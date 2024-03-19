@@ -2,9 +2,9 @@
 import React, { useEffect, useState } from "react";
 import { Form, Input, message } from "antd";
 import Link from "next/link";
-import { CustomButton } from "@/components/common";
 // import { apiErrorHandler } from "@/services";
 import { useRouter } from "next/navigation";
+import { CustomButton } from "@/common/components";
 // import { useAuth } from "@/components/hooks";
 
 type FieldType = {

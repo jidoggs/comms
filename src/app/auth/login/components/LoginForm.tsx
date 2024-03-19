@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Form, Input, message } from "antd";
 import Link from "next/link";
-import { CustomButton } from "@/components/common";
+import { CustomButton } from "@/common/components";
 // import { apiErrorHandler } from "@/services";
 import { useRouter } from "next/navigation";
 // import { setLocalStorageItem } from "@/util";

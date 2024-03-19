@@ -1,9 +1,9 @@
 "use client";
-import { CustomButton } from "@/components/common";
 // import { useAuth } from "@/components/hooks";
 // import { apiErrorHandler } from "@/services";
 import { message, Form, Alert } from "antd";
 import { useRouter, useSearchParams } from "next/navigation";
+import { CustomButton } from "@/common/components";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import OTPInput from "react-otp-input";
 

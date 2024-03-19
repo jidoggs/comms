@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 // import Input from "rc-input";
 import React, { useState } from "react";
 import { EyeInvisibleOutlined } from "@ant-design/icons";
-import { CustomButton } from "@/components/common";
+import { CustomButton } from "@/common/components";
 
 type FormValues = {
   code: string;
