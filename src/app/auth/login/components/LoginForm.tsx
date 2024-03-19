@@ -1,10 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Form, Input, message } from "antd";
+import { Form, Input } from "antd";
 import Link from "next/link";
 import { CustomButton } from "@/common/components";
 // import { apiErrorHandler } from "@/services";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 // import { setLocalStorageItem } from "@/util";
 // import useAuth from "@/components/hooks/useAuth";
 
@@ -18,10 +18,10 @@ const LoginForm = () => {
   const [clientReady, setClientReady] = useState<boolean>(false);
   // To disable submit button at the beginning.
   const [form] = Form.useForm();
-  const router = useRouter();
+  // const router = useRouter();
 
   // Watch all values
-  const values = Form.useWatch([], form);
+  // const values = Form.useWatch([], form);
 
   useEffect(() => {
     form.validateFields({ validateOnly: true }).then(
@@ -32,14 +32,14 @@ const LoginForm = () => {
         setClientReady(false);
       }
     );
-  }, [form, values]);
+  }, [form]);
 
   // const {
   //   loginSWR: { error, isMutating, trigger },
   // } = useAuth();
 
-  const onFinish = (values: any) => {
-    console.log("values", values);
+  // const onFinish = (values: any) => {
+    // console.log("values", values);
     // trigger({
     //   data: values,
     // })
@@ -57,12 +57,12 @@ const LoginForm = () => {
     //       content: apiErrorHandler(error),
     //     });
     //   });
-  };
+  // };
 
   return (
     <Form
       name="basic"
-      onFinish={onFinish}
+      // onFinish={onFinish}
       autoComplete="off"
       layout="vertical"
       className="!w-full !my-5"

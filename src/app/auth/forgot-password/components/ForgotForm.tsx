@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Form, Input, message } from "antd";
+import { Form, Input } from "antd";
 import Link from "next/link";
 // import { apiErrorHandler } from "@/services";
 import { useRouter } from "next/navigation";
@@ -43,7 +43,7 @@ const ForgotForm = () => {
   // } = useAuth();
 
   const onFinish = (values: any) => {
-    console.log("values", values);
+    // console.log("values", values);
     router.push(`/auth/verify?email=${values.email}`);
     // trigger({
     //   data: values,
@@ -63,8 +63,8 @@ const ForgotForm = () => {
     //   });
   };
 
-  console.log("clientReady", clientReady);
-  console.log("values", values);
+  // console.log("clientReady", clientReady);
+  // console.log("values", values);
 
   return (
     <Form

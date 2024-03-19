@@ -11,15 +11,15 @@ const layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
   return (
     <div>
       <Content className="bg-white min-h-screen">
-        <div className="w-[100vw] h-[100vh] flex flex-row items-center justify-center bg-[#FAFAFA]">
+        <div className="w-screen h-screen flex flex-row items-center justify-center bg-[#FAFAFA]">
           <Image
             src={"/images/authImg.png"}
             alt="login image"
             width={726}
             height={982}
-            className="w-[50%] h-full hidden sm:flex"
+            className="w-1/2 h-full hidden sm:flex"
           />
-          <div className="w-[90%] sm:w-[50%] flex justify-center items-center">
+          <div className="w-[90%] sm:w-1/2 flex justify-center items-center">
             <div className="border border-[#3E3E3E] flex justify-center items-center rounded-2xl w-[375px]">
               <div className="p-5 flex flex-col justify-center items-center w-full">
                 {/* <Image
