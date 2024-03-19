@@ -8,5 +8,6 @@ export { default as Logout } from "./Logout";
 export { default as Menu } from "./Menu";
 export { default as More } from "./More";
 export { default as Profile } from "./Profile";
+export { default as Refresh } from "./Refresh";
 export { default as Schedule } from "./Schedule";
 export { default as SpinLoader } from "./SpinLoader";
