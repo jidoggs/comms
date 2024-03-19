@@ -9,7 +9,7 @@ type FullPageLoaderProps = {
 
 export const Loader = ({ size }: { size?: number }) => {
   return (
-    <div className="size-full flex items-center justify-center">
+    <div className="flex items-center justify-center size-full">
       <span className="animate-spin">
         <SpinLoader size={size} />
       </span>
@@ -32,7 +32,7 @@ export default function FullPageLoader({
       className="flex items-center justify-center"
     >
       <Spin fullscreen={fullscreen} size="large">
-        <div className="content" />
+        <div /* className="content" */ />
       </Spin>
       <Loader />
     </div>
