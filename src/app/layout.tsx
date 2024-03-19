@@ -1,11 +1,10 @@
 import React from "react";
 import type { Metadata } from "next";
-
-// import StyledComponentsRegistry from "@/components/lib/AntdRegistry";
+import { Manrope } from "next/font/google";
+import StyledComponentsRegistry from "@/common/components/lib/AntdRegistry";
 import "./globals.css";
 
-import { bebas, inter, roboto_init, manrope } from "./font";
-import StyledComponentsRegistry from "@/common/components/lib/AntdRegistry";
+const manrope = Manrope({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Correspondence",
@@ -19,9 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-        className={`${bebas.variable} ${inter.variable} ${manrope.className} circular`}
-      >
+      <body className={manrope.className}>
         <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
       </body>
     </html>
