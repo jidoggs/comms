@@ -20,7 +20,7 @@ function Layout({ children, user }: Props) {
         <SideNav role={user?.["role.name"] as UserPreDefinedRole} />
         <AntLayout className="flex flex-col h-screen overflow-y-scroll w-full">
           <AppHeader />
-          <Content className="w-full px-5 pt-6 p-[20px]">{children}</Content>
+          <Content className="w-full px-5 pt-6">{children}</Content>
         </AntLayout>
       </div>
     </AntLayout>

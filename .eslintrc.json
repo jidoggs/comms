@@ -5,7 +5,7 @@
     "plugin:react/recommended",
     "plugin:jsx-a11y/recommended",
     "prettier","next/core-web-vitals",
-    "plugin:tailwindcss/recommended","plugin:eslint-plugin-tailwindcss/recommended"
+    /* "plugin:tailwindcss/recommended", */"plugin:eslint-plugin-tailwindcss/recommended"
   ],
   "rules":{
     "no-console": 2,
@@ -13,12 +13,14 @@
     "@next/next/no-duplicate-head":2,
     "import/named": 0,
     "tailwindcss/no-unnecessary-arbitrary-value":2,
-    "tailwindcss/no-contradicting-classname":2,
-    "tailwindcss/no-custom-classname": 0,
+    "tailwindcss/classnames-order": 0,
     "tailwindcss/enforces-shorthand": 2,
-    "tailwindcss/classnames-order": 0
+    "tailwindcss/migration-from-tailwind-2": 1,
+    "tailwindcss/no-arbitrary-value": 0,
+    "tailwindcss/no-custom-classname": 0,
+    "tailwindcss/no-contradicting-classname": 2
   },
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint","tailwindcss"],
+  "plugins": ["@typescript-eslint","eslint-plugin-tailwindcss"],
   "root": true
 }
