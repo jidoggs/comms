@@ -16,9 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-        className={`${bebas.variable} ${inter.variable} ${manrope.className} circular`}
-      >
+      <body className={`${bebas.variable} ${inter.variable} ${manrope.className} circular`}>
         <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
       </body>
     </html>
