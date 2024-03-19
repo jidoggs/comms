@@ -31,3 +31,15 @@ body {
     text-wrap: balance;
   }
 }
+
+.bebas {
+  font-family: var(--bebas);
+}
+
+.manrope {
+  font-family: var(--font-manrope);
+}
+
+.inter {
+  font-family: var(--font-inter);
+}
