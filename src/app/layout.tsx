@@ -1,7 +1,7 @@
 import React from "react";
 import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
-import StyledComponentsRegistry from "@/components/lib/AntdRegistry";
+import StyledComponentsRegistry from "@/common/components/lib/AntdRegistry";
 import "./globals.css";
 
 const manrope = Manrope({ subsets: ["latin"] });
