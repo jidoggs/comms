@@ -1,19 +1,20 @@
 "use client";
 // import { useAuth } from "@/components/hooks";
 // import { apiErrorHandler } from "@/services";
-import { message, Form, Alert } from "antd";
-import { useRouter, useSearchParams } from "next/navigation";
+import {  Form } from "antd";
+// import {  useSearchParams } from "next/navigation";
 import { CustomButton } from "@/common/components";
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, {  useLayoutEffect, useState } from "react";
 import OTPInput from "react-otp-input";
+import { mergeClassName } from "@/common/utils";
 
 // const DEFAULT_TIMER = 0;
 
 const VerifyForm = () => {
   const [otp, setOtp] = useState("");
   const [timer, setTimer] = useState(600); // 10 minutes in seconds
-  const [isResendDisabled, setIsResendDisabled] = useState(false);
-  const router = useRouter();
+  // const [isResendDisabled, setIsResendDisabled] = useState(false);
+  // const router = useRouter();
 
   useLayoutEffect(() => {
     const storedTimer = localStorage.getItem("timer");
@@ -29,7 +30,7 @@ const VerifyForm = () => {
       if (timer > 0) {
         setTimer((prevTimer) => prevTimer - 1);
         localStorage.setItem("timer", timer.toString());
-        setIsResendDisabled(false);
+        // setIsResendDisabled(false);
       }
     }, 1000);
 
@@ -39,9 +40,9 @@ const VerifyForm = () => {
   // const { user } = USER_SESSION();
   // const email = user?.email;
 
-  const searchParams = useSearchParams();
+  // const searchParams = useSearchParams();
   //   const unVerifiedLoginAttempt = searchParams.get("login");
-  const emailParams = searchParams.get("email");
+  // const emailParams = searchParams.get("email");
   //   const initiateOtp = useRef(false);
 
   // const {
@@ -57,39 +58,39 @@ const VerifyForm = () => {
     setOtp(newOtp);
   };
 
-  const inputStyle: React.CSSProperties = {
-    height: 40,
-    width: "100%",
-    margin: 4,
-    borderRadius: 10,
-    border: "1px solid #d9d9d9",
-    color: "black",
-    background: "#FAFAFA",
-  };
+  // const inputStyle: React.CSSProperties = {
+  //   height: 40,
+  //   width: "100%",
+  //   margin: 4,
+  //   borderRadius: 10,
+  //   border: "1px solid #d9d9d9",
+  //   color: "black",
+  //   background: "#FAFAFA",
+  // };
 
-  const handleResendOTP = () => {
-    // const formatPhoneNumber = (phoneNumber: string) => {
-    //   return phoneNumber.length === 10
-    //     ? `+234${phoneNumber}`
-    //     : phoneNumber.length === 11 && phoneNumber.startsWith("0")
-    //     ? `+234${phoneNumber?.slice(1)}`
-    //     : phoneNumber.length === 11
-    //     ? `+234${phoneNumber?.slice(0, 10)}`
-    //     : phoneNumber.length === 13 && phoneNumber.startsWith("+234")
-    //     ? phoneNumber
-    //     : phoneNumber.length === 14 && phoneNumber.startsWith("+234")
-    //     ? phoneNumber
-    //     : "";
-    // };
-    // const phoneNumber = formatPhoneNumber(phone as string);
+  // const handleResendOTP = () => {
+  //   // const formatPhoneNumber = (phoneNumber: string) => {
+  //   //   return phoneNumber.length === 10
+  //   //     ? `+234${phoneNumber}`
+  //   //     : phoneNumber.length === 11 && phoneNumber.startsWith("0")
+  //   //     ? `+234${phoneNumber?.slice(1)}`
+  //   //     : phoneNumber.length === 11
+  //   //     ? `+234${phoneNumber?.slice(0, 10)}`
+  //   //     : phoneNumber.length === 13 && phoneNumber.startsWith("+234")
+  //   //     ? phoneNumber
+  //   //     : phoneNumber.length === 14 && phoneNumber.startsWith("+234")
+  //   //     ? phoneNumber
+  //   //     : "";
+  //   // };
+  //   // const phoneNumber = formatPhoneNumber(phone as string);
 
-    setTimer(600); // Reset timer to 10 minutes
-    setIsResendDisabled(true); // Disable resend button
+  //   setTimer(600); // Reset timer to 10 minutes
+  //   // setIsResendDisabled(true); // Disable resend button
 
-    // resendTrigger({
-    //   data: { phone_number: phoneNumber },
-    // });
-  };
+  //   // resendTrigger({
+  //   //   data: { phone_number: phoneNumber },
+  //   // });
+  // };
 
   const handleSubmit = () => {
     // router.push(`/auth/reset-password?email=${emailParams}&token=${otp}`);
@@ -171,9 +172,9 @@ const VerifyForm = () => {
           // }
           // isLoading={verifyMutating}
           className={
-            otp.length === 6
-              ? "w-full bg-[#11142D] rounded-lg"
-              : "w-full bg-[#BDBDBD] rounded-lg"
+           mergeClassName("rounded-lg w-full", otp.length === 6
+              ? ("bg-[#11142D]")
+              : "bg-[#BDBDBD]")
           }
         >
           Verify
@@ -181,7 +182,7 @@ const VerifyForm = () => {
 
         <CustomButton
           variant="noStyleButton"
-          onClick={handleResendOTP}
+          // onClick={handleResendOTP}
           // disabled={resendLoading}
           // isLoading={resendLoading}
           className="w-full"

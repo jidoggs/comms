@@ -1,40 +1,40 @@
 "use client";
 // import useAuth from "@/components/hooks/useAuth";
 // import { apiErrorHandler } from "@/services";
-import { Alert, Form, Input, message } from "antd";
-import { useRouter, useSearchParams } from "next/navigation";
+import {  Form, Input } from "antd";
+// import { useRouter, useSearchParams } from "next/navigation";
 // import Input from "rc-input";
 import React, { useState } from "react";
 import { EyeInvisibleOutlined } from "@ant-design/icons";
 import { CustomButton } from "@/common/components";
 
-type FormValues = {
-  code: string;
-  newPassword: string;
-  confirmPassword: boolean;
-};
+// type FormValues = {
+//   code: string;
+//   newPassword: string;
+//   confirmPassword: boolean;
+// };
 
 const passwordReqexPattern =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*_])[A-Za-z\d!@#$%^&*_]{8,}$/;
 
 const ResetPasswordForm = () => {
-  const router = useRouter();
+  // const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
-  const [correctPassword, setCorrectPassword] = useState(false);
+  // const [correctPassword, setCorrectPassword] = useState(false);
   // const {
   //   resetTokenSWR: { error, isMutating, trigger },
   // } = useAuth();
-  const searchParams = useSearchParams();
-  const email = searchParams.get("email");
-  const token = searchParams.get("token");
+  // const searchParams = useSearchParams();
+  // const email = searchParams.get("email");
+  // const token = searchParams.get("token");
 
-  const handleResetCode = (values: FormValues) => {
-    const data = {
-      email,
-      code: token,
-      new_password: values.newPassword,
-      // confirm_password: values?.confirmPassword,
-    };
+  // const handleResetCode = (values: FormValues) => {
+    // const data = {
+    //   email,
+    //   code: token,
+    //   new_password: values.newPassword,
+    //   // confirm_password: values?.confirmPassword,
+    // };
     // trigger({ data })
     //   .then(() => {
     //     message.open({
@@ -49,7 +49,7 @@ const ResetPasswordForm = () => {
     //       content: apiErrorHandler(error),
     //     });
     //   });
-  };
+  // };
 
   return (
     <div className="my-5">
@@ -62,7 +62,9 @@ const ResetPasswordForm = () => {
           closable
         />
       )} */}
-      <Form layout="vertical" onFinish={handleResetCode} requiredMark={false}>
+      <Form layout="vertical"
+        // onFinish={handleResetCode}
+        requiredMark={false}>
         {/* <Form.Item
           name="code"
           label="OTP Code"
