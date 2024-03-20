@@ -1,4 +1,4 @@
-import { Plus, Search, ThreeDots } from '@/common/components/icons';
+import { ThreeDots, Plus, Search } from '@/common/components/icons';
 
 type SectionHeaderCardProps = {
   title: string;

@@ -1,17 +1,22 @@
+'use client';
+
 import React from 'react';
-import CorrespondenceCard from './components/CorrespondenceCard';
-import SectionHeaderCard from './components/SectionHeaderCard';
+
+import ActivitiesSection from './components/ActivitiesSection';
+import QueuedList from './components/QueuedList';
+import OngoingList from './components/OngoingList';
 
 const HomePage = () => {
   return (
-    <div className="flex w-full gap-2">
+    <div className="flex w-full justify-center gap-2">
       <div className="w-[34%] flex-col gap-1">
-        <SectionHeaderCard title="Queue" count={20} />
-        {[...Array(5)]?.map((_, id) => <CorrespondenceCard key={id} />)}
+        <QueuedList />
       </div>
       <div className="w-[34%] flex-col">
-        <SectionHeaderCard title="Ongoing" count={16} />
-        {[...Array(3)]?.map((_, id) => <CorrespondenceCard key={id} />)}
+        <OngoingList />
+      </div>
+      <div className="w-[26%] flex-col">
+        <ActivitiesSection />
       </div>
     </div>
   );
