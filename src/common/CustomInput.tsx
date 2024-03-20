@@ -32,7 +32,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
       {label && (
         <label
           className={mergeClassName(
-            'block text-sm font-medium text-custom-main ',
+            'block mb-2 text-sm font-medium text-custom-main ',
             !isClassNameString && className?.label
           )}
         >
