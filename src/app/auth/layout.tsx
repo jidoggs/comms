@@ -11,7 +11,7 @@ const layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
   return (
     <div>
       <Content className="min-h-screen bg-white">
-        <div className="flex h-screen w-screen flex-row items-center justify-center bg-[#FAFAFA]">
+        <div className="bg-custom-gray_100 flex h-screen w-screen flex-row items-center justify-center">
           <Image
             src={'/images/authImg.png'}
             alt="login image"
@@ -20,7 +20,7 @@ const layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
             className="hidden h-full w-1/2 sm:flex"
           />
           <div className="flex w-[90%] items-center justify-center sm:w-1/2">
-            <div className="flex w-[375px] items-center justify-center rounded-2xl border border-[#3E3E3E]">
+            <div className="border-custom-gray_950 flex w-[375px] items-center justify-center rounded-2xl border">
               <div className="flex w-full flex-col items-center justify-center p-5">
                 {/* <Image
                   src={"/images/nigeria_saudi_arabia_logo.png"}

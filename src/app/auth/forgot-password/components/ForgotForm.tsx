@@ -1,10 +1,10 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import { Form, Input } from "antd";
-import Link from "next/link";
+'use client';
+import React, { useEffect, useState } from 'react';
+import { Form, Input } from 'antd';
+import Link from 'next/link';
 // import { apiErrorHandler } from "@/services";
-import { useRouter } from "next/navigation";
-import { CustomButton } from "@/common/components";
+import { useRouter } from 'next/navigation';
+import { CustomButton } from '@/common/components';
 // import { useAuth } from "@/components/hooks";
 
 type FieldType = {
@@ -72,26 +72,29 @@ const ForgotForm = () => {
       onFinish={onFinish}
       autoComplete="off"
       layout="vertical"
-      className="!w-full !my-5"
-      style={{ width: "100%" }}
+      className="!my-5 !w-full"
+      style={{ width: '100%' }}
     >
       <Form.Item<FieldType>
         label={
-          <h3 className="text-[14px] leading-[17.71px] font-medium">Email</h3>
+          <h3 className="text-[14px] font-medium leading-[17.71px]">Email</h3>
         }
         name="email"
         rules={[
           {
-            type: "email",
-            message: "The input is not valid E-mail!",
+            type: 'email',
+            message: 'The input is not valid E-mail!',
           },
           {
             required: true,
-            message: "Please input your E-mail!",
+            message: 'Please input your E-mail!',
           },
         ]}
       >
-        <Input className="w-full !border-[#333333]" placeholder="Enter email" />
+        <Input
+          className="!border-custom-gray_300 w-full"
+          placeholder="Enter email"
+        />
       </Form.Item>
 
       <Form.Item>
@@ -100,8 +103,8 @@ const ForgotForm = () => {
           disabled={!clientReady}
           className={
             clientReady
-              ? "bg-[#11142D] text-white-100 w-full md:w-full sm:w-auto"
-              : "bg-[#BDBDBD] text-white-100 w-full md:w-full sm:w-auto"
+              ? 'text-white-100 bg-custom-main w-full sm:w-auto md:w-full'
+              : 'text-white-100 bg-custom-gray_400 w-full sm:w-auto md:w-full'
           }
         >
           Continue
@@ -110,8 +113,8 @@ const ForgotForm = () => {
 
       <Form.Item className="flex justify-center">
         <Link
-          href={"/auth/login"}
-          className="!text-[#11142D] !text-[14px] !leading-[17.71px] !font-bold !text-center"
+          href={'/auth/login'}
+          className="!text-custom-main !text-center !text-[14px] !font-bold !leading-[17.71px]"
         >
           Login
         </Link>

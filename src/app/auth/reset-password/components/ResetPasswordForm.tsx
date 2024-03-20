@@ -1,7 +1,7 @@
 'use client';
 // import useAuth from "@/components/hooks/useAuth";
 // import { apiErrorHandler } from "@/services";
-import {  Form, Input } from "antd";
+import { Form, Input } from 'antd';
 // import { useRouter, useSearchParams } from "next/navigation";
 // import Input from "rc-input";
 import React, { useState } from 'react';
@@ -29,26 +29,26 @@ const ResetPasswordForm = () => {
   // const token = searchParams.get("token");
 
   // const handleResetCode = (values: FormValues) => {
-    // const data = {
-    //   email,
-    //   code: token,
-    //   new_password: values.newPassword,
-    //   // confirm_password: values?.confirmPassword,
-    // };
-    // trigger({ data })
-    //   .then(() => {
-    //     message.open({
-    //       type: "success",
-    //       content: "Email successfully verified",
-    //     });
-    //     router.push(`/auth/success`);
-    //   })
-    //   .catch(() => {
-    //     message.open({
-    //       type: "error",
-    //       content: apiErrorHandler(error),
-    //     });
-    //   });
+  // const data = {
+  //   email,
+  //   code: token,
+  //   new_password: values.newPassword,
+  //   // confirm_password: values?.confirmPassword,
+  // };
+  // trigger({ data })
+  //   .then(() => {
+  //     message.open({
+  //       type: "success",
+  //       content: "Email successfully verified",
+  //     });
+  //     router.push(`/auth/success`);
+  //   })
+  //   .catch(() => {
+  //     message.open({
+  //       type: "error",
+  //       content: apiErrorHandler(error),
+  //     });
+  //   });
   // };
 
   return (
@@ -62,9 +62,11 @@ const ResetPasswordForm = () => {
           closable
         />
       )} */}
-      <Form layout="vertical"
+      <Form
+        layout="vertical"
         // onFinish={handleResetCode}
-        requiredMark={false}>
+        requiredMark={false}
+      >
         {/* <Form.Item
           name="code"
           label="OTP Code"
@@ -136,10 +138,10 @@ const ResetPasswordForm = () => {
             // isLoading={isMutating}
             // className={
             //   correctPassword
-            //     ? "w-full bg-[#11142D] rounded-lg"
-            //     : "w-full bg-[#BDBDBD] rounded-lg"
+            //     ? "w-full bg-custom-main rounded-lg"
+            //     : "w-full bg-custom-gray_400 rounded-lg"
             // }
-            className="w-full rounded-lg bg-[#11142D]"
+            className="bg-custom-main w-full rounded-lg"
           >
             Reset Password
           </CustomButton>
