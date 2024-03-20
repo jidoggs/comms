@@ -40,9 +40,9 @@ const ChatCard = ({
       <div className="flex flex-row items-center justify-between px-2">
         <div className="my-2 flex flex-row items-center gap-3">
           <Image
-            width={50}
-            height={50}
-            className="size-[50px] rounded-full border border-red-500"
+            width={20}
+            height={20}
+            className="size-[20px] rounded-full border border-red-500"
             src={image || ''}
             alt=""
           />
