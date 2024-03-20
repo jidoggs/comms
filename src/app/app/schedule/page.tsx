@@ -1,9 +1,11 @@
 'use client';
+import CustomTab from '@/common/components/CustomTab';
 import CustomTable from '@/common/components/CustomTable';
 import { dummyPeople } from '@/common/mockData';
 import { mergeClassName } from '@/common/utils';
+import { TabsProps } from 'antd';
 import { ColumnsType } from 'antd/es/table';
-import React from 'react';
+import React, { useState } from 'react';
 
 const columns: ColumnsType<any> = [
   {
@@ -81,11 +83,33 @@ const columns: ColumnsType<any> = [
 }));
 
 const SchedulePage = () => {
+  const [activeKey, setActiveKey] = useState('onboard');
+  const items: TabsProps['items'] = [
+    {
+      key: 'onboard',
+      label: 'Onboard',
+    },
+    {
+      key: 'pending',
+      label: 'Pending onboarding',
+    },
+  ];
+
+  const tabChangeHandler = (state: string) => {
+    setActiveKey(state);
+  };
+
   return (
     <div>
       <CustomTable
         tableTitle="People"
-        tabs={<>Onboard</>}
+        tabs={
+          <CustomTab
+            onChange={tabChangeHandler}
+            defaultKey={activeKey}
+            items={items}
+          />
+        }
         className={{
           table: 'cursor-pointer',
         }}

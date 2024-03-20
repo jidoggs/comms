@@ -55,7 +55,7 @@ const CustomTable = <T extends object>({
       >
         <div
           className={mergeClassName(
-            'flex flex-wrap items-center justify-between gap-2',
+            'flex flex-wrap items-center justify-between gap-2 py-1.5',
             !stringClassName ? className?.tabs : ''
           )}
         >
