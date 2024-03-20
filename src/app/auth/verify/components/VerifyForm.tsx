@@ -1,23 +1,23 @@
-"use client";
+'use client';
 // import { useAuth } from "@/components/hooks";
 // import { apiErrorHandler } from "@/services";
-import {  Form } from "antd";
+import { Form } from 'antd';
 // import {  useSearchParams } from "next/navigation";
-import { CustomButton } from "@/common/components";
-import React, {  useLayoutEffect, useState } from "react";
-import OTPInput from "react-otp-input";
-import { mergeClassName } from "@/common/utils";
+import { CustomButton } from '@/common/components';
+import React, { useLayoutEffect, useState } from 'react';
+import OTPInput from 'react-otp-input';
+import { mergeClassName } from '@/common/utils';
 
 // const DEFAULT_TIMER = 0;
 
 const VerifyForm = () => {
-  const [otp, setOtp] = useState("");
+  const [otp, setOtp] = useState('');
   const [timer, setTimer] = useState(600); // 10 minutes in seconds
   // const [isResendDisabled, setIsResendDisabled] = useState(false);
   // const router = useRouter();
 
   useLayoutEffect(() => {
-    const storedTimer = localStorage.getItem("timer");
+    const storedTimer = localStorage.getItem('timer');
     if (storedTimer) {
       const parsedTimer = parseInt(storedTimer, 10);
       setTimer(parsedTimer);
@@ -29,7 +29,7 @@ const VerifyForm = () => {
     const countdown = setInterval(() => {
       if (timer > 0) {
         setTimer((prevTimer) => prevTimer - 1);
-        localStorage.setItem("timer", timer.toString());
+        localStorage.setItem('timer', timer.toString());
         // setIsResendDisabled(false);
       }
     }, 1000);
@@ -117,13 +117,13 @@ const VerifyForm = () => {
 
   return (
     <div>
-      <div className="w-full gap-5 flex flex-col pt-5 items-center">
-        <span className="text-[16px] font-semibold leading-[21.86px] text-[#585A69]">
+      <div className="flex w-full flex-col items-center gap-5 pt-5">
+        <span className="text-custom-gray_200 text-[16px] font-semibold leading-[21.86px]">
           {/* {Math.floor(countdown / 60)
             .toString()
             .padStart(2, "0")}
           :{(countdown % 60).toString().padStart(2, "0")} mins */}
-          {Math.floor(timer / 60)}:{timer % 60 < 10 ? "0" : ""}
+          {Math.floor(timer / 60)}:{timer % 60 < 10 ? '0' : ''}
           {timer % 60}
         </span>
         {/* {error && (
@@ -143,12 +143,12 @@ const VerifyForm = () => {
         >
           <Form.Item
             name="verification_code"
-            className="!pt-3 !mb-0"
+            className="!mb-0 !pt-3"
             // style={formItemStyle}
             rules={[
               {
                 required: true,
-                message: "Please input your verification code",
+                message: 'Please input your verification code',
               },
             ]}
           >
@@ -157,7 +157,7 @@ const VerifyForm = () => {
               value={otp}
               onChange={handleOtpChange}
               numInputs={6}
-              inputStyle="md:h-11 md:!w-12 !w-10 h-8  md:px-4 md:py-3 px-2 py-1 border border-[#333333] rounded-md text-[#333333] focus:border-green-minst focus-visible:outline-green-minst"
+              inputStyle="md:h-11 md:!w-12 !w-10 h-8  md:px-4 md:py-3 px-2 py-1 border border-custom-gray_300 rounded-md text-custom-gray_300 focus:border-green-minst focus-visible:outline-green-minst"
               containerStyle="justify-center md:gap-x-2.5 gap-x-1"
               inputType="number"
               //   isDisabled={verifyMutating}
@@ -171,11 +171,10 @@ const VerifyForm = () => {
           //   verifyMutating || resendLoading || countdown !== 0 || +otp === 0
           // }
           // isLoading={verifyMutating}
-          className={
-           mergeClassName("rounded-lg w-full", otp.length === 6
-              ? ("bg-[#11142D]")
-              : "bg-[#BDBDBD]")
-          }
+          className={mergeClassName(
+            'w-full rounded-lg',
+            otp.length === 6 ? 'bg-custom-main' : 'bg-custom-gray_400'
+          )}
         >
           Verify
         </CustomButton>

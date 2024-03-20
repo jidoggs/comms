@@ -1,12 +1,12 @@
-"use client";
+'use client';
 // import useAuth from "@/components/hooks/useAuth";
 // import { apiErrorHandler } from "@/services";
-import {  Form, Input } from "antd";
+import { Form, Input } from 'antd';
 // import { useRouter, useSearchParams } from "next/navigation";
 // import Input from "rc-input";
-import React, { useState } from "react";
-import { EyeInvisibleOutlined } from "@ant-design/icons";
-import { CustomButton } from "@/common/components";
+import React, { useState } from 'react';
+import { EyeInvisibleOutlined } from '@ant-design/icons';
+import { CustomButton } from '@/common/components';
 
 // type FormValues = {
 //   code: string;
@@ -29,26 +29,26 @@ const ResetPasswordForm = () => {
   // const token = searchParams.get("token");
 
   // const handleResetCode = (values: FormValues) => {
-    // const data = {
-    //   email,
-    //   code: token,
-    //   new_password: values.newPassword,
-    //   // confirm_password: values?.confirmPassword,
-    // };
-    // trigger({ data })
-    //   .then(() => {
-    //     message.open({
-    //       type: "success",
-    //       content: "Email successfully verified",
-    //     });
-    //     router.push(`/auth/success`);
-    //   })
-    //   .catch(() => {
-    //     message.open({
-    //       type: "error",
-    //       content: apiErrorHandler(error),
-    //     });
-    //   });
+  // const data = {
+  //   email,
+  //   code: token,
+  //   new_password: values.newPassword,
+  //   // confirm_password: values?.confirmPassword,
+  // };
+  // trigger({ data })
+  //   .then(() => {
+  //     message.open({
+  //       type: "success",
+  //       content: "Email successfully verified",
+  //     });
+  //     router.push(`/auth/success`);
+  //   })
+  //   .catch(() => {
+  //     message.open({
+  //       type: "error",
+  //       content: apiErrorHandler(error),
+  //     });
+  //   });
   // };
 
   return (
@@ -62,9 +62,11 @@ const ResetPasswordForm = () => {
           closable
         />
       )} */}
-      <Form layout="vertical"
+      <Form
+        layout="vertical"
         // onFinish={handleResetCode}
-        requiredMark={false}>
+        requiredMark={false}
+      >
         {/* <Form.Item
           name="code"
           label="OTP Code"
@@ -80,11 +82,11 @@ const ResetPasswordForm = () => {
           name="newPassword"
           label="New Password"
           rules={[
-            { required: true, message: "Please input your Password!" },
+            { required: true, message: 'Please input your Password!' },
             {
               pattern: passwordReqexPattern,
               message:
-                "password must contain lower case, uppper case, number, symbols and a min. of 8 characters",
+                'password must contain lower case, uppper case, number, symbols and a min. of 8 characters',
             },
           ]}
         >
@@ -94,7 +96,7 @@ const ResetPasswordForm = () => {
                 onClick={() => setShowPassword(!showPassword)}
               />
             }
-            type={showPassword ? "text" : "password"}
+            type={showPassword ? 'text' : 'password'}
             // disabled={isMutating}
             placeholder="Password"
           />
@@ -102,18 +104,18 @@ const ResetPasswordForm = () => {
         <Form.Item
           name="confirmPassword"
           label="Confirm Password"
-          dependencies={["newPassword"]}
+          dependencies={['newPassword']}
           rules={[
             {
               required: true,
             },
             ({ getFieldValue }) => ({
               validator(_, value) {
-                if (!value || getFieldValue("newPassword") === value) {
+                if (!value || getFieldValue('newPassword') === value) {
                   return Promise.resolve();
                 }
                 return Promise.reject(
-                  new Error("The new password that you entered do not match!")
+                  new Error('The new password that you entered do not match!')
                 );
               },
             }),
@@ -127,7 +129,7 @@ const ResetPasswordForm = () => {
             }
             // disabled={isMutating}
             placeholder="Password"
-            type={showPassword ? "text" : "password"}
+            type={showPassword ? 'text' : 'password'}
           />
         </Form.Item>
         <Form.Item style={{ marginBottom: 0 }} className="mt-10">
@@ -136,10 +138,10 @@ const ResetPasswordForm = () => {
             // isLoading={isMutating}
             // className={
             //   correctPassword
-            //     ? "w-full bg-[#11142D] rounded-lg"
-            //     : "w-full bg-[#BDBDBD] rounded-lg"
+            //     ? "w-full bg-custom-main rounded-lg"
+            //     : "w-full bg-custom-gray_400 rounded-lg"
             // }
-            className="w-full bg-[#11142D] rounded-lg"
+            className="bg-custom-main w-full rounded-lg"
           >
             Reset Password
           </CustomButton>
