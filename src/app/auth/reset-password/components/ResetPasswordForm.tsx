@@ -1,8 +1,8 @@
 'use client';
 // import useAuth from "@/components/hooks/useAuth";
 // import { apiErrorHandler } from "@/services";
-import { Form, Input } from 'antd';
-// import { useSearchParams } from 'next/navigation';
+import {  Form, Input } from "antd";
+// import { useRouter, useSearchParams } from "next/navigation";
 // import Input from "rc-input";
 import React, { useState } from 'react';
 import { EyeInvisibleOutlined } from '@ant-design/icons';
@@ -25,33 +25,31 @@ const ResetPasswordForm = () => {
   //   resetTokenSWR: { error, isMutating, trigger },
   // } = useAuth();
   // const searchParams = useSearchParams();
-  // const email = searchParams.get('email');
-  // const token = searchParams.get('token');
+  // const email = searchParams.get("email");
+  // const token = searchParams.get("token");
 
-  const handleResetCode = () =>
-    // values: FormValues
-    {
-      // const data = {
-      //   email,
-      //   code: token,
-      //   new_password: values.newPassword,
-      //   confirm_password: values?.confirmPassword,
-      // };
-      // trigger({ data })
-      //   .then(() => {
-      //     message.open({
-      //       type: "success",
-      //       content: "Email successfully verified",
-      //     });
-      //     router.push(`/auth/success`);
-      //   })
-      //   .catch(() => {
-      //     message.open({
-      //       type: "error",
-      //       content: apiErrorHandler(error),
-      //     });
-      //   });
-    };
+  // const handleResetCode = (values: FormValues) => {
+    // const data = {
+    //   email,
+    //   code: token,
+    //   new_password: values.newPassword,
+    //   // confirm_password: values?.confirmPassword,
+    // };
+    // trigger({ data })
+    //   .then(() => {
+    //     message.open({
+    //       type: "success",
+    //       content: "Email successfully verified",
+    //     });
+    //     router.push(`/auth/success`);
+    //   })
+    //   .catch(() => {
+    //     message.open({
+    //       type: "error",
+    //       content: apiErrorHandler(error),
+    //     });
+    //   });
+  // };
 
   return (
     <div className="my-5">
@@ -64,7 +62,9 @@ const ResetPasswordForm = () => {
           closable
         />
       )} */}
-      <Form layout="vertical" onFinish={handleResetCode} requiredMark={false}>
+      <Form layout="vertical"
+        // onFinish={handleResetCode}
+        requiredMark={false}>
         {/* <Form.Item
           name="code"
           label="OTP Code"

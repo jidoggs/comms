@@ -1,7 +1,7 @@
 // import { MainLayout } from "@/components/layout";
-import { Content } from "antd/lib/layout/layout";
-import Image from "next/image";
-import React from "react";
+import { Content } from 'antd/lib/layout/layout';
+import Image from 'next/image';
+import React from 'react';
 
 interface LayoutProps {
   children: React.ReactNode;

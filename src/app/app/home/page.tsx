@@ -1,36 +1,17 @@
-import React from "react";
+import React from 'react';
+import CorrespondenceCard from './components/CorrespondenceCard';
+import SectionHeaderCard from './components/SectionHeaderCard';
 
 const HomePage = () => {
   return (
-    <div className="w-full flex gap-2">
+    <div className="flex w-full gap-2">
       <div className="w-[34%] flex-col gap-1">
-        <div className="w-full flex justify-between p-2 bg-white rounded-md shadow-md font-semibold">
-          <div className="flex justify-between align-middle gap-2">
-            <p>Queue</p>
-            <div className="rounded border-r-pink-600">
-              <p>20</p>
-            </div>
-          </div>
-          <div className="flex justify-between">
-            <p>Queue</p>
-          </div>
-        </div>
+        <SectionHeaderCard title="Queue" count={20} />
+        {[...Array(5)]?.map((_, id) => <CorrespondenceCard key={id} />)}
       </div>
       <div className="w-[34%] flex-col">
-        <div className="w-full flex justify-between p-2 bg-white rounded-md shadow-md font-semibold">
-          <div className="flex justify-between align-middle gap-2">
-            <p>Queue</p>
-            <div className="rounded border-r-pink-600">
-              <p>20</p>
-            </div>
-          </div>
-          <div className="flex justify-between">
-            <p>Queue</p>
-          </div>
-        </div>
-        <div className="w-full flex gap-2 p-2 bg-white mt-2 rounded-md shadow-md">
-          <div className="p-4 rounded-md bg-gray-300"></div>
-        </div>
+        <SectionHeaderCard title="Ongoing" count={16} />
+        {[...Array(3)]?.map((_, id) => <CorrespondenceCard key={id} />)}
       </div>
     </div>
   );
