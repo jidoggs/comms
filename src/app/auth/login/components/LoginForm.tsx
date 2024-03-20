@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Form, Input } from 'antd';
 import Link from 'next/link';
 import { CustomButton } from '@/common/components';
+
 // import { apiErrorHandler } from "@/services";
 // import { useRouter } from "next/navigation";
 // import { setLocalStorageItem } from "@/util";
@@ -85,7 +86,7 @@ const LoginForm = () => {
         ]}
       >
         <Input
-          className="!border-custom-gray_300 w-full"
+          className="w-full !border-custom-gray_300"
           placeholder="Enter email"
           // disabled={isMutating}
         />
@@ -107,7 +108,7 @@ const LoginForm = () => {
       >
         <Input.Password
           placeholder="Enter password"
-          className="!border-custom-gray_300 w-full"
+          className="w-full !border-custom-gray_300"
           // disabled={isMutating}
         />
       </Form.Item>
@@ -115,7 +116,7 @@ const LoginForm = () => {
       <Form.Item className="flex justify-center">
         <Link
           href={'/auth/forgot-password'}
-          className="!text-custom-black_200 !text-center !text-[14px] !font-bold !leading-[17.71px]"
+          className="!text-center !text-[14px] !font-bold !leading-[17.71px] !text-custom-black_200"
         >
           Forgot Password?
         </Link>
