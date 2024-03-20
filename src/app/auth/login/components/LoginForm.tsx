@@ -1,8 +1,8 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import { Form, Input } from "antd";
-import Link from "next/link";
-import { CustomButton } from "@/common/components";
+'use client';
+import React, { useEffect, useState } from 'react';
+import { Form, Input } from 'antd';
+import Link from 'next/link';
+import { CustomButton } from '@/common/components';
 // import { apiErrorHandler } from "@/services";
 // import { useRouter } from "next/navigation";
 // import { setLocalStorageItem } from "@/util";
@@ -39,24 +39,24 @@ const LoginForm = () => {
   // } = useAuth();
 
   // const onFinish = (values: any) => {
-    // console.log("values", values);
-    // trigger({
-    //   data: values,
-    // })
-    //   .then((data) => {
-    //     message.open({
-    //       type: "success",
-    //       content: "Successfully logged in",
-    //     });
-    //     setLocalStorageItem("user_details", data.data);
-    //     router.push("/app/registrations");
-    //   })
-    //   .catch(() => {
-    //     message.open({
-    //       type: "error",
-    //       content: apiErrorHandler(error),
-    //     });
-    //   });
+  // console.log("values", values);
+  // trigger({
+  //   data: values,
+  // })
+  //   .then((data) => {
+  //     message.open({
+  //       type: "success",
+  //       content: "Successfully logged in",
+  //     });
+  //     setLocalStorageItem("user_details", data.data);
+  //     router.push("/app/registrations");
+  //   })
+  //   .catch(() => {
+  //     message.open({
+  //       type: "error",
+  //       content: apiErrorHandler(error),
+  //     });
+  //   });
   // };
 
   return (
@@ -65,27 +65,27 @@ const LoginForm = () => {
       // onFinish={onFinish}
       autoComplete="off"
       layout="vertical"
-      className="!w-full !my-5"
-      style={{ width: "100%" }}
+      className="!my-5 !w-full"
+      style={{ width: '100%' }}
     >
       <Form.Item<FieldType>
         label={
-          <h3 className="text-[14px] leading-[17.71px] font-medium">Email</h3>
+          <h3 className="text-[14px] font-medium leading-[17.71px]">Email</h3>
         }
         name="email"
         rules={[
           {
-            type: "email",
-            message: "The input is not valid E-mail!",
+            type: 'email',
+            message: 'The input is not valid E-mail!',
           },
           {
             required: true,
-            message: "Please input your E-mail!",
+            message: 'Please input your E-mail!',
           },
         ]}
       >
         <Input
-          className="w-full !border-[#333333]"
+          className="!border-custom-gray_300 w-full"
           placeholder="Enter email"
           // disabled={isMutating}
         />
@@ -93,7 +93,7 @@ const LoginForm = () => {
 
       <Form.Item<FieldType>
         label={
-          <h3 className="text-[14px] leading-[17.71px] font-medium">
+          <h3 className="text-[14px] font-medium leading-[17.71px]">
             Password
           </h3>
         }
@@ -101,21 +101,21 @@ const LoginForm = () => {
         rules={[
           {
             required: true,
-            message: "Please input your password!",
+            message: 'Please input your password!',
           },
         ]}
       >
         <Input.Password
           placeholder="Enter password"
-          className="w-full !border-[#333333]"
+          className="!border-custom-gray_300 w-full"
           // disabled={isMutating}
         />
       </Form.Item>
 
       <Form.Item className="flex justify-center">
         <Link
-          href={"/auth/forgot-password"}
-          className="!text-[#121212] !text-[14px] !leading-[17.71px] !font-bold !text-center"
+          href={'/auth/forgot-password'}
+          className="!text-custom-black_200 !text-center !text-[14px] !font-bold !leading-[17.71px]"
         >
           Forgot Password?
         </Link>
@@ -125,7 +125,7 @@ const LoginForm = () => {
         <CustomButton
           // isLoading={isMutating}
           disabled={!clientReady}
-          className="text-white-100 w-full md:w-full sm:w-auto bg-black rounded-lg"
+          className="text-white-100 w-full rounded-lg bg-black sm:w-auto md:w-full"
         >
           Login
         </CustomButton>
