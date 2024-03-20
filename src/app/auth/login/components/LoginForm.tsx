@@ -1,8 +1,9 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { Form, Input } from 'antd';
+import { Form } from 'antd';
 import Link from 'next/link';
 import { CustomButton } from '@/common/components';
+import CustomInput from '@/common/CustomInput';
 
 // import { apiErrorHandler } from "@/services";
 // import { useRouter } from "next/navigation";
@@ -69,48 +70,15 @@ const LoginForm = () => {
       className="!my-5 !w-full"
       style={{ width: '100%' }}
     >
-      <Form.Item<FieldType>
-        label={
-          <h3 className="text-[14px] font-medium leading-[17.71px]">Email</h3>
-        }
-        name="email"
-        rules={[
-          {
-            type: 'email',
-            message: 'The input is not valid E-mail!',
-          },
-          {
-            required: true,
-            message: 'Please input your E-mail!',
-          },
-        ]}
-      >
-        <Input
-          className="w-full !border-custom-gray_300"
-          placeholder="Enter email"
-          // disabled={isMutating}
-        />
+      <Form.Item<FieldType>>
+        <CustomInput label="Email" type="email" placeholder="user@gmail.com" />
       </Form.Item>
 
       <Form.Item<FieldType>
-        label={
-          <h3 className="text-[14px] font-medium leading-[17.71px]">
-            Password
-          </h3>
-        }
-        name="password"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your password!',
-          },
-        ]}
+       
       >
-        <Input.Password
-          placeholder="Enter password"
-          className="w-full !border-custom-gray_300"
-          // disabled={isMutating}
-        />
+       
+        <CustomInput label='Password' placeholder='Enter Password' type='password'/>
       </Form.Item>
 
       <Form.Item className="flex justify-center">
