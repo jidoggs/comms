@@ -44,12 +44,16 @@ body {
   font-family: var(--font-inter);
 }
 
-
-.ant-table-footer{
-  @apply  border-b border-custom-gray_200/10
-} 
+.ant-table-footer {
+  @apply border-b border-custom-gray_200/10;
+}
 .react-pdf__Page__canvas {
   width: 100% !important;
   height: 100% !important;
   border-radius: 2px !important;
+}
+
+.ant-picker-calendar .ant-picker-panel .ant-picker-month-panel,
+.ant-picker-calendar .ant-picker-panel .ant-picker-date-panel {
+  background-color: white !important;
 }
