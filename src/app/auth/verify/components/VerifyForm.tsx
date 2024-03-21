@@ -5,13 +5,13 @@ import { Form } from 'antd';
 // import {  useSearchParams } from "next/navigation";
 import { CustomButton } from '@/common/components';
 import React, { useLayoutEffect, useState } from 'react';
-import OTPInput from 'react-otp-input';
+// import OTPInput from 'react-otp-input';
 import { mergeClassName } from '@/common/utils';
 
 // const DEFAULT_TIMER = 0;
 
 const VerifyForm = () => {
-  const [otp, setOtp] = useState('');
+  const [otp] = useState('');
   const [timer, setTimer] = useState(600); // 10 minutes in seconds
   // const [isResendDisabled, setIsResendDisabled] = useState(false);
   // const router = useRouter();
@@ -54,9 +54,9 @@ const VerifyForm = () => {
   //   resendTokenSWR: { isMutating: resendLoading, trigger: resendTrigger },
   // } = useAuth();
 
-  const handleOtpChange = (newOtp: string) => {
-    setOtp(newOtp);
-  };
+  // const handleOtpChange = (newOtp: string) => {
+  //   setOtp(newOtp);
+  // };
 
   // const inputStyle: React.CSSProperties = {
   //   height: 40,
@@ -152,7 +152,7 @@ const VerifyForm = () => {
               },
             ]}
           >
-            <OTPInput
+            {/* <OTPInput
               renderInput={(props) => <input {...props} />}
               value={otp}
               onChange={handleOtpChange}
@@ -161,7 +161,7 @@ const VerifyForm = () => {
               containerStyle="justify-center md:gap-x-2.5 gap-x-1"
               inputType="number"
               //   isDisabled={verifyMutating}
-            />
+            /> */}
           </Form.Item>
         </Form>
         <CustomButton

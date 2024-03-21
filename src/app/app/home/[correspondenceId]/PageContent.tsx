@@ -14,8 +14,8 @@ import Minutes from './components/Minutes';
 import Timelines from './components/Timelines';
 import Documents from './components/Documents';
 import CorrespondentDocument from './components/correspondenceFile/CorrespondentDocument';
-import { pdfjs } from 'react-pdf';
 import { mergeClassName } from '@/common/utils';
+import { pdfjs } from 'react-pdf';
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.js',
