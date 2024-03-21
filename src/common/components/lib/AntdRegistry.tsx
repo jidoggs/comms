@@ -121,6 +121,10 @@ const appTheme: ThemeConfig = {
       itemColor: customThemeColor.gray_200,
       inkBarColor: customThemeColor.purple_100,
     },
+    Calendar: {
+      fullBg: customThemeColor.white_200,
+      fullPanelBg: customThemeColor.white_200,
+    },
     DatePicker: {
       cellActiveWithRangeBg: customThemeColor.white_200,
       cellRangeBorderColor: customThemeColor.gray_700,
@@ -141,7 +145,7 @@ const appTheme: ThemeConfig = {
       siderBg: customThemeColor.blue_100,
     },
     Alert: {
-      colorSuccessBg: '#fff',
+      colorSuccessBg: customThemeColor.white_100,
       borderRadius: 8,
       colorSuccessText: customThemeColor.blue_100,
       colorSuccessTextActive: customThemeColor.blue_100,
