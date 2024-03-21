@@ -5,6 +5,8 @@ import { CustomTableProps } from './type';
 import CustomPaginationHeader from '../CustomPaginationHeader';
 import Title from '../Title';
 
+
+
 const CustomTable = <T extends object>({
   tabs,
   searchPanel,
@@ -15,6 +17,7 @@ const CustomTable = <T extends object>({
   totalContent = 0,
   pageChangeCallBack,
   className,
+  rowClassName,
   ...otherTableProps
 }: CustomTableProps<T>) => {
   const paginationHeader = (
@@ -78,16 +81,18 @@ const CustomTable = <T extends object>({
       >
         <div
           className={mergeClassName(
-            'h-[calc(100vh-160px)] overflow-auto [&_.ant-empty-normal]:flex [&_.ant-empty-normal]:h-[calc(100vh-296px)] [&_.ant-empty-normal]:items-center [&_.ant-empty-normal]:justify-center [&_.ant-empty-normal_.ant-empty-image]:text-2xl',
+            'h-[calc(100vh-192px)] overflow-auto [&_.ant-empty-normal]:flex [&_.ant-empty-normal]:h-[calc(100vh-320px)] [&_.ant-empty-normal]:items-center [&_.ant-empty-normal]:justify-center [&_.ant-empty-normal_.ant-empty-image]:text-2xl',
             !stringClassName ? className?.tableWrapper : ''
           )}
         >
           <Table
             {...otherTableProps}
+            sticky
             scroll={{ x: 'max-content' }}
             pagination={false}
             tableLayout="auto"
             dataSource={dataSource}
+            rowClassName={mergeClassName('bg-transparent', rowClassName)}
             rowKey={'id'}
             className={mergeClassName(
               '!bg-transparent',

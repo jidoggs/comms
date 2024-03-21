@@ -43,3 +43,8 @@ body {
 .inter {
   font-family: var(--font-inter);
 }
+
+
+.ant-table-footer{
+  @apply  border-b border-custom-gray_200/10
+} 
