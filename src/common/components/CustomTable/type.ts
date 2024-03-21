@@ -8,7 +8,8 @@ type ClassNames =
   | 'search'
   | 'tabs'
   | 'search-tabs'
-  | 'container';
+  | 'container'
+  | 'header';
 
 export interface CustomTableProps<T>
   extends Omit<TableProps<T>, 'pagination' | 'title' | 'className'> {

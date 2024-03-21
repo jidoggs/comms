@@ -1,16 +1,23 @@
-import React from "react";
-import type { MenuProps } from "antd";
-import { UserPreDefinedRole, UserRoles } from "@/app/auth/types/auth";
-import { Home, More, Archive, Schedule } from "@/common/components/icons";
+import React from 'react';
+import type { MenuProps } from 'antd';
+import { UserPreDefinedRole, UserRoles } from '@/app/auth/types/auth';
+import {
+  Home,
+  More,
+  Archive,
+  Schedule,
+  Message,
+} from '@/common/components/icons';
 
-type MenuItem = Required<MenuProps>["items"][number];
+type MenuItem = Required<MenuProps>['items'][number];
 
 export function getItem(
   label: React.ReactNode,
   key: React.Key,
   icon?: React.ReactNode,
+  className?: string,
   children?: MenuItem[],
-  type?: "group"
+  type?: 'group'
 ): MenuItem {
   return {
     key,
@@ -18,37 +25,55 @@ export function getItem(
     children,
     label,
     type,
+    className,
   } as MenuItem;
 }
+
+const navClassName =
+  '!flex flex-col item-center justify-center !px-0.5 !pt-2.5 !pb-1 !h-auto gap-y-0.5';
 
 const navItems = {
   HOME: getItem(
     <span>Home</span>,
-    "/app/home",
-    <span className="mr-2">
+    '/app/home',
+    <span className="">
       <Home size="22" />
-    </span>
+    </span>,
+    navClassName
+  ),
+  CORRESPONDENCE: getItem(
+    <span className="block w-[104px] text-wrap text-center leading-4">
+      Correspondence management
+    </span>,
+    '/app/correspondence',
+    <span className="">
+      <Message size="22" />
+    </span>,
+    navClassName
   ),
   SCHEDULES: getItem(
     <span>Schedules</span>,
-    "/app/schedule",
-    <span className="mr-2">
+    '/app/schedule',
+    <span className="">
       <Schedule size="22" />
-    </span>
+    </span>,
+    navClassName
   ),
   ARCHIVES: getItem(
     <span>Archives</span>,
-    "/app/archives",
-    <span className="mr-2">
+    '/app/archives',
+    <span className="">
       <Archive size="22" />
-    </span>
+    </span>,
+    navClassName
   ),
   MORE: getItem(
     <span>More</span>,
-    "/app/more",
-    <span className="mr-2">
+    '/app/more',
+    <span className="">
       <More size="22" />
-    </span>
+    </span>,
+    navClassName
   ),
 };
 
@@ -72,10 +97,13 @@ const publicUser: never[] = [];
 
 const superAdminNav = [
   navItems.HOME,
+  navItems.CORRESPONDENCE,
   navItems.SCHEDULES,
   navItems.ARCHIVES,
   navItems.MORE,
 ];
+
+// const adjust = (second) => { third }
 
 const getUserNavItemsByRole = (role: UserRoles) => {
   switch (role) {
@@ -104,7 +132,7 @@ export const menuItemRenderer = (role: UserRoles) => {
 };
 
 export const generateDefaultKey = (path: string) => {
-  return path.split("/").splice(0, 3).join("/").split("?")?.[0];
+  return path.split('/').splice(0, 3).join('/').split('?')?.[0];
 };
 
-export const rootSubmenuKeys = ["sub1", "sub2", "sub3"];
+export const rootSubmenuKeys = ['sub1', 'sub2', 'sub3'];

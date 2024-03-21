@@ -5,8 +5,6 @@ import { CustomTableProps } from './type';
 import CustomPaginationHeader from '../CustomPaginationHeader';
 import Title from '../Title';
 
-
-
 const CustomTable = <T extends object>({
   tabs,
   searchPanel,
@@ -49,28 +47,35 @@ const CustomTable = <T extends object>({
         !stringClassName ? className?.container : ''
       )}
     >
-      {tabs && paginationHeader}
       <div
         className={mergeClassName(
-          'mb-3 flex flex-wrap items-center justify-between gap-2',
-          !stringClassName ? className?.['search-tabs'] : ''
+          'px-5',
+          !stringClassName && className?.header
         )}
       >
+        {tabs && paginationHeader}
         <div
           className={mergeClassName(
-            'flex flex-wrap items-center justify-between gap-2 py-1.5',
-            !stringClassName ? className?.tabs : ''
+            'mb-3 flex flex-wrap items-center justify-between gap-2',
+            !stringClassName ? className?.['search-tabs'] : ''
           )}
         >
-          {tabs ? tabs : paginationHeader}
-        </div>
-        <div
-          className={mergeClassName(
-            'flex flex-col',
-            !stringClassName ? className?.search : ''
-          )}
-        >
-          {searchPanel}
+          <div
+            className={mergeClassName(
+              'flex flex-wrap items-center justify-between gap-2 py-1.5',
+              !stringClassName ? className?.tabs : ''
+            )}
+          >
+            {tabs ? tabs : paginationHeader}
+          </div>
+          <div
+            className={mergeClassName(
+              'flex flex-col',
+              !stringClassName ? className?.search : ''
+            )}
+          >
+            {searchPanel}
+          </div>
         </div>
       </div>
       <div

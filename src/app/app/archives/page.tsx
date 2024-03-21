@@ -6,6 +6,7 @@ import { mergeClassName } from '@/common/utils';
 import { TabsProps } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import React, { useState } from 'react';
+import Action from './components/Action';
 
 const columns: ColumnsType<any> = [
   {
@@ -70,7 +71,10 @@ const columns: ColumnsType<any> = [
     className: '!pr-3',
     dataIndex: '',
     ellipsis: true,
-    width: 50,
+    width: 135,
+    render: () => {
+      return <Action />;
+    },
   },
 ].map((itm) => ({
   ...itm,

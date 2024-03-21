@@ -1,23 +1,23 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
-import { Layout, Menu } from "antd";
-import type { MenuProps } from "antd";
+'use client';
+import React, { useEffect, useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import { Layout, Menu } from 'antd';
+import type { MenuProps } from 'antd';
 import {
   generateDefaultKey,
   menuItemRenderer,
   rootSubmenuKeys,
-} from "@/common/components/private/SideNav/helper";
-import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
-import { UserPreDefinedRole } from "@/app/auth/types/auth";
-import { Collapse, Logout } from "@/common/components/icons";
+} from '@/common/components/private/SideNav/helper';
+import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint';
+import { UserPreDefinedRole } from '@/app/auth/types/auth';
+import { Collapse, Logout } from '@/common/components/icons';
 
 const { Sider } = Layout;
 
 function SideNav({ role }: { role: UserPreDefinedRole }) {
   const router = useRouter();
   const pathname = usePathname();
-  const [openKeys, setOpenKeys] = useState(["sub1"]);
+  const [openKeys, setOpenKeys] = useState(['sub1']);
   const [collapsed, setCollapsed] = useState(false);
   const { lg } = useBreakpoint();
 
@@ -31,7 +31,7 @@ function SideNav({ role }: { role: UserPreDefinedRole }) {
     setCollapsed(!collapsed);
   };
 
-  const onOpenChange: MenuProps["onOpenChange"] = (keys) => {
+  const onOpenChange: MenuProps['onOpenChange'] = (keys) => {
     const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
     if (latestOpenKey && rootSubmenuKeys.indexOf(latestOpenKey!) === -1) {
       setOpenKeys(keys);
@@ -45,7 +45,7 @@ function SideNav({ role }: { role: UserPreDefinedRole }) {
       // collapsible
       collapsed={collapsed}
       // onCollapse={(value) => setCollapsed(value)}
-      width={220}
+      width={118}
       // className="h-screen"
       style={{ paddingTop: 32 }}
     >
@@ -55,11 +55,11 @@ function SideNav({ role }: { role: UserPreDefinedRole }) {
       >
         <div />
         <button onClick={toggleCollapsed}>
-          {collapsed ? <Collapse size="36" /> : <Collapse size="36" />}
+          {collapsed ? <Collapse size="18" /> : <Collapse size="18" />}
         </button>
       </div>
 
-      <div className="w-full flex flex-col py-6 gap-y-12">
+      <div className="flex w-full flex-col gap-y-12 py-6">
         {/* <Image
           src="/images/logoministry.png"
           alt="ministry"
@@ -73,8 +73,9 @@ function SideNav({ role }: { role: UserPreDefinedRole }) {
           openKeys={openKeys}
           onOpenChange={onOpenChange}
           defaultSelectedKeys={[generateDefaultKey(pathname)]}
-          // inlineCollapsed={collapsed}
+          inlineCollapsed={collapsed}
           onClick={({ key }) => router.push(key)}
+          className="flex flex-col gap-y-1 px-1.5"
           items={menuItemRenderer(role)}
         />
       </div>
