@@ -1,10 +1,11 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { Form, Input } from 'antd';
+import { Form } from 'antd';
 import Link from 'next/link';
 // import { apiErrorHandler } from "@/services";
 import { useRouter } from 'next/navigation';
 import { CustomButton } from '@/common/components';
+import CustomInput from '@/common/CustomInput';
 // import { useAuth } from "@/components/hooks";
 
 type FieldType = {
@@ -76,25 +77,9 @@ const ForgotForm = () => {
       style={{ width: '100%' }}
     >
       <Form.Item<FieldType>
-        label={
-          <h3 className="text-[14px] font-medium leading-[17.71px]">Email</h3>
-        }
-        name="email"
-        rules={[
-          {
-            type: 'email',
-            message: 'The input is not valid E-mail!',
-          },
-          {
-            required: true,
-            message: 'Please input your E-mail!',
-          },
-        ]}
+       
       >
-        <Input
-          className="!border-custom-gray_300 w-full"
-          placeholder="Enter email"
-        />
+        <CustomInput label='Email' type='email' placeholder='user@email.com' />
       </Form.Item>
 
       <Form.Item>

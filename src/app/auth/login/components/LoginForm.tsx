@@ -1,8 +1,10 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { Form, Input } from 'antd';
+import { Form } from 'antd';
 import Link from 'next/link';
 import { CustomButton } from '@/common/components';
+import CustomInput from '@/common/CustomInput';
+
 // import { apiErrorHandler } from "@/services";
 // import { useRouter } from "next/navigation";
 // import { setLocalStorageItem } from "@/util";
@@ -68,54 +70,21 @@ const LoginForm = () => {
       className="!my-5 !w-full"
       style={{ width: '100%' }}
     >
-      <Form.Item<FieldType>
-        label={
-          <h3 className="text-[14px] font-medium leading-[17.71px]">Email</h3>
-        }
-        name="email"
-        rules={[
-          {
-            type: 'email',
-            message: 'The input is not valid E-mail!',
-          },
-          {
-            required: true,
-            message: 'Please input your E-mail!',
-          },
-        ]}
-      >
-        <Input
-          className="!border-custom-gray_300 w-full"
-          placeholder="Enter email"
-          // disabled={isMutating}
-        />
+      <Form.Item<FieldType>>
+        <CustomInput label="Email" type="email" placeholder="user@gmail.com" />
       </Form.Item>
 
       <Form.Item<FieldType>
-        label={
-          <h3 className="text-[14px] font-medium leading-[17.71px]">
-            Password
-          </h3>
-        }
-        name="password"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your password!',
-          },
-        ]}
+       
       >
-        <Input.Password
-          placeholder="Enter password"
-          className="!border-custom-gray_300 w-full"
-          // disabled={isMutating}
-        />
+       
+        <CustomInput label='Password' placeholder='Enter Password' type='password'/>
       </Form.Item>
 
       <Form.Item className="flex justify-center">
         <Link
           href={'/auth/forgot-password'}
-          className="!text-custom-black_200 !text-center !text-[14px] !font-bold !leading-[17.71px]"
+          className="!text-center !text-[14px] !font-bold !leading-[17.71px] !text-custom-black_200"
         >
           Forgot Password?
         </Link>
