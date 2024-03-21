@@ -53,3 +53,10 @@ body {
   height: 100% !important;
   border-radius: 2px !important;
 }
+
+.ant-menu-inline-collapsed li {
+ @apply !flex-row
+}
+.ant-menu-inline-collapsed li .ant-menu-title-content {
+ @apply !hidden
+}
