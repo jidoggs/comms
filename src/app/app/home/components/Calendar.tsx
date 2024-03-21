@@ -6,6 +6,7 @@ import 'dayjs/locale/zh-cn';
 // import type { Dayjs } from 'dayjs';
 import dayLocaleData from 'dayjs/plugin/localeData';
 import { Calendar, Col, Row, Select, Typography, theme } from 'antd';
+// import { customThemeColor } from '@/common/utils';
 // import type { CalendarProps } from 'antd';
 
 dayjs.extend(dayLocaleData);
@@ -21,7 +22,7 @@ const CustomCalendar: React.FC = () => {
 
   const wrapperStyle: React.CSSProperties = {
     width: '100%',
-    background: 'white',
+    backgroundColor: 'white',
     border: `1px solid ${token.colorBorderSecondary}`,
     borderRadius: token.borderRadiusLG,
   };
@@ -29,6 +30,8 @@ const CustomCalendar: React.FC = () => {
   return (
     <div style={wrapperStyle}>
       <Calendar
+        // style={{ background: "white" }}
+        rootClassName="!bg-custom-white_100"
         fullscreen={false}
         // disabledDate={dayjs()}
         headerRender={({
