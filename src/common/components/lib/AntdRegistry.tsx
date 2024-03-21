@@ -120,6 +120,8 @@ const appTheme: ThemeConfig = {
     Tabs: {
       itemColor: customThemeColor.gray_200,
       inkBarColor: customThemeColor.purple_100,
+      // titleFontSizeLG: 14,
+      // horizontalItemPaddingLG: '15px 0',
     },
     Calendar: {
       fullBg: customThemeColor.white_200,

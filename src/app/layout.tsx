@@ -1,12 +1,18 @@
-import React from "react";
-import type { Metadata } from "next";
-import "./globals.css";
-import StyledComponentsRegistry from "@/common/components/lib/AntdRegistry";
-import { bebas, inter, manrope } from "./font";
+import React from 'react';
+import type { Metadata } from 'next';
+import './globals.css';
+import StyledComponentsRegistry from '@/common/components/lib/AntdRegistry';
+import { bebas, inter, manrope } from './font';
+import { pdfjs } from 'react-pdf';
+
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  'pdfjs-dist/build/pdf.worker.min.js',
+  import.meta.url
+).toString();
 
 export const metadata: Metadata = {
-  title: "Correspondence",
-  description: "Correspondence App",
+  title: 'Correspondence',
+  description: 'Correspondence App',
 };
 
 export default function RootLayout({
@@ -16,7 +22,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${bebas.variable} ${inter.variable} ${manrope.className} circular`}>
+      <body
+        className={`${bebas.variable} ${inter.variable} ${manrope.className} circular`}
+      >
         <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
       </body>
     </html>
