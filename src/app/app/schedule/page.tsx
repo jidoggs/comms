@@ -7,6 +7,7 @@ import { mergeClassName } from '@/common/utils';
 import { TabsProps } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import React, { useState } from 'react';
+import Action from './components/Action';
 
 const columns: ColumnsType<any> = [
   {
@@ -79,6 +80,9 @@ const columns: ColumnsType<any> = [
     dataIndex: '',
     ellipsis: true,
     width: 135,
+    render: () => {
+      return <Action />;
+    },
   },
 ].map((itm) => ({
   ...itm,
@@ -119,9 +123,10 @@ const SchedulePage = () => {
         columns={columns}
         dataSource={dummyCorrespondence}
         size="large"
-        rowSelection={{}}
+        rowClassName="group"
+        rowSelection={{ columnWidth: 48 }}
         footer={() => (
-          <button className="text-custom-main flex items-center gap-x-2.5 py-1.5 text-sm">
+          <button className="text-custom-main flex items-center gap-x-2.5 py-1.5 pl-2.5 text-sm">
             +{' '}
             <span className="hover:bg-custom-gray_500 rounded-lg px-4 py-3">
               Add correspondence
