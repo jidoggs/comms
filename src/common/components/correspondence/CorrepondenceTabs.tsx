@@ -1,12 +1,40 @@
 'use client';
-import { mergeClassName } from '@/common/utils';
+import CustomTab from '@/common/components/CustomTab';
+// import { mergeClassName } from '@/common/utils';
 // import { Button } from 'antd';
 import React from 'react';
+import { TabsProps } from 'antd';
 
 const CorrepondenceTabs = ({ activeTab, setActiveTab }: any) => {
+  const items: TabsProps['items'] = [
+    {
+      key: 'minutes',
+      label: 'Minutes',
+    },
+    {
+      key: 'timelines',
+      label: 'Timelines',
+    },
+    {
+      key: 'documents',
+      label: 'Documents',
+    },
+  ];
+
+  const tabChangeHandler = (state: string) => {
+    setActiveTab(state);
+  };
+
   return (
     <div className="flex h-full flex-row gap-5">
-      <button
+      <CustomTab
+        items={items}
+        size="middle"
+        defaultKey={activeTab}
+        onChange={tabChangeHandler}
+        tabBarGutter={30}
+      />
+      {/* <button
         onClick={() => setActiveTab('Minutes')}
         className={mergeClassName(
           'h-full',
@@ -38,7 +66,7 @@ const CorrepondenceTabs = ({ activeTab, setActiveTab }: any) => {
         )}
       >
         Documents
-      </button>
+      </button> */}
     </div>
   );
 };

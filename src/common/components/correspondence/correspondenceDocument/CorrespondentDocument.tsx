@@ -11,7 +11,21 @@ const CorrespondentDocument = ({ correspondenceFile }: any) => {
   }
 
   return (
-    <div className="relative h-[70vh] w-full overflow-auto">
+    <div
+      // initial={{
+      //   x: 200,
+      //   opacity: 0,
+      // }}
+      // whileInView={{
+      //   opacity: 1,
+      //   x: 0,
+      // }}
+      // transition={{
+      //   duration: 0.5,
+      //   ease: 'easeInOut',
+      // }}
+      className="relative h-[70vh] w-full overflow-auto"
+    >
       <Document
         file={correspondenceFile && correspondenceFile[0]}
         onLoadSuccess={onDocumentLoadSuccess}
