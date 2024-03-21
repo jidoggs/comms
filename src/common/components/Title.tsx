@@ -1,8 +1,8 @@
-import React from "react";
-import { mergeClassName } from "../utils";
+import React from 'react';
+import { mergeClassName } from '../utils';
 
 type Props = {
-  type?: "h1" | "h2" | "nav" | "p" | "btn" | "bread" | "sm";
+  type?: 'h1' | 'h2' | 'nav' | 'p' | 'btn' | 'bread' | 'sm';
   children: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
@@ -10,67 +10,57 @@ type Props = {
 
 function Title({ type, children, className, style }: Props) {
   let template: React.JSX.Element | null = null;
+  const color = 'text-custom-main';
 
   switch (type) {
-    case "h1":
+    case 'h1':
       template = (
         <h1
           style={style}
-          className={mergeClassName(
-            "text-gray-minst-main text-xl font-bold",
-            className
-          )}
+          className={mergeClassName(color, 'text-xl font-bold', className)}
         >
           {children}
         </h1>
       );
       break;
-    case "h2":
+    case 'h2':
       template = (
         <h2
           style={style}
-          className={mergeClassName(
-            "text-gray-minst-main text-xl font-bold",
-            className
-          )}
+          className={mergeClassName(color, 'text-xl font-bold', className)}
         >
           {children}
         </h2>
       );
       break;
-    case "nav":
+    case 'nav':
       template = (
         <span
           style={style}
-          className={mergeClassName(
-            "text-gray-minst-main text-base font-bold",
-            className
-          )}
+          className={mergeClassName(color, 'text-base font-bold', className)}
         >
           {children}
         </span>
       );
       break;
-    case "bread":
-    case "sm":
+    case 'bread':
+    case 'sm':
       template = (
         <span
           style={style}
-          className={mergeClassName(
-            "text-gray-minst-main text-sm font-normal",
-            className
-          )}
+          className={mergeClassName(color, 'text-sm font-normal', className)}
         >
           {children}
         </span>
       );
       break;
-    case "btn":
+    case 'btn':
       template = (
         <span
           style={style}
           className={mergeClassName(
-            "text-gray-minst-main text-base font-semibold",
+            color,
+            'text-base font-semibold',
             className
           )}
         >
@@ -83,10 +73,7 @@ function Title({ type, children, className, style }: Props) {
       template = (
         <p
           style={style}
-          className={mergeClassName(
-            "text-gray-minst-main text-base font-normal",
-            className
-          )}
+          className={mergeClassName(color, 'text-base font-normal', className)}
         >
           {children}
         </p>

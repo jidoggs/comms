@@ -1,17 +1,27 @@
 'use client';
+import CustomTab from '@/common/components/CustomTab';
 import CustomTable from '@/common/components/CustomTable';
-import { dummyPeople } from '@/common/mockData';
+import Document from '@/common/components/icons/Document';
+import { dummyCorrespondence } from '@/common/mockData';
 import { mergeClassName } from '@/common/utils';
+import { TabsProps } from 'antd';
 import { ColumnsType } from 'antd/es/table';
-import React from 'react';
+import React, { useState } from 'react';
 
 const columns: ColumnsType<any> = [
   {
     title: 'Sender - Who sent it',
-    className: '',
+    className: '!pl-5',
     dataIndex: 'sent_by',
-    // width: 180,
+    width: 180,
     ellipsis: true,
+  },
+  {
+    title: 'Recipient (Primary)',
+    className: '',
+    dataIndex: 'recipient',
+    ellipsis: true,
+    width: 200,
     render: (value: any) => {
       return (
         <div className="flex items-center gap-x-2.5">
@@ -22,75 +32,102 @@ const columns: ColumnsType<any> = [
     },
   },
   {
-    title: 'Email',
+    title: 'Subject',
     className: '',
-    dataIndex: 'email',
-    ellipsis: true,
-    width: 200,
-  },
-  {
-    title: 'Title',
-    className: '',
-    dataIndex: 'title',
+    dataIndex: 'subject',
     ellipsis: true,
     width: 150,
   },
   {
-    title: 'Office',
+    title: 'Ref. No',
     className: '',
-    dataIndex: 'office',
+    dataIndex: 'ref_no',
     ellipsis: true,
     width: 150,
   },
   {
-    title: 'Parastatal',
+    title: 'Document',
     className: '',
-    dataIndex: 'parastatal',
+    dataIndex: 'document',
     ellipsis: true,
     width: 220,
+    render: (value: any) => {
+      return (
+        <div className="flex items-center gap-x-2.5">
+          <Document />
+          <span>{value}</span>
+        </div>
+      );
+    },
   },
   {
-    title: 'Last active',
-    className: '',
-    dataIndex: 'last_active',
+    title: 'Comment',
+    dataIndex: 'comment',
     ellipsis: true,
-    width: 135,
+    width: 450,
+    className: '!text-wrap !max-w-full !break-words',
   },
   {
-    title: 'Date added',
-    className: '',
+    title: 'Date of correspondence',
     dataIndex: 'created_at',
     ellipsis: true,
-    width: 135,
+    width: 180,
   },
   {
     title: 'Actions',
-    className: '',
+    className: '!pr-3',
     dataIndex: '',
     ellipsis: true,
-    width: 50,
+    width: 135,
   },
-].map((itm, index, arr) => ({
+].map((itm) => ({
   ...itm,
-  className: mergeClassName(
-    '!py-4 text-sm font-medium !bg-transparent',
-    index === 0 && '!pl-5',
-    index === arr.length - 1 && '!pr-3',
-    itm.className
-  ),
+  className: mergeClassName('!py-4 text-sm font-medium', itm.className),
 }));
 
 const SchedulePage = () => {
+  const [activeKey, setActiveKey] = useState('draft');
+  const items: TabsProps['items'] = [
+    {
+      key: 'draft',
+      label: 'Draft',
+    },
+    {
+      key: 'archive',
+      label: 'Archive',
+    },
+  ];
+
+  const tabChangeHandler = (state: string) => {
+    setActiveKey(state);
+  };
+
   return (
     <div>
       <CustomTable
-        tableTitle="People"
-        tabs={<>Onboard</>}
+        tableTitle="Correspondence management"
+        tabs={
+          <CustomTab
+            onChange={tabChangeHandler}
+            defaultKey={activeKey}
+            items={items}
+          />
+        }
         className={{
           table: 'cursor-pointer',
         }}
         columns={columns}
-        dataSource={dummyPeople}
+        dataSource={dummyCorrespondence}
+        size="large"
+        rowSelection={{}}
+        footer={() => (
+          <button className="flex items-center gap-x-2.5 py-1.5 text-sm text-custom-main">
+            +{' '}
+            <span className="rounded-lg px-4 py-3 hover:bg-custom-gray_500">
+              Add correspondence
+            </span>
+          </button>
+        )}
       />
     </div>
   );

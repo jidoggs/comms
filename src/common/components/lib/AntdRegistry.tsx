@@ -20,7 +20,7 @@ const appTheme: ThemeConfig = {
     colorTextSecondary: customThemeColor.gray_600,
     colorText: customThemeColor.gray_200,
     colorFillTertiary: customThemeColor.gray_800,
-    colorBgContainer: customThemeColor.gray_800,
+    colorBgContainer: customThemeColor.gray_100,
   },
   components: {
     Form: {
@@ -102,14 +102,24 @@ const appTheme: ThemeConfig = {
       headerBorderRadius: 0,
       borderRadiusOuter: 0,
       colorText: customThemeColor.main,
-      headerColor: '#333333',
+
+      headerColor: customThemeColor.gray_300,
       cellFontSize: 14,
       fontWeightStrong: 500,
       fontSizeHeading1: 14,
       // font: 400,
       cellPaddingInline: 10,
       cellPaddingBlock: 5,
-      borderColor: '#1212121A',
+      borderColor: customThemeColor.black_200 + '1A',
+      footerBg: customThemeColor.gray_100,
+      rowSelectedBg: customThemeColor.gray_100,
+      rowHoverBg: customThemeColor.white_100,
+      rowSelectedHoverBg: customThemeColor.white_100,
+      footerColor: customThemeColor.main,
+    },
+    Tabs: {
+      itemColor: customThemeColor.gray_200,
+      inkBarColor: customThemeColor.purple_100,
     },
     DatePicker: {
       cellActiveWithRangeBg: customThemeColor.white_200,
