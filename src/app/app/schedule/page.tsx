@@ -1,7 +1,7 @@
 'use client';
 import CustomTab from '@/common/components/CustomTab';
 import CustomTable from '@/common/components/CustomTable';
-import { Document } from '@/common/components/icons';
+import Document from '@/common/components/icons/Document';
 import { dummyCorrespondence } from '@/common/mockData';
 import { mergeClassName } from '@/common/utils';
 import { TabsProps } from 'antd';
@@ -121,9 +121,9 @@ const SchedulePage = () => {
         size="large"
         rowSelection={{}}
         footer={() => (
-          <button className="text-custom-main flex items-center gap-x-2.5 py-1.5 text-sm">
+          <button className="flex items-center gap-x-2.5 py-1.5 text-sm text-custom-main">
             +{' '}
-            <span className="hover:bg-custom-gray_500 rounded-lg px-4 py-3">
+            <span className="rounded-lg px-4 py-3 hover:bg-custom-gray_500">
               Add correspondence
             </span>
           </button>
