@@ -1,44 +1,46 @@
-import React from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import React from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import {
   BreadcrumbItemType,
   BreadcrumbSeparatorType,
-} from "antd/es/breadcrumb/Breadcrumb";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+} from 'antd/es/breadcrumb/Breadcrumb';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
+import { ArrowDown } from '../components/icons';
 
 const generateBreadCrumbs = (
   path: string,
   router: AppRouterInstance,
   params: string
 ): Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[] => {
-  const pathArr = path.split("/").slice(2);
-  const paramsQuery = params.split("+").join("%20").split("&");
+  const pathArr = path.split('/').slice(2);
+  const paramsQuery = params.split('+').join('%20').split('&');
   const paramsSplit = params
-    .split("+")
-    .join(" ")
-    .split("&")
-    .join("=")
-    .split("=")
+    .split('+')
+    .join(' ')
+    .split('&')
+    .join('=')
+    .split('=')
     .filter((_, idx) => idx % 2 !== 0);
 
   const separator: BreadcrumbSeparatorType = {
-    type: "separator",
-    separator: "/",
+    type: 'separator',
+    separator: <ArrowDown size={18} className="-rotate-90" />,
   };
   const routes = [];
   for (let i = 0; i < pathArr.length; i++) {
     const val: Partial<BreadcrumbItemType & BreadcrumbSeparatorType> = {};
     const tempTitle = paramsSplit[i - 1] ? paramsSplit[i - 1] : pathArr[i];
-    const queryGroup = paramsQuery.slice(0, i).join("&");
-    const query = queryGroup ? `?${queryGroup}` : "";
+    const queryGroup = paramsQuery.slice(0, i).join('&');
+    const query = queryGroup ? `?${queryGroup}` : '';
     val.title = tempTitle[0].toUpperCase() + tempTitle.substring(1);
-    val.href = "/app/" + pathArr.slice(0, i + 1).join("/") + query;
+    val.href = '/app/' + pathArr.slice(0, i + 1).join('/') + query;
+    val.className = 'text-custom-gray_200 text-sm p-0';
     val.onClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
       e.preventDefault();
       router.push(e.currentTarget.href);
     };
-    routes.push(separator);
     routes.push(val);
+    routes.push(separator);
   }
 
   return routes.slice(0, routes.length - 1);

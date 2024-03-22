@@ -188,7 +188,12 @@ const appTheme: ThemeConfig = {
       controlItemBgActive: customThemeColor.white_200,
     },
     Breadcrumb: {
-      linkColor: customThemeColor.main,
+      linkColor: customThemeColor.gray_200,
+      separatorColor: customThemeColor.gray_200,
+      separatorMargin: 5,
+      iconFontSize: 0,
+      padding: 0,
+      paddingXXS: 0,
     },
   },
 };

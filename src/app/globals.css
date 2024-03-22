@@ -63,3 +63,6 @@ body {
  .ant-menu-inline-collapsed .ant-menu-title-content {
  @apply !opacity-100 text-center
 }
+.ant-breadcrumb-separator{
+  @apply flex items-center justify-center
+}

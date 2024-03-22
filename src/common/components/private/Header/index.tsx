@@ -1,7 +1,12 @@
 import React, { lazy, Suspense } from 'react';
 import { Dropdown, MenuProps, Avatar, Layout /* message */ } from 'antd';
 // import { useAuth, useSession } from "@/app/auth/hooks";
-import { Logout, Profile, SpinLoader } from '@/common/components/icons';
+import {
+  Logout,
+  NotificationBell,
+  Profile,
+  SpinLoader,
+} from '@/common/components/icons';
 // import { apiErrorHandler } from "@/services";
 import Title from '@/common/components/Title';
 import { dummyUser } from '@/common/mockData/user';
@@ -60,11 +65,11 @@ const AppHeader: React.FunctionComponent = () => {
         <BreadCrumb />
       </Suspense>
       <div className="flex items-center gap-x-2.5">
-        {/* <Flex className="">
-          <span className="text-2xl leading-6 relative before:absolute before:bg-red-500 before:w-2 before:h-2 before:rounded-full before:right-0 before:top-0">
-            <BellOutlined />
+        <button className="p-2">
+          <span className="">
+            <NotificationBell />
           </span>
-        </Flex> */}
+        </button>
         <Dropdown menu={{ items }} placement="bottom" className="flex h-auto">
           {isMutating ? (
             <SpinLoader size="24" />
@@ -78,12 +83,13 @@ const AppHeader: React.FunctionComponent = () => {
                   </span>
                 }
               />
-              <div className="ml-2.5 flex flex-row">
+              <div className="ml-2.5 flex flex-col">
                 <Title className="mb-0.5 text-sm font-semibold">
                   {dummyUser?.first_name} {dummyUser?.last_name}
                 </Title>
-                <Title className="!text-gray-mist-body !text-xs font-normal">
-                  {dummyUser?.['role.name']}
+                <Title className="text-custom-gray_600 text-xs font-normal">
+                  {/* {dummyUser?.['role.name']} */}
+                  HM Trade & Inv...
                 </Title>
               </div>
             </div>
