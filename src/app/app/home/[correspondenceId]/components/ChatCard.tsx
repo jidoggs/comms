@@ -6,19 +6,18 @@ import { mergeClassName } from '@/common/utils';
 import { Avatar, Tooltip } from 'antd';
 // import dayjs from 'dayjs';
 import React from 'react';
+import { initalChatState } from './pages/Minutes';
+import { StateDispatch } from '@/types';
 
 type Props = {
   name?: string;
   image?: string;
-  setCorrespondenceFile?: any;
-  setOpenCorrespondence?: any;
-  chatId?: number;
-  cardPosition?: string;
-  chatState?: {
-    activeChatId: number;
-    activeChatOptions: boolean;
-  };
-  setChatState?: any;
+  setCorrespondenceFile: StateDispatch<FileList | null>;
+  setOpenCorrespondence: StateDispatch<boolean>;
+  chatId: number;
+  cardPosition: string;
+  chatState: typeof initalChatState;
+  setChatState: StateDispatch<typeof initalChatState>;
 };
 
 const ChatCard = ({
@@ -57,7 +56,7 @@ const ChatCard = ({
 
   return (
     <div
-      className="flex flex-row items-center gap-3"
+      className="my-3 flex flex-row items-center gap-3 sm:my-0"
       onMouseEnter={() => {
         setChatState({
           activeChatId: chatId,
@@ -74,8 +73,10 @@ const ChatCard = ({
       <div
         // className=""
         className={mergeClassName(
-          'bg-custom-white_100 w-[400px] rounded-lg',
-          cardPosition === 'left' ? 'order-1' : 'order-2'
+          'w-full bg-custom-white_100 md:w-[400px]',
+          cardPosition === 'left'
+            ? 'order-1 rounded-xl rounded-bl-none'
+            : 'order-2 rounded-xl rounded-br-none'
         )}
       >
         <div className="flex flex-row items-center justify-between px-2">
@@ -110,17 +111,17 @@ const ChatCard = ({
           </div>
           <Title
             type="p"
-            className="text-custom-main my-2 text-sm font-[450] leading-[17.71px]"
+            className="my-2 text-sm font-[450] leading-[17.71px] text-custom-main"
           >
             Kindly provide advise on the Nigerian Breweries correspondence. Also
             find attached additional information to help with your findings.
             Regards.
           </Title>
-          <div className="bg-custom-gray_500 my-2 h-px w-full" />
+          <div className="my-2 h-px w-full bg-custom-gray_500" />
           <div className="flex w-full flex-row items-center justify-between">
             <Title
               type="p"
-              className="text-custom-gray_600 text-sm leading-[17.71px]"
+              className="text-sm leading-[17.71px] text-custom-gray_600"
             >
               {formattedDate}
             </Title>
@@ -157,7 +158,7 @@ const ChatCard = ({
       {chatState?.activeChatId === chatId && (
         <div
           className={mergeClassName(
-            '',
+            'hidden sm:inline-flex',
             cardPosition === 'left' ? 'order-2' : 'order-1'
           )}
         >

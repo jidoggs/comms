@@ -42,6 +42,7 @@ export { default as SpinLoader } from './SpinLoader';
 export { default as Stamp } from './Stamp';
 export { default as StickyNote } from './StickyNote';
 export { default as TickSquare } from './TickSquare';
+export { default as TimelineDot } from './TimelineDot';
 export { default as ThreeDots } from './ThreeDots';
 export { default as Undo } from './Undo';
 export { default as Users } from './Users';
