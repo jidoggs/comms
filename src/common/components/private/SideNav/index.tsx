@@ -11,6 +11,7 @@ import {
 import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint';
 import { UserPreDefinedRole } from '@/app/auth/types/auth';
 import { Collapse, Logout } from '@/common/components/icons';
+import { mergeClassName } from '@/common/utils';
 
 const { Sider } = Layout;
 
@@ -41,47 +42,41 @@ function SideNav({ role }: { role: UserPreDefinedRole }) {
   };
 
   return (
-    <Sider
-      // collapsible
-      collapsed={collapsed}
-      // onCollapse={(value) => setCollapsed(value)}
-      width={118}
-      // className="h-screen"
-      style={{ paddingTop: 32 }}
-    >
+    <Sider collapsed={collapsed} width={200} collapsedWidth={118}>
       <div
         className="flex items-end justify-between"
         style={{ paddingRight: 16 }}
       >
         <div />
-        <button onClick={toggleCollapsed}>
-          {collapsed ? <Collapse size="18" /> : <Collapse size="18" />}
+        <button onClick={toggleCollapsed} className="my-5 px-1 py-5">
+          <Collapse
+            className={mergeClassName(
+              'ease-in hover:scale-110',
+              !collapsed && 'rotate-180'
+            )}
+            size="18"
+          />
         </button>
       </div>
-
-      <div className="flex w-full flex-col gap-y-12 py-6">
-        {/* <Image
-          src="/images/logoministry.png"
-          alt="ministry"
-          width={100}
-          height={48}
-          className="mx-auto w-auto"
-          priority
-        /> */}
-        <Menu
-          mode="inline"
-          openKeys={openKeys}
-          onOpenChange={onOpenChange}
-          defaultSelectedKeys={[generateDefaultKey(pathname)]}
-          inlineCollapsed={collapsed}
-          onClick={({ key }) => router.push(key)}
-          className="flex flex-col gap-y-1 px-1.5"
-          items={menuItemRenderer(role)}
-        />
-      </div>
-      <div className="absolute bottom-10 right-1/2 cursor-pointer">
-        <Logout size="26" />
-      </div>
+      <Menu
+        mode="inline"
+        openKeys={openKeys}
+        onOpenChange={onOpenChange}
+        defaultSelectedKeys={[generateDefaultKey(pathname)]}
+        inlineCollapsed={collapsed}
+        onClick={({ key }) => router.push(key)}
+        className="flex flex-col !items-start gap-y-1 px-1.5"
+        items={menuItemRenderer(role)}
+      />
+      <button
+        className={mergeClassName(
+          'hover:text-custom-red_100 group absolute bottom-5 left-1 right-1 flex cursor-pointer items-center px-4 py-5 text-xs ease-linear',
+          collapsed ? 'flex-col gap-y-0.5 pb-0.5 pt-2.5' : 'gap-x-2.5'
+        )}
+      >
+        <Logout className="group-hover:scale-105" size="22" />
+        <span>Logout</span>
+      </button>
     </Sider>
   );
 }

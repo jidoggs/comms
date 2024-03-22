@@ -29,8 +29,7 @@ export function getItem(
   } as MenuItem;
 }
 
-const navClassName =
-  '!flex flex-col item-center justify-center !px-0.5 !pt-2.5 !pb-1 !h-auto gap-y-0.5';
+const navClassName = '!flex items-center gap-x-2.5 !p-4 !h-auto gap-y-0.5';
 
 const navItems = {
   HOME: getItem(
@@ -42,7 +41,7 @@ const navItems = {
     navClassName
   ),
   CORRESPONDENCE: getItem(
-    <span className="block w-[104px] text-wrap text-center leading-4">
+    <span className="w-[104px] text-wrap text-start leading-4">
       Correspondence management
     </span>,
     '/app/correspondence',

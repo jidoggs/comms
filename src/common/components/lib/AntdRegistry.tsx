@@ -163,7 +163,7 @@ const appTheme: ThemeConfig = {
       itemMarginInline: 0,
       itemPaddingInline: 0,
       iconMarginInlineEnd: 0,
-      horizontalLineHeight: 66,
+      // horizontalLineHeight: 66,
       colorText: customThemeColor.white_100,
       itemColor: customThemeColor.white_100,
       itemHoverBg: customThemeColor.gray_700,
@@ -173,8 +173,6 @@ const appTheme: ThemeConfig = {
       itemHeight: 15,
       groupTitleFontSize: 16,
       fontSize: 12,
-      collapsedIconSize:8,
-      collapsedWidth:30,
     },
 
     Dropdown: {
