@@ -11,12 +11,13 @@ import {
 import { motion } from 'framer-motion';
 import Title from '@/common/components/Title';
 import { Tooltip } from 'antd';
+import { StateDispatch } from '@/types';
 
 type Props = {
   openCorrespondence?: boolean;
-  activeTab?: any;
-  setActiveTab?: any;
-  setOpenCorrespondence?: any;
+  setOpenCorrespondence?: StateDispatch<boolean>;
+  activeTab: string;
+  setActiveTab: StateDispatch<string>;
 };
 
 const CorrrespondenceMenu = ({
@@ -25,8 +26,14 @@ const CorrrespondenceMenu = ({
   setActiveTab,
   setOpenCorrespondence,
 }: Props) => {
+  const handleCloseClick = () => {
+    if (setOpenCorrespondence) {
+      setOpenCorrespondence(false);
+    }
+  };
+
   return (
-    <div className="border-custom-gray_500 bg-custom-white_100 mt-3 flex !h-[50px] flex-row justify-between border-b px-5">
+    <div className="mt-3 flex !h-[50px] flex-row justify-between border-b border-custom-gray_500 bg-custom-white_100 px-5">
       <div
         className={mergeClassName(
           'flex w-full flex-row items-end justify-between',
@@ -44,7 +51,7 @@ const CorrrespondenceMenu = ({
           <Tooltip placement="top" title={'Search'} className="mx-2 my-3">
             <Search className="mx-3 cursor-pointer" size={18} />
           </Tooltip>
-          <div className="border-custom-gray_500 flex h-full flex-row items-center border-x">
+          <div className="flex h-full flex-row items-center border-x border-custom-gray_500">
             <Tooltip
               placement="top"
               title={'Create project'}
@@ -79,14 +86,14 @@ const CorrrespondenceMenu = ({
             duration: 0.5,
             ease: 'easeInOut',
           }}
-          className="border-custom-gray_500 bg-custom-white_100 flex w-2/6 flex-row items-center justify-between border-l px-5"
+          className="flex w-2/6 flex-row items-center justify-between border-l border-custom-gray_500 bg-custom-white_100 px-5"
         >
           <Title type="h1" className="text-[#585A69]">
             Correspondence
           </Title>
           <Close
             className="cursor-pointer rounded-full bg-[#F2F2F2]"
-            onClick={() => setOpenCorrespondence(false)}
+            onClick={handleCloseClick}
           />
         </motion.div>
       )}

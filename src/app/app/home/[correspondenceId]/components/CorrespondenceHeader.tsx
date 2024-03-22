@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { BackwardArrow } from '@/common/components/icons';
 import Document from '@/common/components/icons/Document';
 import Title from '@/common/components/Title';
@@ -7,13 +6,13 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 
 type Props = {
-  setOpenCorrespondence?: any;
+  setOpenCorrespondence: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const CorrespondenceHeader = ({ setOpenCorrespondence }: Props) => {
   const router = useRouter();
   return (
-    <div className="my-3 flex flex-row items-center justify-between px-5">
+    <div className="my-2 flex flex-row items-center justify-between px-5">
       <div className="flex flex-row items-center gap-3">
         <BackwardArrow
           size={34}

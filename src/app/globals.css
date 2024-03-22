@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import '/font/Circular-std-master/css/circular-std.css';
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -42,6 +44,20 @@ body {
 
 .inter {
   font-family: var(--font-inter);
+}
+
+.circular {
+  font-family: 'Circular Std', sans-serif; /* Use a fallback font */
+}
+
+.circularMedium {
+  font-family: 'Circular Std', sans-serif; /* Use a fallback font */
+  font-weight: 400;
+}
+
+.circularBold {
+  font-family: 'Circular Std', sans-serif; /* Use a fallback font */
+  font-weight: 700;
 }
 
 .ant-table-footer {

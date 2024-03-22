@@ -1,19 +1,19 @@
 'use client';
 import React, { useState } from 'react';
-import Minutes from '../../../../common/components/correspondence/pages/Minutes';
-import Timelines from '../../../../common/components/correspondence/pages/Timelines';
-import Documents from '../../../../common/components/correspondence/pages/Documents';
-import CorrespondentDocument from '../../../../common/components/correspondence/correspondenceDocument/CorrespondentDocument';
+import Minutes from './components/pages/Minutes';
+import Timelines from './components/pages/Timelines';
+import Documents from './components/pages/Documents';
+import CorrespondentDocument from './components/correspondenceDocument/CorrespondentDocument';
 import { mergeClassName } from '@/common/utils';
 import { motion } from 'framer-motion';
-import CorrespondenceHeader from '../../../../common/components/correspondence/CorrespondenceHeader';
-import CorrrespondenceMenu from '../../../../common/components/correspondence/CorrrespondenceMenu';
+import CorrespondenceHeader from './components/CorrespondenceHeader';
+import CorrrespondenceMenu from './components/CorrrespondenceMenu';
 
 // type Props = {};
 
 const PageContent = () => {
-  const [activeTab, setActiveTab] = useState('minutes');
-  const [openCorrespondence, setOpenCorrespondence] = useState(false);
+  const [activeTab, setActiveTab] = useState<string>('minutes');
+  const [openCorrespondence, setOpenCorrespondence] = useState<boolean>(false);
   const [correspondenceFile, setCorrespondenceFile] = useState<FileList | null>(
     null
   );
@@ -62,7 +62,7 @@ const PageContent = () => {
               duration: 0.5,
               ease: 'easeInOut',
             }}
-            className="border-custom-gray_500 flex w-2/6 flex-row items-center justify-center border-l"
+            className="flex w-2/6 flex-row items-center justify-center border-l border-custom-gray_500"
           >
             <CorrespondentDocument correspondenceFile={correspondenceFile} />
           </motion.div>
