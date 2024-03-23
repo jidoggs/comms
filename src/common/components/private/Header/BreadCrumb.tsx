@@ -8,7 +8,6 @@ function BreadCrumb() {
     <Breadcrumb
       items={[...crumbs]}
       separator={''}
-      className="[&_a]:!text-gray-minst-main [&_.ant-breadcrumb-link]:!text-gray-minst-main"
     />
   );
 }

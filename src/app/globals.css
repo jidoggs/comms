@@ -73,9 +73,12 @@ body {
 .ant-picker-calendar .ant-picker-panel .ant-picker-date-panel {
   background-color: white !important;
 }
-.ant-menu-inline-collapsed li {
- @apply !flex-row
+ .ant-menu-inline-collapsed li {
+ @apply !flex-col justify-center !px-0.5 !pt-2.5 !pb-1
 }
-.ant-menu-inline-collapsed li .ant-menu-title-content {
- @apply !hidden
+ .ant-menu-inline-collapsed .ant-menu-title-content {
+ @apply !opacity-100 text-center
+}
+.ant-breadcrumb-separator{
+  @apply flex items-center justify-center
 }

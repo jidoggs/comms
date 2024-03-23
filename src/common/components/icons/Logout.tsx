@@ -1,7 +1,7 @@
-import * as React from "react";
-import { Icon } from "./type";
+import * as React from 'react';
+import { Icon } from './type';
 
-const Logout: Icon = ({ size = "18", ...props }) => (
+const Logout: Icon = ({ size = '18', ...props }) => (
   <svg
     width={size}
     height={size}

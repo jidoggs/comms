@@ -1,5 +1,4 @@
 import { Maximize, MoreFile, Send } from '@/common/components/icons';
-import { customThemeColor } from '@/common/utils';
 import React from 'react';
 
 function Action() {
@@ -12,13 +11,8 @@ function Action() {
         <MoreFile size={18} />
       </button>
       <div className="border-custom-gray_500 h-8  w-px border-l" />
-      <button className="bg-custom-main cursor-pointer rounded-lg fill-white px-2 py-2.5">
-        <Send
-          size={18}
-          fill={customThemeColor.white_100}
-          stroke={customThemeColor.white_100}
-          className="transition-all hover:scale-125"
-        />
+      <button className="bg-custom-main text-custom-white_100 cursor-pointer rounded-lg px-2 py-2.5">
+        <Send size={18} className="transition-all hover:scale-125" />
       </button>
     </div>
   );
