@@ -1,6 +1,5 @@
 import React from 'react';
 import { Input, InputProps } from 'antd';
-
 import { mergeClassName } from './utils';
 
 type ClassName = 'container' | 'label' | 'input';
@@ -32,7 +31,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
       {label && (
         <label
           className={mergeClassName(
-            'block mb-2 text-sm font-medium text-custom-main ',
+            'mb-2 block text-sm font-medium text-custom-main ',
             !isClassNameString && className?.label
           )}
         >
@@ -41,6 +40,8 @@ const CustomInput: React.FC<CustomInputProps> = ({
       )}
       {type === 'password' ? (
         <Input.Password className={inputclassName} />
+      ) : type === 'textarea' ? (
+        <Input.TextArea className={inputclassName} />
       ) : (
         <Input className={inputclassName} {...rest} />
       )}

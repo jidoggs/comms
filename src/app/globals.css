@@ -73,12 +73,16 @@ body {
 .ant-picker-calendar .ant-picker-panel .ant-picker-date-panel {
   background-color: white !important;
 }
- .ant-menu-inline-collapsed li {
- @apply !flex-col justify-center !px-0.5 !pt-2.5 !pb-1
+.ant-collapse .ant-collapse-item
+.ant-collapse-content {
+  background-color: white !important;
 }
- .ant-menu-inline-collapsed .ant-menu-title-content {
- @apply !opacity-100 text-center
+.ant-menu-inline-collapsed li {
+  @apply !flex-col justify-center !px-0.5 !pb-1 !pt-2.5;
 }
-.ant-breadcrumb-separator{
-  @apply flex items-center justify-center
+.ant-menu-inline-collapsed .ant-menu-title-content {
+  @apply text-center !opacity-100;
+}
+.ant-breadcrumb-separator {
+  @apply flex items-center justify-center;
 }
