@@ -13,8 +13,8 @@ type BackButtonProps = {
 const BackButton = ({ text }: BackButtonProps) => {
   const router = useRouter();
   return (
-    <div className="flex items-center gap-0">
-      <CustomButton onClick={() => router.back()}>
+    <div className="flex items-center gap-2">
+      <CustomButton className='!px-0' onClick={() => router.back()}>
         <BackwardArrow size={22} />
       </CustomButton>
       <p className="font-semibold text-base">{text}</p>

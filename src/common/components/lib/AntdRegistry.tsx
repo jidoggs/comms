@@ -131,6 +131,9 @@ const appTheme: ThemeConfig = {
       cellActiveWithRangeBg: customThemeColor.white_200,
       cellRangeBorderColor: customThemeColor.gray_700,
     },
+    Progress: {
+      defaultColor: customThemeColor.gray_400,
+    },
     Typography: {
       titleMarginTop: 0,
       titleMarginBottom: 0,

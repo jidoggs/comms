@@ -2,7 +2,7 @@ import React from 'react';
 import dayjs from 'dayjs';
 
 import AvatarGroup from '@/common/components/Avatar/AvatarGroup';
-import { File } from '@/common/components/icons';
+import { Hierachy } from '@/common/components/icons';
 import { Assignee } from '@/types/projects';
 
 type TaskCardProps = {
@@ -16,7 +16,7 @@ const TaskCard = ({ taskTitle, taskStatus, assignees }: TaskCardProps) => {
     <div className="flex w-full justify-between py-1 text-custom-gray_400 hover:bg-custom-gray_100">
       <div className="flex w-1/12 items-center gap-1">
         <input type="checkbox" />
-        <File />
+        <Hierachy size={16} />
         {/* <p>5</p> */}
       </div>
       <p className="w-7/12">{taskTitle}</p>

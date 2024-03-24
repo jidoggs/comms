@@ -4,7 +4,7 @@ import React from 'react';
 import dayjs from 'dayjs';
 
 import AvatarGroup from '@/common/components/Avatar/AvatarGroup';
-import { File } from '@/common/components/icons';
+import { Hierachy } from '@/common/components/icons';
 import { AvatarData } from '@/common/components/Avatar/types';
 import CustomProgress from '@/common/components/CustomProgress';
 
@@ -26,7 +26,7 @@ const ProjectAccordionLabel = ({
     <div className="flex w-full justify-between font-semibold text-custom-gray_600">
       <div className="flex w-1/12 items-center gap-1">
         <input type="checkbox" />
-        <File />
+        <Hierachy size={16} />
         <p>{totalTasks}</p>
       </div>
       <div className="flex w-7/12 items-center gap-1">
