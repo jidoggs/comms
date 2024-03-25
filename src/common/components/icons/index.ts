@@ -2,10 +2,12 @@
 
 export { default as Archive } from './Archive';
 export { default as ArrowDown } from './ArrowDown';
+export { default as Bell } from './Bell';
 export { default as BackwardArrow } from './BackwardArrow';
 export { default as Briefcase } from './Briefcase';
 export { default as Calender } from './Calender';
 export { default as Close } from './Close';
+export { default as CloseCircle } from './CloseCircle';
 export { default as CloseCircled } from './CloseCircled';
 export { default as Collapse } from './Collapse';
 export { default as DatePicker } from './DatePicker';
@@ -15,7 +17,7 @@ export { default as Document } from './Document';
 export { default as Dot } from './Dot';
 export { default as Edit } from './Edit';
 export { default as File } from './File';
-export { default as GreenTick } from './GreenTick';
+export { default as GreenTick } from './Tick';
 export { default as Home } from './Home';
 export { default as Link } from './Link';
 export { default as Location } from './Location';

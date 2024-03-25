@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Icon } from './type';
 
-const Dot: Icon = ({ size = '30', fill = '#585A69', ...props }) => (
+const Dot: Icon = ({ size = '30', fill = 'currentColor', ...props }) => (
   <svg
     width={size}
     height={size}
@@ -16,7 +16,7 @@ const Dot: Icon = ({ size = '30', fill = '#585A69', ...props }) => (
       cy="17"
       r="7.5"
       fill="white"
-      stroke="#11142D"
+      stroke="currentColor"
       stroke-width="5"
     />
     <rect x="19" y="26" width="2" height="8" fill={fill} />
@@ -29,7 +29,7 @@ const Dot: Icon = ({ size = '30', fill = '#585A69', ...props }) => (
         y2="8"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#F2F2F2" />
+        <stop stop-color="currentColor" />
         <stop offset="1" stop-color={fill} />
       </linearGradient>
     </defs>
