@@ -19,7 +19,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
   const isClassNameString = typeof className === 'string';
 
   const inputclassName: string = mergeClassName(
-    'w-full placeholder-custom-main p-3 bg-transparent text-custom-main border-1 border-custom-gray_600',
+    'w-full placeholder-custom-main p-3 bg-transparent text-custom-main border border-custom-gray_600 outline-none',
     isClassNameString ? className : className?.input
   );
   return (
@@ -32,7 +32,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
       {label && (
         <label
           className={mergeClassName(
-            'block mb-2 text-sm font-medium text-custom-main ',
+            'text-custom-main mb-2 block text-sm font-medium ',
             !isClassNameString && className?.label
           )}
         >

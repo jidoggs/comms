@@ -120,11 +120,11 @@ const SchedulePage = () => {
         }
         searchPanel={
           <CustomInput
-            prefix={<Search />}
+            prefix={<Search className="text-custom-gray_400" />}
             placeholder="Search"
             className={{
               input:
-                'bg-custom-white_100 border-custom-gray_400 placeholder:text-custom-gray_400 outline-none',
+                'bg-custom-white_100 border-custom-gray_400 placeholder:text-custom-gray_400 border focus:outline-none',
             }}
           />
         }
@@ -135,10 +135,10 @@ const SchedulePage = () => {
         dataSource={dummyCorrespondence}
         size="large"
         rowClassName="group"
-        rowSelection={{ columnWidth: 48 }}
+        rowSelection={{ columnWidth: 56 }}
         footer={() => (
           <div className="hover:bg-custom-white_100">
-            <button className="text-custom-main flex items-center gap-x-2.5 py-1.5 pl-5 text-sm group">
+            <button className="text-custom-main group flex items-center gap-x-2.5 py-1.5 pl-5 text-sm">
               <span>+</span>
               <span className="group-hover:bg-custom-gray_500 rounded-lg px-2 py-3">
                 Add correspondence

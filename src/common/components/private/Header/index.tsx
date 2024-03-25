@@ -59,7 +59,7 @@ const AppHeader: React.FunctionComponent = () => {
     },
   ];
   return (
-    <Header className="flex w-full items-center justify-between bg-red-200 !px-5 !py-[3.5px]">
+    <Header className="flex w-full items-center justify-between !px-5 !py-0.5">
       {/* {contextHolder} */}
       <Suspense fallback={<div />}>
         <BreadCrumb />
@@ -74,17 +74,17 @@ const AppHeader: React.FunctionComponent = () => {
           {isMutating ? (
             <SpinLoader size="24" />
           ) : (
-            <div className="flex cursor-pointer items-center">
+            <div className="flex cursor-pointer gap-x-2.5 items-center py-0.5 px-1.5">
               <Avatar
-                size={40}
+                size={30}
                 icon={
                   <span className="flex h-full flex-1 items-center justify-center">
                     <Profile size="22" className="stroke-white" />
                   </span>
                 }
               />
-              <div className="ml-2.5 flex flex-col">
-                <Title className="mb-0.5 text-sm font-semibold">
+              <div className="flex flex-col">
+                <Title className="text-sm font-semibold">
                   {dummyUser?.first_name} {dummyUser?.last_name}
                 </Title>
                 <Title className="text-custom-gray_600 text-xs font-normal">

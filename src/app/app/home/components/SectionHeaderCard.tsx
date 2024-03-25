@@ -15,9 +15,15 @@ const SectionHeaderCard = ({ title, count }: SectionHeaderCardProps) => {
         </div>
       </div>
       <div className="flex items-center justify-between gap-1">
-        <Search />
-        <Plus />
-        <ThreeDots />
+        <button className="text-custom-main p-2">
+          <Search />
+        </button>
+        <button className="text-custom-main p-2">
+          <Plus />
+        </button>
+        <button className="text-custom-main p-2">
+          <ThreeDots />
+        </button>
       </div>
     </div>
   );
