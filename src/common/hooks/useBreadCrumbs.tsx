@@ -34,7 +34,7 @@ const generateBreadCrumbs = (
     const query = queryGroup ? `?${queryGroup}` : '';
     val.title = tempTitle[0].toUpperCase() + tempTitle.substring(1);
     val.href = '/app/' + pathArr.slice(0, i + 1).join('/') + query;
-    val.className = 'text-custom-gray_200 text-sm p-0';
+    val.className = 'text-custom-gray_200';
     val.onClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
       e.preventDefault();
       router.push(e.currentTarget.href);
