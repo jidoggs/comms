@@ -59,7 +59,7 @@ const AppHeader: React.FunctionComponent = () => {
     },
   ];
   return (
-    <Header className="flex w-full items-center justify-between px-5 py-4">
+    <Header className="flex w-full items-center justify-between bg-red-200 !px-5 !py-[3.5px]">
       {/* {contextHolder} */}
       <Suspense fallback={<div />}>
         <BreadCrumb />

@@ -108,7 +108,7 @@ const appTheme: ThemeConfig = {
       fontWeightStrong: 500,
       fontSizeHeading1: 14,
       // font: 400,
-      cellPaddingInline: 10,
+      cellPaddingInline: 0,
       cellPaddingBlock: 5,
       borderColor: customThemeColor.black_200 + '1A',
       footerBg: customThemeColor.gray_100,
@@ -116,6 +116,7 @@ const appTheme: ThemeConfig = {
       rowHoverBg: customThemeColor.white_100,
       rowSelectedHoverBg: customThemeColor.white_100,
       footerColor: customThemeColor.main,
+
     },
     Tabs: {
       itemColor: customThemeColor.gray_200,
@@ -141,8 +142,8 @@ const appTheme: ThemeConfig = {
     },
     Layout: {
       headerBg: customThemeColor.white_100,
-      headerPadding: '4px 20px',
-      headerHeight: 60,
+      headerPadding: '3.5px 20px',
+      headerHeight: 40,
       bodyBg: customThemeColor.gray_100,
       siderBg: customThemeColor.blue_100,
     },

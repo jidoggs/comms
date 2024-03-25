@@ -137,12 +137,14 @@ const SchedulePage = () => {
         rowClassName="group"
         rowSelection={{ columnWidth: 48 }}
         footer={() => (
-          <button className="text-custom-main flex items-center gap-x-2.5 py-1.5 pl-2.5 text-sm">
-            +{' '}
-            <span className="hover:bg-custom-gray_500 rounded-lg px-4 py-3">
-              Add correspondence
-            </span>
-          </button>
+          <div className="hover:bg-custom-white_100">
+            <button className="text-custom-main flex items-center gap-x-2.5 py-1.5 pl-5 text-sm group">
+              <span>+</span>
+              <span className="group-hover:bg-custom-gray_500 rounded-lg px-2 py-3">
+                Add correspondence
+              </span>
+            </button>
+          </div>
         )}
       />
     </div>
