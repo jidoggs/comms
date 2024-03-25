@@ -57,7 +57,7 @@ const appTheme: ThemeConfig = {
       colorText: customThemeColor.gray_600,
       colorBgContainer: customThemeColor.gray_900,
       fontWeightStrong: 400,
-      colorBorderBg: customThemeColor.gray_800,
+      colorBorderBg: customThemeColor.gray_400,
       colorTextPlaceholder: customThemeColor.gray_600,
       colorBgContainerDisabled: customThemeColor.gray_900,
       margin: 0,
@@ -120,6 +120,8 @@ const appTheme: ThemeConfig = {
     Tabs: {
       itemColor: customThemeColor.gray_200,
       inkBarColor: customThemeColor.purple_100,
+      horizontalItemPadding: '8px 8px',
+      horizontalItemPaddingSM: '8px 8px',
       // titleFontSizeLG: 14,
       // horizontalItemPaddingLG: '15px 0',
     },
@@ -141,8 +143,8 @@ const appTheme: ThemeConfig = {
     },
     Layout: {
       headerBg: customThemeColor.white_100,
-      headerPadding: '4px 20px',
-      headerHeight: 60,
+      headerPadding: '3.5px 20px',
+      headerHeight: 40,
       bodyBg: customThemeColor.gray_100,
       siderBg: customThemeColor.blue_100,
     },
@@ -194,6 +196,8 @@ const appTheme: ThemeConfig = {
       iconFontSize: 0,
       padding: 0,
       paddingXXS: 0,
+      fontSize: 14,
+      marginXXS: 0,
     },
   },
 };
