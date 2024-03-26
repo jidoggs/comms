@@ -1,14 +1,14 @@
 'use client';
-import CustomTab from '@/common/components/CustomTab';
-import CustomTable from '@/common/components/CustomTable';
-import { Document, Search } from '@/common/components/icons';
-import { dummyCorrespondence } from '@/common/mockData';
-import { mergeClassName } from '@/common/utils';
+import React, { useState } from 'react';
 import { TabsProps } from 'antd';
 import { ColumnsType } from 'antd/es/table';
-import React, { useState } from 'react';
-import Action from './components/Action';
-import CustomInput from '@/common/CustomInput';
+import CustomTable from '@/common/components/CustomTable';
+import CustomTab from '@/common/components/CustomTab';
+import TableRowAction from './components/TableRowAction';
+import TableActions from './components/TableActions';
+import { Document } from '@/common/components/icons';
+import { mergeClassName } from '@/common/utils';
+import { dummyCorrespondence } from '@/common/mockData';
 
 const columns: ColumnsType<any> = [
   {
@@ -82,7 +82,7 @@ const columns: ColumnsType<any> = [
     ellipsis: true,
     width: 135,
     render: () => {
-      return <Action />;
+      return <TableRowAction />;
     },
   },
 ].map((itm) => ({
@@ -118,16 +118,7 @@ const SchedulePage = () => {
             items={items}
           />
         }
-        searchPanel={
-          <CustomInput
-            prefix={<Search className="text-custom-gray_400" />}
-            placeholder="Search"
-            className={{
-              input:
-                'bg-custom-white_100 border-custom-gray_400 placeholder:text-custom-gray_400 border focus:outline-none',
-            }}
-          />
-        }
+        searchPanel={<TableActions />}
         className={{
           table: 'cursor-pointer',
         }}
@@ -138,9 +129,9 @@ const SchedulePage = () => {
         rowSelection={{ columnWidth: 56 }}
         footer={() => (
           <div className="hover:bg-custom-white_100">
-            <button className="text-custom-main group flex items-center gap-x-2.5 py-1.5 pl-5 text-sm">
+            <button className="group flex items-center gap-x-2.5 py-1.5 pl-5 text-sm text-custom-main">
               <span>+</span>
-              <span className="group-hover:bg-custom-gray_500 rounded-lg px-2 py-3">
+              <span className="rounded-lg px-2 py-3 group-hover:bg-custom-gray_500">
                 Add correspondence
               </span>
             </button>

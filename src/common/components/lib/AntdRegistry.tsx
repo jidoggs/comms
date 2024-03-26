@@ -1,13 +1,7 @@
 'use client';
 import React from 'react';
-import {
-  createCache,
-  extractStyle,
-  StyleProvider,
-} from '@ant-design/cssinjs/lib';
-import type Entity from '@ant-design/cssinjs/es/Cache';
-import { useServerInsertedHTML } from 'next/navigation';
 import { ConfigProvider, ThemeConfig } from 'antd';
+import { AntdRegistry } from '@ant-design/nextjs-registry';
 import { customThemeColor } from '@/common/utils';
 
 const appTheme: ThemeConfig = {
@@ -27,27 +21,40 @@ const appTheme: ThemeConfig = {
       fontWeightStrong: 500,
     },
     Button: {
-      fontSize: 16,
-      paddingInline: 16,
-      controlHeight: 42,
-      borderRadius: 8,
+      fontSize: 14,
+      paddingInline: 8,
+      paddingBlock: 8,
+      padding: 8,
+      onlyIconSize: 34,
+      controlHeight: 50,
+      controlHeightSM: 34,
+
+      borderRadius: 10,
       lineHeight: 1,
       algorithm: true,
+      contentLineHeight: 1,
 
-      defaultBg: customThemeColor.white_100,
+      defaultBg: customThemeColor.main,
+      defaultColor: customThemeColor.white_100,
+      defaultHoverBg: customThemeColor.gray_200,
+      defaultActiveBg: customThemeColor.main,
+      defaultHoverColor: customThemeColor.white_100,
 
-      defaultColor: customThemeColor.blue_100,
-      defaultBorderColor: customThemeColor.blue_100,
-
-      colorBgTextHover: customThemeColor.blue_100,
-
-      colorPrimary: customThemeColor.blue_100,
-      colorPrimaryHover: customThemeColor.gray_700,
-      colorPrimaryActive: customThemeColor.gray_700,
-      colorText: customThemeColor.blue_100,
-      textHoverBg: customThemeColor.white_200,
-      colorBgTextActive: customThemeColor.gray_700,
+      colorBgContainerDisabled: customThemeColor.gray_400,
+      colorText: customThemeColor.main,
       colorTextDisabled: customThemeColor.white_100,
+      colorBgTextHover: customThemeColor.main,
+      textHoverBg: customThemeColor.gray_500,
+
+      colorPrimaryBg: customThemeColor.white_100,
+      colorPrimaryText: customThemeColor.main,
+      primaryColor: customThemeColor.main,
+      colorPrimaryBgHover: customThemeColor.gray_500,
+      colorPrimaryTextHover: customThemeColor.main,
+      colorPrimaryHover: customThemeColor.gray_500,
+      colorPrimary: customThemeColor.white_100,
+
+      // colorBgTextActive: 'transparent',
     },
     Input: {
       paddingBlock: 10,
@@ -163,7 +170,6 @@ const appTheme: ThemeConfig = {
       itemBg: customThemeColor.blue_100,
       itemMarginBlock: 0,
       itemMarginInline: 0,
-      itemPaddingInline: 0,
       iconMarginInlineEnd: 0,
       // horizontalLineHeight: 66,
       colorText: customThemeColor.white_100,
@@ -203,20 +209,10 @@ const appTheme: ThemeConfig = {
 };
 
 const StyledComponentsRegistry = ({ children }: React.PropsWithChildren) => {
-  const cache = React.useMemo<Entity>(() => createCache(), []);
-
-  useServerInsertedHTML(() => {
-    return (
-      <style
-        id="antd"
-        dangerouslySetInnerHTML={{ __html: extractStyle(cache, true) }}
-      />
-    );
-  });
   return (
-    <StyleProvider cache={cache} hashPriority="high" autoClear>
+    <AntdRegistry>
       <ConfigProvider theme={appTheme}>{children}</ConfigProvider>
-    </StyleProvider>
+    </AntdRegistry>
   );
 };
 
