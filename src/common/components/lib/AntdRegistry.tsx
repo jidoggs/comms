@@ -3,6 +3,12 @@ import React from 'react';
 import { ConfigProvider, ThemeConfig } from 'antd';
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import { customThemeColor } from '@/common/utils';
+import { pdfjs } from 'react-pdf';
+
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  'pdfjs-dist/build/pdf.worker.min.js',
+  import.meta.url
+).toString();
 
 const appTheme: ThemeConfig = {
   token: {
@@ -181,6 +187,8 @@ const appTheme: ThemeConfig = {
       itemHeight: 15,
       groupTitleFontSize: 16,
       fontSize: 12,
+      collapsedIconSize: 8,
+      collapsedWidth: 30,
     },
 
     Dropdown: {
@@ -204,6 +212,15 @@ const appTheme: ThemeConfig = {
       paddingXXS: 0,
       fontSize: 14,
       marginXXS: 0,
+    },
+    Timeline: {
+      tailColor: customThemeColor.gray_200,
+    },
+    Cascader: {
+      optionSelectedBg: customThemeColor.gray_500,
+      optionSelectedFontWeight: 400,
+      colorBorder: customThemeColor.black_100,
+      // optionPadding
     },
   },
 };
