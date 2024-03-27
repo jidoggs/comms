@@ -29,7 +29,7 @@ const PageContent = () => {
         setActiveTab={setActiveTab}
         setOpenCorrespondence={setOpenCorrespondence}
       />
-      <div className="flex flex-row justify-between px-5">
+      <div className="flex flex-row justify-between ">
         <div
           className={mergeClassName(
             'flex w-full flex-row items-center justify-between',

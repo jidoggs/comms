@@ -2,6 +2,7 @@
 
 export { default as Archive } from './Archive';
 export { default as ArrowDown } from './ArrowDown';
+export { default as ArrowRight } from './ArrowRight';
 export { default as Bell } from './Bell';
 export { default as BackwardArrow } from './BackwardArrow';
 export { default as Briefcase } from './Briefcase';
@@ -38,6 +39,7 @@ export { default as Profile } from './Profile';
 export { default as Redo } from './Redo';
 export { default as Refresh } from './Refresh';
 export { default as Schedule } from './Schedule';
+export { default as Sound } from './Sound';
 export { default as Search } from './Search';
 export { default as Send } from './Send';
 export { default as SpinLoader } from './SpinLoader';
