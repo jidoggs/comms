@@ -92,3 +92,6 @@ body {
 .ant-btn-primary:not(:disabled):not(.ant-btn-disabled):hover {
   @apply !text-custom-main;
 }
+.ant-upload-btn {
+  @apply !p-0;
+}

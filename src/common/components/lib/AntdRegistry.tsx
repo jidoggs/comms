@@ -69,6 +69,10 @@ const appTheme: ThemeConfig = {
       colorBgContainerDisabled: customThemeColor.gray_900,
       margin: 0,
       controlHeight: 44,
+      controlHeightSM: 24,
+      paddingBlockSM: 0,
+      paddingInlineSM: 0,
+      
     },
     InputNumber: {
       paddingBlock: 10,
@@ -204,6 +208,10 @@ const appTheme: ThemeConfig = {
       paddingXXS: 0,
       fontSize: 14,
       marginXXS: 0,
+    },
+    Upload: {
+      colorBorder: 'transparent',
+      padding: 0,
     },
   },
 };

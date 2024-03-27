@@ -1,19 +1,29 @@
+import CustomButton from '@/common/components/CustomButton';
 import { Maximize, MoreFile, Send } from '@/common/components/icons';
 import React from 'react';
 
 function TableRowAction() {
+  const icon = 'transition-all hover:scale-125 group/button-hover:scale-125';
   return (
     <div className="hidden items-center gap-x-1 px-2.5 group-hover:flex">
-      <button className="cursor-pointer rounded-lg px-2 py-2.5">
-        <Maximize size={18} className="transition-all hover:scale-125" />
-      </button>
-      <button className="cursor-pointer rounded-lg px-2 py-2.5">
-        <MoreFile size={18} />
-      </button>
+      <CustomButton
+        icon={<Maximize size={18} className={icon} />}
+        description="Maximize"
+        size="small"
+        type="text"
+      />
+      <CustomButton
+        icon={<MoreFile size={18} className={icon} />}
+        description="View More"
+        size="small"
+        type="text"
+      />
       <div className="h-8 w-px  border-l border-custom-gray_500" />
-      <button className="cursor-pointer rounded-lg bg-custom-main px-2 py-2.5 text-custom-white_100">
-        <Send size={18} className="transition-all hover:scale-125" />
-      </button>
+      <CustomButton
+        icon={<Send size={18} className={icon} />}
+        description="Send"
+        size="small"
+      />
     </div>
   );
 }

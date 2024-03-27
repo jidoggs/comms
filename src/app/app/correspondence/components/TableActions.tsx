@@ -3,7 +3,11 @@ import CustomInput from '@/common/CustomInput';
 import { Add, Search } from '@/common/components/icons';
 import CustomButton from '@/common/components/CustomButton';
 
-function TableActions() {
+type Props = {
+  addHandler: VoidFunction; //eslint-disable-line
+};
+
+function TableActions({ addHandler }: Props) {
   return (
     <div className="flex items-center gap-x-2.5">
       <CustomInput
@@ -18,6 +22,7 @@ function TableActions() {
         type="primary"
         icon={<Add />}
         description="Add New Correspondence"
+        onClick={addHandler}
       />
     </div>
   );
