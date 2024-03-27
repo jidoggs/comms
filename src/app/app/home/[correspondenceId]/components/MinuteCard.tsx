@@ -1,5 +1,5 @@
 'use client';
-import SideMenu from '@/app/app/correspondence/[correspondenceId]/components/SideMenu';
+import SideMenu from '@/app/app/home/[correspondenceId]/components/SideMenu';
 import { MoreFile } from '@/common/components/icons';
 import Title from '@/common/components/Title';
 import { mergeClassName } from '@/common/utils';
