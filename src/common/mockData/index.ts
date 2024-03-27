@@ -1,4 +1,4 @@
 export * from './people';
 export * from './user';
-export * from './correspondentData';
+export * from './corrData';
 export * from './correspondence';
