@@ -1,5 +1,6 @@
 'use client';
 
+export { default as Add } from './Add';
 export { default as Archive } from './Archive';
 export { default as ArrowDown } from './ArrowDown';
 export { default as ArrowRight } from './ArrowRight';
@@ -18,8 +19,10 @@ export { default as Document } from './Document';
 export { default as Dot } from './Dot';
 export { default as Edit } from './Edit';
 export { default as File } from './File';
+export { default as Folder } from './Folder';
 export { default as GreenTick } from './Tick';
 export { default as Home } from './Home';
+export { default as InfoCircle } from './InfoCircle';
 export { default as Link } from './Link';
 export { default as Location } from './Location';
 export { default as Logout } from './Logout';

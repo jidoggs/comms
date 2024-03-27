@@ -6,7 +6,7 @@ import { Form, Input } from 'antd';
 // import Input from "rc-input";
 import React, { useState } from 'react';
 import { EyeInvisibleOutlined } from '@ant-design/icons';
-import { CustomButton } from '@/common/components';
+import CustomButton from '@/common/components/CustomButton';
 
 // type FormValues = {
 //   code: string;
@@ -134,14 +134,8 @@ const ResetPasswordForm = () => {
         </Form.Item>
         <Form.Item style={{ marginBottom: 0 }} className="mt-10">
           <CustomButton
-            // disabled={isMutating}
-            // isLoading={isMutating}
-            // className={
-            //   correctPassword
-            //     ? "w-full bg-custom-main rounded-lg"
-            //     : "w-full bg-custom-gray_400 rounded-lg"
-            // }
-            className="bg-custom-main w-full rounded-lg"
+          // disabled={isMutating}
+          // isLoading={isMutating}
           >
             Reset Password
           </CustomButton>

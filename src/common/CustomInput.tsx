@@ -19,7 +19,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
   const isClassNameString = typeof className === 'string';
 
   const inputclassName: string = mergeClassName(
-    'w-full placeholder-custom-main p-3 bg-transparent text-custom-main border border-custom-gray_600 outline-none',
+    'w-full placeholder-custom-main p-2.5 bg-transparent text-custom-main border border-custom-gray_600 !focus-within:border-transparent !focus:border-transparent !focus-within:outline-none !focus:outline-none',
     isClassNameString ? className : className?.input
   );
   return (
@@ -32,7 +32,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
       {label && (
         <label
           className={mergeClassName(
-            'text-custom-main mb-2 block text-sm font-medium ',
+            'focus-within: mb-2 block text-sm font-medium text-custom-main',
             !isClassNameString && className?.label
           )}
         >
@@ -40,7 +40,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
         </label>
       )}
       {type === 'password' ? (
-        <Input.Password className={inputclassName} />
+        <Input.Password className={inputclassName} {...rest} />
       ) : (
         <Input className={inputclassName} {...rest} />
       )}

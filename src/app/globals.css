@@ -73,15 +73,22 @@ body {
 .ant-picker-calendar .ant-picker-panel .ant-picker-date-panel {
   background-color: white !important;
 }
- .ant-menu-inline-collapsed li {
- @apply !flex-col justify-center !px-0.5 !pt-2.5 !pb-1
+.ant-menu-inline-collapsed li {
+  @apply !flex-col justify-center !px-0.5 !pb-1 !pt-2.5;
 }
- .ant-menu-inline-collapsed .ant-menu-title-content {
- @apply !opacity-100 text-center
+.ant-menu-inline-collapsed .ant-menu-title-content {
+  @apply text-center !opacity-100;
 }
-/* .ant-breadcrumb-separator{
-  @apply flex items-center justify-center
-} */
+
 .ant-table-footer {
-  @apply !p-0
+  @apply !p-0;
+}
+
+.ant-btn-text:disabled,
+.ant-btn-text.ant-btn-disabled {
+  @apply !text-custom-gray_400;
+}
+
+.ant-btn-primary:not(:disabled):not(.ant-btn-disabled):hover {
+  @apply !text-custom-main;
 }
