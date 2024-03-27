@@ -1,5 +1,6 @@
 'use client';
 
+export { default as Add } from './Add';
 export { default as Archive } from './Archive';
 export { default as ArrowDown } from './ArrowDown';
 export { default as Bell } from './Bell';

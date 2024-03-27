@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Metadata } from 'next';
-import './globals.css';
 import StyledComponentsRegistry from '@/common/components/lib/AntdRegistry';
+import './globals.css';
 import { bebas, inter, manrope } from './font';
 import { pdfjs } from 'react-pdf';
 

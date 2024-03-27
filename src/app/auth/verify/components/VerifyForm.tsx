@@ -3,10 +3,10 @@
 // import { apiErrorHandler } from "@/services";
 import { Form } from 'antd';
 // import {  useSearchParams } from "next/navigation";
-import { CustomButton } from '@/common/components';
+// import { CustomButton } from '@/common/components';
 import React, { useLayoutEffect, useState } from 'react';
 // import OTPInput from 'react-otp-input';
-import { mergeClassName } from '@/common/utils';
+import CustomButton from '@/common/components/CustomButton';
 
 // const DEFAULT_TIMER = 0;
 
@@ -118,7 +118,7 @@ const VerifyForm = () => {
   return (
     <div>
       <div className="flex w-full flex-col items-center gap-5 pt-5">
-        <span className="text-custom-gray_200 text-[16px] font-semibold leading-[21.86px]">
+        <span className="text-[16px] font-semibold leading-[21.86px] text-custom-gray_200">
           {/* {Math.floor(countdown / 60)
             .toString()
             .padStart(2, "0")}
@@ -164,28 +164,11 @@ const VerifyForm = () => {
             /> */}
           </Form.Item>
         </Form>
-        <CustomButton
-          variant="contained"
-          onClick={handleSubmit}
-          // disabled={
-          //   verifyMutating || resendLoading || countdown !== 0 || +otp === 0
-          // }
-          // isLoading={verifyMutating}
-          className={mergeClassName(
-            'w-full rounded-lg',
-            otp.length === 6 ? 'bg-custom-main' : 'bg-custom-gray_400'
-          )}
-        >
+        <CustomButton onClick={handleSubmit} disabled={otp.length !== 6} block>
           Verify
         </CustomButton>
 
-        <CustomButton
-          variant="noStyleButton"
-          // onClick={handleResendOTP}
-          // disabled={resendLoading}
-          // isLoading={resendLoading}
-          className="w-full"
-        >
+        <CustomButton type="text" block>
           Resend OTP
         </CustomButton>
       </div>

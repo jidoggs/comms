@@ -4,8 +4,9 @@ import { Form } from 'antd';
 import Link from 'next/link';
 // import { apiErrorHandler } from "@/services";
 import { useRouter } from 'next/navigation';
-import { CustomButton } from '@/common/components';
 import CustomInput from '@/common/CustomInput';
+import CustomButton from '@/common/components/CustomButton';
+
 // import { useAuth } from "@/components/hooks";
 
 type FieldType = {
@@ -76,22 +77,12 @@ const ForgotForm = () => {
       className="!my-5 !w-full"
       style={{ width: '100%' }}
     >
-      <Form.Item<FieldType>
-       
-      >
-        <CustomInput label='Email' type='email' placeholder='user@email.com' />
+      <Form.Item<FieldType>>
+        <CustomInput label="Email" type="email" placeholder="user@email.com" />
       </Form.Item>
 
       <Form.Item>
-        <CustomButton
-          // isLoading={isMutating}
-          disabled={!clientReady}
-          className={
-            clientReady
-              ? 'text-white-100 bg-custom-main w-full sm:w-auto md:w-full'
-              : 'text-white-100 bg-custom-gray_400 w-full sm:w-auto md:w-full'
-          }
-        >
+        <CustomButton disabled={!clientReady} block>
           Continue
         </CustomButton>
       </Form.Item>
@@ -99,7 +90,7 @@ const ForgotForm = () => {
       <Form.Item className="flex justify-center">
         <Link
           href={'/auth/login'}
-          className="!text-custom-main !text-center !text-[14px] !font-bold !leading-[17.71px]"
+          className="!text-center !text-[14px] !font-bold !leading-[17.71px] !text-custom-main"
         >
           Login
         </Link>
