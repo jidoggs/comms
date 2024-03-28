@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { GetRef, Input, InputProps } from 'antd';
 
 import { mergeClassName } from './utils';
@@ -33,6 +34,7 @@ const CustomInput: React.FC<CustomInputProps> = React.forwardRef<
       {label && (
         <label
           className={mergeClassName(
+
             'focus-within: mb-2 block text-sm font-medium text-custom-main',
             !isClassNameString && className?.label
           )}
@@ -42,6 +44,8 @@ const CustomInput: React.FC<CustomInputProps> = React.forwardRef<
       )}
       {type === 'password' ? (
         <Input.Password className={inputclassName} ref={ref} {...rest} />
+      ) : type === 'textarea' ? (
+        <Input.TextArea className={inputclassName} ref={ref} {...rest} />
       ) : (
         <Input className={inputclassName} ref={ref} {...rest} />
       )}

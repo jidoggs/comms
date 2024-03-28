@@ -1,5 +1,5 @@
-import { Spin } from "antd";
-import { SpinLoader } from "./icons";
+import { Spin } from 'antd';
+import { SpinLoader } from './icons';
 
 type FullPageLoaderProps = {
   background?: string;
@@ -9,7 +9,7 @@ type FullPageLoaderProps = {
 
 export const Loader = ({ size }: { size?: number }) => {
   return (
-    <div className="flex items-center justify-center size-full">
+    <div className="flex size-full items-center justify-center">
       <span className="animate-spin">
         <SpinLoader size={size} />
       </span>
@@ -25,11 +25,11 @@ export default function FullPageLoader({
   return (
     <div
       style={{
-        background: background || "#f6f4f9",
-        height: height ? height : "100vh",
-        width: "100%",
+        background: background || '#f6f4f9',
+        height: height ? height : '100vh',
+        width: '100%',
       }}
-      className="flex items-center justify-center"
+      className="flex w-full items-center justify-center"
     >
       <Spin fullscreen={fullscreen} size="large">
         <div /* className="content" */ />
