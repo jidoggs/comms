@@ -195,7 +195,7 @@ const SchedulePage = () => {
   });
 
   return (
-    <div>
+    <div className="pt-4">
       <CustomTable
         tableTitle="Correspondence management"
         tabs={

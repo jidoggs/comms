@@ -8,15 +8,17 @@ import OngoingList from './components/OngoingList';
 
 const HomePage = () => {
   return (
-    <div className="flex w-full justify-center gap-2">
-      <div className="w-[34%] flex-col gap-1">
-        <QueuedList />
-      </div>
-      <div className="w-[34%] flex-col">
-        <OngoingList />
-      </div>
-      <div className="w-[26%] flex-col">
-        <ActivitiesSection />
+    <div className="size-full overflow-y-scroll">
+      <div className="mx-auto grid w-full max-w-screen-lg grid-cols-11 gap-2.5 p-5">
+        <div className="col-span-4 flex-col gap-1">
+          <QueuedList />
+        </div>
+        <div className="col-span-4 flex-col">
+          <OngoingList />
+        </div>
+        <div className="col-span-3 flex-col">
+          <ActivitiesSection />
+        </div>
       </div>
     </div>
   );
