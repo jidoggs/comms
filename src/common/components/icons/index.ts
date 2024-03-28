@@ -19,7 +19,6 @@ export { default as Document } from './Document';
 export { default as Dot } from './Dot';
 export { default as Edit } from './Edit';
 export { default as File } from './File';
-export { default as GreenTick } from './GreenTick';
 export { default as Hierachy } from './Hierachy';
 export { default as Folder } from './Folder';
 export { default as Home } from './Home';
