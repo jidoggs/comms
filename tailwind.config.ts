@@ -15,6 +15,9 @@ const config: Config = {
           ...customThemeColor,
         },
       },
+      borderRadius: {
+        10: '10px',
+      },
       boxShadow: {
         minuteCard: '0px 2px 4px 0px #0000001A',
       },
