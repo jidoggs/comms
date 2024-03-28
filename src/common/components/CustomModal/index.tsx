@@ -3,7 +3,9 @@ import { Modal, ModalProps } from 'antd';
 import { CloseCircle } from '../icons';
 import { mergeClassName } from '@/common/utils';
 
-interface Props extends ModalProps {
+type OmitProps = 'closeIcon' | 'footer';
+
+interface Props extends Omit<ModalProps, OmitProps> {
   hideCloseIcon?: boolean;
 }
 
