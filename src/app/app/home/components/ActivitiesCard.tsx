@@ -1,6 +1,6 @@
 'use client';
-
-import { File } from '@/common/components/icons';
+import Title from '@/common/components/Title';
+import { Folder } from '@/common/components/icons';
 import React from 'react';
 
 type ActivitiesCardProps = {
@@ -9,10 +9,14 @@ type ActivitiesCardProps = {
 
 const ActivitiesCard = ({ title }: ActivitiesCardProps) => {
   return (
-    <div className="mt-1 flex w-full items-center">
-      <p className="text-xs">12:30pm</p>
-      <File />
-      <p className="w-full truncate text-xs">{title}</p>
+    <div className="flex w-full items-center gap-1 border-b border-custom-gray_500 p-2.5">
+      <p className="rounded bg-custom-gray_900 p-0.5 text-sm leading-normal text-custom-gray_200">
+        12:30pm
+      </p>
+      <div className="flex items-center gap-x-2.5">
+        <Folder size={22} className="text-custom-main" />
+        <Title className="text-sm text-custom-gray_200">{title}</Title>
+      </div>
     </div>
   );
 };

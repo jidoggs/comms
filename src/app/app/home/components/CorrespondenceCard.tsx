@@ -1,7 +1,7 @@
 'use client';
 
-import { Dropdown, Flex, MenuProps } from 'antd';
-import { Briefcase, File, Send, Users } from '@/common/components/icons';
+import { Flex, MenuProps } from 'antd';
+import { Briefcase, Send, Users, Folder } from '@/common/components/icons';
 import { useRouter } from 'next/navigation';
 import CreateCorrespondenceModal from './Modal';
 import NewProjectModalContent from './NewProjectModalContent';
@@ -9,6 +9,7 @@ import NewMeetingModalContent from './NewMeetingModalContent';
 import AvatarGroup from '@/common/components/Avatar/AvatarGroup';
 import { dummyAvatarData } from '@/common/mockData';
 import CustomAvatar from '@/common/components/Avatar/CustomAvatar';
+import CustomButton from '@/common/components/CustomButton';
 
 const CorrespondenceCard = () => {
   const router = useRouter();
@@ -23,7 +24,7 @@ const CorrespondenceCard = () => {
   };
 
   // TODO: TO BE MOVED TO HELPER FILE
-
+  //eslint-disable-next-line
   const items: MenuProps['items'] = [
     {
       key: '1',
@@ -71,42 +72,43 @@ const CorrespondenceCard = () => {
     },
   ];
 
-
   return (
     <div
       role="button"
       tabIndex={0}
-      className="mt-2 flex w-full cursor-pointer gap-2 rounded-md bg-white p-2 text-gray-400 shadow-md"
+      className="shadow-wordBox group flex w-full cursor-pointer gap-2 rounded-md bg-white p-2.5 text-custom-gray_600"
       onClick={handleClick}
       onKeyDown={handleKeyDown}
     >
-      <div className="size-8 rounded-md bg-gray-100">
-        <File />
+      <div className="rounded-10 self-start bg-custom-gray_100 p-2.5 text-custom-main">
+        <Folder size={18} />
       </div>
-      <div className="w-5/6">
+      <div className="space-y-2.5">
         <div className="flex gap-1 align-middle">
           <CustomAvatar firstName="Jane" lastName="Doe" />
-          <div className="leading-3.2 text-xs">
-            <p className="font-bold text-gray-500">Jane Doe</p>
-            <p>Registry, Ministry of Trade & Investment</p>
+          <div className="">
+            <p className="text-sm font-bold leading-4 text-custom-main">
+              Jane Doe
+            </p>
+            <p className="text-xs">PS, Ministry of Trade & Investment</p>
           </div>
         </div>
-        <div className="my-2 text-xs font-semibold">
+        <div className="text-xs font-medium">
           <p>
             Dear HM, I hope this message finds you well. Please find
             correspondence f ...
           </p>
         </div>
-        <div className="mb-1 mt-2 flex items-center gap-1 text-xs font-semibold">
-          <p>04:20 PM, 16 Feb 2024</p>
+        <div className="flex items-center gap-1">
+          <p className="text-xs font-medium text-custom-gray_200">
+            4:20 PM, 16 Feb 2024
+          </p>
           <AvatarGroup maxCount={3} avatarData={dummyAvatarData} />
-          <Dropdown
-            menu={{ items }}
-            placement="bottom"
-            className="w-1/7 ml-10 flex h-auto justify-end"
-          >
-            <p className="opacity-0">Text</p>
-          </Dropdown>
+          <div className="invisible flex flex-1 items-center justify-end group-hover:visible">
+            <CustomButton size="small" type="text" icon={<Users />} />
+            <CustomButton size="small" type="text" icon={<Briefcase />} />
+            <CustomButton size="small" type="text" icon={<Send />} />
+          </div>
         </div>
       </div>
     </div>

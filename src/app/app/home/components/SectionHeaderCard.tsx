@@ -9,7 +9,7 @@ type SectionHeaderCardProps = {
 
 const SectionHeaderCard = ({ title, count }: SectionHeaderCardProps) => {
   return (
-    <div className="flex w-full items-center justify-between rounded-md bg-white px-2 py-1 font-semibold shadow-md">
+    <div className="shadow-wordBox flex w-full items-center justify-between rounded-md bg-white px-2 py-1 font-semibold">
       <div className="flex items-center gap-x-2.5">
         <Title className="text-sm font-medium">{title}</Title>
         <div className="rounded-10 size-6 border border-gray-400 text-center">
@@ -24,7 +24,7 @@ const SectionHeaderCard = ({ title, count }: SectionHeaderCardProps) => {
           size="small"
           type="text"
           icon={<Plus />}
-          title="Add Correspondence"
+          title="Create Correspondence"
         />
         <CustomButton
           size="small"

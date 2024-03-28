@@ -32,6 +32,15 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+  /* Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
 }
 
 .bebas {
@@ -74,8 +83,7 @@ body {
   background-color: white !important;
 }
 
-.ant-collapse .ant-collapse-item
-.ant-collapse-content {
+.ant-collapse .ant-collapse-item .ant-collapse-content {
   background-color: white !important;
 }
 
@@ -85,7 +93,6 @@ body {
 .ant-menu-inline-collapsed .ant-menu-title-content {
   @apply text-center !opacity-100;
 }
-
 
 .ant-breadcrumb-separator {
   @apply flex items-center justify-center;

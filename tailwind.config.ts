@@ -20,6 +20,10 @@ const config: Config = {
       },
       boxShadow: {
         minuteCard: '0px 2px 4px 0px #0000001A',
+        wordBox: '0px 2px 4px 0px #0000001A',
+      },
+      gridTemplateColumns: {
+        homeMax: '1fr 1fr minmax(180px, 320px)',
       },
     },
   },
