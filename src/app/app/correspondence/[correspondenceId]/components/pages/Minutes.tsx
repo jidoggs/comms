@@ -36,7 +36,7 @@ const Minutes = ({
       transition={{
         duration: 0.5,
       }}
-      className="relative flex h-[70vh] w-full flex-col justify-end"
+      className="relative flex size-full flex-col justify-end"
     >
       <div className="mx-0 my-3 flex h-full flex-col gap-5 overflow-y-auto md:m-3">
         {correspondenceMinute.map((minute) => {

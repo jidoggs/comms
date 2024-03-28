@@ -143,7 +143,7 @@ const Documents = () => {
       transition={{
         duration: 0.5,
       }}
-      className="relative flex h-[70vh] w-full flex-col"
+      className="relative flex size-full flex-col"
     >
       <div className="mt-5">
         <Cascader.Panel
