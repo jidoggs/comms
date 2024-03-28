@@ -63,7 +63,6 @@ function SideNav({ role }: { role: UserPreDefinedRole }) {
         openKeys={openKeys}
         onOpenChange={onOpenChange}
         defaultSelectedKeys={[generateDefaultKey(pathname)]}
-        inlineCollapsed={collapsed}
         onClick={({ key }) => router.push(key)}
         className="flex flex-col !items-start gap-y-1 !px-1.5"
         items={menuItemRenderer(role)}

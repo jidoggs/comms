@@ -1,4 +1,4 @@
-const singldata = {
+export const singleDummyCorrespondenceData = {
   sent_by: 'Nigerian Breweries',
   recipient: 'Jane Doe',
   subject: 'Executive_Support_Letter.pdf',
@@ -11,4 +11,4 @@ const singldata = {
 
 export const dummyCorrespondence = new Array(5)
   .fill('o')
-  .map((_, idx) => ({ ...singldata, id: idx }));
+  .map((_, idx) => ({ ...singleDummyCorrespondenceData, id: idx }));

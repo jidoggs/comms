@@ -18,7 +18,7 @@ function CustomButton({
   ...props
 }: CustomInputProps) {
   const btnClassName = mergeClassName(
-    '!flex items-center only:justify-center group',
+    '!flex items-center only:justify-center group/button',
     block && 'flex-1',
     typeof className === 'string' ? className : className?.button
   );
