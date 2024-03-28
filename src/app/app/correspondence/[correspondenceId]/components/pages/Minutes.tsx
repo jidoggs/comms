@@ -38,37 +38,22 @@ const Minutes = ({
       }}
       className="relative flex size-full flex-col justify-end"
     >
-      <div className="mx-0 my-3 flex h-full flex-col gap-5 overflow-y-auto md:m-3">
+      <div className="flex h-full flex-col gap-3 overflow-y-auto px-5">
         {correspondenceMinute.map((minute) => {
-          if (minute.id % 2) {
-            return (
-              <div className="leftChat h-full self-start " key={minute.id}>
-                <MinuteCard
-                  setCorrespondenceFile={setCorrespondenceFile}
-                  setOpenCorrespondenceDetails={setOpenCorrespondenceDetails}
-                  minuteId={minute.id}
-                  cardPosition={'left'}
-                  chatState={chatState}
-                  setChatState={setChatState}
-                  minute={minute}
-                />
-              </div>
-            );
-          } else {
-            return (
-              <div className="rightChat self-end" key={minute.id}>
-                <MinuteCard
-                  setCorrespondenceFile={setCorrespondenceFile}
-                  setOpenCorrespondenceDetails={setOpenCorrespondenceDetails}
-                  minuteId={minute.id}
-                  cardPosition={'right'}
-                  chatState={chatState}
-                  setChatState={setChatState}
-                  minute={minute}
-                />
-              </div>
-            );
-          }
+          return (
+            <MinuteCard
+              setCorrespondenceFile={setCorrespondenceFile}
+              setOpenCorrespondenceDetails={setOpenCorrespondenceDetails}
+              minuteId={minute.id}
+              key={minute.id}
+              chatState={chatState}
+              setChatState={setChatState}
+              minute={minute}
+              className={
+                'group h-full first:mt-3 last:mb-3 odd:self-start even:self-end'
+              }
+            />
+          );
         })}
       </div>
       <MinuteAction />

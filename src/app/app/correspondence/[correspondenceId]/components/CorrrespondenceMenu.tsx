@@ -35,11 +35,11 @@ const CorrrespondenceMenu = ({
   };
 
   return (
-    <div className="mt-3 flex !h-[50px] flex-row justify-between border-b border-custom-gray_500 bg-custom-white_100 px-5">
+    <div className="flex !h-[50px] flex-row justify-between border-b border-custom-gray_500 bg-custom-white_100">
       <div
         className={mergeClassName(
-          'flex w-full flex-row items-end justify-between',
-          openCorrespondenceDetails ? 'w-4/6' : ''
+          'flex w-full flex-row items-end justify-between pl-5',
+          openCorrespondenceDetails && 'w-4/6'
         )}
       >
         <div>
@@ -88,13 +88,13 @@ const CorrrespondenceMenu = ({
             duration: 0.5,
             ease: 'easeInOut',
           }}
-          className="flex w-2/6 flex-row items-center justify-between border-l border-custom-gray_500 bg-custom-white_100 px-5"
+          className="flex w-2/6 flex-row items-center justify-between border-l border-custom-gray_500 bg-custom-white_100"
         >
-          <Title type="h1" className="text-[#585A69]">
+          <Title type="h1" className="ml-3 text-custom-gray_200">
             Details
           </Title>
           <Close
-            className="cursor-pointer rounded-full bg-[#F2F2F2]"
+            className="mr-3 cursor-pointer rounded-full bg-custom-gray_100"
             onClick={handleCloseClick}
           />
         </motion.div>

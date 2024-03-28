@@ -15,6 +15,9 @@ const config: Config = {
           ...customThemeColor,
         },
       },
+      boxShadow: {
+        minuteCard: '0px 2px 4px 0px #0000001A',
+      },
     },
   },
   plugins: [],
