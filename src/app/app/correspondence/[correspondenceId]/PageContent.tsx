@@ -35,7 +35,7 @@ const PageContent = () => {
         // setOpenCorrespondence={setOpenCorrespondence}
         setOpenCorrespondenceDetails={setOpenCorrespondenceDetails}
       />
-      <div className="flex flex-row justify-between px-5">
+      <div className="flex h-[calc(100vh_-_146px)] flex-row justify-between px-5">
         <div
           className={mergeClassName(
             'flex w-full flex-row items-center justify-between',

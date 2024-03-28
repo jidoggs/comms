@@ -86,7 +86,7 @@ export const correspondenceMinute = [
       meetingTitle: 'Export of Brewery Products',
       meetingDate: 'Friday, 16 February 2024 . 12:30pm - 1:30pm',
       meetingUrl: 'https://meet.google.com/qrm-smti-liv',
-      partticipants: ['P', 'T', 'O', 'Q'],
+      participants: ['P', 'T', 'O', 'Q'],
       meetingDesc:
         'Kindly provide advise on the Nigerian Breweries correspondence. Also find attached additional information to help with your findings. Regards',
     },

@@ -11,7 +11,7 @@ type Props = {
 const CorrespondenceHeader = ({ setOpenCorrespondenceDetails }: Props) => {
   const router = useRouter();
   return (
-    <div className="my-2 flex flex-row items-center justify-between px-5">
+    <div className="my-1.5 flex flex-row items-center justify-between px-5">
       <div className="flex flex-row items-center gap-3">
         <BackwardArrow
           size={34}

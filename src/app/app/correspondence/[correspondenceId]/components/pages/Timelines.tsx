@@ -30,7 +30,7 @@ const Timelines = () => {
       transition={{
         duration: 0.5,
       }}
-      className="relative flex h-[70vh] w-full flex-col items-center justify-center"
+      className="relative flex size-full flex-col items-center justify-center"
     >
       <div className="flex size-full items-center justify-center">
         <Timeline
