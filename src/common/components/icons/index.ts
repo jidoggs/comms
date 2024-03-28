@@ -1,11 +1,15 @@
 'use client';
 
+export { default as Add } from './Add';
 export { default as Archive } from './Archive';
 export { default as ArrowDown } from './ArrowDown';
+export { default as ArrowRight } from './ArrowRight';
+export { default as Bell } from './Bell';
 export { default as BackwardArrow } from './BackwardArrow';
 export { default as Briefcase } from './Briefcase';
 export { default as Calender } from './Calender';
 export { default as Close } from './Close';
+export { default as CloseCircle } from './CloseCircle';
 export { default as CloseCircled } from './CloseCircled';
 export { default as Collapse } from './Collapse';
 export { default as DatePicker } from './DatePicker';
@@ -17,7 +21,9 @@ export { default as Edit } from './Edit';
 export { default as File } from './File';
 export { default as GreenTick } from './GreenTick';
 export { default as Hierachy } from './Hierachy';
+export { default as Folder } from './Folder';
 export { default as Home } from './Home';
+export { default as InfoCircle } from './InfoCircle';
 export { default as Link } from './Link';
 export { default as Location } from './Location';
 export { default as Logout } from './Logout';

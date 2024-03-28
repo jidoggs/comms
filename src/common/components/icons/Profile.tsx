@@ -3,12 +3,13 @@ import { Icon } from "./type";
 
 const Profile: Icon = ({ size = "18", ...props }) => (
   <svg
+    {...props}
     width={size}
     height={size}
     viewBox="0 0 18 18"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    {...props}
+    style={{ cursor: 'pointer' }}
   >
     <g
       stroke="currentColor"

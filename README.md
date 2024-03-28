@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Comms
 
-## Getting Started
+## update 0.0.1
 
-First, run the development server:
+## Components
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### Buttons
+
+The Buttons have been customized to render your desired UI
+
+#### colors
+
+For default color of #11142D {custom-main} pass the props type default or ignore
+
+White
+
+```javascript
+<Button type="primary">Do Something </Button>
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Blue/Black
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```javascript
+<Button type="default">Do Something </Button>
+<Button >Do Something </Button>
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Transparent / Text Only
 
-## Learn More
+```javascript
+<Button type="text">Do Something </Button>
+```
 
-To learn more about Next.js, take a look at the following resources:
+#### Icon only
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Pass only icon as props to the button
+You can also add a description to for the icon
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```javascript
+<Button icon={<Icon />} />
+<Button icon={<Icon />} description={"Add Cart"} />
+```
 
-## Deploy on Vercel
+#### Full Width
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+pass the block attribute
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```javascript
+<Button block>Do Something </Button>
+```
+
+#### Size
+
+for small buttons with height of 34px or less, Add the size attribute of "small";
+regular sized buttons can have the size attribute ignored
+
+```javascript
+<Button size="small">Do Something </Button>
+```
+
+Read official Docs for more detailed read https://ant.design/components/button
+
+### Modals
+
+#### Close Icon
+
+if you want to remove the close Icon you can pass the hideCloseIcon Prop
+
+```javascript
+<CustomModal hideCloseIcon> ... </CustomModal>
+```
+
+
+Read official Docs for more detailed read https://ant.design/components/modal

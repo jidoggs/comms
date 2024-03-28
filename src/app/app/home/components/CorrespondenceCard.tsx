@@ -15,7 +15,7 @@ const CorrespondenceCard = () => {
   // console.log("DADADAD")
 
   const handleClick = () => {
-    router.push('home/correspondenceId');
+    router.push('correspondence/correspondenceId');
   };
 
   const handleKeyDown = () => {
@@ -70,6 +70,7 @@ const CorrespondenceCard = () => {
       ),
     },
   ];
+
 
   return (
     <div

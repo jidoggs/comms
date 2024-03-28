@@ -3,12 +3,12 @@ import { Icon } from './type';
 
 const Schedule: Icon = ({ size = '19', ...props }) => (
   <svg
+    {...props}
     width={size}
     height={size}
-    viewBox={`0 0 22 {size *}`}
+    viewBox={`0 0 22 22`}
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    {...props}
   >
     <path
       d="M7.33398 5.271C6.95815 5.271 6.64648 4.95933 6.64648 4.5835V1.8335C6.64648 1.45766 6.95815 1.146 7.33398 1.146C7.70982 1.146 8.02148 1.45766 8.02148 1.8335V4.5835C8.02148 4.95933 7.70982 5.271 7.33398 5.271Z"

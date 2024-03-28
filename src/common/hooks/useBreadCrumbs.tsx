@@ -5,7 +5,7 @@ import {
   BreadcrumbSeparatorType,
 } from 'antd/es/breadcrumb/Breadcrumb';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
-import { ArrowDown } from '../components/icons';
+import { ArrowRight } from '../components/icons';
 
 const generateBreadCrumbs = (
   path: string,
@@ -24,7 +24,7 @@ const generateBreadCrumbs = (
 
   const separator: BreadcrumbSeparatorType = {
     type: 'separator',
-    separator: <ArrowDown size={18} className="-rotate-90" />,
+    separator: <ArrowRight />,
   };
   const routes = [];
   for (let i = 0; i < pathArr.length; i++) {
@@ -34,7 +34,7 @@ const generateBreadCrumbs = (
     const query = queryGroup ? `?${queryGroup}` : '';
     val.title = tempTitle[0].toUpperCase() + tempTitle.substring(1);
     val.href = '/app/' + pathArr.slice(0, i + 1).join('/') + query;
-    val.className = 'text-custom-gray_200 text-sm p-0';
+    val.className = 'text-custom-gray_200';
     val.onClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
       e.preventDefault();
       router.push(e.currentTarget.href);

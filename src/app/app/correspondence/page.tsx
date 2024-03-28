@@ -1,35 +1,54 @@
 'use client';
-import CustomTab from '@/common/components/CustomTab';
-import CustomTable from '@/common/components/CustomTable';
-import { Document, Search } from '@/common/components/icons';
-import { dummyCorrespondence } from '@/common/mockData';
-import { mergeClassName } from '@/common/utils';
-import { TabsProps } from 'antd';
-import { ColumnsType } from 'antd/es/table';
 import React, { useState } from 'react';
-import Action from './components/Action';
-import CustomInput from '@/common/CustomInput';
+import { TabsProps } from 'antd';
+import Table from 'antd/es/table';
+import CustomTable from '@/common/components/CustomTable';
+import CustomTab from '@/common/components/CustomTab';
+import TableRowAction from './components/TableRowAction';
+import TableActions from './components/TableActions';
+import { Document } from '@/common/components/icons';
+import { mergeClassName } from '@/common/utils';
+import {
+  dummyCorrespondence,
+  singleDummyCorrespondenceData,
+} from '@/common/mockData';
+import {
+  EditableCell,
+  EditableRow,
+} from './components/EditTable/EditableTable';
 
-const columns: ColumnsType<any> = [
+type EditableTableProps = Parameters<typeof Table>[0];
+type ColumnTypes = Exclude<EditableTableProps['columns'], undefined>;
+
+const defaultColumns: (ColumnTypes[number] & {
+  editable?: boolean;
+  dataIndex: string;
+})[] = [
   {
     title: 'Sender - Who sent it',
     className: '!pl-5',
     dataIndex: 'sent_by',
     width: 180,
     ellipsis: true,
+    editable: true,
   },
   {
     title: 'Recipient (Primary)',
     className: '',
     dataIndex: 'recipient',
     ellipsis: true,
+    editable: true,
     width: 200,
     render: (value: any) => {
       return (
-        <div className="flex items-center gap-x-2.5">
-          <div className="size-7 rounded-full bg-red-500" />{' '}
-          <span>{value}</span>
-        </div>
+        <>
+          {value ? (
+            <div className="flex items-center gap-x-2.5">
+              <div className="size-7 rounded-full bg-red-500" />
+              <span>{value}</span>
+            </div>
+          ) : null}
+        </>
       );
     },
   },
@@ -39,6 +58,7 @@ const columns: ColumnsType<any> = [
     dataIndex: 'subject',
     ellipsis: true,
     width: 150,
+    editable: true,
   },
   {
     title: 'Ref. No',
@@ -46,19 +66,25 @@ const columns: ColumnsType<any> = [
     dataIndex: 'ref_no',
     ellipsis: true,
     width: 150,
+    editable: true,
   },
   {
     title: 'Document',
     className: '',
     dataIndex: 'document',
     ellipsis: true,
-    width: 220,
+    editable: true,
+    width: 330,
     render: (value: any) => {
       return (
-        <div className="flex items-center gap-x-2.5">
-          <Document />
-          <span>{value}</span>
-        </div>
+        <>
+          {value ? (
+            <div className="flex items-center gap-x-2.5">
+              <Document />
+              <span>{value}</span>
+            </div>
+          ) : null}
+        </>
       );
     },
   },
@@ -66,6 +92,7 @@ const columns: ColumnsType<any> = [
     title: 'Comment',
     dataIndex: 'comment',
     ellipsis: true,
+    editable: true,
     width: 450,
     className: '!text-wrap !max-w-full !break-words',
   },
@@ -81,8 +108,8 @@ const columns: ColumnsType<any> = [
     dataIndex: '',
     ellipsis: true,
     width: 135,
-    render: () => {
-      return <Action />;
+    render: (_: any, __: any, record: any) => {
+      return <TableRowAction data={record} />;
     },
   },
 ].map((itm) => ({
@@ -91,7 +118,10 @@ const columns: ColumnsType<any> = [
 }));
 
 const SchedulePage = () => {
+  const [dataSource, setDataSource] = useState(dummyCorrespondence);
+
   const [activeKey, setActiveKey] = useState('draft');
+
   const items: TabsProps['items'] = [
     {
       key: 'draft',
@@ -107,6 +137,63 @@ const SchedulePage = () => {
     setActiveKey(state);
   };
 
+  // const handleDelete = (id: string | number) => {
+  //   const newData = dataSource.filter((item) => item.id !== id);
+  //   setDataSource(newData);
+  // };
+
+  const handleAdd = () => {
+    const keys = Object.keys(singleDummyCorrespondenceData) as Array<
+      keyof typeof singleDummyCorrespondenceData
+    >;
+    const empty: any = {};
+
+    keys.forEach((itm) => {
+      empty[itm] = '';
+    });
+
+    const newData = {
+      ...empty,
+      id: dataSource.length + 1,
+      created_at: new Date().toLocaleDateString(),
+    };
+    setDataSource([...dataSource, newData]);
+  };
+
+  const handleSave = (row: any) => {
+    const newData = [...dataSource];
+    const index = newData.findIndex((item) => row.id === item.id);
+    const item = newData[index];
+    newData.splice(index, 1, {
+      ...item,
+      ...row,
+    });
+    setDataSource(newData);
+  };
+
+  const components = {
+    body: {
+      row: EditableRow,
+      cell: EditableCell,
+    },
+  };
+
+  const columns = defaultColumns.map((col) => {
+    if (!col.editable) {
+      return col;
+    }
+    return {
+      ...col,
+      onCell: (record: any) => ({
+        record,
+        editable: col.editable,
+        dataIndex: col.dataIndex,
+        title: col.title,
+        handleSave,
+      }),
+    };
+  });
+
   return (
     <div>
       <CustomTable
@@ -118,31 +205,26 @@ const SchedulePage = () => {
             items={items}
           />
         }
-        searchPanel={
-          <CustomInput
-            prefix={<Search />}
-            placeholder="Search"
-            className={{
-              input:
-                'bg-custom-white_100 border-custom-gray_400 placeholder:text-custom-gray_400 outline-none',
-            }}
-          />
-        }
+        searchPanel={<TableActions addHandler={handleAdd} />}
         className={{
           table: 'cursor-pointer',
         }}
-        columns={columns}
-        dataSource={dummyCorrespondence}
+        columns={columns as ColumnTypes}
+        components={components}
+        dataSource={dataSource}
+        onRow={(row, id) => ({ ...row, id: id?.toString(), help: 'jide' })}
         size="large"
         rowClassName="group"
-        rowSelection={{ columnWidth: 48 }}
+        rowSelection={{ columnWidth: 56 }}
         footer={() => (
-          <button className="text-custom-main flex items-center gap-x-2.5 py-1.5 pl-2.5 text-sm">
-            +{' '}
-            <span className="hover:bg-custom-gray_500 rounded-lg px-4 py-3">
-              Add correspondence
-            </span>
-          </button>
+          <div className="hover:bg-custom-white_100">
+            <button className="group flex items-center gap-x-2.5 py-1.5 pl-5 text-sm text-custom-main">
+              <span>+</span>
+              <span className="rounded-lg px-2 py-3 group-hover:bg-custom-gray_500">
+                Add correspondence
+              </span>
+            </button>
+          </div>
         )}
       />
     </div>
