@@ -17,7 +17,6 @@ const TaskCard = ({ taskTitle, taskStatus, assignees }: TaskCardProps) => {
       <div className="flex w-1/12 items-center gap-1">
         <input type="checkbox" />
         <Hierachy size={16} />
-        {/* <p>5</p> */}
       </div>
       <p className="w-7/12">{taskTitle}</p>
       <div className="flex w-4/12 gap-1">

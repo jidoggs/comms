@@ -48,7 +48,10 @@ function SideNav({ role }: { role: UserPreDefinedRole }) {
         style={{ paddingRight: 16 }}
       >
         <div />
-        <button onClick={toggleCollapsed} className="my-5 px-1 py-5">
+        <button
+          onClick={toggleCollapsed}
+          className="my-5 px-1 py-5 text-custom-white_100"
+        >
           <Collapse
             className={mergeClassName(
               'ease-in hover:scale-110',
@@ -69,7 +72,7 @@ function SideNav({ role }: { role: UserPreDefinedRole }) {
       />
       <button
         className={mergeClassName(
-          'group absolute bottom-5 left-1 right-1 flex cursor-pointer items-center px-4 py-5 text-xs ease-linear hover:text-custom-red_100',
+          'group absolute bottom-5 left-1 right-1 flex cursor-pointer items-center px-4 py-5 text-xs text-custom-white_100 ease-linear hover:text-custom-red_100',
           collapsed ? 'flex-col gap-y-0.5 pb-0.5 pt-2.5' : 'gap-x-2.5'
         )}
       >

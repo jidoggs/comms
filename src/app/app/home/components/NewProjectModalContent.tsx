@@ -5,8 +5,8 @@ import { useRouter } from 'next/navigation';
 
 import CustomInput from '@/common/CustomInput';
 import UploadCard from './UploadCard';
-import { CustomButton } from '@/common/components';
 import { File, Link } from '@/common/components/icons';
+import CustomButton from '@/common/components/CustomButton';
 
 const NewProjectModalContent = () => {
   const router = useRouter();
@@ -37,17 +37,11 @@ const NewProjectModalContent = () => {
           />
           {file && <UploadCard fileName={file?.name} />}
           <div className="relative mt-4 flex w-full items-center justify-between">
-            <CustomButton
-              variant="noStyleButton"
-              className="flex h-6 items-center gap-1 !px-2 hover:bg-custom-gray_100"
-            >
+            <CustomButton type="text">
               <Link />
               Insert Link
             </CustomButton>
-            <CustomButton
-              variant="noStyleButton"
-              className="flex h-6 items-center gap-1 !px-2 hover:bg-custom-gray_100"
-            >
+            <CustomButton type="text">
               <File size={40} />
               Attach File
             </CustomButton>
@@ -118,9 +112,7 @@ const NewProjectModalContent = () => {
         </div>
       )}
       <div className="mt-8 flex h-8 w-full justify-end">
-        <CustomButton className="bg-custom-main" onClick={handleClick}>
-          Continue
-        </CustomButton>
+        <CustomButton onClick={handleClick}>Continue</CustomButton>
       </div>
     </>
   );

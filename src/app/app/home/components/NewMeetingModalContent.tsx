@@ -1,7 +1,6 @@
 'use client';
 
 import CustomInput from '@/common/CustomInput';
-import { CustomButton } from '@/common/components';
 import {
   DatePicker,
   Location,
@@ -9,6 +8,7 @@ import {
   Users,
 } from '@/common/components/icons';
 import DatePickerAndTimeRange from './DateAndTimePicker';
+import CustomButton from '@/common/components/CustomButton';
 
 const NewMeetingModalContent = () => {
   const handleClick = () => {

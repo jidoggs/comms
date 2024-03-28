@@ -39,7 +39,7 @@ function SentCorrespondece({
       <div className="flex items-center justify-between border-t border-custom-gray_400 px-2 pt-5">
         <CustomButton
           size="small"
-          className="!rounded-[10px]"
+          className="!rounded-10"
           onClick={newCorrespondence}
           type="text"
         >
@@ -47,7 +47,7 @@ function SentCorrespondece({
         </CustomButton>
         <CustomButton
           size="small"
-          className="!rounded-[10px]"
+          className="!rounded-10"
           onClick={viewCorrespondence}
         >
           View Correspondence

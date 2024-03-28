@@ -5,8 +5,6 @@ const ProjectTitle = () => {
     <div className="mb-1 flex w-full justify-between px-4 text-base font-semibold">
       <div className="flex w-1/12 items-center gap-1">
         <input type="checkbox" />
-        {/* <File /> */}
-        {/* <p>5</p> */}
       </div>
       <div className="flex w-7/12 items-center gap-1">
         <p>Name</p>
