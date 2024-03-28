@@ -5,8 +5,8 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import type { GetRef } from 'antd';
 import { Form } from 'antd';
 import { singleDummyCorrespondenceData } from '@/common/mockData';
-import EditableCellData from './EditableCell';
 import { mergeClassName } from '@/common/utils';
+import EditableCellData from './EditableCell';
 
 // type InputRef = GetRef<typeof Input> | any;
 type FormInstance<T> = GetRef<typeof Form<T>>;

@@ -3,8 +3,8 @@ import CustomInput from '@/common/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
 import { Link, PaperClip } from '@/common/components/icons';
 import { GetProp, GetRef, Input, Upload, UploadFile, UploadProps } from 'antd';
-import React, { forwardRef, useRef, useState } from 'react';
-import { Props } from './EditableCell';
+import React, { forwardRef, useState } from 'react';
+import { EditCellProps } from './type';
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 type inputRef = GetRef<typeof Input> | any;
@@ -20,7 +20,7 @@ const getBase64 = (file: FileType): Promise<string> =>
     reader.onerror = (error) => reject(error);
   });
 
-const UploadDocs = forwardRef<Ref, Props>(
+const UploadDocs = forwardRef<Ref, EditCellProps>(
   ({ defaultValue, name, save }, ref) => {
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewTitle, setPreviewTitle] = useState('');

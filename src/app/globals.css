@@ -80,6 +80,10 @@ body {
   @apply text-center !opacity-100;
 }
 
+.ant-breadcrumb-separator {
+  @apply flex items-center justify-center;
+}
+
 .ant-table-footer {
   @apply !p-0;
 }

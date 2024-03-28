@@ -12,7 +12,10 @@ import {
   dummyCorrespondence,
   singleDummyCorrespondenceData,
 } from '@/common/mockData';
-import { EditableCell, EditableRow } from './components/EditableTable';
+import {
+  EditableCell,
+  EditableRow,
+} from './components/EditTable/EditableTable';
 
 type EditableTableProps = Parameters<typeof Table>[0];
 type ColumnTypes = Exclude<EditableTableProps['columns'], undefined>;
@@ -105,8 +108,8 @@ const defaultColumns: (ColumnTypes[number] & {
     dataIndex: '',
     ellipsis: true,
     width: 135,
-    render: () => {
-      return <TableRowAction />;
+    render: (_: any, __: any, record: any) => {
+      return <TableRowAction data={record} />;
     },
   },
 ].map((itm) => ({

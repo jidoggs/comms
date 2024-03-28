@@ -1,15 +1,9 @@
 import React, { forwardRef } from 'react';
-import { Item } from './EditableTable';
 import CustomInput from '@/common/CustomInput';
 import UploadDocs from './UploadDocs';
+import { EditCellProps } from './type';
 
-export type Props = {
-  name: keyof Item;
-  defaultValue: any;
-  save: () => Promise<void>;
-};
-
-const EditableCellData = forwardRef<any, Props>(
+const EditableCellData = forwardRef<any, EditCellProps>(
   ({ name, save, defaultValue }, ref) => {
     let template: any = null;
     switch (name) {
@@ -39,6 +33,6 @@ const EditableCellData = forwardRef<any, Props>(
   }
 );
 
-EditableCellData.displayName = "EditableCellData"
+EditableCellData.displayName = 'EditableCellData';
 
 export default EditableCellData;

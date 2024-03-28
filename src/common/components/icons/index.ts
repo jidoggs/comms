@@ -3,6 +3,7 @@
 export { default as Add } from './Add';
 export { default as Archive } from './Archive';
 export { default as ArrowDown } from './ArrowDown';
+export { default as ArrowRight } from './ArrowRight';
 export { default as Bell } from './Bell';
 export { default as BackwardArrow } from './BackwardArrow';
 export { default as Briefcase } from './Briefcase';
