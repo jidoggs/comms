@@ -4,12 +4,7 @@ import { useBreadCrumbs } from '@/common/hooks';
 
 function BreadCrumb() {
   const { crumbs } = useBreadCrumbs();
-  return (
-    <Breadcrumb
-      items={[...crumbs]}
-      separator={''}
-    />
-  );
+  return <Breadcrumb items={[...crumbs]} separator={''} />;
 }
 
 export default BreadCrumb;

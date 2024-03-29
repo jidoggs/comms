@@ -5,7 +5,7 @@ import {
   BreadcrumbSeparatorType,
 } from 'antd/es/breadcrumb/Breadcrumb';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
-import { ArrowDown } from '../components/icons';
+import { ArrowRight } from '../components/icons';
 
 const generateBreadCrumbs = (
   path: string,
@@ -24,7 +24,7 @@ const generateBreadCrumbs = (
 
   const separator: BreadcrumbSeparatorType = {
     type: 'separator',
-    separator: <ArrowDown size={18} className="-rotate-90" />,
+    separator: <ArrowRight />,
   };
   const routes = [];
   for (let i = 0; i < pathArr.length; i++) {

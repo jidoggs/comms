@@ -5,30 +5,21 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
 // import type { Dayjs } from 'dayjs';
 import dayLocaleData from 'dayjs/plugin/localeData';
-import { Calendar, Col, Row, Select, Typography, theme } from 'antd';
+import { Calendar, Col, Row, Select } from 'antd';
 // import { customThemeColor } from '@/common/utils';
 // import type { CalendarProps } from 'antd';
 
 dayjs.extend(dayLocaleData);
 
 const CustomCalendar: React.FC = () => {
-  const { token } = theme.useToken();
-
   const onPanelChange = () =>
     // value: Dayjs, mode: CalendarProps<Dayjs>['mode']
     {
       // console.log(value.format('YYYY-MM-DD'), mode);
     };
 
-  const wrapperStyle: React.CSSProperties = {
-    width: '100%',
-    backgroundColor: 'white',
-    border: `1px solid ${token.colorBorderSecondary}`,
-    borderRadius: token.borderRadiusLG,
-  };
-
   return (
-    <div style={wrapperStyle}>
+    <div className="shadow-wordBox overflow-hidden rounded bg-custom-white_100">
       <Calendar
         // style={{ background: "white" }}
         rootClassName="!bg-custom-white_100"
@@ -49,7 +40,7 @@ const CustomCalendar: React.FC = () => {
           const months = [];
           for (let i = 0; i < 12; i++) {
             current = current.month(i);
-            months.push(localeData.monthsShort(current));
+            months.push(localeData.months(current));
           }
 
           for (let i = start; i < end; i++) {
@@ -74,11 +65,24 @@ const CustomCalendar: React.FC = () => {
             <div style={{ padding: 8 }}>
               <Row gutter={8} align="middle">
                 <Col>
-                  <Typography.Title level={4}>
+                  {/* <Typography.Title level={4}>
                     {new Date(year, month).toLocaleString('en', {
                       month: 'long',
                     })}
-                  </Typography.Title>
+                  </Typography.Title> */}
+
+                  <Select
+                    size="small"
+                    popupMatchSelectWidth={false}
+                    variant="borderless"
+                    value={month}
+                    // onChange={(newYear) => {
+                    //   const now = value.clone().year(newYear);
+                    //   onChange(now);
+                    // }}
+                  >
+                    {monthOptions}
+                  </Select>
 
                   {/* <Radio.Group
                     size="small"
@@ -89,11 +93,12 @@ const CustomCalendar: React.FC = () => {
                     <Radio.Button value="year">Year</Radio.Button>
                   </Radio.Group> */}
                 </Col>
-                <Col className="mt-1">
+                <Col className="">
                   <Select
                     size="small"
+                    variant="borderless"
                     popupMatchSelectWidth={false}
-                    className="my-year-select border-0"
+                    className="my-year-select !border-none"
                     value={year}
                     onChange={(newYear) => {
                       const now = value.clone().year(newYear);

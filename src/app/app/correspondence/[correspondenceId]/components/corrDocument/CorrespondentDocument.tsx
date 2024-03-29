@@ -31,7 +31,7 @@ const CorrespondentDocument = ({ correspondenceFile }: any) => {
       //   duration: 0.5,
       //   ease: 'easeInOut',
       // }}
-      className="relative h-[70vh] w-full overflow-auto"
+      className="relative w-full overflow-auto"
     >
       <Document
         file={correspondenceFile[0]}

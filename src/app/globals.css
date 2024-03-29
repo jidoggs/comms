@@ -32,6 +32,15 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+  /* Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
 }
 
 .bebas {
@@ -73,11 +82,20 @@ body {
 .ant-picker-calendar .ant-picker-panel .ant-picker-date-panel {
   background-color: white !important;
 }
+
+.ant-collapse .ant-collapse-item .ant-collapse-content {
+  background-color: white !important;
+}
+
 .ant-menu-inline-collapsed li {
   @apply !flex-col justify-center !px-0.5 !pb-1 !pt-2.5;
 }
 .ant-menu-inline-collapsed .ant-menu-title-content {
   @apply text-center !opacity-100;
+}
+
+.ant-breadcrumb-separator {
+  @apply flex items-center justify-center;
 }
 
 .ant-table-footer {
@@ -91,4 +109,7 @@ body {
 
 .ant-btn-primary:not(:disabled):not(.ant-btn-disabled):hover {
   @apply !text-custom-main;
+}
+.ant-upload-btn {
+  @apply !p-0;
 }

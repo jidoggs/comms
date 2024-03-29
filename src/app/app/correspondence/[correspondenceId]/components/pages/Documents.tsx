@@ -42,7 +42,7 @@ const Documents = () => {
       transition={{
         duration: 0.5,
       }}
-      className="relative flex h-[75vh] w-full flex-col"
+      className="relative flex size-full flex-col"
     >
       <div className="relative flex h-full gap-4 px-5">
         <div className="flex flex-col gap-4 border-r border-white  pr-4 pt-5">

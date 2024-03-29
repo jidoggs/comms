@@ -1,21 +1,23 @@
 import React from 'react';
-import { Input, InputProps } from 'antd';
+
+import { GetRef, Input, InputProps } from 'antd';
 
 import { mergeClassName } from './utils';
+
+type InputRef = GetRef<typeof Input> | any;
 
 type ClassName = 'container' | 'label' | 'input';
 interface CustomInputProps extends Omit<InputProps, 'className'> {
   label?: string;
   type?: string;
   className?: string | Partial<Record<ClassName, string>>;
+  ref?: InputRef;
 }
 
-const CustomInput: React.FC<CustomInputProps> = ({
-  label,
-  type,
-  className,
-  ...rest
-}) => {
+const CustomInput: React.FC<CustomInputProps> = React.forwardRef<
+  CustomInputProps,
+  InputRef
+>(({ label, type, className, ...rest }, ref) => {
   const isClassNameString = typeof className === 'string';
 
   const inputclassName: string = mergeClassName(
@@ -32,6 +34,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
       {label && (
         <label
           className={mergeClassName(
+
             'focus-within: mb-2 block text-sm font-medium text-custom-main',
             !isClassNameString && className?.label
           )}
@@ -40,12 +43,16 @@ const CustomInput: React.FC<CustomInputProps> = ({
         </label>
       )}
       {type === 'password' ? (
-        <Input.Password className={inputclassName} {...rest} />
+        <Input.Password className={inputclassName} ref={ref} {...rest} />
+      ) : type === 'textarea' ? (
+        <Input.TextArea className={inputclassName} ref={ref} {...rest} />
       ) : (
-        <Input className={inputclassName} {...rest} />
+        <Input className={inputclassName} ref={ref} {...rest} />
       )}
     </div>
   );
-};
+});
+
+CustomInput.displayName = 'CustomInput';
 
 export default CustomInput;

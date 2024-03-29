@@ -1,6 +1,7 @@
+import CustomButton from '@/common/components/CustomButton';
 import { BackwardArrow, Dot, InfoCircle } from '@/common/components/icons';
 import Title from '@/common/components/Title';
-import { Avatar, Tooltip } from 'antd';
+import { Avatar } from 'antd';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
@@ -11,7 +12,7 @@ type Props = {
 const CorrespondenceHeader = ({ setOpenCorrespondenceDetails }: Props) => {
   const router = useRouter();
   return (
-    <div className="my-2 flex flex-row items-center justify-between px-5">
+    <div className="my-1.5 flex flex-row items-center justify-between px-5">
       <div className="flex flex-row items-center gap-3">
         <BackwardArrow
           size={34}
@@ -29,17 +30,16 @@ const CorrespondenceHeader = ({ setOpenCorrespondenceDetails }: Props) => {
             <Avatar
               src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
               size="default"
-              //   className="mr-2"
+              className="!border-full !border-1 !border-solid !border-black"
             />
           </div>
         </div>
-        <Tooltip placement="top" title={'Correspondence'} className="mx-2 my-3">
-          <InfoCircle
-            size={18}
-            onClick={() => setOpenCorrespondenceDetails(true)}
-            className="cursor-pointer"
-          />
-        </Tooltip>
+        <CustomButton
+          description="Correspondence"
+          type="primary"
+          icon={<InfoCircle size={18} />}
+          onClick={() => setOpenCorrespondenceDetails(true)}
+        />
       </div>
     </div>
   );

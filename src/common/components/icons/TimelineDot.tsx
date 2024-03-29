@@ -1,11 +1,7 @@
 import * as React from 'react';
 import { Icon } from './type';
 
-const TimelineDot: Icon = ({
-  size = '20',
-  // currentColor
-  ...props
-}) => (
+const TimelineDot: Icon = ({ size = '20', ...props }) => (
   <svg
     {...props}
     width={size}
@@ -20,7 +16,7 @@ const TimelineDot: Icon = ({
       r="9"
       fill="white"
       stroke="currentColor"
-      stroke-width="2"
+      strokeWidth="2"
     />
   </svg>
 );

@@ -2,7 +2,18 @@ import React from 'react';
 import { mergeClassName } from '../utils';
 
 type Props = {
-  type?: 'h1' | 'h2' | 'nav' | 'p' | 'btn' | 'bread' | 'sm';
+  type?:
+    | 'h1'
+    | 'h2'
+    | 'h3'
+    | 'h4'
+    | 'h5'
+    | 'h6'
+    | 'nav'
+    | 'p'
+    | 'btn'
+    | 'bread'
+    | 'sm';
   children: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;

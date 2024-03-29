@@ -1,8 +1,15 @@
 'use client';
 
-import { Avatar } from 'antd';
-import { File } from '@/common/components/icons';
+import { Flex, MenuProps } from 'antd';
+import { Briefcase, Send, Users, Folder } from '@/common/components/icons';
 import { useRouter } from 'next/navigation';
+import CreateCorrespondenceModal from './Modal';
+import NewProjectModalContent from './NewProjectModalContent';
+import NewMeetingModalContent from './NewMeetingModalContent';
+import AvatarGroup from '@/common/components/Avatar/AvatarGroup';
+import { dummyAvatarData } from '@/common/mockData';
+import CustomAvatar from '@/common/components/Avatar/CustomAvatar';
+import CustomButton from '@/common/components/CustomButton';
 
 const CorrespondenceCard = () => {
   const router = useRouter();
@@ -16,54 +23,92 @@ const CorrespondenceCard = () => {
     handleClick();
   };
 
+  // TODO: TO BE MOVED TO HELPER FILE
+  //eslint-disable-next-line
+  const items: MenuProps['items'] = [
+    {
+      key: '1',
+      icon: (
+        <Flex align="center" gap=".5rem">
+          <span
+            role="button"
+            tabIndex={0}
+            className=""
+            onKeyDown={() => null}
+            onClick={(e) => {
+              e.stopPropagation();
+              // console.log('A');
+            }}
+          >
+            <CreateCorrespondenceModal
+              Icon={<Users size="18" />}
+              title="Meeting"
+            >
+              <NewMeetingModalContent />
+            </CreateCorrespondenceModal>
+          </span>
+          <span
+            role="button"
+            tabIndex={0}
+            className=""
+            onKeyDown={() => null}
+            onClick={(e) => {
+              e.stopPropagation();
+              // console.log('B');
+            }}
+          >
+            <CreateCorrespondenceModal
+              Icon={<Briefcase size="18" />}
+              title="Project"
+            >
+              <NewProjectModalContent />
+            </CreateCorrespondenceModal>
+          </span>
+          <span className="">
+            <Send size="18" />
+          </span>
+        </Flex>
+      ),
+    },
+  ];
+
   return (
     <div
       role="button"
       tabIndex={0}
-      className="mt-2 flex w-full cursor-pointer gap-2 rounded-md bg-white p-2 text-gray-400 shadow-md"
+      className="group flex w-full cursor-pointer gap-2 rounded-md bg-white p-2.5 text-custom-gray_600 shadow-wordBox"
       onClick={handleClick}
       onKeyDown={handleKeyDown}
     >
-      <div className="size-8 rounded-md bg-gray-100">
-        <File />
+      <div className="self-start rounded-10 bg-custom-gray_100 p-2.5 text-custom-main">
+        <Folder size={18} />
       </div>
-      <div className="w-5/6">
+      <div className="space-y-2.5">
         <div className="flex gap-1 align-middle">
-          <Avatar className="bg-gray-300">U I</Avatar>
-          <div className="leading-3.2 text-xs">
-            <p className="font-bold text-gray-500">Jane Doe</p>
-            <p>Registry, Ministry of Trade & Investment</p>
+          <CustomAvatar firstName="Jane" lastName="Doe" />
+          <div className="">
+            <p className="text-sm font-bold leading-4 text-custom-main">
+              Jane Doe
+            </p>
+            <p className="text-xs">PS, Ministry of Trade & Investment</p>
           </div>
         </div>
-        <div className="my-2 text-xs font-semibold">
+        <div className="text-xs font-medium">
           <p>
             Dear HM, I hope this message finds you well. Please find
             correspondence f ...
           </p>
         </div>
-        <div className="mb-1 mt-2 flex items-center gap-1 text-xs font-semibold">
-          <p>04:20 PM, 16 Feb 2024</p>
-          {/* TODO: REFACTOR TO ITS OWN COMPONENT */}
-          <Avatar.Group
-            maxCount={3}
-            maxPopoverTrigger="click"
-            size="small"
-            maxStyle={{
-              color: '#f56a00',
-              backgroundColor: '#fde3cf',
-              cursor: 'pointer',
-            }}
-          >
-            <Avatar
-              src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-              className="mr-2"
-            />
-            <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-
-            <Avatar style={{ backgroundColor: '#87d068' }} />
-
-            <Avatar style={{ backgroundColor: '#1677ff' }} />
-          </Avatar.Group>
+        <div className="flex items-center gap-1">
+          <p className="text-xs font-medium text-custom-gray_200">
+            4:20 PM, 16 Feb 2024
+          </p>
+          <AvatarGroup maxCount={3} avatarData={dummyAvatarData} />
+          <div className="invisible flex flex-1 items-center justify-end group-hover:visible">
+            <CustomButton size="small" type="text" icon={<Users />} />
+            <CustomButton size="small" type="text" icon={<Briefcase />} />
+            <CustomButton size="small" type="text" icon={<Send />} />
+          </div>
         </div>
       </div>
     </div>

@@ -17,7 +17,7 @@ const Dot: Icon = ({ size = '30', fill = 'currentColor', ...props }) => (
       r="7.5"
       fill="white"
       stroke="currentColor"
-      stroke-width="5"
+      strokeWidth="5"
     />
     <rect x="19" y="26" width="2" height="8" fill={fill} />
     <defs>
@@ -29,8 +29,8 @@ const Dot: Icon = ({ size = '30', fill = 'currentColor', ...props }) => (
         y2="8"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="currentColor" />
-        <stop offset="1" stop-color={fill} />
+        <stop stopColor="currentColor" />
+        <stop offset="1" stopColor={fill} />
       </linearGradient>
     </defs>
   </svg>

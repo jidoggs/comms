@@ -18,9 +18,9 @@ function Layout({ children, user }: Props) {
     <AntLayout className="!bg-custom-gray_100">
       <div className="flex h-screen w-full">
         <SideNav role={user?.['role.name'] as UserPreDefinedRole} />
-        <AntLayout className="flex h-screen w-full flex-col overflow-y-scroll">
+        <AntLayout className="flex h-screen w-full flex-col overflow-hidden">
           <AppHeader />
-          <Content className="w-full pt-6">{children}</Content>
+          <Content className="w-full">{children}</Content>
         </AntLayout>
       </div>
     </AntLayout>

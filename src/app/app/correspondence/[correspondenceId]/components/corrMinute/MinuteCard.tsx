@@ -2,7 +2,6 @@
 import SideMenu from '@/app/app/correspondence/[correspondenceId]/components/SideMenu';
 import { MoreFile } from '@/common/components/icons';
 import Title from '@/common/components/Title';
-import { mergeClassName } from '@/common/utils';
 import { Avatar, Tooltip } from 'antd';
 // import dayjs from 'dayjs';
 import React from 'react';
@@ -10,6 +9,7 @@ import { initalMinuteState } from '../pages/Minutes';
 import { StateDispatch } from '@/types';
 import { generateRandomColor, useIntials } from '@/common/hooks/corrUtils';
 import MinuteType from './MinuteType';
+import { mergeClassName } from '@/common/utils';
 // import { CorrespondenceMinute } from '@/common/mockData/correspondenceMinute';
 
 type Props = {
@@ -18,19 +18,19 @@ type Props = {
   setCorrespondenceFile: StateDispatch<FileList | null>;
   setOpenCorrespondenceDetails: StateDispatch<boolean>;
   minuteId: number;
-  cardPosition: string;
   chatState: typeof initalMinuteState;
   setChatState: StateDispatch<typeof initalMinuteState>;
   minute: any;
+  className?: string;
 };
 
 const MinuteCard = ({
   // name,
   // image,
+  className,
   setCorrespondenceFile,
   setOpenCorrespondenceDetails,
   minuteId,
-  cardPosition,
   chatState,
   setChatState,
   minute,
@@ -55,7 +55,7 @@ const MinuteCard = ({
 
   return (
     <div
-      className="my-3 flex flex-row items-center gap-3 sm:my-0"
+      className={mergeClassName('flex flex-row items-center gap-3', className)}
       onMouseEnter={() => {
         setChatState({
           activeChatId: minuteId,
@@ -71,12 +71,7 @@ const MinuteCard = ({
     >
       <div
         // className=""
-        className={mergeClassName(
-          'w-full bg-custom-white_100 pb-2 md:w-[400px]',
-          cardPosition === 'left'
-            ? 'order-1 rounded-xl rounded-bl-none'
-            : 'order-2 rounded-xl rounded-br-none'
-        )}
+        className="shadow-minuteCard w-full rounded-xl bg-custom-white_100 pb-2 group-odd:order-1  group-odd:rounded-bl-none group-even:order-2 group-even:rounded-br-none md:w-[400px]"
       >
         <div className="flex flex-row items-center justify-between px-2">
           <div className="my-2 flex flex-row items-center gap-3">
@@ -152,12 +147,7 @@ const MinuteCard = ({
         </div>
       </div>
       {chatState?.activeChatId === minuteId && (
-        <div
-          className={mergeClassName(
-            'hidden sm:inline-flex',
-            cardPosition === 'left' ? 'order-2' : 'order-1'
-          )}
-        >
+        <div className="hidden group-odd:order-2 group-even:order-1 sm:inline-flex">
           <SideMenu />
         </div>
       )}

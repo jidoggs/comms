@@ -75,6 +75,9 @@ const appTheme: ThemeConfig = {
       colorBgContainerDisabled: customThemeColor.gray_900,
       margin: 0,
       controlHeight: 44,
+      controlHeightSM: 24,
+      paddingBlockSM: 0,
+      paddingInlineSM: 0,
     },
     InputNumber: {
       paddingBlock: 10,
@@ -146,6 +149,9 @@ const appTheme: ThemeConfig = {
       cellActiveWithRangeBg: customThemeColor.white_200,
       cellRangeBorderColor: customThemeColor.gray_700,
     },
+    Progress: {
+      defaultColor: customThemeColor.gray_400,
+    },
     Typography: {
       titleMarginTop: 0,
       titleMarginBottom: 0,
@@ -212,6 +218,20 @@ const appTheme: ThemeConfig = {
       paddingXXS: 0,
       fontSize: 14,
       marginXXS: 0,
+    },
+    Upload: {
+      colorBorder: 'transparent',
+      padding: 0,
+    },
+    Modal: {
+      margin: 0,
+      marginXS: 15,
+      paddingLG: 20,
+      padding: 20,
+      titleFontSize: 20,
+      titleColor: customThemeColor.gray_300,
+      borderRadius: 5,
+      borderRadiusSM: 0,
     },
     Timeline: {
       tailColor: customThemeColor.gray_200,

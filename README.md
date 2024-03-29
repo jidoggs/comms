@@ -1,5 +1,7 @@
 # Comms
 
+## update 0.0.1
+
 ## Components
 
 ### Buttons
@@ -21,6 +23,12 @@ Blue/Black
 ```javascript
 <Button type="default">Do Something </Button>
 <Button >Do Something </Button>
+```
+
+Transparent / Text Only
+
+```javascript
+<Button type="text">Do Something </Button>
 ```
 
 #### Icon only
@@ -50,4 +58,17 @@ regular sized buttons can have the size attribute ignored
 <Button size="small">Do Something </Button>
 ```
 
-Read official Docs for more detailed read https://ant.design/components/button#styles-and-classnames-attribute
+Read official Docs for more detailed read https://ant.design/components/button
+
+### Modals
+
+#### Close Icon
+
+if you want to remove the close Icon you can pass the hideCloseIcon Prop
+
+```javascript
+<CustomModal hideCloseIcon> ... </CustomModal>
+```
+
+
+Read official Docs for more detailed read https://ant.design/components/modal
