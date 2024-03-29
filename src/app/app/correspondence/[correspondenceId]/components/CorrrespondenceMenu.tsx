@@ -10,8 +10,8 @@ import {
 } from '@/common/components/icons';
 import { motion } from 'framer-motion';
 import Title from '@/common/components/Title';
-import { Tooltip } from 'antd';
 import { StateDispatch } from '@/types';
+import CustomButton from '@/common/components/CustomButton';
 
 type Props = {
   // openCorrespondence?: boolean;
@@ -49,29 +49,29 @@ const CorrrespondenceMenu = ({
           />
         </div>
 
-        <div className="left flex h-full flex-row items-center">
-          <Tooltip placement="top" title={'Search'} className="mx-2 my-3">
-            <Search className="mx-3 cursor-pointer" size={18} />
-          </Tooltip>
-          <div className="flex h-full flex-row items-center border-x border-custom-gray_500">
-            <Tooltip
-              placement="top"
-              title={'Create project'}
-              className="mx-2 my-3"
-            >
-              <Briefcase className="mx-3 cursor-pointer" size={18} />
-            </Tooltip>
-            <Tooltip
-              placement="top"
-              title={'Create meeting'}
-              className="mx-2 my-3"
-            >
-              <Users className="mx-3 cursor-pointer" size={18} />
-            </Tooltip>
+        <div className="left flex h-full flex-row items-center gap-1 px-1">
+          <CustomButton
+            description="Search"
+            type="primary"
+            icon={<Search size={18} />}
+          />
+          <div className="flex h-full flex-row items-center gap-1 border-x border-custom-gray_500 px-1">
+            <CustomButton
+              description="Create project"
+              type="primary"
+              icon={<Briefcase size={18} />}
+            />
+            <CustomButton
+              description="Create a meeting"
+              type="primary"
+              icon={<Users size={18} />}
+            />
           </div>
-          <Tooltip placement="top" title={'Push'} className="mx-2 my-3">
-            <Send className="mx-3 cursor-pointer" size={18} />
-          </Tooltip>
+          <CustomButton
+            description="Push"
+            type="primary"
+            icon={<Send size={18} />}
+          />
         </div>
       </div>
       {openCorrespondenceDetails && (

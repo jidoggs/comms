@@ -15,7 +15,7 @@ const MinuteAction = () => {
       <div className="flex flex-col p-3">
         <div className="mb-2 flex flex-row items-center justify-between">
           <div className="left">Left</div>
-          <div className="flex flex-row">
+          <div className="flex flex-row gap-1">
             <CustomButton
               description="Create a meeting"
               type="primary"
@@ -26,7 +26,7 @@ const MinuteAction = () => {
               type="primary"
               icon={<Briefcase size={18} />}
             />
-            <div className="h-8  w-px self-center border-l border-custom-gray_500 bg-custom-gray_500" />
+            <div className="h-8 self-center border-l border-custom-gray_500 bg-custom-gray_500" />
             <CustomButton
               description="Create a meeting"
               type="primary"
