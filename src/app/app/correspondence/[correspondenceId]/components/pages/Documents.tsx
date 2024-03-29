@@ -1,137 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Cascader } from 'antd';
+import { documents } from './data';
+import { ArrowRight } from '@/common/components/icons';
 
 interface Option {
   value: string | number;
-  label: string;
+  label: React.ReactNode;
   children?: Option[];
 }
 
-const options: Option[] = [
-  {
-    value: 'zhejiang',
-    label: 'Zhejiang Zhejiang',
-    children: [
-      {
-        value: 'hangzhou',
-        label: 'Hangzhou',
-        children: [
-          {
-            value: 'westLake',
-            label: 'West Lake',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    value: 'jim',
-    label: 'Jiim',
-    children: [
-      {
-        value: 'nanjingg',
-        label: 'Nanjingg',
-        children: [
-          {
-            value: 'zhonghuamena',
-            label: 'Zhong Hua Mena',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    value: 'jiangsus',
-    label: 'Jiangsus',
-    children: [
-      {
-        value: 'nanjings',
-        label: 'Nanjings',
-        children: [
-          {
-            value: 'zhonghuamend',
-            label: 'Zhong Hua Mend',
-          },
-          {
-            value: 'zhonghuamend',
-            label: 'Zhong Hua Mend',
-          },
-          {
-            value: 'zhonghuamendk',
-            label: 'Zhong Hua Mend',
-          },
-          {
-            value: 'zhonghuamendl',
-            label: 'Zhong Hua Mend',
-          },
-          {
-            value: 'zhonghuamendh',
-            label: 'Zhong Hua Mend',
-          },
-          {
-            value: 'zhonghuamendh',
-            label: 'Zhong Hua Mend',
-          },
-        ],
-      },
-      {
-        value: 'nanjingj',
-        label: 'Nanjingj',
-        children: [
-          {
-            value: 'zhonghuamenj',
-            label: 'Zhong Hua Menj',
-          },
-          {
-            value: 'zhonghuamenj',
-            label: 'Zhong Hua Menj',
-          },
-          {
-            value: 'zhonghuameng',
-            label: 'Zhong Hua Men',
-          },
-          {
-            value: 'zhonghuamenge',
-            label: 'Zhong Hua Men',
-          },
-        ],
-      },
-      {
-        value: 'nanjingq',
-        label: 'Nanjingq',
-        children: [
-          {
-            value: 'zhonghuameny',
-            label: 'Zhong Hua Men',
-          },
-          {
-            value: 'zhonghuamenu',
-            label: 'Zhong Hua Men',
-          },
-          {
-            value: 'zhonghuament',
-            label: 'Zhong Hua Men',
-          },
-          {
-            value: 'zhonghuamen',
-            label: 'Zhong Hua Men',
-          },
-          {
-            value: 'zhonghuamenq',
-            label: 'Zhong Hua Men',
-          },
-        ],
-      },
-    ],
-  },
-];
-
-// const onChange = (value: string[]) => {
-//   console.log(value);
-// };
-
 const Documents = () => {
+  const [stepOne, setStepOne] = useState<any>(null);
+  const [stepTwo, setStepTwo] = useState<any>(null);
+
+  const handleStepOne = (doc: any) => {
+    if (stepOne && stepOne.key === doc.key) {
+      setStepOne(null);
+      setStepTwo(null);
+    } else {
+      setStepOne(doc);
+      setStepTwo(null);
+    }
+  };
+
+  const handleStepTwo = (id: any) => {
+    if (stepTwo === id) {
+      setStepTwo(null);
+    } else {
+      setStepTwo(id);
+    }
+  };
+
   return (
     <motion.div
       initial={{
@@ -143,14 +42,50 @@ const Documents = () => {
       transition={{
         duration: 0.5,
       }}
-      className="relative flex h-[70vh] w-full flex-col"
+      className="relative flex h-[75vh] w-full flex-col"
     >
-      <div className="mt-5">
-        <Cascader.Panel
-          options={options}
-          // onChange={onChange}
-          rootClassName="!border-custom-gray_500 !border-none"
-        />
+      <div className="relative flex h-full gap-4 px-5">
+        <div className="flex flex-col gap-4 border-r border-white  pr-4 pt-5">
+          {documents.map((doc) => (
+            <button
+              key={doc.key}
+              className={`flex min-w-[284px] items-center justify-between rounded-md px-3 py-2 text-left ${stepOne && stepOne.key === doc.key && !stepTwo ? 'bg-white' : stepOne && stepOne.key === doc.key && stepTwo ? 'bg-gray-200' : 'bg-transparent'}`}
+              onClick={() => handleStepOne(doc)}
+            >
+              <span className="flex items-center gap-2">
+                <doc.icon size={16} />
+                {doc.value}
+              </span>
+              {doc.children.length && <ArrowRight size={12} />}
+            </button>
+          ))}
+        </div>
+        {stepOne && stepOne.children.length && (
+          <div
+            className={`flex flex-col gap-4 border-r border-white  pr-4 pt-5`}
+          >
+            {stepOne.children.map((el: any) => (
+              <button
+                key={el.id}
+                className={`flex min-w-[284px] items-center justify-between whitespace-nowrap rounded-md px-3 py-2 text-left ${stepTwo === el.id ? 'bg-white' : 'bg-transparent'}`}
+                onClick={() => handleStepTwo(el.id)}
+              >
+                <span className="flex items-center gap-2">
+                  <el.icon size={16} />
+                  {el.value}
+                </span>
+                <ArrowRight size={12} />
+              </button>
+            ))}
+          </div>
+        )}
+        <div className="flex-1 pt-5">
+          {stepTwo && (
+            <div className="mx-auto min-h-full max-w-[80%] rounded-md bg-white p-5">
+              {stepTwo}
+            </div>
+          )}
+        </div>
       </div>
     </motion.div>
   );
