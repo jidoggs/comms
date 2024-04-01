@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-
 import CustomInput from '@/common/CustomInput';
 import UploadCard from './UploadCard';
 import { File, Link } from '@/common/components/icons';

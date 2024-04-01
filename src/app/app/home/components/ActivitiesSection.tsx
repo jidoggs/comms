@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import dayjs from 'dayjs';
 import ActivitiesCard from './ActivitiesCard';
 import Title from '@/common/components/Title';
@@ -46,7 +46,7 @@ const ActivitiesSection = () => {
             dayjs(activity?.date).format('DD-MM-YYYY');
 
           return (
-            <>
+            <Fragment key={i}>
               {!showDate && (
                 <div className="p-2.5">
                   <Title className="text-custom-gray_850 text-xs font-medium leading-4">
@@ -59,7 +59,7 @@ const ActivitiesSection = () => {
                 </div>
               )}
               <ActivitiesCard title={activity?.title} />
-            </>
+            </Fragment>
           );
         })}
       </div>
