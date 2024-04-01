@@ -16,6 +16,7 @@ export { default as DatePicker } from './DatePicker';
 export { default as Delete } from './Delete';
 export { default as DirectDown } from './DirectDown';
 export { default as Document } from './Document';
+export { default as DocumentUpload } from './DocumentUpload';
 export { default as Dot } from './Dot';
 export { default as Edit } from './Edit';
 export { default as File } from './File';

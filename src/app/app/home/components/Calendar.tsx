@@ -6,6 +6,8 @@ import 'dayjs/locale/zh-cn';
 // import type { Dayjs } from 'dayjs';
 import dayLocaleData from 'dayjs/plugin/localeData';
 import { Calendar, Col, Row, Select } from 'antd';
+import CustomButton from '@/common/components/CustomButton';
+import { Plus } from '@/common/components/icons';
 // import { customThemeColor } from '@/common/utils';
 // import type { CalendarProps } from 'antd';
 
@@ -19,7 +21,7 @@ const CustomCalendar: React.FC = () => {
     };
 
   return (
-    <div className="shadow-wordBox overflow-hidden rounded bg-custom-white_100">
+    <div className="shadow-wordBox h-[317px] overflow-hidden rounded bg-custom-white_100">
       <Calendar
         // style={{ background: "white" }}
         rootClassName="!bg-custom-white_100"
@@ -62,7 +64,7 @@ const CustomCalendar: React.FC = () => {
             );
           }
           return (
-            <div style={{ padding: 8 }}>
+            <div className="flex items-center justify-between p-2">
               <Row gutter={8} align="middle">
                 <Col>
                   {/* <Typography.Title level={4}>
@@ -122,6 +124,12 @@ const CustomCalendar: React.FC = () => {
                   </Select>
                 </Col> */}
               </Row>
+              <CustomButton
+                size="small"
+                type="text"
+                icon={<Plus />}
+                borderLeft
+              />
             </div>
           );
         }}

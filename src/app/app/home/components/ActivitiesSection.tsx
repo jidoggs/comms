@@ -10,17 +10,25 @@ const ActivitiesSection = () => {
   return (
     <div className="flex w-full flex-col rounded bg-white text-gray-400 shadow-md">
       <div className="flex w-full items-center justify-between border-b border-custom-gray_500 py-2 pl-1 pr-2.5">
-        <CustomButton type="text" size="small">
-          <Title type="btn" className="font-semibold">
+        <CustomButton
+          type="text"
+          size="small"
+          className="flex items-center gap-x-1"
+        >
+          <Title type="sm" className="font-semibold text-custom-gray_200">
             Activities
           </Title>
           <ArrowRight />
         </CustomButton>
-        <div className="border-l border-custom-gray_500 pl-2.5">
-          <CustomButton size="small" type="text" icon={<Plus />} title="Add" />
-        </div>
+        <CustomButton
+          size="small"
+          type="text"
+          icon={<Plus />}
+          description="Add"
+          borderLeft
+        />
       </div>
-      <div className="no-scrollbar size-full max-h-[347px] overflow-y-scroll">
+      <div className="no-scrollbar size-full max-h-[calc(100vh_-_636px)]  overflow-y-scroll">
         {activitiesMockData?.map((activity, i, data) => {
           const prevDate = data[i - 1];
           const showDate =

@@ -76,11 +76,11 @@ const CorrespondenceCard = () => {
     <div
       role="button"
       tabIndex={0}
-      className="group flex w-full cursor-pointer gap-2 rounded-md bg-white p-2.5 text-custom-gray_600 shadow-wordBox"
+      className="shadow-wordBox group flex w-full cursor-pointer gap-2 rounded-md bg-white p-2.5 text-custom-gray_600"
       onClick={handleClick}
       onKeyDown={handleKeyDown}
     >
-      <div className="self-start rounded-10 bg-custom-gray_100 p-2.5 text-custom-main">
+      <div className="rounded-10 self-start bg-custom-gray_100 p-2.5 text-custom-main">
         <Folder size={18} />
       </div>
       <div className="space-y-2.5">
@@ -105,9 +105,24 @@ const CorrespondenceCard = () => {
           </p>
           <AvatarGroup maxCount={3} avatarData={dummyAvatarData} />
           <div className="invisible flex flex-1 items-center justify-end group-hover:visible">
-            <CustomButton size="small" type="text" icon={<Users />} />
-            <CustomButton size="small" type="text" icon={<Briefcase />} />
-            <CustomButton size="small" type="text" icon={<Send />} />
+            <CustomButton
+              size="small"
+              type="text"
+              icon={<Users />}
+              description="Create a meeting"
+            />
+            <CustomButton
+              size="small"
+              type="text"
+              icon={<Briefcase />}
+              description="Create a project"
+            />
+            <CustomButton
+              size="small"
+              type="text"
+              icon={<Send />}
+              description="Push"
+            />
           </div>
         </div>
       </div>

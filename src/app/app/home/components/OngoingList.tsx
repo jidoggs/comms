@@ -6,8 +6,8 @@ import CorrespondenceCard from './CorrespondenceCard';
 const OngoingList = () => {
   return (
     <section className="flex flex-col gap-y-2.5">
-      <SectionHeaderCard title="Ongoing" count={16} />
-      <div className="no-scrollbar h-full max-h-[calc(100vh_-_7.5rem)] space-y-2.5 overflow-y-scroll">
+      <SectionHeaderCard title="Ongoing" count={10} />
+      <div className="no-scrollbar h-full max-h-[calc(100vh_-_8.625rem)] space-y-2.5 overflow-y-scroll">
         {[...Array(3)]?.map((_, id) => <CorrespondenceCard key={id} />)}
       </div>
     </section>

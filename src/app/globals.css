@@ -42,6 +42,9 @@ body {
     scrollbar-width: none; /* Firefox */
   }
 }
+/* * {
+  outline: 1px solid red;
+} */
 
 .bebas {
   font-family: var(--bebas);
