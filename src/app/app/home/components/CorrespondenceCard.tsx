@@ -1,20 +1,14 @@
-'use client';
-
-import { Flex, MenuProps } from 'antd';
-import { Briefcase, Send, Users, Folder } from '@/common/components/icons';
 import { useRouter } from 'next/navigation';
-import CreateCorrespondenceModal from './Modal';
-import NewProjectModalContent from './NewProjectModalContent';
-import NewMeetingModalContent from './NewMeetingModalContent';
 import AvatarGroup from '@/common/components/Avatar/AvatarGroup';
-import { dummyAvatarData } from '@/common/mockData';
 import CustomAvatar from '@/common/components/Avatar/CustomAvatar';
 import CustomButton from '@/common/components/CustomButton';
+import CreateMeeting from './CorrespondenceCardActions/CreateMeeting';
+import CreateProject from './CorrespondenceCardActions/CreateProject';
+import { Send, Folder } from '@/common/components/icons';
+import { dummyAvatarData } from '@/common/mockData';
 
 const CorrespondenceCard = () => {
   const router = useRouter();
-  // console.log("DADADAD")
-
   const handleClick = () => {
     router.push('correspondence/correspondenceId');
   };
@@ -22,55 +16,6 @@ const CorrespondenceCard = () => {
   const handleKeyDown = () => {
     handleClick();
   };
-
-  // TODO: TO BE MOVED TO HELPER FILE
-  //eslint-disable-next-line
-  const items: MenuProps['items'] = [
-    {
-      key: '1',
-      icon: (
-        <Flex align="center" gap=".5rem">
-          <span
-            role="button"
-            tabIndex={0}
-            className=""
-            onKeyDown={() => null}
-            onClick={(e) => {
-              e.stopPropagation();
-              // console.log('A');
-            }}
-          >
-            <CreateCorrespondenceModal
-              Icon={<Users size="18" />}
-              title="Meeting"
-            >
-              <NewMeetingModalContent />
-            </CreateCorrespondenceModal>
-          </span>
-          <span
-            role="button"
-            tabIndex={0}
-            className=""
-            onKeyDown={() => null}
-            onClick={(e) => {
-              e.stopPropagation();
-              // console.log('B');
-            }}
-          >
-            <CreateCorrespondenceModal
-              Icon={<Briefcase size="18" />}
-              title="Project"
-            >
-              <NewProjectModalContent />
-            </CreateCorrespondenceModal>
-          </span>
-          <span className="">
-            <Send size="18" />
-          </span>
-        </Flex>
-      ),
-    },
-  ];
 
   return (
     <div
@@ -105,18 +50,8 @@ const CorrespondenceCard = () => {
           </p>
           <AvatarGroup maxCount={3} avatarData={dummyAvatarData} />
           <div className="invisible flex flex-1 items-center justify-end group-hover:visible">
-            <CustomButton
-              size="small"
-              type="text"
-              icon={<Users />}
-              description="Create a meeting"
-            />
-            <CustomButton
-              size="small"
-              type="text"
-              icon={<Briefcase />}
-              description="Create a project"
-            />
+            <CreateMeeting />
+            <CreateProject />
             <CustomButton
               size="small"
               type="text"
