@@ -25,6 +25,15 @@ const appTheme: ThemeConfig = {
   components: {
     Form: {
       fontWeightStrong: 500,
+      itemMarginBottom: 10,
+      labelColor: customThemeColor.main,
+      labelHeight: 18,
+      verticalLabelPadding: '0 0 5px',
+      controlPaddingHorizontal: 5,
+      paddingContentVertical: 5,
+      padding: 5,
+      paddingContentHorizontal: 5,
+      
     },
     Button: {
       fontSize: 14,
