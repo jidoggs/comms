@@ -1,3 +1,4 @@
+export * from '../../../types';
 export interface CorrespondenceData {
   sent_by: string;
   recipient: string;

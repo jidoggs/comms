@@ -7,9 +7,9 @@ export const dummyProjectData = [
     assignees: [
       {
         id: 1,
-        image_url: '',
-        last_name: 'Doe',
-        first_name: 'Jane',
+        // image_url: '',
+        firstName: 'Doe',
+        lastName: 'Jane',
       },
     ],
     tasks: [
@@ -38,15 +38,15 @@ export const dummyProjectData = [
     assignees: [
       {
         id: 1,
-        image_url: '',
-        last_name: 'Doe',
-        first_name: 'John',
+        // image_url: '',
+        firstName: 'Doe',
+        lastName: 'John',
       },
       {
         id: 2,
-        image_url: '',
-        last_name: 'Doe',
-        first_name: 'Jane',
+        // image_url: '',
+        firstName: 'Doe',
+        lastName: 'Jane',
       },
     ],
     tasks: [
@@ -70,27 +70,27 @@ export const dummyProjectData = [
     assignees: [
       {
         id: 1,
-        image_url: '',
-        last_name: 'Doe',
-        first_name: 'Jane',
+        // image_url: '',
+        firstName: 'Doe',
+        lastName: 'Jane',
       },
       {
         id: 2,
-        image_url: '',
-        last_name: 'Doe',
-        first_name: 'Jane',
+        // image_url: '',
+        firstName: 'Doe',
+        lastName: 'Jane',
       },
       {
         id: 3,
-        image_url: '',
-        last_name: 'Doe',
-        first_name: 'Jane',
+        // image_url: '',
+        firstName: 'Doe',
+        lastName: 'Jane',
       },
       {
         id: 4,
-        image_url: '',
-        last_name: 'Doe',
-        first_name: 'Jane',
+        // image_url: '',
+        firstName: 'Doe',
+        lastName: 'Jane',
       },
     ],
     tasks: [
@@ -119,27 +119,27 @@ export const dummyProjectData = [
     assignees: [
       {
         id: 1,
-        image_url: '',
-        last_name: 'Doe',
-        first_name: 'Jane',
+        // image_url: '',
+        firstName: 'Doe',
+        lastName: 'Jane',
       },
       {
         id: 2,
-        image_url: '',
-        last_name: 'Doe',
-        first_name: 'Jane',
+        // image_url: '',
+        firstName: 'Doe',
+        lastName: 'Jane',
       },
       {
         id: 3,
-        image_url: '',
-        last_name: 'Doe',
-        first_name: 'Jane',
+        // image_url: '',
+        firstName: 'Doe',
+        lastName: 'Jane',
       },
       {
         id: 4,
-        image_url: '',
-        last_name: 'Doe',
-        first_name: 'Jane',
+        // image_url: '',
+        firstName: 'Doe',
+        lastName: 'Jane',
       },
     ],
     tasks: [
