@@ -1,33 +1,37 @@
-'use client';
-
 import { Avatar } from 'antd';
 import CustomAvatar from './CustomAvatar';
 import { customThemeColor } from '@/common/utils';
-import { AvatarData, AvatarGroupProps } from './types';
+import { AvatarGroupProps } from './types';
 
-const AvatarGroup = ({ maxCount, avatarData }: AvatarGroupProps) => {
+const AvatarGroup = ({ avatarData, size, ...props }: AvatarGroupProps) => {
   return (
     <Avatar.Group
-      maxCount={maxCount}
+      {...props}
       maxPopoverTrigger="click"
-      size="small"
+      size={size ? size : 'small'}
       maxStyle={{
-        color: '#f56a00',
-        backgroundColor: '#fde3cf',
+        color: customThemeColor.white_100,
+        backgroundColor: customThemeColor.gray_700,
         cursor: 'pointer',
       }}
+      className="p-0.5"
     >
       {/* <Avatar
         src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
         className="mr-2"
       /> */}
-      {avatarData?.map((data: AvatarData, index: number) => (
+      {avatarData.map((data, index: number) => (
         <CustomAvatar
+          style={{
+            zIndex: avatarData.length - index,
+          }}
           key={index}
-          url={data?.image_url}
-          firstName={data?.first_name}
-          lastName={data?.last_name}
-          backgroundColor={`${customThemeColor.gray_200}${index}`}
+          src={data?.src}
+          firstName={data?.firstName}
+          lastName={data?.lastName}
+          backgroundColor={
+            !data.src ? `${customThemeColor.gray_200}` : undefined
+          }
         />
       ))}
     </Avatar.Group>

@@ -38,7 +38,11 @@ const CorrespondenceCard = () => {
       </div>
       <div className="space-y-2.5">
         <div className="flex gap-1 align-middle">
-          <CustomAvatar firstName="Jane" lastName="Doe" />
+          <CustomAvatar
+            firstName="Jane"
+            lastName="Doe"
+            src="/images/user3.jpeg"
+          />
           <div className="">
             <p className="text-sm font-bold leading-4 text-custom-main">
               Jane Doe
@@ -52,18 +56,30 @@ const CorrespondenceCard = () => {
             correspondence f ...
           </p>
         </div>
-        <div className="flex items-center gap-1">
+        <div
+          role="button"
+          tabIndex={0}
+          onClick={actionsMouseHandler}
+          onKeyDown={actionsKeyboardHandler}
+          className="flex items-center gap-1"
+        >
           <p className="text-xs font-medium text-custom-gray_200">
             4:20 PM, 16 Feb 2024
           </p>
-          <AvatarGroup maxCount={3} avatarData={dummyAvatarData} />
-          <div
-            role="button"
-            tabIndex={0}
-            onClick={actionsMouseHandler}
-            onKeyDown={actionsKeyboardHandler}
-            className="invisible flex flex-1 items-center justify-end group-hover:visible"
-          >
+          <div className="flex items-center gap-x-1">
+            <CustomAvatar
+              className="size-7"
+              size={'default'}
+              src="/images/user1.jpeg"
+            />
+            <AvatarGroup
+              maxCount={3}
+              size={22}
+              maxPopoverPlacement="bottom"
+              avatarData={dummyAvatarData}
+            />
+          </div>
+          <div className="invisible flex flex-1 items-center justify-end group-hover:visible">
             <CreateMeeting />
             <CreateProject />
             <CustomButton

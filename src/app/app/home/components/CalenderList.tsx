@@ -1,6 +1,6 @@
 import React from 'react';
 import CustomCalendar from './Calendar';
-import ActivitiesSection from './ActivitiesSection';
+import ActivitiesSection from './Activities/ActivitiesSection';
 import RecentUpload from './RecentUpload';
 
 function CalenderList() {

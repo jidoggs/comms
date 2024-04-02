@@ -270,6 +270,10 @@ const appTheme: ThemeConfig = {
     Checkbox: {
       fontSize: 14,
     },
+    Avatar: {
+      fontSize: 12,
+      groupOverlapping: -8,
+    },
   },
 };
 

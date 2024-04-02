@@ -1,22 +1,24 @@
-import { Avatar } from 'antd';
 import React from 'react';
+import { Avatar } from 'antd';
+import { CustomAvatarProps } from './types';
 
-type CustomAvatarProps = {
-  url?: string;
-  lastName?: string;
-  firstName?: string;
-  backgroundColor?: string;
+const titleHandler = (value?: string) => {
+  let val = '';
+  if (value) {
+    val = value.split('')?.[0];
+  }
+  return val;
 };
 
 const CustomAvatar = ({
-  url,
   firstName,
   lastName,
   backgroundColor,
+  ...props
 }: CustomAvatarProps) => {
   return (
-    <Avatar src={url} style={{ backgroundColor }}>
-      {firstName?.split('')?.[0]} {lastName?.split('')?.[0]}
+    <Avatar {...props} style={{ ...props.style, backgroundColor }}>
+      {titleHandler(firstName)} {titleHandler(lastName)}
     </Avatar>
   );
 };

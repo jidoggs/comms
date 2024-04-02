@@ -5,9 +5,9 @@ export type Task = {
 
 export type Assignee = {
   id: number;
-  image_url: string;
-  last_name: string;
-  first_name: string;
+  image_url?: string;
+  lastName: string;
+  firstName: string;
 };
 
 export type Project = {

@@ -3,18 +3,15 @@ import CustomModal from '@/common/components/CustomModal';
 import React, { useState } from 'react';
 import NewProjectModalContent from '../NewProjectModalContent';
 import { Briefcase } from '@/common/components/icons';
-import { iHandleClick } from '@/types';
 
 function CreateProject() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const showModal: iHandleClick = (e) => {
-    e.stopPropagation();
+  const showModal = () => {
     setIsModalOpen(true);
   };
 
-  const handleCancel: iHandleClick = (e) => {
-    e.stopPropagation();
+  const handleCancel = () => {
     setIsModalOpen(false);
   };
 
