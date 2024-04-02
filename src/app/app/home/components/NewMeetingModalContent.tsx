@@ -1,5 +1,3 @@
-'use client';
-
 import CustomInput from '@/common/CustomInput';
 import {
   DatePicker,

@@ -20,5 +20,6 @@ export const customThemeColor = {
   white_300: '#FCFCFC',
   green_100: '#00A96E',
   red_100: '#EB5757',
+  red_200: '#F25A7E',
   purple_100: '#5D5FEF',
 };
