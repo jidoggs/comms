@@ -28,7 +28,7 @@ const ActivitiesSection = () => {
           borderLeft
         />
       </div>
-      <div className="no-scrollbar size-full max-h-[calc(100vh_-_636px)]  overflow-y-scroll">
+      <div className="no-scrollbar size-full max-h-[calc(100vh_-_626px)]  overflow-y-scroll">
         {activitiesMockData?.map((activity, i, data) => {
           const prevDate = data[i - 1];
           const showDate =
