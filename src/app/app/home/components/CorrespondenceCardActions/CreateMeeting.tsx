@@ -1,22 +1,25 @@
+import React, { useState } from 'react';
 import CustomButton from '@/common/components/CustomButton';
 import CustomModal from '@/common/components/CustomModal';
+import NewMeetingForm from '../forms/CreateMeeting/Form';
 import { Users } from '@/common/components/icons';
-import React, { useState } from 'react';
-import NewMeetingModalContent from '../NewMeetingModalContent';
-import { iHandleClick } from '@/types';
+import { MeetingData } from '../forms/CreateMeeting/types';
 
 function CreateMeeting() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const showModal: iHandleClick = (e) => {
-    e.stopPropagation();
+  const showModal = () => {
     setIsModalOpen(true);
   };
 
-  const handleCancel: iHandleClick = (e) => {
-    e.stopPropagation();
+  const handleCancel = () => {
     setIsModalOpen(false);
   };
+
+  const submitHandler = (value: MeetingData) => {
+    console.log(value); //eslint-disable-line
+  };
+
   return (
     <>
       <CustomButton
@@ -26,13 +29,8 @@ function CreateMeeting() {
         description="Create a meeting"
         onClick={showModal}
       />
-      <CustomModal
-        title="Meeting"
-        width={400}
-        open={isModalOpen}
-        onCancel={handleCancel}
-      >
-        <NewMeetingModalContent />
+      <CustomModal width={500} open={isModalOpen} onCancel={handleCancel}>
+        <NewMeetingForm onFinish={submitHandler} />
       </CustomModal>
     </>
   );

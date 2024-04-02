@@ -66,8 +66,8 @@ const appTheme: ThemeConfig = {
       paddingBlock: 10,
       paddingInline: 15,
       borderRadius: 8,
-      fontSize: 16,
-      colorText: customThemeColor.gray_600,
+      fontSize: 14,
+      colorText: customThemeColor.main,
       colorBgContainer: customThemeColor.gray_900,
       fontWeightStrong: 400,
       colorBorderBg: customThemeColor.gray_400,
@@ -144,7 +144,6 @@ const appTheme: ThemeConfig = {
     Calendar: {
       fullBg: customThemeColor.white_100,
       fullPanelBg: customThemeColor.white_100,
-      itemActiveBg: customThemeColor.gray_500,
 
       padding: 0,
       paddingLG: 0,
@@ -165,6 +164,15 @@ const appTheme: ThemeConfig = {
     DatePicker: {
       cellActiveWithRangeBg: customThemeColor.white_200,
       cellRangeBorderColor: customThemeColor.gray_700,
+      controlItemBgActive: customThemeColor.white_200,
+      paddingBlock: 10,
+      paddingInline: 15,
+      borderRadius: 8,
+      fontSize: 16,
+      controlHeight: 44,
+      controlHeightSM: 24,
+      paddingBlockSM: 0,
+      paddingInlineSM: 0,
     },
     Progress: {
       defaultColor: customThemeColor.gray_400,
@@ -258,6 +266,9 @@ const appTheme: ThemeConfig = {
       optionSelectedFontWeight: 400,
       colorBorder: customThemeColor.black_100,
       // optionPadding
+    },
+    Checkbox: {
+      fontSize: 14,
     },
   },
 };

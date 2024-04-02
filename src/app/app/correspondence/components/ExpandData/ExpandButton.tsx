@@ -5,7 +5,7 @@ import CustomModal from '@/common/components/CustomModal';
 import SentCorrespondece from '../SentCorrespondece';
 import Form from './Form';
 import { Maximize } from '@/common/components/icons';
-import { CorrespondenceData } from './types';
+import { CorrespondenceData } from '../../types';
 
 type Props = {
   className: string;

@@ -4,7 +4,7 @@ import CustomDragger from '@/common/components/CustomDragger';
 import CustomInput from '@/common/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
 import { correspondenceFormInputs } from './helper';
-import { CorrespondenceData } from './types';
+import { CorrespondenceData } from '../../types';
 
 type FieldType = CorrespondenceData;
 

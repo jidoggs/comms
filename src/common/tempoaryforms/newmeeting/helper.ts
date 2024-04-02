@@ -1,4 +1,4 @@
-import { FormItems } from '@/app/app/correspondence/components/ExpandData/types';
+import { FormItems } from '@/types';
 import { CorrespondenceData } from './type';
 
 export const correspondenceFormInputs: FormItems<CorrespondenceData>[] = [

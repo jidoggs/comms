@@ -6,6 +6,7 @@ import CreateMeeting from './CorrespondenceCardActions/CreateMeeting';
 import CreateProject from './CorrespondenceCardActions/CreateProject';
 import { Send, Folder } from '@/common/components/icons';
 import { dummyAvatarData } from '@/common/mockData';
+import { iHandleClick, iHandleKeyboard } from '../../correspondence/types';
 
 const CorrespondenceCard = () => {
   const router = useRouter();
@@ -15,6 +16,13 @@ const CorrespondenceCard = () => {
 
   const handleKeyDown = () => {
     handleClick();
+  };
+
+  const actionsMouseHandler: iHandleClick = (e) => {
+    e.stopPropagation();
+  };
+  const actionsKeyboardHandler: iHandleKeyboard = (e) => {
+    e.stopPropagation();
   };
 
   return (
@@ -49,7 +57,13 @@ const CorrespondenceCard = () => {
             4:20 PM, 16 Feb 2024
           </p>
           <AvatarGroup maxCount={3} avatarData={dummyAvatarData} />
-          <div className="invisible flex flex-1 items-center justify-end group-hover:visible">
+          <div
+            role="button"
+            tabIndex={0}
+            onClick={actionsMouseHandler}
+            onKeyDown={actionsKeyboardHandler}
+            className="invisible flex flex-1 items-center justify-end group-hover:visible"
+          >
             <CreateMeeting />
             <CreateProject />
             <CustomButton
