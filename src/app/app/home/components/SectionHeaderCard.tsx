@@ -1,23 +1,52 @@
+import CustomButton from '@/common/components/CustomButton';
+import Title from '@/common/components/Title';
 import { ThreeDots, Plus, Search } from '@/common/components/icons';
 
 type SectionHeaderCardProps = {
   title: string;
   count: number;
+  newData?: boolean;
 };
 
-const SectionHeaderCard = ({ title, count }: SectionHeaderCardProps) => {
+const SectionHeaderCard = ({
+  title,
+  count,
+  newData,
+}: SectionHeaderCardProps) => {
   return (
-    <div className="flex w-full items-center justify-between rounded-md bg-white px-2 py-1 font-semibold shadow-md">
-      <div className="flex items-center justify-between gap-2">
-        <p>{title}</p>
-        <div className="size-6 rounded border border-gray-400 text-center">
-          <p>{count}</p>
+    <div className="shadow-wordBox flex w-full items-center justify-between rounded-md bg-white p-2 font-semibold">
+      <div className="flex items-center gap-x-2.5">
+        <Title className="text-base font-medium text-custom-gray_200">
+          {title}
+        </Title>
+        {newData ? (
+          <div className="size-1 rounded-full bg-custom-red_100" />
+        ) : null}
+        <div className="rounded-10 border border-gray-400 px-2 py-0.5 text-center">
+          <Title type="sm" className="text-sm font-medium">
+            {count}
+          </Title>
         </div>
       </div>
-      <div className="flex items-center justify-between gap-1">
-        <Search />
-        <Plus />
-        <ThreeDots />
+      <div className="flex items-center gap-x-1">
+        <CustomButton
+          size="small"
+          type="text"
+          icon={<Search />}
+          description="Search"
+        />
+        <CustomButton
+          size="small"
+          type="text"
+          icon={<Plus />}
+          description="Create Correspondence"
+        />
+        <CustomButton
+          size="small"
+          type="text"
+          icon={<ThreeDots />}
+          description="More"
+        />
       </div>
     </div>
   );

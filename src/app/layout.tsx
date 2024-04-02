@@ -1,14 +1,8 @@
 import React from 'react';
 import type { Metadata } from 'next';
-import './globals.css';
 import StyledComponentsRegistry from '@/common/components/lib/AntdRegistry';
+import './globals.css';
 import { bebas, inter, manrope } from './font';
-import { pdfjs } from 'react-pdf';
-
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  'pdfjs-dist/build/pdf.worker.min.js',
-  import.meta.url
-).toString();
 
 export const metadata: Metadata = {
   title: 'Correspondence',

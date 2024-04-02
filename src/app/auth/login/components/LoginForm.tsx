@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { Form } from 'antd';
 import Link from 'next/link';
-import { CustomButton } from '@/common/components';
 import CustomInput from '@/common/CustomInput';
+import CustomButton from '@/common/components/CustomButton';
 
 // import { apiErrorHandler } from "@/services";
 // import { useRouter } from "next/navigation";
@@ -74,11 +74,12 @@ const LoginForm = () => {
         <CustomInput label="Email" type="email" placeholder="user@gmail.com" />
       </Form.Item>
 
-      <Form.Item<FieldType>
-       
-      >
-       
-        <CustomInput label='Password' placeholder='Enter Password' type='password'/>
+      <Form.Item<FieldType>>
+        <CustomInput
+          label="Password"
+          placeholder="Enter Password"
+          type="password"
+        />
       </Form.Item>
 
       <Form.Item className="flex justify-center">
@@ -94,7 +95,7 @@ const LoginForm = () => {
         <CustomButton
           // isLoading={isMutating}
           disabled={!clientReady}
-          className="text-white-100 w-full rounded-lg bg-black sm:w-auto md:w-full"
+          block
         >
           Login
         </CustomButton>

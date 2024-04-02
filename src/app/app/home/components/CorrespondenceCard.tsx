@@ -1,69 +1,64 @@
-'use client';
-
-import { Avatar } from 'antd';
-import { File } from '@/common/components/icons';
 import { useRouter } from 'next/navigation';
+import AvatarGroup from '@/common/components/Avatar/AvatarGroup';
+import CustomAvatar from '@/common/components/Avatar/CustomAvatar';
+import CustomButton from '@/common/components/CustomButton';
+import CreateMeeting from './CorrespondenceCardActions/CreateMeeting';
+import CreateProject from './CorrespondenceCardActions/CreateProject';
+import { Send, Folder } from '@/common/components/icons';
+import { dummyAvatarData } from '@/common/mockData';
 
 const CorrespondenceCard = () => {
   const router = useRouter();
-  // console.log("DADADAD")
-
   const handleClick = () => {
-    router.push('home/correspondenceId');
+    router.push('correspondence/correspondenceId');
   };
 
   const handleKeyDown = () => {
-      handleClick();
-    }
+    handleClick();
+  };
 
   return (
     <div
       role="button"
       tabIndex={0}
-      className="mt-2 flex w-full cursor-pointer gap-2 rounded-md bg-white p-2 text-gray-400 shadow-md"
+      className="shadow-wordBox group flex w-full cursor-pointer gap-2 rounded-md bg-white p-2.5 text-custom-gray_600"
       onClick={handleClick}
       onKeyDown={handleKeyDown}
     >
-      <div className="size-8 rounded-md bg-gray-100">
-        <File />
+      <div className="rounded-10 self-start bg-custom-gray_100 p-2.5 text-custom-main">
+        <Folder size={18} />
       </div>
-      <div className="w-5/6">
+      <div className="space-y-2.5">
         <div className="flex gap-1 align-middle">
-          <Avatar className="bg-gray-300">U I</Avatar>
-          <div className="leading-3.2 text-xs">
-            <p className="font-bold text-gray-500">Jane Doe</p>
-            <p>Registry, Ministry of Trade & Investment</p>
+          <CustomAvatar firstName="Jane" lastName="Doe" />
+          <div className="">
+            <p className="text-sm font-bold leading-4 text-custom-main">
+              Jane Doe
+            </p>
+            <p className="text-xs">PS, Ministry of Trade & Investment</p>
           </div>
         </div>
-        <div className="my-2 text-xs font-semibold">
+        <div className="text-xs font-medium">
           <p>
             Dear HM, I hope this message finds you well. Please find
             correspondence f ...
           </p>
         </div>
-        <div className="mb-1 mt-2 flex items-center gap-1 text-xs font-semibold">
-          <p>04:20 PM, 16 Feb 2024</p>
-          {/* TODO: REFACTOR TO ITS OWN COMPONENT */}
-          <Avatar.Group
-            maxCount={3}
-            maxPopoverTrigger="click"
-            size="small"
-            maxStyle={{
-              color: '#f56a00',
-              backgroundColor: '#fde3cf',
-              cursor: 'pointer',
-            }}
-          >
-            <Avatar
-              src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-              className="mr-2"
+        <div className="flex items-center gap-1">
+          <p className="text-xs font-medium text-custom-gray_200">
+            4:20 PM, 16 Feb 2024
+          </p>
+          <AvatarGroup maxCount={3} avatarData={dummyAvatarData} />
+          <div className="invisible flex flex-1 items-center justify-end group-hover:visible">
+            <CreateMeeting />
+            <CreateProject />
+            <CustomButton
+              size="small"
+              type="text"
+              icon={<Send />}
+              description="Push"
             />
-            <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-
-            <Avatar style={{ backgroundColor: '#87d068' }} />
-
-            <Avatar style={{ backgroundColor: '#1677ff' }} />
-          </Avatar.Group>
+          </div>
         </div>
       </div>
     </div>

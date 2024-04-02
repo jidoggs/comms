@@ -1,45 +1,86 @@
 'use client';
 
 import React from 'react';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import 'dayjs/locale/zh-cn';
-// import type { Dayjs } from 'dayjs';
 import dayLocaleData from 'dayjs/plugin/localeData';
-import { Calendar, Col, Row, Select, Typography, theme } from 'antd';
-// import { customThemeColor } from '@/common/utils';
-// import type { CalendarProps } from 'antd';
+import { Calendar, CalendarProps, Col, Row, Select } from 'antd';
+import CustomButton from '@/common/components/CustomButton';
+import { Plus } from '@/common/components/icons';
 
 dayjs.extend(dayLocaleData);
 
+const getDataCount = (value: Dayjs) => {
+  let dataCount;
+  switch (value.date()) {
+    case 2:
+    case 5:
+    case 14:
+    case 19:
+      dataCount = 3;
+      break;
+    case 7:
+      dataCount = 2;
+      break;
+    case 12:
+      dataCount = 5;
+      break;
+    case 15:
+      dataCount = 1;
+      break;
+    case 16:
+      dataCount = 7;
+      break;
+    case 21:
+      dataCount = 4;
+      break;
+    case 22:
+      dataCount = 6;
+      break;
+    default:
+  }
+  return dataCount || '';
+};
+
 const CustomCalendar: React.FC = () => {
-  const { token } = theme.useToken();
+  const dateCellRender = (value: Dayjs) => {
+    const dataCount = getDataCount(value);
+    const dayOfWeek = dayjs(value).day();
 
-  const onPanelChange = () =>
-    // value: Dayjs, mode: CalendarProps<Dayjs>['mode']
-    {
-      // console.log(value.format('YYYY-MM-DD'), mode);
-    };
+    return (
+      <div className="flex size-[42px] flex-col items-center justify-start gap-y-px">
+        <p className="text-sm">{value.date()}</p>
+        {!dataCount || dayOfWeek === 0 || dayOfWeek === 6 ? null : (
+          <p className="size-4 rounded-full bg-custom-main px-1 py-[0.5px] text-center text-xs text-custom-white_100">
+            {dataCount}
+          </p>
+        )}
+      </div>
+    );
+  };
 
-  const wrapperStyle: React.CSSProperties = {
-    width: '100%',
-    backgroundColor: 'white',
-    border: `1px solid ${token.colorBorderSecondary}`,
-    borderRadius: token.borderRadiusLG,
+  const fullCellRender: CalendarProps<Dayjs>['fullCellRender'] = (
+    current,
+    info
+  ) => {
+    if (info.type === 'date') return dateCellRender(current);
+    return info.originNode;
+  };
+  const disabledDate: CalendarProps<Dayjs>['disabledDate'] = (date) => {
+    const dayOfWeek = dayjs(date).day();
+    if (dayOfWeek === 0 || dayOfWeek === 6) {
+      return true;
+    }
+
+    return false;
   };
 
   return (
-    <div style={wrapperStyle}>
+    <div className="shadow-wordBox rounded">
       <Calendar
-        // style={{ background: "white" }}
-        rootClassName="!bg-custom-white_100"
         fullscreen={false}
-        // disabledDate={dayjs()}
-        headerRender={({
-          value,
-          // type,
-          onChange,
-          // onTypeChange
-        }) => {
+        fullCellRender={fullCellRender}
+        headerRender={({ value, onChange }) => {
           const start = 0;
           const end = 12;
           const monthOptions = [];
@@ -49,7 +90,7 @@ const CustomCalendar: React.FC = () => {
           const months = [];
           for (let i = 0; i < 12; i++) {
             current = current.month(i);
-            months.push(localeData.monthsShort(current));
+            months.push(localeData.months(current));
           }
 
           for (let i = start; i < end; i++) {
@@ -71,29 +112,30 @@ const CustomCalendar: React.FC = () => {
             );
           }
           return (
-            <div style={{ padding: 8 }}>
+            <div className="flex items-center justify-between border-b border-custom-gray_500 p-2">
               <Row gutter={8} align="middle">
                 <Col>
-                  <Typography.Title level={4}>
-                    {new Date(year, month).toLocaleString('en', {
-                      month: 'long',
-                    })}
-                  </Typography.Title>
-
-                  {/* <Radio.Group
-                    size="small"
-                    onChange={(e) => onTypeChange(e.target.value)}
-                    value={type}
-                  >
-                    <Radio.Button value="month">Month</Radio.Button>
-                    <Radio.Button value="year">Year</Radio.Button>
-                  </Radio.Group> */}
-                </Col>
-                <Col className="mt-1">
                   <Select
                     size="small"
                     popupMatchSelectWidth={false}
-                    className="my-year-select border-0"
+                    variant="borderless"
+                    value={month}
+                    onChange={(newMonth) => {
+                      const now = value.clone().month(newMonth);
+                      onChange(now);
+                    }}
+                    rootClassName="!text-red-500"
+                    className="!text-red-500"
+                  >
+                    {monthOptions}
+                  </Select>
+                </Col>
+                <Col className="">
+                  <Select
+                    size="small"
+                    variant="borderless"
+                    popupMatchSelectWidth={false}
+                    className="my-year-select !border-none"
                     value={year}
                     onChange={(newYear) => {
                       const now = value.clone().year(newYear);
@@ -103,24 +145,17 @@ const CustomCalendar: React.FC = () => {
                     {options}
                   </Select>
                 </Col>
-                {/* <Col>
-                  <Select
-                    size="small"
-                    popupMatchSelectWidth={false}
-                    value={month}
-                    onChange={(newMonth) => {
-                      const now = value.clone().month(newMonth);
-                      onChange(now);
-                    }}
-                  >
-                    {monthOptions}
-                  </Select>
-                </Col> */}
               </Row>
+              <CustomButton
+                size="small"
+                type="text"
+                icon={<Plus />}
+                borderLeft
+              />
             </div>
           );
         }}
-        onPanelChange={onPanelChange}
+        disabledDate={disabledDate}
       />
     </div>
   );
