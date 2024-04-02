@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 
 const page = () => {
   return (
-    <>
-      <p>Home</p>
-    </>
+    <div className="mx-auto my-8 w-[200px]">
+      <h2>Hello</h2>
+    </div>
   );
 };
 
