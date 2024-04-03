@@ -2,36 +2,40 @@ import { Avatar } from 'antd';
 import CustomAvatar from './CustomAvatar';
 import { customThemeColor } from '@/common/utils';
 import { AvatarGroupProps } from './types';
+import { generateRandomColor } from '@/common/hooks/corrUtils';
 
-const AvatarGroup = ({ avatarData, size, ...props }: AvatarGroupProps) => {
+const AvatarGroup = ({
+  avatarData,
+  size,
+  maxCount = 3,
+  ...props
+}: AvatarGroupProps) => {
   return (
     <Avatar.Group
       {...props}
       maxPopoverTrigger="click"
       size={size ? size : 'small'}
+      maxCount={maxCount}
       maxStyle={{
         color: customThemeColor.white_100,
         backgroundColor: customThemeColor.gray_700,
         cursor: 'pointer',
+        fontSize: 10,
       }}
       className="p-0.5"
     >
-      {/* <Avatar
-        src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-        className="mr-2"
-      /> */}
       {avatarData.map((data, index: number) => (
         <CustomAvatar
           style={{
-            zIndex: avatarData.length - index,
+            zIndex: maxCount - index,
+            fontSize: 8,
           }}
           key={index}
           src={data?.src}
           firstName={data?.firstName}
+          size={size}
           lastName={data?.lastName}
-          backgroundColor={
-            !data.src ? `${customThemeColor.gray_200}` : undefined
-          }
+          backgroundColor={!data.src ? generateRandomColor() : undefined}
         />
       ))}
     </Avatar.Group>

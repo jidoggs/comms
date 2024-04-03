@@ -33,7 +33,6 @@ const appTheme: ThemeConfig = {
       paddingContentVertical: 5,
       padding: 5,
       paddingContentHorizontal: 5,
-      
     },
     Button: {
       fontSize: 14,
@@ -280,8 +279,9 @@ const appTheme: ThemeConfig = {
       fontSize: 14,
     },
     Avatar: {
-      fontSize: 12,
-      groupOverlapping: -8,
+      fontSize: 10,
+      groupOverlapping: -6,
+      borderRadius: 0,
     },
   },
 };

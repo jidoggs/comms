@@ -17,7 +17,10 @@ const CustomAvatar = ({
   ...props
 }: CustomAvatarProps) => {
   return (
-    <Avatar {...props} style={{ ...props.style, backgroundColor }}>
+    <Avatar
+      {...props}
+      style={{ ...props.style, backgroundColor, border: '1px solid white' }}
+    >
       {titleHandler(firstName)} {titleHandler(lastName)}
     </Avatar>
   );

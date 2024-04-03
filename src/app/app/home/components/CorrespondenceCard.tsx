@@ -37,14 +37,15 @@ const CorrespondenceCard = () => {
         <Folder size={18} />
       </div>
       <div className="space-y-2.5">
-        <div className="flex gap-1 align-middle">
+        <div className="flex gap-x-2.5 items-center">
           <CustomAvatar
             firstName="Jane"
             lastName="Doe"
             src="/images/user3.jpeg"
+            size={28}
           />
-          <div className="">
-            <p className="text-sm font-bold leading-4 text-custom-main">
+          <div className="flex-1">
+            <p className="text-sm  leading-4 text-custom-main">
               Jane Doe
             </p>
             <p className="text-xs">PS, Ministry of Trade & Investment</p>
@@ -69,17 +70,17 @@ const CorrespondenceCard = () => {
           <div className="flex items-center gap-x-1">
             <CustomAvatar
               className="size-7"
-              size={'default'}
+              size={28}
               src="/images/user1.jpeg"
             />
             <AvatarGroup
               maxCount={3}
-              size={22}
+              size={24}
               maxPopoverPlacement="bottom"
               avatarData={dummyAvatarData}
             />
           </div>
-          <div className="invisible flex flex-1 items-center justify-end group-hover:visible">
+          <div className="invisible flex flex-1 items-center gap-x-1.5 justify-end group-hover:visible">
             <CreateMeeting />
             <CreateProject />
             <CustomButton
