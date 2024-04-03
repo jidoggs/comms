@@ -1,57 +1,63 @@
-import { Briefcase, Document, Users } from '@/common/components/icons';
-import { Tooltip } from 'antd';
 import React from 'react';
-import { motion } from 'framer-motion';
+import CustomButton from '@/common/components/CustomButton';
+import { Briefcase, Document, Users } from '@/common/components/icons';
+import { mergeClassName } from '@/common/utils';
 
-const SideMenu = () => {
+type Props = {
+  className?: string;
+  placement?: 'left' | 'right';
+};
+
+const SideMenu = ({ className, placement }: Props) => {
   return (
-    <motion.div
-      initial={{
-        opacity: 0,
-      }}
-      whileInView={{
-        opacity: 1,
-      }}
-      transition={{
-        duration: 0.5,
-        ease: 'easeInOut',
-      }}
-      translate="yes"
-      className="border-custom-gray_500 bg-custom-white_100 rounded-xl border px-1"
+    <div
+      className={mergeClassName(
+        'rounded-xl border border-custom-gray_500 bg-custom-white_100 px-1',
+        className
+      )}
     >
       <div className="flex cursor-pointer flex-col items-center justify-center py-1">
-        <div className="flex w-full flex-col items-center justify-center">
-          <Tooltip placement="right" title={'Add note'} className="mx-2 my-3">
-            <Document
-              size={18}
-              //   onClick={() => setOpenCorrespondence(true)}
-            />
-          </Tooltip>
-          <div className="bg-custom-gray_500 h-px w-full" />
-          <Tooltip
-            placement="right"
-            title={'Create a meeting'}
-            className="mx-2 my-3"
-          >
-            <Users
-              size={18}
-              //   onClick={() => setOpenCorrespondence(true)}
-            />
-          </Tooltip>
-          {/* <div className="bg-custom-gray_500 h-px w-full" /> */}
-          <Tooltip
-            placement="right"
-            title={'Create Project'}
-            className="mx-2 my-3"
-          >
-            <Briefcase
-              size={18}
-              //   onClick={() => setOpenCorrespondence(true)}
-            />
-          </Tooltip>
+        <div className="flex w-full flex-col items-center justify-center gap-y-2">
+          <CustomButton
+            icon={
+              <Document
+                size={18}
+                className="invisible group-hover/minute:visible"
+              />
+            }
+            size="small"
+            type="text"
+            description="Add note"
+            borderBottom
+            descriptionPlacement={placement}
+          />
+          <CustomButton
+            icon={
+              <Users
+                size={18}
+                className="invisible group-hover/minute:visible"
+              />
+            }
+            size="small"
+            type="text"
+            description="Create project"
+            descriptionPlacement={placement}
+          />
+          <CustomButton
+            icon={
+              <Briefcase
+                size={18}
+                className="invisible group-hover/minute:visible"
+              />
+            }
+            size="small"
+            type="text"
+            description="Create a meeting"
+            descriptionPlacement={placement}
+          />
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

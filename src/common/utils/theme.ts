@@ -22,4 +22,5 @@ export const customThemeColor = {
   red_100: '#EB5757',
   red_200: '#F25A7E',
   purple_100: '#5D5FEF',
+  purple_200: '#A5A6F6',
 };

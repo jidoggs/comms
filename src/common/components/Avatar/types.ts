@@ -1,11 +1,15 @@
-export type AvatarData = {
-  id: number;
-  image_url?: string;
-  last_name?: string;
-  first_name?: string;
-};
+import { AvatarProps } from 'antd';
+import { GroupProps } from 'antd/es/avatar/group';
 
-export type AvatarGroupProps = {
-  maxCount: number;
-  avatarData: AvatarData[];
-};
+export interface CustomAvatarProps extends AvatarProps {
+  backgroundColor?: string;
+}
+export interface GroupAvatarProps {
+  lastName?: string;
+  firstName?: string;
+  src?: string;
+}
+
+export interface AvatarGroupProps extends GroupProps {
+  avatarData: GroupAvatarProps[];
+}

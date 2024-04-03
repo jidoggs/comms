@@ -1,4 +1,4 @@
-import { CorrespondenceData, FormItems } from './types';
+import { CorrespondenceData, FormItems } from '../../types';
 
 export const correspondenceFormInputs: FormItems<CorrespondenceData>[] = [
   {

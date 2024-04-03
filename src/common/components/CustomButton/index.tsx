@@ -1,25 +1,20 @@
 import { mergeClassName } from '@/common/utils';
-import { Button, ButtonProps, Tooltip } from 'antd';
+import { Button, Tooltip } from 'antd';
 import React from 'react';
-
-type ClassName = 'container' | 'button';
-
-interface CustomInputProps extends Omit<ButtonProps, 'className'> {
-  description?: string;
-  className?: string | Partial<Record<ClassName, string>>;
-  borderLeft?: boolean;
-  borderRight?: boolean;
-}
+import { CustomInputProps } from './types';
 
 function CustomButton({
   className,
   children,
   description,
+  descriptionPlacement,
   size,
   block,
   title,
   borderLeft,
   borderRight,
+  borderBottom,
+  borderTop,
   ...props
 }: CustomInputProps) {
   const btnClassName = mergeClassName(
@@ -32,11 +27,19 @@ function CustomButton({
       className={mergeClassName(
         'flex items-center justify-center',
         block && 'w-full',
+        borderRight || borderLeft || borderBottom || borderTop
+          ? 'relative before:absolute   before:bg-custom-gray_500'
+          : '',
         borderRight || borderLeft
-          ? 'relative before:absolute before:top-1/2 before:h-7 before:w-px before:-translate-y-1/2 before:bg-custom-gray_500'
+          ? 'before:top-1/2 before:h-7 before:w-px before:-translate-y-1/2'
+          : '',
+        borderBottom || borderTop
+          ? 'before:left-1/2 before:h-px before:w-7 before:-translate-x-1/2'
           : '',
         borderRight ? 'before:-right-2.5' : '',
         borderLeft ? 'before:-left-2.5' : '',
+        borderBottom ? 'before:-bottom-1' : '',
+        borderTop ? 'before:-top-1' : '',
         typeof className !== 'string' ? className?.container : ''
       )}
     >
@@ -51,7 +54,7 @@ function CustomButton({
           {children}
         </Button>
       ) : (
-        <Tooltip title={description || title}>
+        <Tooltip placement={descriptionPlacement} title={description || title}>
           <Button
             className={btnClassName}
             size={description ? 'small' : size}

@@ -77,6 +77,7 @@ const AppHeader: React.FunctionComponent = () => {
             <div className="flex cursor-pointer gap-x-2.5 items-center py-0.5 px-1.5">
               <Avatar
                 size={30}
+                src={dummyUser.img}
                 icon={
                   <span className="flex h-full flex-1 items-center justify-center">
                     <Profile size="22" className="stroke-white" />

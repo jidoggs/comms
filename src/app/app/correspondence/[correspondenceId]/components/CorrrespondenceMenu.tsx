@@ -1,5 +1,5 @@
 import { mergeClassName } from '@/common/utils';
-import React from 'react';
+import React, { useContext } from 'react';
 import CorrepondenceTabs from './CorrepondenceTabs';
 import {
   Briefcase,
@@ -12,34 +12,22 @@ import { motion } from 'framer-motion';
 import Title from '@/common/components/Title';
 import { StateDispatch } from '@/types';
 import CustomButton from '@/common/components/CustomButton';
+import { DetailContext } from '../PageContent';
 
 type Props = {
-  // openCorrespondence?: boolean;
-  setOpenCorrespondence?: StateDispatch<boolean>;
-  openCorrespondenceDetails?: boolean;
-  setOpenCorrespondenceDetails?: StateDispatch<boolean>;
   activeTab: string;
   setActiveTab: StateDispatch<string>;
 };
 
-const CorrrespondenceMenu = ({
-  openCorrespondenceDetails,
-  activeTab,
-  setActiveTab,
-  setOpenCorrespondenceDetails,
-}: Props) => {
-  const handleCloseClick = () => {
-    if (setOpenCorrespondenceDetails) {
-      setOpenCorrespondenceDetails(false);
-    }
-  };
+const CorrrespondenceMenu = ({ activeTab, setActiveTab }: Props) => {
+  const detailsData = useContext(DetailContext);
 
   return (
     <div className="flex !h-[50px] flex-row justify-between border-b border-custom-gray_500 bg-custom-white_100">
       <div
         className={mergeClassName(
           'flex w-full flex-row items-end justify-between pl-5',
-          openCorrespondenceDetails && 'w-4/6'
+          detailsData?.openCorrespondenceDetails && 'w-4/6'
         )}
       >
         <div>
@@ -74,7 +62,7 @@ const CorrrespondenceMenu = ({
           />
         </div>
       </div>
-      {openCorrespondenceDetails && (
+      {detailsData?.openCorrespondenceDetails ? (
         <motion.div
           initial={{
             x: 200,
@@ -95,10 +83,10 @@ const CorrrespondenceMenu = ({
           </Title>
           <Close
             className="mr-3 cursor-pointer rounded-full bg-custom-gray_100"
-            onClick={handleCloseClick}
+            onClick={detailsData?.closeDetailsHandler}
           />
         </motion.div>
-      )}
+      ) : null}
     </div>
   );
 };

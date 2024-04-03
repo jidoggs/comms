@@ -5,15 +5,15 @@ import dayjs from 'dayjs';
 
 import AvatarGroup from '@/common/components/Avatar/AvatarGroup';
 import { Hierachy } from '@/common/components/icons';
-import { AvatarData } from '@/common/components/Avatar/types';
 import CustomProgress from '@/common/components/CustomProgress';
+import { Assignee } from '@/types/projects';
 
 type ProjectAccordionLabelProps = {
   status?: string;
   title: string;
   dueDate: Date;
   totalTasks: number;
-  assignees: AvatarData[];
+  assignees: Assignee[];
 };
 
 const ProjectAccordionLabel = ({
