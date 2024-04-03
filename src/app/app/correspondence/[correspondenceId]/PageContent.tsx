@@ -7,6 +7,9 @@ import { mergeClassName } from '@/common/utils';
 import { motion } from 'framer-motion';
 import CorrespondenceHeader from './components/CorrespondenceHeader';
 import CorrrespondenceMenu from './components/CorrrespondenceMenu';
+import MinuteDetails from './components/MinuteDetails';
+import dayjs from 'dayjs';
+// import CorrespondentDocument from './components/corrDocument/CorrespondentDocument';
 
 type DetailContextType = {
   openCorrespondenceDetails: boolean;
@@ -44,6 +47,22 @@ const PageContent = () => {
       openDetailsHandler();
       setCorrespondenceFile(files);
     }
+  };
+
+  const demoDetails = {
+    name: 'Export of Brewery Products',
+    from: 'Nigerian Breweries',
+    to: {
+      name: 'Adbul Jabar',
+      office: 'string',
+      date: dayjs('30 Jan 2024, 4:22pm', 'DD MMM YYYY, h:mmA'),
+    },
+    createdBy: {
+      name: 'Adbul Jabar',
+      office: 'string',
+      date: dayjs('30 Jan 2024, 4:22pm', 'DD MMM YYYY, h:mmA'),
+    },
+    dateCreated: '30-01-2024',
   };
 
   return (
@@ -90,6 +109,7 @@ const PageContent = () => {
               className="flex w-2/6 flex-row items-center justify-center border-l border-custom-gray_500"
             >
               {/* <CorrespondentDocument correspondenceFile={correspondenceFile} /> */}
+              <MinuteDetails corrMinuteDetails={demoDetails} />
             </motion.div>
           )}
         </div>

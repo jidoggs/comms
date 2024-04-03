@@ -78,7 +78,10 @@ const CorrrespondenceMenu = ({ activeTab, setActiveTab }: Props) => {
           }}
           className="flex w-2/6 flex-row items-center justify-between border-l border-custom-gray_500 bg-custom-white_100"
         >
-          <Title type="h1" className="ml-3 text-custom-gray_200">
+          <Title
+            type="h5"
+            className="circular ml-3 font-[500] leading-[20.24px] text-custom-gray_200"
+          >
             Details
           </Title>
           <Close

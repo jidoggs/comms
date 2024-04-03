@@ -28,7 +28,11 @@ function Title({ type, children, className, style }: Props) {
       template = (
         <h1
           style={style}
-          className={mergeClassName(color, 'text-xl font-bold', className)}
+          className={mergeClassName(
+            color,
+            'circular text-3xl font-bold',
+            className
+          )}
         >
           {children}
         </h1>
@@ -38,17 +42,79 @@ function Title({ type, children, className, style }: Props) {
       template = (
         <h2
           style={style}
-          className={mergeClassName(color, 'text-xl font-bold', className)}
+          className={mergeClassName(
+            color,
+            'circular text-2xl font-bold',
+            className
+          )}
         >
           {children}
         </h2>
+      );
+      break;
+    case 'h3':
+      template = (
+        <h3
+          style={style}
+          className={mergeClassName(
+            color,
+            'circular text-xl font-bold',
+            className
+          )}
+        >
+          {children}
+        </h3>
+      );
+      break;
+    case 'h4':
+      template = (
+        <h4
+          style={style}
+          className={mergeClassName(
+            color,
+            'circular text-lg font-bold',
+            className
+          )}
+        >
+          {children}
+        </h4>
+      );
+      break;
+    case 'h5':
+      template = (
+        <h5
+          style={style}
+          className={mergeClassName(color, 'circular text-base', className)}
+        >
+          {children}
+        </h5>
+      );
+      break;
+    case 'h6':
+      template = (
+        <h6
+          style={style}
+          className={mergeClassName(color, 'circular text-sm', className)}
+        >
+          {children}
+        </h6>
+      );
+      break;
+    case 'p':
+      template = (
+        <p
+          style={style}
+          className={mergeClassName(color, 'circular text-sx', className)}
+        >
+          {children}
+        </p>
       );
       break;
     case 'nav':
       template = (
         <span
           style={style}
-          className={mergeClassName(color, 'text-base font-bold', className)}
+          className={mergeClassName(color, 'circular text-base', className)}
         >
           {children}
         </span>
@@ -59,7 +125,11 @@ function Title({ type, children, className, style }: Props) {
       template = (
         <span
           style={style}
-          className={mergeClassName(color, 'text-sm font-normal', className)}
+          className={mergeClassName(
+            color,
+            'circular text-sm font-normal',
+            className
+          )}
         >
           {children}
         </span>
@@ -71,7 +141,7 @@ function Title({ type, children, className, style }: Props) {
           style={style}
           className={mergeClassName(
             color,
-            'text-base font-semibold',
+            'circular text-base font-semibold',
             className
           )}
         >
@@ -84,7 +154,11 @@ function Title({ type, children, className, style }: Props) {
       template = (
         <p
           style={style}
-          className={mergeClassName(color, 'text-base font-normal', className)}
+          className={mergeClassName(
+            color,
+            'circular text-base font-normal',
+            className
+          )}
         >
           {children}
         </p>

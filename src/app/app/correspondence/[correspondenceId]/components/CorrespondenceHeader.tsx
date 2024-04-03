@@ -1,14 +1,22 @@
 import React, { useContext } from 'react';
-import { Avatar } from 'antd';
 import { useRouter } from 'next/navigation';
 import CustomButton from '@/common/components/CustomButton';
 import Title from '@/common/components/Title';
 import { DetailContext } from '../PageContent';
 import { BackwardArrow, Dot, InfoCircle } from '@/common/components/icons';
+import TimelineComponent from '@/common/components/TimelineComponent/TimelineComponent';
+import dayjs from 'dayjs';
 
 const CorrespondenceHeader = () => {
   const router = useRouter();
   const detailsData = useContext(DetailContext);
+
+  const timeline = {
+    name: 'Adbul Jabar',
+    office: 'string',
+    date: dayjs('30 Jan 2024, 4:22pm', 'DD MMM YYYY, h:mmA'),
+  };
+
   return (
     <div className="my-1.5 flex flex-row items-center justify-between px-5">
       <div className="flex flex-row items-center gap-3">
@@ -25,16 +33,10 @@ const CorrespondenceHeader = () => {
           Export of Brewery Products
         </Title>
       </div>
-      <div className="flex flex-row items-center justify-between gap-3">
+      <div className="flex flex-row items-center justify-between gap-1">
         <div className="flex flex-row gap-2">
           <Dot />
-          <div>
-            <Avatar
-              src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-              size="default"
-              className="!border-full !border-1 !border-solid !border-black"
-            />
-          </div>
+          <TimelineComponent timeline={timeline} />
         </div>
         <CustomButton
           description="Correspondence"

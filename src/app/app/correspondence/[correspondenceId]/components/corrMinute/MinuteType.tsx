@@ -14,16 +14,13 @@ const MinuteType = ({ fileSend, minute }: any) => {
 
   return (
     <div className="flex flex-col items-start justify-between px-2">
-      <div></div>
       {minute && minute.type === 'text' ? (
         <TextMinute MinuteText={MinuteText} />
-      ) : minute && minute.type === 'document' ? (
+      ) : null}
+      {minute && minute.type === 'document' ? (
         <FileMinute fileSend={fileSend} />
-      ) : minute && minute.type === 'meeting' ? (
-        <MeetingMinute />
-      ) : (
-        ''
-      )}
+      ) : null}
+      {minute && minute.type === 'meeting' ? <MeetingMinute /> : null}
     </div>
   );
 };
