@@ -9,7 +9,7 @@ const TextMinute = ({ MinuteText }: MinuteProps) => {
   return (
     <Title
       type="p"
-      className="my-2 text-sm font-[450] leading-[17.71px] text-custom-main"
+      className="font-450 my-2 text-sm leading-[17.71px] text-custom-main"
     >
       {MinuteText}
     </Title>

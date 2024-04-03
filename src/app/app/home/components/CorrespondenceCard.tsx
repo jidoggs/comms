@@ -7,6 +7,7 @@ import CreateProject from './CorrespondenceCardActions/CreateProject';
 import { Send, Folder } from '@/common/components/icons';
 import { dummyAvatarData } from '@/common/mockData';
 import { iHandleClick, iHandleKeyboard } from '../../correspondence/types';
+import { generateInitials } from '@/common/utils';
 
 const CorrespondenceCard = () => {
   const router = useRouter();
@@ -37,17 +38,12 @@ const CorrespondenceCard = () => {
         <Folder size={18} />
       </div>
       <div className="space-y-2.5">
-        <div className="flex gap-x-2.5 items-center">
-          <CustomAvatar
-            firstName="Jane"
-            lastName="Doe"
-            src="/images/user3.jpeg"
-            size={28}
-          />
+        <div className="flex items-center gap-x-2.5">
+          <CustomAvatar src="/images/user3.jpeg" size={28}>
+            {generateInitials('Jane', 'Doe')}
+          </CustomAvatar>
           <div className="flex-1">
-            <p className="text-sm  leading-4 text-custom-main">
-              Jane Doe
-            </p>
+            <p className="text-sm  leading-4 text-custom-main">Jane Doe</p>
             <p className="text-xs">PS, Ministry of Trade & Investment</p>
           </div>
         </div>
@@ -80,7 +76,7 @@ const CorrespondenceCard = () => {
               avatarData={dummyAvatarData}
             />
           </div>
-          <div className="invisible flex flex-1 items-center gap-x-1.5 justify-end group-hover:visible">
+          <div className="invisible flex flex-1 items-center justify-end gap-x-1.5 group-hover:visible">
             <CreateMeeting />
             <CreateProject />
             <CustomButton

@@ -7,6 +7,7 @@ import {
   StickyNote,
 } from '@/common/components/icons';
 import { dummyAvatarData } from '@/common/mockData';
+import { generateInitials } from '@/common/utils';
 import React, { ReactNode } from 'react';
 
 type ItemProps = {
@@ -58,12 +59,9 @@ function ActivityInformation() {
       </div>
       <div className="border-t border-custom-gray_500 pt-4">
         <div className="flex items-center gap-x-1 p-1">
-          <CustomAvatar
-            size={22}
-            firstName="Jane"
-            lastName="Doe"
-            src="/images/user1.jpeg"
-          />
+          <CustomAvatar size={22} src="/images/user1.jpeg">
+            {generateInitials('Jane Doe')}
+          </CustomAvatar>
           <Title type="sm" className="font-medium text-custom-gray_200">
             Jane Doe
           </Title>

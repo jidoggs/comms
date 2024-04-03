@@ -1,25 +1,27 @@
-import CustomButton from '@/common/components/CustomButton';
-import { BackwardArrow, Dot, InfoCircle } from '@/common/components/icons';
-import Title from '@/common/components/Title';
+import React, { useContext } from 'react';
 import { Avatar } from 'antd';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import CustomButton from '@/common/components/CustomButton';
+import Title from '@/common/components/Title';
+import { DetailContext } from '../PageContent';
+import { BackwardArrow, Dot, InfoCircle } from '@/common/components/icons';
 
-type Props = {
-  setOpenCorrespondenceDetails: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-const CorrespondenceHeader = ({ setOpenCorrespondenceDetails }: Props) => {
+const CorrespondenceHeader = () => {
   const router = useRouter();
+  const detailsData = useContext(DetailContext);
   return (
     <div className="my-1.5 flex flex-row items-center justify-between px-5">
       <div className="flex flex-row items-center gap-3">
-        <BackwardArrow
-          size={34}
+        <CustomButton
+          description="Back"
+          type="primary"
+          size="small"
+          icon={<BackwardArrow size={18} />}
           onClick={() => router.back()}
-          className="cursor-pointer"
+          className="border !border-custom-gray_400"
+          descriptionPlacement="bottom"
         />
-        <Title type="h1" className="text-lg leading-[22.77px] text-[#11142D]">
+        <Title type="h1" className="text-lg leading-[22.77px] text-custom-main">
           Export of Brewery Products
         </Title>
       </div>
@@ -36,9 +38,10 @@ const CorrespondenceHeader = ({ setOpenCorrespondenceDetails }: Props) => {
         </div>
         <CustomButton
           description="Correspondence"
-          type="primary"
+          type="text"
+          size="small"
           icon={<InfoCircle size={18} />}
-          onClick={() => setOpenCorrespondenceDetails(true)}
+          onClick={detailsData?.openDetailsHandler}
         />
       </div>
     </div>

@@ -1,8 +1,11 @@
 import { Avatar } from 'antd';
 import CustomAvatar from './CustomAvatar';
-import { customThemeColor } from '@/common/utils';
+import {
+  customThemeColor,
+  generateInitials,
+  generateRandomColor,
+} from '@/common/utils';
 import { AvatarGroupProps } from './types';
-import { generateRandomColor } from '@/common/hooks/corrUtils';
 
 const AvatarGroup = ({
   avatarData,
@@ -32,11 +35,11 @@ const AvatarGroup = ({
           }}
           key={index}
           src={data?.src}
-          firstName={data?.firstName}
           size={size}
-          lastName={data?.lastName}
           backgroundColor={!data.src ? generateRandomColor() : undefined}
-        />
+        >
+          {generateInitials(data?.firstName || '', data.lastName)}
+        </CustomAvatar>
       ))}
     </Avatar.Group>
   );
