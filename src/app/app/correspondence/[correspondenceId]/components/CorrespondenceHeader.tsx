@@ -13,7 +13,7 @@ const CorrespondenceHeader = () => {
 
   const timeline = {
     name: 'Adbul Jabar',
-    office: 'string',
+    office: 'HM Trade & Inv...',
     date: dayjs('30 Jan 2024, 4:22pm', 'DD MMM YYYY, h:mmA'),
   };
 

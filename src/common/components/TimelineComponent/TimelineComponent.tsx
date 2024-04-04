@@ -1,7 +1,7 @@
 import { generateInitials } from '@/common/utils';
-import { Avatar } from 'antd';
 import dayjs, { Dayjs } from 'dayjs';
 import React from 'react';
+import CustomAvatar from '../Avatar/CustomAvatar';
 
 interface TimelineProps {
   timeline: {
@@ -21,12 +21,12 @@ const TimelineComponent = ({ timeline }: TimelineProps) => {
   return (
     <div>
       <div className="flex flex-row items-center justify-start gap-3">
-        <Avatar
+        <CustomAvatar
           size="default"
           className="rounded-full border border-custom-main"
         >
           {generateInitials(`${timeline.name}`)}
-        </Avatar>
+        </CustomAvatar>
         <div className="flex flex-col gap-2">
           <div className="circular text-sm font-medium leading-[17.71px] text-custom-main">
             {timeline.name}

@@ -1,8 +1,13 @@
+import React from 'react';
+import { useRouter } from 'next/navigation';
 import CustomButton from '@/common/components/CustomButton';
 import { Archive, Send } from '@/common/components/icons';
-import React from 'react';
 
 function TableActions() {
+  const router = useRouter();
+  const clickHandler = () => {
+    router.push('/app/correspondence/export_of_brewery_products');
+  };
   return (
     <div className="flex items-center gap-x-2.5">
       <CustomButton
@@ -16,6 +21,7 @@ function TableActions() {
         type="primary"
         size="small"
         className="!border !border-custom-gray_400"
+        onClick={clickHandler}
       >
         Push
       </CustomButton>

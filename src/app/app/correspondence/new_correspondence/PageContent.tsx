@@ -2,7 +2,7 @@ import CustomTable from '@/common/components/CustomTable';
 import React, { useContext } from 'react';
 import PageTitle from './components/PageTitle';
 import TableActions from './components/TableActions';
-import AddCorrespondence from './components/AddCorrespondence';
+import AddCorrespondence from '../components/AddCorrespondence';
 import {
   EditableCell,
   EditableRow,
@@ -33,7 +33,9 @@ function PageContent() {
         size="large"
         rowClassName="group"
         rowSelection={{ columnWidth: 56 }}
-        footer={() => <AddCorrespondence />}
+        footer={() => (
+          <AddCorrespondence handleClick={contextInfo?.handleAdd} />
+        )}
       />
     </div>
   );

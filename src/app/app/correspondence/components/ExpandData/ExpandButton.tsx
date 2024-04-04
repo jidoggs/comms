@@ -28,7 +28,7 @@ function ExpandButton({ className, description }: Props) {
 
   const viewCorrespondenceHandler = () => {
     closeConfirmModalHandler();
-    router.push('correspondence/correspondenceId');
+    router.push('correspondence/export_of_brewery_products');
   };
 
   const newCorrespondenceHandler = () => {

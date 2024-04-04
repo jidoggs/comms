@@ -12,7 +12,7 @@ import { generateInitials } from '@/common/utils';
 const CorrespondenceCard = () => {
   const router = useRouter();
   const handleClick = () => {
-    router.push('correspondence/correspondenceId');
+    router.push('correspondence/export_of_brewery_products');
   };
 
   const handleKeyDown = () => {
@@ -30,11 +30,11 @@ const CorrespondenceCard = () => {
     <div
       role="button"
       tabIndex={0}
-      className="shadow-wordBox group flex w-full cursor-pointer gap-2 rounded-md bg-white p-2.5 text-custom-gray_600"
+      className="group flex w-full cursor-pointer gap-2 rounded-md bg-white p-2.5 text-custom-gray_600 shadow-wordBox"
       onClick={handleClick}
       onKeyDown={handleKeyDown}
     >
-      <div className="rounded-10 self-start bg-custom-gray_100 p-2.5 text-custom-main">
+      <div className="self-start rounded-10 bg-custom-gray_100 p-2.5 text-custom-main">
         <Folder size={18} />
       </div>
       <div className="space-y-2.5">

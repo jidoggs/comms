@@ -1,4 +1,4 @@
-import { Table } from 'antd';
+import { Table, TabsProps } from 'antd';
 
 export * from '../../../types';
 export interface CorrespondenceData {
@@ -22,4 +22,14 @@ export type CorrespondenceContextNewType = {
   columns: EditableTableColumnTypes;
   dataSource: any[];
   handleDelete: (id: string | number) => void; //eslint-disable-line
+} | null;
+
+export type CorrespondenceListContextType = {
+  handleAdd: VoidFunction; //eslint-disable-line
+  handleTabChange: (state: string) => void; //eslint-disable-line
+  columns: EditableTableColumnTypes;
+  dataSource: any[];
+  handleDelete: (id: string | number) => void; //eslint-disable-line
+  tabItem: string;
+  tabItemList: TabsProps['items'];
 } | null;
