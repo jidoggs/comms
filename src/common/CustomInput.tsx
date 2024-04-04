@@ -7,9 +7,12 @@ import { mergeClassName } from './utils';
 type InputRef = GetRef<typeof Input> | any;
 
 type ClassName = 'container' | 'label' | 'input';
+
+type InputType = 'password' | 'textarea' | 'email';
+
 interface CustomInputProps extends Omit<InputProps, 'className'> {
   label?: string;
-  type?: string;
+  type?: InputType;
   className?: string | Partial<Record<ClassName, string>>;
   ref?: InputRef;
 }
@@ -34,7 +37,6 @@ const CustomInput: React.FC<CustomInputProps> = React.forwardRef<
       {label && (
         <label
           className={mergeClassName(
-
             'focus-within: mb-2 block text-sm font-medium text-custom-main',
             !isClassNameString && className?.label
           )}
@@ -44,11 +46,11 @@ const CustomInput: React.FC<CustomInputProps> = React.forwardRef<
       )}
       {type === 'password' ? (
         <Input.Password className={inputclassName} ref={ref} {...rest} />
-      ) : type === 'textarea' ? (
+      ) : null}
+      {type === 'textarea' ? (
         <Input.TextArea className={inputclassName} ref={ref} {...rest} />
-      ) : (
-        <Input className={inputclassName} ref={ref} {...rest} />
-      )}
+      ) : null}
+      {!type ? <Input className={inputclassName} ref={ref} {...rest} /> : null}
     </div>
   );
 });

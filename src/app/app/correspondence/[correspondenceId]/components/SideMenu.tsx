@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import CustomButton from '@/common/components/CustomButton';
 import { Briefcase, Document, Users } from '@/common/components/icons';
 import { mergeClassName } from '@/common/utils';
+import { NoteContext } from './notes/NotesContext';
 
 type Props = {
   className?: string;
@@ -9,6 +10,8 @@ type Props = {
 };
 
 const SideMenu = ({ className, placement }: Props) => {
+  const contextInfo = useContext(NoteContext);
+
   return (
     <div
       className={mergeClassName(
@@ -20,24 +23,17 @@ const SideMenu = ({ className, placement }: Props) => {
         <div className="flex w-full flex-col items-center justify-center gap-y-2">
           <CustomButton
             icon={
-              <Document
-                size={18}
-                className="invisible group-hover/minute:visible"
-              />
+              <Document size={18} className="invisible group-hover:visible" />
             }
             size="small"
             type="text"
             description="Add note"
             borderBottom
             descriptionPlacement={placement}
+            onClick={contextInfo?.showNoteHandler}
           />
           <CustomButton
-            icon={
-              <Users
-                size={18}
-                className="invisible group-hover/minute:visible"
-              />
-            }
+            icon={<Users size={18} className="invisible group-hover:visible" />}
             size="small"
             type="text"
             description="Create project"
@@ -45,10 +41,7 @@ const SideMenu = ({ className, placement }: Props) => {
           />
           <CustomButton
             icon={
-              <Briefcase
-                size={18}
-                className="invisible group-hover/minute:visible"
-              />
+              <Briefcase size={18} className="invisible group-hover:visible" />
             }
             size="small"
             type="text"

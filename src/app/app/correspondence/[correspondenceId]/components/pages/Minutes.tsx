@@ -3,6 +3,7 @@ import MinuteCard from '../corrMinute/MinuteCard';
 import MinuteAction from '../corrMinute/MinuteAction';
 import { motion } from 'framer-motion';
 import { correspondenceMinute } from '@/common/mockData/corrMinute';
+import NotesContext from '../notes/NotesContext';
 
 const Minutes = () => {
   return (
@@ -21,14 +22,15 @@ const Minutes = () => {
       <div className="flex h-full flex-col gap-3 overflow-y-auto px-5">
         {correspondenceMinute.map((minute) => {
           return (
-            <MinuteCard
-              key={minute.id}
-              minuteId={minute.id}
-              minute={minute}
-              className={
-                'group h-full first:mt-3 last:mb-3 odd:self-start even:self-end'
-              }
-            />
+            <NotesContext key={minute.id}>
+              <MinuteCard
+                minuteId={minute.id}
+                minute={minute}
+                className={
+                  'group h-full first:mt-3 last:mb-3 odd:self-start even:self-end'
+                }
+              />
+            </NotesContext>
           );
         })}
       </div>

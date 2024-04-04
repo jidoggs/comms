@@ -6,6 +6,7 @@ import {
   generateRandomColor,
 } from '@/common/utils';
 import { AvatarGroupProps } from './types';
+import { useMemo } from 'react';
 
 const AvatarGroup = ({
   avatarData,
@@ -13,6 +14,7 @@ const AvatarGroup = ({
   maxCount = 3,
   ...props
 }: AvatarGroupProps) => {
+  const memorizedColor = useMemo(() => generateRandomColor(), []);
   return (
     <Avatar.Group
       {...props}
@@ -36,7 +38,7 @@ const AvatarGroup = ({
           key={index}
           src={data?.src}
           size={size}
-          backgroundColor={!data.src ? generateRandomColor() : undefined}
+          backgroundColor={!data.src ? memorizedColor : undefined}
         >
           {generateInitials(data?.firstName || '', data.lastName)}
         </CustomAvatar>

@@ -21,6 +21,7 @@ export { default as DocumentUpload } from './DocumentUpload';
 export { default as Dot } from './Dot';
 export { default as Edit } from './Edit';
 export { default as Edit2 } from './Edit2';
+export { default as EyeSlash } from './EyeSlash';
 export { default as File } from './File';
 export { default as Hierachy } from './Hierachy';
 export { default as Folder } from './Folder';

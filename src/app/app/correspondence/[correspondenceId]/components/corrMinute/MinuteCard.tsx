@@ -1,8 +1,8 @@
 'use client';
+import React, { useContext } from 'react';
 import SideMenu from '@/app/app/correspondence/[correspondenceId]/components/SideMenu';
 import { MoreFile } from '@/common/components/icons';
 import Title from '@/common/components/Title';
-import React, { useContext } from 'react';
 import MinuteType from './MinuteType';
 import { generateInitials, mergeClassName } from '@/common/utils';
 import CustomAvatar from '@/common/components/Avatar/CustomAvatar';
@@ -10,6 +10,8 @@ import AvatarGroup from '@/common/components/Avatar/AvatarGroup';
 import { dummyAvatarData } from '@/common/mockData';
 import CustomButton from '@/common/components/CustomButton';
 import { DetailContext } from '../../PageContent';
+import { NoteContext } from '../notes/NotesContext';
+import Note from '../notes';
 
 type Props = {
   minuteId: number;
@@ -18,10 +20,11 @@ type Props = {
 };
 
 const MinuteCard = ({ className, minuteId, minute }: Props) => {
-  const detailsData = useContext(DetailContext);
+  const detailContextInfo = useContext(DetailContext);
+  const noteContextInfo = useContext(NoteContext);
   const fileSend = (event: any) => {
     const files = event.target.files;
-    detailsData?.handleUpdateFile(files);
+    detailContextInfo?.handleUpdateFile(files);
   };
 
   const userDetails = minute.userDetails;
@@ -32,11 +35,11 @@ const MinuteCard = ({ className, minuteId, minute }: Props) => {
   return (
     <div
       className={mergeClassName(
-        'group/minute flex flex-row items-center gap-3',
+        'relative flex flex-row items-center gap-3',
         className
       )}
     >
-      <div className="shadow-wordBox w-full rounded-xl bg-custom-white_100 pb-2 group-odd:order-1  group-odd:rounded-bl-none group-even:order-2 group-even:rounded-br-none md:w-[400px]">
+      <div className="w-full rounded-xl bg-custom-white_100 pb-2 shadow-wordBox group-odd:order-1  group-odd:rounded-bl-none group-even:order-2 group-even:rounded-br-none md:w-100">
         <div className="flex flex-row items-center justify-between px-2">
           <div className="my-2 flex flex-row items-center gap-3">
             {userDetails.image ? (
@@ -51,12 +54,12 @@ const MinuteCard = ({ className, minuteId, minute }: Props) => {
               </CustomAvatar>
             )}
             <div className="flex flex-col">
-              <Title type="h2" className="name circular font-450 text-sm">
+              <Title type="h2" className="name circular text-sm font-450">
                 {userDetails.name}
               </Title>
               <Title
                 type="h2"
-                className="circular font-450 text-xs leading-[15.18px] text-gray-600"
+                className="circular text-xs font-450 leading-[15.18px] text-gray-600"
               >
                 {userDetails.title} - {userDetails.office}
               </Title>
@@ -89,9 +92,12 @@ const MinuteCard = ({ className, minuteId, minute }: Props) => {
         </div>
       </div>
       <SideMenu
-        className="invisible ease-in-out group-odd:order-2 group-even:order-1 group-hover/minute:visible"
+        className="invisible ease-in-out group-odd:order-2 group-even:order-1 group-hover:visible"
         placement={minuteId % 2 ? 'right' : 'left'}
       />
+      {noteContextInfo?.showNote ? (
+        <Note className="absolute top-[calc(100%_+_7px)] group-even:right-0" />
+      ) : null}
     </div>
   );
 };

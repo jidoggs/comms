@@ -15,6 +15,12 @@ const config: Config = {
           ...customThemeColor,
         },
       },
+      width: {
+        100: '400px',
+      },
+      maxWidth: {
+        100: '400px',
+      },
       borderRadius: {
         10: '10px',
       },
@@ -26,6 +32,9 @@ const config: Config = {
       },
       fontWeight: {
         450: '450',
+      },
+      lineHeight: {
+        '4.5': '18px',
       },
     },
   },
