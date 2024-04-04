@@ -7,11 +7,12 @@ import { Form } from 'antd';
 import React, { useLayoutEffect, useState } from 'react';
 // import OTPInput from 'react-otp-input';
 import CustomButton from '@/common/components/CustomButton';
+import OTPInput from 'react-otp-input';
 
 // const DEFAULT_TIMER = 0;
 
 const VerifyForm = () => {
-  const [otp] = useState('');
+  const [otp, setOtp] = useState('');
   const [timer, setTimer] = useState(600); // 10 minutes in seconds
   // const [isResendDisabled, setIsResendDisabled] = useState(false);
   // const router = useRouter();
@@ -54,9 +55,9 @@ const VerifyForm = () => {
   //   resendTokenSWR: { isMutating: resendLoading, trigger: resendTrigger },
   // } = useAuth();
 
-  // const handleOtpChange = (newOtp: string) => {
-  //   setOtp(newOtp);
-  // };
+  const handleOtpChange = (newOtp: string) => {
+    setOtp(newOtp);
+  };
 
   // const inputStyle: React.CSSProperties = {
   //   height: 40,
@@ -140,6 +141,7 @@ const VerifyForm = () => {
           layout="vertical"
           // onFinish={handleDataSend}
           requiredMark={false}
+          className="!w-full"
         >
           <Form.Item
             name="verification_code"
@@ -152,16 +154,17 @@ const VerifyForm = () => {
               },
             ]}
           >
-            {/* <OTPInput
+            <OTPInput
               renderInput={(props) => <input {...props} />}
               value={otp}
               onChange={handleOtpChange}
               numInputs={6}
-              inputStyle="md:h-11 md:!w-12 !w-10 h-8  md:px-4 md:py-3 px-2 py-1 border border-custom-gray_300 rounded-md text-custom-gray_300 focus:border-green-minst focus-visible:outline-green-minst"
-              containerStyle="justify-center md:gap-x-2.5 gap-x-1"
+              inputStyle="otpInputStyle"
+              // inputStyle={{ color: 'red', width: '40px', height: '40px', }}
+              containerStyle="justify-between w-full flex"
               inputType="number"
               //   isDisabled={verifyMutating}
-            /> */}
+            />
           </Form.Item>
         </Form>
         <CustomButton onClick={handleSubmit} disabled={otp.length !== 6} block>

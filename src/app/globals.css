@@ -129,3 +129,23 @@ body {
 .ant-upload-btn {
   @apply !p-0;
 }
+
+.otpInputStyle {
+  /* @apply !size-10 rounded-md border border-custom-gray_300 px-2 py-1 !text-custom-main focus:border-custom-gray_300 focus-visible:outline-custom-gray_300 md:!size-12 md:px-4 md:py-3; */
+  height: 40px !important;
+  width: 40px !important;
+  border-radius: 5px;
+  border: 1px solid #bdbdbd;
+  color: #11142d;
+  padding: 4px 8px;
+}
+.otpInputStyle:focus {
+  border: 1px solid #333333;
+}
+
+@media screen and (min-width: 768px) {
+  .otpInputStyle {
+    height: 48px !important;
+    width: 48px !important;
+  }
+}

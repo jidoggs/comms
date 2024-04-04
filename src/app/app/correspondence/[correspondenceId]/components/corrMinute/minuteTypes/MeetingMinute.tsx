@@ -14,16 +14,24 @@ import {
 } from '@/common/components/icons';
 import Title from '@/common/components/Title';
 import { dummyAvatarData } from '@/common/mockData';
+import { generateInitials } from '@/common/utils';
 import Link from 'next/link';
 import React, { useState } from 'react';
 
-const MeetingMinute = () => {
+interface MinuteUserDetails {
+  userDetails: {
+    name: string;
+    title: string;
+    office: string;
+  };
+}
+
+const MeetingMinute = ({ userDetails }: MinuteUserDetails) => {
   const [meetingCreator, setMeetingCreator] = useState(true);
 
   return (
-    <div className="w-full flex-col items-center justify-end rounded-md border border-gray-500 p-2">
-      {/* <h1 className="text-center text-black">Meeting</h1> */}
-      <div className="flex flex-col gap-4">
+    <div className="w-full flex-col items-center justify-end rounded-md border border-custom-gray_500 p-1">
+      <div className="flex flex-col gap-4 p-1">
         <div className="flex flex-row items-center gap-2 text-custom-black_300">
           <Users size={22} className="w-1/12" />
           <Title
@@ -85,7 +93,7 @@ const MeetingMinute = () => {
         <div className="flex flex-row items-center gap-2 text-custom-black_300">
           <div className="flex w-1/12 items-center justify-center">
             <CustomAvatar size={'small'} style={{ backgroundColor: '#87d068' }}>
-              IK
+              {generateInitials(`${userDetails.name}`)}
             </CustomAvatar>
           </div>
           <AvatarGroup
@@ -104,6 +112,23 @@ const MeetingMinute = () => {
             <br />
             Regards
           </Title>
+        </div>
+        <div className="h-px w-full bg-custom-gray_500" />
+        <div className="flex flex-row items-center gap-2 text-custom-black_300">
+          <div className="flex w-1/12 items-center justify-center">
+            <CustomAvatar size={'small'} style={{ backgroundColor: '#87d068' }}>
+              {generateInitials(`${userDetails.name}`)}
+            </CustomAvatar>
+          </div>
+          <Link
+            href={'https://meet.google.com/qrm-smti-liv'}
+            target="_blank"
+            className="w-11/12"
+          >
+            <Title type="h6" className="circular font-450 leading-[17.71px]">
+              {userDetails.name}
+            </Title>
+          </Link>
         </div>
       </div>
     </div>

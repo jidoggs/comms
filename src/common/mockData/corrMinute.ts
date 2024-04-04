@@ -7,7 +7,7 @@ export interface CorrespondenceMinute {
     meetingTitle?: string;
     meetingDate?: string;
     meetingUrl?: string;
-    partticipants?: string;
+    participants?: string;
     meetingDesc?: string;
   };
   userDetails: {

@@ -39,7 +39,7 @@ const MinuteCard = ({ className, minuteId, minute }: Props) => {
         className
       )}
     >
-      <div className="w-full rounded-xl bg-custom-white_100 pb-2 shadow-wordBox group-odd:order-1  group-odd:rounded-bl-none group-even:order-2 group-even:rounded-br-none md:w-100">
+      <div className="md:w-100 w-full rounded-xl bg-custom-white_100 pb-2 shadow-wordBox  group-odd:order-1 group-odd:rounded-bl-none group-even:order-2 group-even:rounded-br-none">
         <div className="flex flex-row items-center justify-between px-2">
           <div className="my-2 flex flex-row items-center gap-3">
             {userDetails.image ? (
@@ -54,12 +54,12 @@ const MinuteCard = ({ className, minuteId, minute }: Props) => {
               </CustomAvatar>
             )}
             <div className="flex flex-col">
-              <Title type="h2" className="name circular text-sm font-450">
+              <Title type="h6" className="font-450">
                 {userDetails.name}
               </Title>
               <Title
-                type="h2"
-                className="circular text-xs font-450 leading-[15.18px] text-gray-600"
+                type="h6"
+                className="font-450 leading-[15.18px] text-gray-600"
               >
                 {userDetails.title} - {userDetails.office}
               </Title>
@@ -75,6 +75,7 @@ const MinuteCard = ({ className, minuteId, minute }: Props) => {
         <MinuteType
           fileSend={fileSend}
           minute={minute}
+          userDetails={userDetails}
           // formattedDate={formattedDate}
         />
         <div className="my-2 h-px w-full bg-custom-gray_500" />

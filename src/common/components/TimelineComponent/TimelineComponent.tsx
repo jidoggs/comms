@@ -18,27 +18,24 @@ export const FormattedDate = ({ date }: { date: Dayjs }) => {
 };
 
 const TimelineComponent = ({ timeline }: TimelineProps) => {
+  // console.log('timeline.date', timeline.date);
+
   return (
-    <div>
-      <div className="flex flex-row items-center justify-start gap-3">
-        <Avatar
-          size="default"
-          className="rounded-full border border-custom-main"
-        >
-          {generateInitials(`${timeline.name}`)}
-        </Avatar>
-        <div className="flex flex-col gap-2">
-          <div className="circular text-sm font-medium leading-[17.71px] text-custom-main">
-            {timeline.name}
-          </div>
-          <p className="circular text-sm font-450 leading-[15.18px] text-custom-gray_600">
-            <span className="office">{timeline.office} </span>-
-            <span className="date">
-              {' '}
-              <FormattedDate date={timeline.date} />
-            </span>
-          </p>
+    <div className="flex flex-row items-center justify-start gap-3">
+      <Avatar size="default" className="rounded-full border border-custom-main">
+        {generateInitials(`${timeline.name}`)}
+      </Avatar>
+      <div className="flex flex-col gap-2">
+        <div className="circular text-sm font-medium leading-[17.71px] text-custom-main">
+          {timeline.name}
         </div>
+        <p className="circular text-sm font-450 leading-[15.18px] text-custom-gray_600">
+          <span className="office">{timeline.office} </span>-
+          <span className="date">
+            {' '}
+            <FormattedDate date={timeline.date} />
+          </span>
+        </p>
       </div>
     </div>
   );
