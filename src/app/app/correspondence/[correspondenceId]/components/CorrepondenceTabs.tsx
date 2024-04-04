@@ -2,7 +2,7 @@
 import React, { useContext } from 'react';
 import { TabsProps } from 'antd';
 import CustomTab from '@/common/components/CustomTab';
-import { DetailContext } from './service-context/DetailContextWrapper';
+import { DetailContext } from '../service-context/DetailContextWrapper';
 
 const CorrepondenceTabs = () => {
   const detailsData = useContext(DetailContext);

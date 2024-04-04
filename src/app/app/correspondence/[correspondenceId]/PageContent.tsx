@@ -8,7 +8,7 @@ import Documents from './components/pages/Documents';
 import CorrespondenceHeader from './components/CorrespondenceHeader';
 import CorrrespondenceMenu from './components/CorrrespondenceMenu';
 import MinuteDetails from './components/MinuteDetails';
-import { DetailContext } from './components/service-context/DetailContextWrapper';
+import { DetailContext } from './service-context/DetailContextWrapper';
 import { mergeClassName } from '@/common/utils';
 
 const PageContent = () => {

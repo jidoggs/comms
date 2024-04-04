@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { motion } from 'framer-motion';
 import CorrepondenceTabs from './CorrepondenceTabs';
-import { DetailContext } from './service-context/DetailContextWrapper';
+import { DetailContext } from '../service-context/DetailContextWrapper';
 import Title from '@/common/components/Title';
 import CustomButton from '@/common/components/CustomButton';
 import {

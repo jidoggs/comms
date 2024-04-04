@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Checkbox, Form } from 'antd';
 import CustomInput from '@/common/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
-import { NoteContext } from '../service-context/NotesContextWapper';
+import { NoteContext } from '../../service-context/NotesContextWapper';
 import { StickyNote } from '@/common/components/icons';
 import { CreateNoteFormType } from './type';
 import Colors from './Colors';

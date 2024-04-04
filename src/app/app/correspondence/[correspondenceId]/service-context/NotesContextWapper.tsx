@@ -1,8 +1,12 @@
 import React, { createContext, useState } from 'react';
 import { RadioGroupProps } from 'antd';
 import { customThemeColor } from '@/common/utils';
-import { CreateNoteFormType, NoteInfo, NotesContextType } from '../notes/type';
-import { ContextWapper } from '../../../types';
+import {
+  CreateNoteFormType,
+  NoteInfo,
+  NotesContextType,
+} from '../components/notes/type';
+import { ContextWapper } from '../../types';
 
 const initialNoteInfo: NoteInfo = {
   showNote: false,

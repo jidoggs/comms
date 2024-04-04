@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { NoteContext } from '../service-context/NotesContextWapper';
+import { NoteContext } from '../../service-context/NotesContextWapper';
 import CreateNote from './CreateNote';
 import ReadNote from './ReadNote';
 import PrivateNote from './PrivateNote';

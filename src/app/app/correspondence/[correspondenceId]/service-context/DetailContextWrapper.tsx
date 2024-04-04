@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useState } from 'react';
-import { ContextWapper, DetailContextType } from '../../../types';
+import { ContextWapper, DetailContextType } from '../../types';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 export const DetailContext = React.createContext<DetailContextType>(null);

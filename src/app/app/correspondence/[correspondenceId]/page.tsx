@@ -1,7 +1,7 @@
 'use client';
 // import { AppPageLoader } from '@/components/common';
 import React, { lazy, Suspense } from 'react';
-import DetailContextWrapper from './components/service-context/DetailContextWrapper';
+import DetailContextWrapper from './service-context/DetailContextWrapper';
 
 const CorrespondenceContent = lazy(() => import('./PageContent'));
 

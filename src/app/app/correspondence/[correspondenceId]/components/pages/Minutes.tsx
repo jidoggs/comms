@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import MinuteCard from '../corrMinute/MinuteCard';
 import MinuteAction from '../corrMinute/MinuteAction';
-import NotesContextWapper from '../service-context/NotesContextWapper';
+import NotesContextWapper from '../../service-context/NotesContextWapper';
 import { correspondenceMinute } from '@/common/mockData/corrMinute';
 
 const Minutes = () => {

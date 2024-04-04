@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import dayjs from 'dayjs';
 import CustomButton from '@/common/components/CustomButton';
 import Title from '@/common/components/Title';
-import { DetailContext } from './service-context/DetailContextWrapper';
+import { DetailContext } from '../service-context/DetailContextWrapper';
 import { BackwardArrow, Dot, InfoCircle } from '@/common/components/icons';
 import TimelineComponent from '@/common/components/TimelineComponent/TimelineComponent';
 

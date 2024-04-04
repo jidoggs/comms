@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import CustomButton from '@/common/components/CustomButton';
 import { Briefcase, Document, Users } from '@/common/components/icons';
 import { mergeClassName } from '@/common/utils';
-import { NoteContext } from './service-context/NotesContextWapper';
+import { NoteContext } from '../service-context/NotesContextWapper';
 
 type Props = {
   className?: string;
