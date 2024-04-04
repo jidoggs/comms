@@ -14,13 +14,13 @@ const generateBreadCrumbs = (
 ): Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[] => {
   const pathArr = path.split('/').slice(2);
   const paramsQuery = params.split('+').join('%20').split('&');
-  const paramsSplit = params
-    .split('+')
-    .join(' ')
-    .split('&')
-    .join('=')
-    .split('=')
-    .filter((_, idx) => idx % 2 !== 0);
+  // const paramsSplit = params
+  //   .split('+')
+  //   .join(' ')
+  //   .split('&')
+  //   .join('=')
+  //   .split('=')
+  //   .filter((_, idx) => idx % 2 !== 0);
 
   const separator: BreadcrumbSeparatorType = {
     type: 'separator',
@@ -29,12 +29,15 @@ const generateBreadCrumbs = (
   const routes = [];
   for (let i = 0; i < pathArr.length; i++) {
     const val: Partial<BreadcrumbItemType & BreadcrumbSeparatorType> = {};
-    const tempTitle = paramsSplit[i - 1] ? paramsSplit[i - 1] : pathArr[i];
+    // const tempTitle = paramsSplit[i - 1] ? paramsSplit[i - 1] : pathArr[i];
+    const tempTitle = pathArr[i].split('_').join(' ');
     const queryGroup = paramsQuery.slice(0, i).join('&');
     const query = queryGroup ? `?${queryGroup}` : '';
-    val.title = tempTitle[0].toUpperCase() + tempTitle.substring(1);
+
+    // val.title = tempTitle[0].toUpperCase() + tempTitle.substring(1);
+    val.title = tempTitle;
     val.href = '/app/' + pathArr.slice(0, i + 1).join('/') + query;
-    val.className = 'text-custom-gray_200';
+    val.className = 'text-custom-gray_200 capitalize';
     val.onClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
       e.preventDefault();
       router.push(e.currentTarget.href);

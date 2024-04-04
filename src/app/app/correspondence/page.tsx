@@ -8,10 +8,7 @@ import TableRowAction from './components/TableRowAction';
 import TableActions from './components/TableActions';
 import { Document } from '@/common/components/icons';
 import { mergeClassName } from '@/common/utils';
-import {
-  dummyCorrespondence,
-  singleDummyCorrespondenceData,
-} from '@/common/mockData';
+import { dummyCorrespondence } from '@/common/mockData';
 import {
   EditableCell,
   EditableRow,
@@ -117,7 +114,7 @@ const defaultColumns: (ColumnTypes[number] & {
   className: mergeClassName('!py-4 text-sm font-medium', itm.className),
 }));
 
-const SchedulePage = () => {
+const CorrespondecePage = () => {
   const [dataSource, setDataSource] = useState(dummyCorrespondence);
 
   const [activeKey, setActiveKey] = useState('draft');
@@ -142,23 +139,23 @@ const SchedulePage = () => {
   //   setDataSource(newData);
   // };
 
-  const handleAdd = () => {
-    const keys = Object.keys(singleDummyCorrespondenceData) as Array<
-      keyof typeof singleDummyCorrespondenceData
-    >;
-    const empty: any = {};
+  // const handleAdd = () => {
+  //   const keys = Object.keys(singleDummyCorrespondenceData) as Array<
+  //     keyof typeof singleDummyCorrespondenceData
+  //   >;
+  //   const empty: any = {};
 
-    keys.forEach((itm) => {
-      empty[itm] = '';
-    });
+  //   keys.forEach((itm) => {
+  //     empty[itm] = '';
+  //   });
 
-    const newData = {
-      ...empty,
-      id: dataSource.length + 1,
-      created_at: new Date().toLocaleDateString(),
-    };
-    setDataSource([...dataSource, newData]);
-  };
+  //   const newData = {
+  //     ...empty,
+  //     id: dataSource.length + 1,
+  //     created_at: new Date().toLocaleDateString(),
+  //   };
+  //   setDataSource([...dataSource, newData]);
+  // };
 
   const handleSave = (row: any) => {
     const newData = [...dataSource];
@@ -205,7 +202,7 @@ const SchedulePage = () => {
             items={items}
           />
         }
-        searchPanel={<TableActions addHandler={handleAdd} />}
+        searchPanel={<TableActions />}
         className={{
           table: 'cursor-pointer',
         }}
@@ -231,4 +228,4 @@ const SchedulePage = () => {
   );
 };
 
-export default SchedulePage;
+export default CorrespondecePage;

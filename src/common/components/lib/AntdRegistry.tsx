@@ -44,6 +44,8 @@ const appTheme: ThemeConfig = {
       controlHeightSM: 34,
 
       borderRadius: 10,
+      borderRadiusSM: 10,
+
       lineHeight: 1,
       algorithm: true,
       contentLineHeight: 1,
@@ -67,6 +69,9 @@ const appTheme: ThemeConfig = {
       colorPrimaryTextHover: customThemeColor.main,
       colorPrimaryHover: customThemeColor.gray_500,
       colorPrimary: customThemeColor.white_100,
+      defaultBorderColor: 'transparent',
+      colorPrimaryBorder: customThemeColor.gray_400,
+      colorPrimaryBorderHover: customThemeColor.gray_400,
 
       // colorBgTextActive: 'transparent',
     },

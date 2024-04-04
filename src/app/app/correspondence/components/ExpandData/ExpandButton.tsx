@@ -9,9 +9,10 @@ import { CorrespondenceData } from '../../types';
 
 type Props = {
   className: string;
+  description?: string;
 };
 
-function ExpandButton({ className }: Props) {
+function ExpandButton({ className, description }: Props) {
   const router = useRouter();
   const [openModal, setOpenModal] = useState(false);
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
@@ -38,7 +39,7 @@ function ExpandButton({ className }: Props) {
     <>
       <CustomButton
         icon={<Maximize size={18} className={className} />}
-        description="Maximize"
+        description={description || 'Maximize'}
         size="small"
         type="text"
         onClick={openModalHandler}

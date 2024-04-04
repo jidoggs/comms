@@ -1,7 +1,7 @@
 'use client';
 
 export { default as Add } from './Add';
-export { default as Archive } from './Archive';
+export { default as Archive } from './FolderOpen';
 export { default as ArrowDown } from './ArrowDown';
 export { default as ArrowRight } from './ArrowRight';
 export { default as Bell } from './Bell';
@@ -25,6 +25,7 @@ export { default as EyeSlash } from './EyeSlash';
 export { default as File } from './File';
 export { default as Hierachy } from './Hierachy';
 export { default as Folder } from './Folder';
+export { default as FolderOpen } from './FolderOpen';
 export { default as Home } from './Home';
 export { default as InfoCircle } from './InfoCircle';
 export { default as Link } from './Link';
