@@ -1,12 +1,13 @@
-import React, { ReactNode, createContext, useState } from 'react';
-import { mergeClassName } from '@/common/utils';
+import React, { createContext, useState } from 'react';
+import TableRowAction from '../components/TableRowAction';
 import { Document } from '@/common/components/icons';
+import { mergeClassName } from '@/common/utils';
 import {
+  ContextWapper,
   CorrespondenceContextNewType,
   EditableTableColumnTypes,
 } from '../../types';
 import { singleDummyCorrespondenceData } from '@/common/mockData';
-import TableRowAction from '../components/TableRowAction';
 
 export const CorrespondenceContextNew =
   createContext<CorrespondenceContextNewType>(null);
@@ -108,11 +109,7 @@ const defaultColumns: (EditableTableColumnTypes[number] & {
   className: mergeClassName('!py-4 text-sm font-medium', itm.className),
 }));
 
-type Props = {
-  children: ReactNode;
-};
-
-function NewCorrespondenceContext({ children }: Props) {
+function NewCorrespondenceContext({ children }: ContextWapper) {
   const [dataSource, setDataSource] = useState<any[]>([]);
 
   const handleDelete = (id: string | number) => {

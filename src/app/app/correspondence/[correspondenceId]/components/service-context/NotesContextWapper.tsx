@@ -1,7 +1,8 @@
-import React, { ReactNode, createContext, useState } from 'react';
+import React, { createContext, useState } from 'react';
 import { RadioGroupProps } from 'antd';
-import { CreateNoteFormType, NoteInfo, NotesContextType } from './type';
 import { customThemeColor } from '@/common/utils';
+import { CreateNoteFormType, NoteInfo, NotesContextType } from '../notes/type';
+import { ContextWapper } from '../../../types';
 
 const initialNoteInfo: NoteInfo = {
   showNote: false,
@@ -11,13 +12,9 @@ const initialNoteInfo: NoteInfo = {
   isPrivate: false,
 };
 
-type Props = {
-  children: ReactNode;
-};
-
 export const NoteContext = createContext<NotesContextType>(null);
 
-function NotesContext({ children }: Props) {
+function NotesContextWapper({ children }: ContextWapper) {
   const [noteInfo, setNoteInfo] = useState<NoteInfo>(initialNoteInfo);
 
   const showNoteHandler = () => {
@@ -62,4 +59,4 @@ function NotesContext({ children }: Props) {
   );
 }
 
-export default NotesContext;
+export default NotesContextWapper;

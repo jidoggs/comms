@@ -1,10 +1,5 @@
 'use client';
-import React, {
-  ReactNode,
-  createContext,
-  useLayoutEffect,
-  useState,
-} from 'react';
+import React, { createContext, useLayoutEffect, useState } from 'react';
 import { TabsProps } from 'antd';
 import TableRowAction from '../components/TableRowAction';
 import { Document } from '@/common/components/icons';
@@ -14,6 +9,7 @@ import {
   singleDummyCorrespondenceData,
 } from '@/common/mockData';
 import {
+  ContextWapper,
   CorrespondenceListContextType,
   EditableTableColumnTypes,
 } from '../types';
@@ -21,10 +17,6 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 export const CorrespondeceListContext =
   createContext<CorrespondenceListContextType>(null);
-
-type Props = {
-  children: ReactNode;
-};
 
 const defaultColumns: (EditableTableColumnTypes[number] & {
   editable?: boolean;
@@ -123,7 +115,7 @@ const defaultColumns: (EditableTableColumnTypes[number] & {
   className: mergeClassName('!py-4 text-sm font-medium', itm.className),
 }));
 
-function CorrespondeceListContextWrapper({ children }: Props) {
+function CorrespondeceListContextWrapper({ children }: ContextWapper) {
   const [dataSource, setDataSource] = useState(dummyCorrespondence);
   const router = useRouter();
   const tabItem = useSearchParams().get('tab') as string;

@@ -8,6 +8,7 @@ interface TimelineProps {
     name: string;
     office: string;
     date: Dayjs;
+    img?: string;
   };
 }
 
@@ -24,6 +25,7 @@ const TimelineComponent = ({ timeline }: TimelineProps) => {
         <CustomAvatar
           size="default"
           className="rounded-full border border-custom-main"
+          src={timeline.img}
         >
           {generateInitials(`${timeline.name}`)}
         </CustomAvatar>

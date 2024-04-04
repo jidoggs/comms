@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { NoteContext } from './NotesContext';
+import { NoteContext } from '../service-context/NotesContextWapper';
 import CustomButton from '@/common/components/CustomButton';
 import { EyeSlash, Thrash } from '@/common/components/icons';
 import Colors from './Colors';

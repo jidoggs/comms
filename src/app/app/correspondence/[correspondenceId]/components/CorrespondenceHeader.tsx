@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { useRouter } from 'next/navigation';
+import dayjs from 'dayjs';
 import CustomButton from '@/common/components/CustomButton';
 import Title from '@/common/components/Title';
-import { DetailContext } from '../PageContent';
+import { DetailContext } from './service-context/DetailContextWrapper';
 import { BackwardArrow, Dot, InfoCircle } from '@/common/components/icons';
 import TimelineComponent from '@/common/components/TimelineComponent/TimelineComponent';
-import dayjs from 'dayjs';
 
 const CorrespondenceHeader = () => {
   const router = useRouter();
@@ -14,7 +14,8 @@ const CorrespondenceHeader = () => {
   const timeline = {
     name: 'Adbul Jabar',
     office: 'HM Trade & Inv...',
-    date: dayjs('30 Jan 2024, 4:22pm', 'DD MMM YYYY, h:mmA'),
+    date: dayjs(new Date(), 'DD MMM YYYY, h:mmA'),
+    img: '/images/user2.jpeg',
   };
 
   return (

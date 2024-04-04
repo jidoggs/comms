@@ -1,17 +1,17 @@
 'use client';
 import React, { useContext } from 'react';
-import SideMenu from '@/app/app/correspondence/[correspondenceId]/components/SideMenu';
-import { MoreFile } from '@/common/components/icons';
-import Title from '@/common/components/Title';
 import MinuteType from './MinuteType';
-import { generateInitials, mergeClassName } from '@/common/utils';
+import SideMenu from '../SideMenu';
+import Note from '../notes';
+import { NoteContext } from '../service-context/NotesContextWapper';
+import { DetailContext } from '../service-context/DetailContextWrapper';
+import Title from '@/common/components/Title';
+import { MoreFile } from '@/common/components/icons';
 import CustomAvatar from '@/common/components/Avatar/CustomAvatar';
 import AvatarGroup from '@/common/components/Avatar/AvatarGroup';
-import { dummyAvatarData } from '@/common/mockData';
 import CustomButton from '@/common/components/CustomButton';
-import { DetailContext } from '../../PageContent';
-import { NoteContext } from '../notes/NotesContext';
-import Note from '../notes';
+import { dummyAvatarData } from '@/common/mockData';
+import { generateInitials, mergeClassName } from '@/common/utils';
 
 type Props = {
   minuteId: number;

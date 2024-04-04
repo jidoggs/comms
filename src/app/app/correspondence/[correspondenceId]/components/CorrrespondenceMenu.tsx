@@ -1,6 +1,9 @@
-import { mergeClassName } from '@/common/utils';
 import React, { useContext } from 'react';
+import { motion } from 'framer-motion';
 import CorrepondenceTabs from './CorrepondenceTabs';
+import { DetailContext } from './service-context/DetailContextWrapper';
+import Title from '@/common/components/Title';
+import CustomButton from '@/common/components/CustomButton';
 import {
   Briefcase,
   Close,
@@ -8,18 +11,9 @@ import {
   Send,
   Users,
 } from '@/common/components/icons';
-import { motion } from 'framer-motion';
-import Title from '@/common/components/Title';
-import { StateDispatch } from '@/types';
-import CustomButton from '@/common/components/CustomButton';
-import { DetailContext } from '../PageContent';
+import { mergeClassName } from '@/common/utils';
 
-type Props = {
-  activeTab: string;
-  setActiveTab: StateDispatch<string>;
-};
-
-const CorrrespondenceMenu = ({ activeTab, setActiveTab }: Props) => {
+const CorrrespondenceMenu = () => {
   const detailsData = useContext(DetailContext);
 
   return (
@@ -31,10 +25,7 @@ const CorrrespondenceMenu = ({ activeTab, setActiveTab }: Props) => {
         )}
       >
         <div>
-          <CorrepondenceTabs
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
-          />
+          <CorrepondenceTabs />
         </div>
 
         <div className="left flex h-full flex-row items-center gap-1 px-1">
