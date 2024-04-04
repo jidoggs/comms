@@ -1,11 +1,13 @@
 import React, { ReactNode, createContext, useState } from 'react';
+import { RadioGroupProps } from 'antd';
 import { CreateNoteFormType, NoteInfo, NotesContextType } from './type';
+import { customThemeColor } from '@/common/utils';
 
 const initialNoteInfo: NoteInfo = {
   showNote: false,
   noteType: 'form',
   note: '',
-  color: '',
+  color: customThemeColor.cream_100,
   isPrivate: false,
 };
 
@@ -39,6 +41,11 @@ function NotesContext({ children }: Props) {
     setNoteInfo((prev) => ({ ...prev, isPrivate: !prev.isPrivate }));
   };
 
+  const colorUpdateHandler: RadioGroupProps['onChange'] = (e) => {
+    const color = e.target.value;
+    setNoteInfo((prev) => ({ ...prev, color }));
+  };
+
   return (
     <NoteContext.Provider
       value={{
@@ -47,6 +54,7 @@ function NotesContext({ children }: Props) {
         createNoteHandler,
         deleteNoteHandler,
         togglePrivacyHandler,
+        colorUpdateHandler,
       }}
     >
       {children}
