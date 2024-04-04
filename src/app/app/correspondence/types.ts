@@ -1,4 +1,5 @@
 import { Table, TabsProps } from 'antd';
+import { AnimationControls } from 'framer-motion';
 export * from '../../../types';
 export interface CorrespondenceData {
   sent_by: string;
@@ -41,4 +42,5 @@ export type DetailContextType = {
   handleUpdateFile: (files: FileList) => void; //eslint-disable-line
   tabChangeHandler: (state: string) => void; //eslint-disable-line
   activeTab: string;
+  contentControls: AnimationControls;
 } | null;

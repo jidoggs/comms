@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Avatar, Timeline } from 'antd';
 import { TimelineDot } from '@/common/components/icons';
 // import Title from '@/common/components/Title';
@@ -36,18 +35,7 @@ const Timelines = () => {
   // console.log('correspondenceTimeline', correspondenceTimeline);
 
   return (
-    <motion.div
-      initial={{
-        opacity: 0,
-      }}
-      whileInView={{
-        opacity: 1,
-      }}
-      transition={{
-        duration: 0.5,
-      }}
-      className="relative flex size-full flex-col items-center justify-center"
-    >
+    <div className="relative flex size-full flex-col items-center justify-center">
       <div className="mt-6 flex size-full items-center justify-center overflow-y-auto">
         <Timeline
           className="pt-5"
@@ -255,7 +243,7 @@ const Timelines = () => {
           // ]}
         />
       </div>
-    </motion.div>
+    </div>
   );
 };
 

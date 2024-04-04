@@ -1,6 +1,7 @@
 import React, { useLayoutEffect, useState } from 'react';
-import { ContextWapper, DetailContextType } from '../../types';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useAnimation } from 'framer-motion';
+import { ContextWapper, DetailContextType } from '../../types';
 
 export const DetailContext = React.createContext<DetailContextType>(null);
 
@@ -13,6 +14,7 @@ function DetailContextWrapper({ children }: ContextWapper) {
   const [correspondenceFile, setCorrespondenceFile] = useState<FileList | null>(
     null
   );
+  const contentControls = useAnimation();
 
   const tabChangeHandler = (state: string) => {
     router.push(`${pathname}?tab=${state}`);
@@ -26,9 +28,11 @@ function DetailContextWrapper({ children }: ContextWapper) {
 
   const openDetailsHandler = () => {
     setOpenCorrespondenceDetails(true);
+    contentControls.start({ width: '66.666%' });
   };
   const closeDetailsHandler = () => {
     setOpenCorrespondenceDetails(false);
+    contentControls.start({ width: '100%' });
   };
 
   const handleUpdateFile = (files: FileList) => {
@@ -51,6 +55,7 @@ function DetailContextWrapper({ children }: ContextWapper) {
         handleUpdateFile,
         tabChangeHandler,
         activeTab,
+        contentControls,
       }}
     >
       {children}

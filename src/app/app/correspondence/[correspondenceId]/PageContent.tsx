@@ -9,7 +9,6 @@ import CorrespondenceHeader from './components/CorrespondenceHeader';
 import CorrrespondenceMenu from './components/CorrrespondenceMenu';
 import MinuteDetails from './components/MinuteDetails';
 import { DetailContext } from './service-context/DetailContextWrapper';
-import { mergeClassName } from '@/common/utils';
 
 const PageContent = () => {
   const detailsData = useContext(DetailContext);
@@ -33,17 +32,19 @@ const PageContent = () => {
     <div className="flex w-full flex-col">
       <CorrespondenceHeader />
       <CorrrespondenceMenu />
-      <div className="flex h-[calc(100vh_-_146px)] flex-row justify-between">
-        <div
-          className={mergeClassName(
-            'flex w-full flex-row items-center justify-between',
-            detailsData?.openCorrespondenceDetails && 'w-4/6'
-          )}
+      <div className="flex h-[calc(100vh_-_144px)] flex-row justify-between">
+        <motion.div
+          animate={detailsData?.contentControls}
+          transition={{
+            duration: 0.2,
+          }}
+          className="flex w-full flex-row items-center justify-between"
         >
           {detailsData?.activeTab === 'minutes' ? <Minutes /> : null}
           {detailsData?.activeTab === 'timelines' ? <Timelines /> : null}
           {detailsData?.activeTab === 'documents' ? <Documents /> : null}
-        </div>
+        </motion.div>
+
         {detailsData?.openCorrespondenceDetails && (
           <motion.div
             initial={{
@@ -54,9 +55,12 @@ const PageContent = () => {
               opacity: 1,
               x: 0,
             }}
+            exit={{
+              x: -200,
+              opacity: 0,
+            }}
             transition={{
-              duration: 0.5,
-              ease: 'easeInOut',
+              duration: 0.2,
             }}
             className="flex w-2/6 flex-row items-center justify-center border-l border-custom-gray_500"
           >

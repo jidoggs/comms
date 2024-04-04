@@ -11,18 +11,18 @@ import {
   Send,
   Users,
 } from '@/common/components/icons';
-import { mergeClassName } from '@/common/utils';
 
 const CorrrespondenceMenu = () => {
   const detailsData = useContext(DetailContext);
 
   return (
     <div className="flex !h-[50px] flex-row justify-between border-b border-custom-gray_500 bg-custom-white_100">
-      <div
-        className={mergeClassName(
-          'flex w-full flex-row items-end justify-between pl-5',
-          detailsData?.openCorrespondenceDetails && 'w-4/6'
-        )}
+      <motion.div
+        animate={detailsData?.contentControls}
+        transition={{
+          duration: 0.2,
+        }}
+        className="flex w-full flex-row items-end justify-between pl-5"
       >
         <div>
           <CorrepondenceTabs />
@@ -52,7 +52,7 @@ const CorrrespondenceMenu = () => {
             icon={<Send size={18} />}
           />
         </div>
-      </div>
+      </motion.div>
       {detailsData?.openCorrespondenceDetails ? (
         <motion.div
           initial={{
@@ -64,8 +64,7 @@ const CorrrespondenceMenu = () => {
             x: 0,
           }}
           transition={{
-            duration: 0.5,
-            ease: 'easeInOut',
+            duration: 0.2,
           }}
           className="flex w-2/6 flex-row items-center justify-between border-l border-custom-gray_500 bg-custom-white_100"
         >
