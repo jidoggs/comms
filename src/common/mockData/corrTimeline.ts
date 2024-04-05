@@ -12,6 +12,21 @@ const names = [
   'Kofi Mensah',
   'Ebenezer Asamoah',
   'Aisha Buhari',
+  'Hafsat Abubakar',
+  'Moyo Lawal',
+  'Chikezie Madu',
+  'Adeola Ogunbiyi',
+  'Ismaila Ibrahim',
+  'Nneka Ogu',
+  'Emeka Okafor',
+  'Bola Tinubu',
+  'Yemi Osinbajo',
+  'Amina Mohammed',
+  'Ngozi Okonjo-Iweala',
+  'Seun Onigbinde',
+  'Uche Jumbo',
+  'Johnathan Doe', // Added some generic names for variety
+  'Jane Smith',
 ];
 
 const offices = [
@@ -25,6 +40,16 @@ const offices = [
   'Department of Transportation',
   'Immigration Services',
   'Tax Authority',
+  'Central Bank',
+  'Supreme Court',
+  'Department of Defense',
+  'Department of Foreign Affairs',
+  'Department of Energy',
+  'Environmental Protection Agency',
+  'Department of Labor',
+  'Postal Service',
+  'National Park Service',
+  'Public Utilities Commission',
 ];
 
 export const correspondenceTimeline: TimelineProps[] = [];
@@ -68,6 +93,28 @@ for (let i = 0; i < 2; i++) {
       .hour(Math.floor(Math.random() * 12) + 1)
       .minute(Math.floor(Math.random() * 60)),
   });
+}
+
+// Ensure 20 total entries (if needed)
+const neededEntries = 20 - correspondenceTimeline.length;
+if (neededEntries > 0) {
+  for (let i = 0; i < neededEntries; i++) {
+    // Logic to generate entries from a random date in the past (can be similar to last week/month)
+    correspondenceTimeline.push({
+      name: names[Math.floor(Math.random() * names.length)],
+      office: offices[Math.floor(Math.random() * offices.length)],
+      date: generateRandomDateFromPast(), // Implement this function
+    });
+  }
+}
+
+// Function to generate a random date in the past (implementation example)
+function generateRandomDateFromPast() {
+  const randomDays = Math.floor(Math.random() * 365); // Adjust range as needed
+  return dayjs()
+    .subtract(randomDays, 'days')
+    .hour(Math.floor(Math.random() * 12) + 1)
+    .minute(Math.floor(Math.random() * 60));
 }
 
 // export const correspondenceTimeline: TimelineProps[] = [
