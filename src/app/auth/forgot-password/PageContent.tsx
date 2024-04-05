@@ -6,7 +6,7 @@ const ForgotPageContent: React.FunctionComponent = () => {
   return (
     <>
       <Title
-        type="h2"
+        tag="h2"
         className="bebas mb-3 text-center font-normal uppercase leading-[28.8px] text-custom-black_200"
       >
         Forgot Password

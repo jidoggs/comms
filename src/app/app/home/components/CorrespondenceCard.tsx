@@ -16,7 +16,8 @@ const CorrespondenceCard = () => {
     router.push('correspondence/export_of_brewery_products');
   };
 
-  const handleKeyDown = () => {
+  const handleKeyDown: iHandleKeyboard = (e) => {
+    if (e.key === 'Tab') return;
     handleClick();
   };
 

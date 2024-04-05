@@ -138,6 +138,7 @@ function CorrespondeceListContextWrapper({ children }: ContextWapper) {
     if (!tabItem) {
       router.replace('/app/correspondence?tab=draft');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tabItem]);
 
   const handleTabChange = (state: string) => {

@@ -1,8 +1,8 @@
 import React from 'react';
 import MinuteCard from '../corrMinute/MinuteCard';
 import MinuteAction from '../corrMinute/MinuteAction';
-import NotesContextWapper from '../../service-context/NotesContextWapper';
 import { correspondenceMinute } from '@/common/mockData/corrMinute';
+import NotesContextWapper from '../../service-context/NotesContextWapper';
 
 const Minutes = () => {
   return (

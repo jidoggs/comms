@@ -42,13 +42,6 @@ const TimelineComponent = ({ timeline }: TimelineProps) => {
             </span>
           </Title>
         </div>
-        <p className="circular text-sm font-450 leading-[15.18px] text-custom-gray_600">
-          <span className="office">{timeline.office} </span>-
-          <span className="date">
-            {' '}
-            <FormattedDate date={timeline.date} />
-          </span>
-        </p>
       </div>
     </div>
   );

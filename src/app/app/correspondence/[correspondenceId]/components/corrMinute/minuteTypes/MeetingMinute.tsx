@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 'use client';
 import AvatarGroup from '@/common/components/Avatar/AvatarGroup';
 import CustomAvatar from '@/common/components/Avatar/CustomAvatar';
@@ -16,7 +15,7 @@ import Title from '@/common/components/Title';
 import { dummyAvatarData } from '@/common/mockData';
 import { generateInitials } from '@/common/utils';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React from 'react';
 
 interface MinuteUserDetails {
   userDetails: {
@@ -27,7 +26,7 @@ interface MinuteUserDetails {
 }
 
 const MeetingMinute = ({ userDetails }: MinuteUserDetails) => {
-  const [meetingCreator, setMeetingCreator] = useState(true);
+  // const [meetingCreator, setMeetingCreator] = useState(true);
 
   return (
     <div className="w-full flex-col items-center justify-end rounded-md border border-custom-gray_500 p-1">
@@ -37,31 +36,31 @@ const MeetingMinute = ({ userDetails }: MinuteUserDetails) => {
           <Title tag="h5" className="w-11/12 leading-[20.24px]">
             Export of Brewery Products Meeting
           </Title>
-          {meetingCreator && (
-            <div className="flex flex-row gap-1">
-              <CustomButton
-                description="Correspondence"
-                type="text"
-                size="small"
-                icon={<Edit size={18} />}
-                // onClick={detailsData?.openDetailsHandler}
-              />
-              <CustomButton
-                description="Correspondence"
-                type="text"
-                size="small"
-                icon={<Delete size={18} />}
-                // onClick={detailsData?.openDetailsHandler}
-              />
-              <CustomButton
-                description="Correspondence"
-                type="text"
-                size="small"
-                icon={<Copy size={18} />}
-                // onClick={detailsData?.openDetailsHandler}
-              />
-            </div>
-          )}
+          {/* {meetingCreator && ( */}
+          <div className="flex flex-row gap-1">
+            <CustomButton
+              description="Correspondence"
+              type="text"
+              size="small"
+              icon={<Edit size={18} />}
+              // onClick={detailsData?.openDetailsHandler}
+            />
+            <CustomButton
+              description="Correspondence"
+              type="text"
+              size="small"
+              icon={<Delete size={18} />}
+              // onClick={detailsData?.openDetailsHandler}
+            />
+            <CustomButton
+              description="Correspondence"
+              type="text"
+              size="small"
+              icon={<Copy size={18} />}
+              // onClick={detailsData?.openDetailsHandler}
+            />
+          </div>
+          {/* )} */}
         </div>
         <Title tag="h6" className="w-full leading-[17.71px]">
           Friday, 16 February 2024 . 12:30pm - 1:30pm
@@ -119,7 +118,7 @@ const MeetingMinute = ({ userDetails }: MinuteUserDetails) => {
             target="_blank"
             className="w-11/12"
           >
-            <Title type="h6" className="circular font-450 leading-[17.71px]">
+            <Title tag="h6" className="circular font-450 leading-[17.71px]">
               {userDetails.name}
             </Title>
           </Link>

@@ -24,6 +24,7 @@ function DetailContextWrapper({ children }: ContextWapper) {
     if (!activeTab) {
       router.replace(`${pathname}?tab=minutes`);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab]);
 
   const openDetailsHandler = () => {
