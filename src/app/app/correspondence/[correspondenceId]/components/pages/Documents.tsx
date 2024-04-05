@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import { documents } from './data';
 import { ArrowRight } from '@/common/components/icons';
 
@@ -30,20 +29,8 @@ const Documents = () => {
       setStepTwo(id);
     }
   };
-// 
   return (
-    <motion.div
-      initial={{
-        opacity: 0,
-      }}
-      whileInView={{
-        opacity: 1,
-      }}
-      transition={{
-        duration: 0.5,
-      }}
-      className="relative flex size-full flex-col"
-    >
+    <div className="relative flex size-full flex-col">
       <div className="relative flex h-full gap-4 px-5">
         <div className="flex flex-col gap-4 border-r border-white  pr-4 pt-5">
           {documents.map((doc) => (
@@ -87,7 +74,7 @@ const Documents = () => {
           )}
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

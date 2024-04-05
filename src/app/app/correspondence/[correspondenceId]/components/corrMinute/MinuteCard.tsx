@@ -1,17 +1,17 @@
 'use client';
 import React, { useContext } from 'react';
-import SideMenu from '@/app/app/correspondence/[correspondenceId]/components/SideMenu';
-import { MoreFile } from '@/common/components/icons';
-import Title from '@/common/components/Title';
 import MinuteType from './MinuteType';
-import { generateInitials, mergeClassName } from '@/common/utils';
+import SideMenu from '../SideMenu';
+import Note from '../notes';
+import { NoteContext } from '../../service-context/NotesContextWapper';
+import { DetailContext } from '../../service-context/DetailContextWrapper';
+import Title from '@/common/components/Title';
+import { MoreFile } from '@/common/components/icons';
 import CustomAvatar from '@/common/components/Avatar/CustomAvatar';
 import AvatarGroup from '@/common/components/Avatar/AvatarGroup';
-import { dummyAvatarData } from '@/common/mockData';
 import CustomButton from '@/common/components/CustomButton';
-import { DetailContext } from '../../PageContent';
-import { NoteContext } from '../notes/NotesContext';
-import Note from '../notes';
+import { dummyAvatarData } from '@/common/mockData';
+import { generateInitials, mergeClassName } from '@/common/utils';
 
 type Props = {
   minuteId: number;
@@ -39,7 +39,7 @@ const MinuteCard = ({ className, minuteId, minute }: Props) => {
         className
       )}
     >
-      <div className="md:w-100 w-full rounded-xl bg-custom-white_100 pb-2 shadow-wordBox  group-odd:order-1 group-odd:rounded-bl-none group-even:order-2 group-even:rounded-br-none">
+      <div className="w-full rounded-xl bg-custom-white_100 pb-2 shadow-wordBox group-odd:order-1  group-odd:rounded-bl-none group-even:order-2 group-even:rounded-br-none md:w-100">
         <div className="flex flex-row items-center justify-between px-2">
           <div className="my-2 flex flex-row items-center gap-3">
             {userDetails.image ? (
@@ -54,12 +54,13 @@ const MinuteCard = ({ className, minuteId, minute }: Props) => {
               </CustomAvatar>
             )}
             <div className="flex flex-col">
-              <Title type="h6" className="font-450">
+              <Title tag="h2" bold={false} className="name text-sm">
                 {userDetails.name}
               </Title>
               <Title
-                type="h6"
-                className="font-450 leading-[15.18px] text-gray-600"
+                tag="h2"
+                bold={false}
+                className="text-xs leading-[15.18px] text-gray-600"
               >
                 {userDetails.title} - {userDetails.office}
               </Title>
@@ -80,10 +81,7 @@ const MinuteCard = ({ className, minuteId, minute }: Props) => {
         />
         <div className="my-2 h-px w-full bg-custom-gray_500" />
         <div className="flex w-full flex-row items-center justify-between px-2">
-          <Title
-            type="p"
-            className="text-sm leading-[17.71px] text-custom-gray_600"
-          >
+          <Title tag="p" className="text-custom-gray_600">
             {formattedDate}
           </Title>
           <div className="flex flex-row gap-2">

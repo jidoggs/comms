@@ -15,7 +15,7 @@ const ActivitiesSection = () => {
           size="small"
           className="flex items-center gap-x-1"
         >
-          <Title type="sm" className="font-semibold text-custom-gray_200">
+          <Title tag="span" className="font-semibold text-custom-gray_200">
             Activities
           </Title>
           <ArrowRight />
@@ -49,7 +49,7 @@ const ActivitiesSection = () => {
             <Fragment key={i}>
               {!showDate && (
                 <div className="p-2.5">
-                  <Title className="text-custom-gray_850 text-xs font-medium leading-4">
+                  <Title className="text-xs font-medium leading-4 text-custom-gray_850">
                     {isToday
                       ? 'Today'
                       : isTomorrow

@@ -23,10 +23,7 @@ const layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
           <div className="flex w-[90%] items-center justify-center sm:w-1/2">
             <div className="flex w-[375px] items-center justify-center rounded-2xl border border-custom-gray_950">
               <div className="flex w-full flex-col items-center justify-center p-5">
-                <Title
-                  type="h2"
-                  className="my-5 text-center font-bold leading-[30.36px]"
-                >
+                <Title className="my-5 text-center text-2xl font-bold leading-[30.36px]">
                   Correspondence
                 </Title>
                 {children}

@@ -19,7 +19,7 @@ function ActivityInformationItem({ icon, value }: ItemProps) {
   return (
     <div className="flex items-start gap-x-2.5 p-1">
       <span>{icon}</span>
-      {typeof value === 'string' ? <Title type="sm">{value}</Title> : value}
+      {typeof value === 'string' ? <Title tag="span">{value}</Title> : value}
     </div>
   );
 }
@@ -62,7 +62,7 @@ function ActivityInformation() {
           <CustomAvatar size={22} src="/images/user1.jpeg">
             {generateInitials('Jane Doe')}
           </CustomAvatar>
-          <Title type="sm" className="font-medium text-custom-gray_200">
+          <Title tag="span" semibold className="text-custom-gray_200">
             Jane Doe
           </Title>
         </div>

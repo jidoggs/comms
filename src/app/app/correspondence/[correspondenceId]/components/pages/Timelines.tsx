@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Avatar, Timeline } from 'antd';
 import { TimelineDot } from '@/common/components/icons';
 // import Title from '@/common/components/Title';
@@ -7,6 +6,7 @@ import { TimelineDot } from '@/common/components/icons';
 import { correspondenceTimeline } from '@/common/mockData/corrTimeline';
 import dayjs, { Dayjs } from 'dayjs';
 import TimelineComponent from '@/common/components/TimelineComponent/TimelineComponent';
+// import TimelineComponent from '@/common/components/TimelineComponent/TimelineComponent';
 // import Title from '@/common/components/Title';
 
 export const FormattedDate = ({ date }: { date: Dayjs }) => {
@@ -36,18 +36,7 @@ const Timelines = () => {
   // console.log('correspondenceTimeline', correspondenceTimeline);
 
   return (
-    <motion.div
-      initial={{
-        opacity: 0,
-      }}
-      whileInView={{
-        opacity: 1,
-      }}
-      transition={{
-        duration: 0.5,
-      }}
-      className="relative flex size-full flex-col items-center justify-center"
-    >
+    <div className="relative flex size-full flex-col items-center justify-center">
       <div className="mt-6 flex size-full flex-wrap items-center justify-center overflow-y-auto">
         <Timeline className="!mt-5">
           {[
@@ -114,7 +103,7 @@ const Timelines = () => {
           })}
         </Timeline>
       </div>
-    </motion.div>
+    </div>
   );
 };
 export default Timelines;

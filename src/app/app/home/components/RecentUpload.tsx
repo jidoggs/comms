@@ -6,14 +6,14 @@ import React from 'react';
 const RandomDocument = () => {
   return (
     <div className="flex gap-x-2.5 p-2.5">
-      <div className="rounded-10 self-start bg-custom-gray_100 p-2.5 text-custom-main">
+      <div className="self-start rounded-10 bg-custom-gray_100 p-2.5 text-custom-main">
         <Folder size={18} />
       </div>
       <div className="flex flex-col">
-        <Title type="sm" className="font-medium">
+        <Title tag="span" semibold>
           Requirments.pdf
         </Title>
-        <Title type="sm" className="font-medium text-custom-gray_600">
+        <Title tag="span" semibold className="text-custom-gray_600">
           20-10-2022
         </Title>
       </div>
@@ -30,7 +30,7 @@ function RecentUpload() {
           size="small"
           className="flex items-center gap-x-1"
         >
-          <Title type="sm" className="font-semibold text-custom-gray_200">
+          <Title tag="span" className="font-semibold text-custom-gray_200">
             Recent uploads
           </Title>
           <ArrowRight />

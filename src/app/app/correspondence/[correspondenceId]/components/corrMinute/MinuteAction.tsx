@@ -1,3 +1,5 @@
+import React from 'react';
+import TextArea from 'antd/es/input/TextArea';
 import CustomButton from '@/common/components/CustomButton';
 import {
   Briefcase,
@@ -6,12 +8,10 @@ import {
   Send,
   Users,
 } from '@/common/components/icons';
-import TextArea from 'antd/es/input/TextArea';
-import React from 'react';
 
 const MinuteAction = () => {
   return (
-    <div className="mt-2 w-full rounded-md bg-white">
+    <div className="w-full rounded-md bg-white drop-shadow-2xl ">
       <div className="flex flex-col p-3">
         <div className="mb-2 flex flex-row items-center justify-between">
           <div className="left">Left</div>

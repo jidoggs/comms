@@ -1,28 +1,16 @@
 import React from 'react';
 import MinuteCard from '../corrMinute/MinuteCard';
 import MinuteAction from '../corrMinute/MinuteAction';
-import { motion } from 'framer-motion';
+import NotesContextWapper from '../../service-context/NotesContextWapper';
 import { correspondenceMinute } from '@/common/mockData/corrMinute';
-import NotesContext from '../notes/NotesContext';
 
 const Minutes = () => {
   return (
-    <motion.div
-      initial={{
-        opacity: 0,
-      }}
-      whileInView={{
-        opacity: 1,
-      }}
-      transition={{
-        duration: 0.5,
-      }}
-      className="relative flex size-full flex-col justify-end"
-    >
-      <div className="flex h-full flex-col gap-3 overflow-y-auto px-5">
+    <div className="relative flex size-full flex-col justify-end">
+      <div className="flex h-full flex-col gap-3 overflow-y-auto px-5 transition-[width]">
         {correspondenceMinute.map((minute) => {
           return (
-            <NotesContext key={minute.id}>
+            <NotesContextWapper key={minute.id}>
               <MinuteCard
                 minuteId={minute.id}
                 minute={minute}
@@ -30,12 +18,12 @@ const Minutes = () => {
                   'group h-full first:mt-3 last:mb-3 odd:self-start even:self-end'
                 }
               />
-            </NotesContext>
+            </NotesContextWapper>
           );
         })}
       </div>
       <MinuteAction />
-    </motion.div>
+    </div>
   );
 };
 

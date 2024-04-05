@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { useRouter } from 'next/navigation';
+import dayjs from 'dayjs';
 import CustomButton from '@/common/components/CustomButton';
 import Title from '@/common/components/Title';
-import { DetailContext } from '../PageContent';
+import { DetailContext } from '../service-context/DetailContextWrapper';
 import { BackwardArrow, Dot, InfoCircle } from '@/common/components/icons';
 import TimelineComponent from '@/common/components/TimelineComponent/TimelineComponent';
-import dayjs from 'dayjs';
 
 const CorrespondenceHeader = () => {
   const router = useRouter();
@@ -13,8 +13,9 @@ const CorrespondenceHeader = () => {
 
   const timeline = {
     name: 'Adbul Jabar',
-    office: 'string',
-    date: dayjs('30 Jan 2024, 4:22pm', 'DD MMM YYYY, h:mmA'),
+    office: 'HM Trade & Inv...',
+    date: dayjs(new Date(), 'DD MMM YYYY, h:mmA'),
+    img: '/images/user2.jpeg',
   };
 
   return (
@@ -29,7 +30,7 @@ const CorrespondenceHeader = () => {
           className="border !border-custom-gray_400"
           descriptionPlacement="bottom"
         />
-        <Title type="h1" className="text-lg leading-[22.77px] text-custom-main">
+        <Title tag="h1" className="text-lg leading-[22.77px]">
           Export of Brewery Products
         </Title>
       </div>

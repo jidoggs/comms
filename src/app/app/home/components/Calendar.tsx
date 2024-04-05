@@ -7,6 +7,7 @@ import dayLocaleData from 'dayjs/plugin/localeData';
 import { Calendar, CalendarProps, Col, Row, Select } from 'antd';
 import CustomButton from '@/common/components/CustomButton';
 import { Plus } from '@/common/components/icons';
+import Title from '@/common/components/Title';
 
 dayjs.extend(dayLocaleData);
 
@@ -49,11 +50,14 @@ const CustomCalendar: React.FC = () => {
 
     return (
       <div className="flex size-[42px] flex-col items-center justify-start gap-y-px">
-        <p className="text-sm">{value.date()}</p>
+        <Title>{value.date()}</Title>
         {!dataCount || dayOfWeek === 0 || dayOfWeek === 6 ? null : (
-          <p className="size-4 rounded-full bg-custom-main px-1 py-[0.5px] text-center text-xs text-custom-white_100">
+          <Title
+            small
+            className="size-4 rounded-full px-1 py-[0.5px] text-center text-custom-white_100"
+          >
             {dataCount}
-          </p>
+          </Title>
         )}
       </div>
     );
@@ -76,7 +80,7 @@ const CustomCalendar: React.FC = () => {
   };
 
   return (
-    <div className="shadow-wordBox rounded">
+    <div className="rounded shadow-wordBox">
       <Calendar
         fullscreen={false}
         fullCellRender={fullCellRender}

@@ -1,6 +1,9 @@
-import { mergeClassName } from '@/common/utils';
 import React, { useContext } from 'react';
+import { motion } from 'framer-motion';
 import CorrepondenceTabs from './CorrepondenceTabs';
+import { DetailContext } from '../service-context/DetailContextWrapper';
+import Title from '@/common/components/Title';
+import CustomButton from '@/common/components/CustomButton';
 import {
   Briefcase,
   Close,
@@ -8,33 +11,21 @@ import {
   Send,
   Users,
 } from '@/common/components/icons';
-import { motion } from 'framer-motion';
-import Title from '@/common/components/Title';
-import { StateDispatch } from '@/types';
-import CustomButton from '@/common/components/CustomButton';
-import { DetailContext } from '../PageContent';
 
-type Props = {
-  activeTab: string;
-  setActiveTab: StateDispatch<string>;
-};
-
-const CorrrespondenceMenu = ({ activeTab, setActiveTab }: Props) => {
+const CorrrespondenceMenu = () => {
   const detailsData = useContext(DetailContext);
 
   return (
     <div className="flex !h-[50px] flex-row justify-between border-b border-custom-gray_500 bg-custom-white_100">
-      <div
-        className={mergeClassName(
-          'flex w-full flex-row items-end justify-between pl-5',
-          detailsData?.openCorrespondenceDetails && 'w-4/6'
-        )}
+      <motion.div
+        animate={detailsData?.contentControls}
+        transition={{
+          duration: 0.2,
+        }}
+        className="flex w-full flex-row items-end justify-between pl-5"
       >
         <div>
-          <CorrepondenceTabs
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
-          />
+          <CorrepondenceTabs />
         </div>
 
         <div className="left flex h-full flex-row items-center gap-1 px-1">
@@ -61,7 +52,7 @@ const CorrrespondenceMenu = ({ activeTab, setActiveTab }: Props) => {
             icon={<Send size={18} />}
           />
         </div>
-      </div>
+      </motion.div>
       {detailsData?.openCorrespondenceDetails ? (
         <motion.div
           initial={{
@@ -73,14 +64,14 @@ const CorrrespondenceMenu = ({ activeTab, setActiveTab }: Props) => {
             x: 0,
           }}
           transition={{
-            duration: 0.5,
-            ease: 'easeInOut',
+            duration: 0.2,
           }}
           className="flex w-2/6 flex-row items-center justify-between border-l border-custom-gray_500 bg-custom-white_100"
         >
           <Title
-            type="h5"
-            className="circular ml-3 font-[500] leading-[20.24px] text-custom-gray_200"
+            tag="h5"
+            semibold
+            className="ml-3 leading-[20.24px] text-custom-gray_200"
           >
             Details
           </Title>

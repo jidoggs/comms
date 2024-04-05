@@ -34,10 +34,7 @@ const MeetingMinute = ({ userDetails }: MinuteUserDetails) => {
       <div className="flex flex-col gap-4 p-1">
         <div className="flex flex-row items-center gap-2 text-custom-black_300">
           <Users size={22} className="w-1/12" />
-          <Title
-            type="h5"
-            className="circular w-11/12 font-450 leading-[20.24px]"
-          >
+          <Title tag="h5" className="w-11/12 leading-[20.24px]">
             Export of Brewery Products Meeting
           </Title>
           {meetingCreator && (
@@ -66,15 +63,12 @@ const MeetingMinute = ({ userDetails }: MinuteUserDetails) => {
             </div>
           )}
         </div>
-        <Title type="h6" className="circular w-full font-450 leading-[17.71px]">
+        <Title tag="h6" className="w-full leading-[17.71px]">
           Friday, 16 February 2024 . 12:30pm - 1:30pm
         </Title>
         <div className="flex flex-row items-center gap-2 text-custom-black_300">
           <NotificationBell size={22} className="w-1/12" />
-          <Title
-            type="h6"
-            className="circular w-11/12 font-450 leading-[17.71px] "
-          >
+          <Title tag="h6" className="w-11/12 leading-[17.71px] ">
             30 minutes before
           </Title>
         </div>
@@ -85,7 +79,7 @@ const MeetingMinute = ({ userDetails }: MinuteUserDetails) => {
             target="_blank"
             className="w-11/12"
           >
-            <Title type="h6" className="circular font-450 leading-[17.71px]">
+            <Title tag="h6" className="leading-[17.71px]">
               https://meet.google.com/qrm-smti-liv
             </Title>
           </Link>
@@ -105,7 +99,7 @@ const MeetingMinute = ({ userDetails }: MinuteUserDetails) => {
         </div>
         <div className="flex flex-row items-start justify-center gap-2 text-custom-black_300">
           <StickyNote size={22} className="w-1/12" />
-          <Title type="h6" className="circular w-11/12 leading-[17.71px]">
+          <Title tag="h6" className="w-11/12 leading-[17.71px]">
             Kindly provide advise on the Nigerian Breweries correspondence. Also
             find attached additional information to help with your findings.
             <br />
