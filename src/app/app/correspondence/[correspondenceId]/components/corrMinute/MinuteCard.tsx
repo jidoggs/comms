@@ -54,12 +54,13 @@ const MinuteCard = ({ className, minuteId, minute }: Props) => {
               </CustomAvatar>
             )}
             <div className="flex flex-col">
-              <Title type="h2" className="name circular text-sm font-450">
+              <Title tag="h2" bold={false} className="name text-sm">
                 {userDetails.name}
               </Title>
               <Title
-                type="h2"
-                className="circular text-xs font-450 leading-[15.18px] text-gray-600"
+                tag="h2"
+                bold={false}
+                className="text-xs leading-[15.18px] text-gray-600"
               >
                 {userDetails.title} - {userDetails.office}
               </Title>
@@ -79,10 +80,7 @@ const MinuteCard = ({ className, minuteId, minute }: Props) => {
         />
         <div className="my-2 h-px w-full bg-custom-gray_500" />
         <div className="flex w-full flex-row items-center justify-between px-2">
-          <Title
-            type="p"
-            className="text-sm leading-[17.71px] text-custom-gray_600"
-          >
+          <Title tag="p" className="text-custom-gray_600">
             {formattedDate}
           </Title>
           <div className="flex flex-row gap-2">

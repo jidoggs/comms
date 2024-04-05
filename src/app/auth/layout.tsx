@@ -1,4 +1,5 @@
 // import { MainLayout } from "@/components/layout";
+import Title from '@/common/components/Title';
 import { Content } from 'antd/lib/layout/layout';
 import Image from 'next/image';
 import React from 'react';
@@ -29,9 +30,9 @@ const layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
                   height={50}
                   className="h-[50px] my-5"
                 /> */}
-                <h1 className="circular my-5 text-center text-[24px] font-bold leading-[30.36px]">
+                <Title className="my-5 text-center text-2xl font-bold leading-[30.36px]">
                   Correspondence
-                </h1>
+                </Title>
                 {children}
               </div>
             </div>

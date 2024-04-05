@@ -7,10 +7,7 @@ interface MinuteProps {
 
 const TextMinute = ({ MinuteText }: MinuteProps) => {
   return (
-    <Title
-      type="p"
-      className="font-450 my-2 text-sm leading-[17.71px] text-custom-main"
-    >
+    <Title tag="p" className="my-2">
       {MinuteText}
     </Title>
   );

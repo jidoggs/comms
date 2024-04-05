@@ -21,46 +21,46 @@ const MinuteDetails = ({ corrMinuteDetails }: DetailsProps) => {
         <Folder size={18} />
       </div>
       <div className="flex">
-        <Title type="h6" className="w-2/6 font-450 text-custom-gray_850">
+        <Title tag="h6" className="w-2/6 text-custom-gray_850">
           Name
         </Title>
-        <Title type="h6" className="w-4/6 font-bold text-custom-gray_700">
+        <Title tag="h6" bold className="w-4/6 text-custom-gray_700">
           {corrMinuteDetails.name}
         </Title>
       </div>
       <div className="my-2 h-px w-full bg-custom-gray_500" />
       <div className="mt-3 flex">
-        <Title type="h6" className="w-2/6 font-450 text-custom-gray_850">
+        <Title tag="h6" className="w-2/6 text-custom-gray_850">
           From
         </Title>
-        <Title type="h6" className="w-4/6 font-bold text-custom-gray_700">
+        <Title tag="h6" bold className="w-4/6 text-custom-gray_700">
           {corrMinuteDetails.from}
         </Title>
       </div>
       <div className="my-2 h-px w-full bg-custom-gray_500" />
       <div className="mt-3 flex">
-        <Title type="h6" className="w-2/6 font-450 text-custom-gray_850">
+        <Title tag="h6" className="w-2/6 text-custom-gray_850">
           To
         </Title>
-        <Title type="h6" className="w-4/6 font-bold text-custom-gray_700">
+        <Title tag="h6" bold className="w-4/6 text-custom-gray_700">
           <TimelineComponent timeline={corrMinuteDetails.to} />
         </Title>
       </div>
       <div className="my-2 h-px w-full bg-custom-gray_500" />
       <div className="mt-3 flex">
-        <Title type="h6" className="w-2/6 font-450 text-custom-gray_850">
+        <Title tag="h6" className="w-2/6 text-custom-gray_850">
           Created By
         </Title>
-        <Title type="h6" className="w-4/6 font-bold text-custom-gray_700">
+        <Title tag="h6" bold className="w-4/6 text-custom-gray_700">
           <TimelineComponent timeline={corrMinuteDetails.createdBy} />
         </Title>
       </div>
       <div className="my-2 h-px w-full bg-custom-gray_500" />
       <div className="mt-3 flex">
-        <Title type="h6" className="w-2/6 font-450 text-custom-gray_850">
+        <Title tag="h6" className="w-2/6 text-custom-gray_850">
           Date of creation
         </Title>
-        <Title type="h6" className="w-4/6 font-bold text-custom-gray_700">
+        <Title tag="h6" bold className="w-4/6 text-custom-gray_700">
           {corrMinuteDetails.dateCreated}
         </Title>
       </div>

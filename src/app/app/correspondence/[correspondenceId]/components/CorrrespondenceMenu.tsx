@@ -69,8 +69,9 @@ const CorrrespondenceMenu = () => {
           className="flex w-2/6 flex-row items-center justify-between border-l border-custom-gray_500 bg-custom-white_100"
         >
           <Title
-            type="h5"
-            className="circular ml-3 font-[500] leading-[20.24px] text-custom-gray_200"
+            tag="h5"
+            semibold
+            className="ml-3 leading-[20.24px] text-custom-gray_200"
           >
             Details
           </Title>

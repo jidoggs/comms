@@ -30,7 +30,7 @@ const CorrespondenceHeader = () => {
           className="border !border-custom-gray_400"
           descriptionPlacement="bottom"
         />
-        <Title type="h1" className="text-lg leading-[22.77px] text-custom-main">
+        <Title tag="h1" className="text-lg leading-[22.77px]">
           Export of Brewery Products
         </Title>
       </div>

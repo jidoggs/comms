@@ -8,6 +8,7 @@ import { Send, Folder } from '@/common/components/icons';
 import { dummyAvatarData } from '@/common/mockData';
 import { iHandleClick, iHandleKeyboard } from '../../correspondence/types';
 import { generateInitials } from '@/common/utils';
+import Title from '@/common/components/Title';
 
 const CorrespondenceCard = () => {
   const router = useRouter();
@@ -43,16 +44,16 @@ const CorrespondenceCard = () => {
             {generateInitials('Jane', 'Doe')}
           </CustomAvatar>
           <div className="flex-1">
-            <p className="text-sm  leading-4 text-custom-main">Jane Doe</p>
-            <p className="text-xs">PS, Ministry of Trade & Investment</p>
+            <Title>Jane Doe</Title>
+            <Title small className="text-xs">
+              PS, Ministry of Trade & Investment
+            </Title>
           </div>
         </div>
-        <div className="text-xs font-medium">
-          <p>
-            Dear HM, I hope this message finds you well. Please find
-            correspondence f ...
-          </p>
-        </div>
+        <Title small className="font-medium">
+          Dear HM, I hope this message finds you well. Please find
+          correspondence f ...
+        </Title>
         <div
           role="button"
           tabIndex={0}
@@ -60,9 +61,9 @@ const CorrespondenceCard = () => {
           onKeyDown={actionsKeyboardHandler}
           className="flex items-center gap-1"
         >
-          <p className="text-xs font-medium text-custom-gray_200">
+          <Title small className="font-medium text-custom-gray_200">
             4:20 PM, 16 Feb 2024
-          </p>
+          </Title>
           <div className="flex items-center gap-x-1">
             <CustomAvatar
               className="size-7"
