@@ -31,9 +31,9 @@ function CustomPaginationHeader({
       )}
     >
       <Title
-        type="h1"
+        tag="h1"
         className={mergeClassName(
-          'text-xl font-bold capitalize text-black',
+          'text-xl capitalize text-black',
           className?.title
         )}
       >

@@ -1,21 +1,24 @@
-import React, { ReactNode, createContext, useState } from 'react';
-import { CreateNoteFormType, NoteInfo, NotesContextType } from './type';
+import React, { createContext, useState } from 'react';
+import { RadioGroupProps } from 'antd';
+import { customThemeColor } from '@/common/utils';
+import {
+  CreateNoteFormType,
+  NoteInfo,
+  NotesContextType,
+} from '../components/notes/type';
+import { ContextWapper } from '../../types';
 
 const initialNoteInfo: NoteInfo = {
   showNote: false,
   noteType: 'form',
   note: '',
-  color: '',
+  color: customThemeColor.cream_100,
   isPrivate: false,
-};
-
-type Props = {
-  children: ReactNode;
 };
 
 export const NoteContext = createContext<NotesContextType>(null);
 
-function NotesContext({ children }: Props) {
+function NotesContextWapper({ children }: ContextWapper) {
   const [noteInfo, setNoteInfo] = useState<NoteInfo>(initialNoteInfo);
 
   const showNoteHandler = () => {
@@ -39,6 +42,11 @@ function NotesContext({ children }: Props) {
     setNoteInfo((prev) => ({ ...prev, isPrivate: !prev.isPrivate }));
   };
 
+  const colorUpdateHandler: RadioGroupProps['onChange'] = (e) => {
+    const color = e.target.value;
+    setNoteInfo((prev) => ({ ...prev, color }));
+  };
+
   return (
     <NoteContext.Provider
       value={{
@@ -47,6 +55,7 @@ function NotesContext({ children }: Props) {
         createNoteHandler,
         deleteNoteHandler,
         togglePrivacyHandler,
+        colorUpdateHandler,
       }}
     >
       {children}
@@ -54,4 +63,4 @@ function NotesContext({ children }: Props) {
   );
 }
 
-export default NotesContext;
+export default NotesContextWapper;

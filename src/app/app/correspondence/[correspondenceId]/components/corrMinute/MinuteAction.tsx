@@ -1,3 +1,5 @@
+import React, { useState } from 'react';
+import TextArea from 'antd/es/input/TextArea';
 import CustomButton from '@/common/components/CustomButton';
 import CustomModal from '@/common/components/CustomModal';
 import {
@@ -7,23 +9,21 @@ import {
   Send,
   Users,
 } from '@/common/components/icons';
-import TextArea from 'antd/es/input/TextArea';
-import React, { useState } from 'react';
+
 import ExpandedMinuteForm from './ExpandedMinuteForm';
 
 const MinuteAction = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-   const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
 
-   const showModal = () => {
-     setIsModalOpen(true);
-   };
-
-   const handleCancel = () => {
-     setIsModalOpen(false);
-   };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   return (
-    <div className="mt-2 w-full rounded-md bg-white">
+    <div className="w-full rounded-md bg-white drop-shadow-2xl ">
       <div className="flex flex-col p-3">
         <div className="mb-2 flex flex-row items-center justify-between">
           <div className="left">Left</div>

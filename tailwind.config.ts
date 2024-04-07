@@ -27,6 +27,9 @@ const config: Config = {
       boxShadow: {
         wordBox: '0px 2px 4px 0px #0000001A',
       },
+      dropShadow: {
+        dropp: '0px 2px 8px 0px #000000E6',
+      },
       gridTemplateColumns: {
         homeMax: '1fr 1fr minmax(180px, 320px)',
       },

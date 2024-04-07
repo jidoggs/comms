@@ -3,7 +3,13 @@ import TextMinute from './minuteTypes/TextMinute';
 import FileMinute from './minuteTypes/FileMinute';
 import MeetingMinute from './minuteTypes/MeetingMinute';
 
-const MinuteType = ({ fileSend, minute }: any) => {
+interface MinuteTypeProps {
+  fileSend?: any;
+  minute?: any;
+  userDetails?: any;
+}
+
+const MinuteType = ({ fileSend, minute, userDetails }: MinuteTypeProps) => {
   // const userDetails = minute.userDetails;
   // const initials = useIntials(minute.userDetails.name);
 
@@ -20,7 +26,9 @@ const MinuteType = ({ fileSend, minute }: any) => {
       {minute && minute.type === 'document' ? (
         <FileMinute fileSend={fileSend} />
       ) : null}
-      {minute && minute.type === 'meeting' ? <MeetingMinute /> : null}
+      {minute && minute.type === 'meeting' ? (
+        <MeetingMinute userDetails={userDetails} />
+      ) : null}
     </div>
   );
 };

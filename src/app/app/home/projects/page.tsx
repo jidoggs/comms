@@ -12,7 +12,9 @@ const Projects = () => {
     <div>
       <div className="px-6">
         <CustomButton type="primary" icon={<BackwardArrow size={22} />} />
-        <Title className="font-bold text-custom-gray_600">Tasks</Title>
+        <Title bold className="text-custom-gray_600">
+          Tasks
+        </Title>
       </div>
       <div className="flex w-full flex-col justify-center p-6 font-semibold">
         <ProjectTitle />

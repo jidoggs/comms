@@ -4,9 +4,9 @@ import { UserPreDefinedRole, UserRoles } from '@/app/auth/types/auth';
 import {
   Home,
   More,
-  Archive,
   Schedule,
   Message,
+  FolderOpen,
 } from '@/common/components/icons';
 
 type MenuItem = Required<MenuProps>['items'][number];
@@ -36,7 +36,7 @@ const navItems = {
     <span>Home</span>,
     '/app/home',
     <span className="">
-      <Home size="22" />
+      <Home size={22} />
     </span>,
     navClassName
   ),
@@ -46,7 +46,7 @@ const navItems = {
     </span>,
     '/app/correspondence',
     <span className="">
-      <Message size="22" />
+      <Message size={22} />
     </span>,
     navClassName
   ),
@@ -54,7 +54,7 @@ const navItems = {
     <span>Schedules</span>,
     '/app/schedule',
     <span className="">
-      <Schedule size="22" />
+      <Schedule size={22} />
     </span>,
     navClassName
   ),
@@ -62,7 +62,7 @@ const navItems = {
     <span>Archives</span>,
     '/app/archives',
     <span className="">
-      <Archive size="22" />
+      <FolderOpen size={22} />
     </span>,
     navClassName
   ),
@@ -70,7 +70,7 @@ const navItems = {
     <span>More</span>,
     '/app/more',
     <span className="">
-      <More size="22" />
+      <More size={22} />
     </span>,
     navClassName
   ),

@@ -7,6 +7,7 @@ export const singleDummyCorrespondenceData = {
   comment:
     'Dear HM, I hope this message finds you well. Please find correspondence from the Nigerian Breweries requesting action. ',
   created_at: '30-01-2024',
+  img: '/images/user1.jpeg',
 };
 
 export const dummyCorrespondence = new Array(5)

@@ -51,7 +51,7 @@ function CustomDrawer({
       }}
       title={
         <>
-          <Title type="h2" className="inline-flex items-center gap-x-2.5">
+          <Title tag="h2" className="inline-flex items-center gap-x-2.5">
             {titleIcon}
             <span>{title}</span>
           </Title>

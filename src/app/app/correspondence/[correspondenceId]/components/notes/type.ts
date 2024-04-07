@@ -1,3 +1,5 @@
+import { RadioGroupProps } from 'antd';
+
 export type CreateNoteFormType = {
   note: string;
   isPrivate: boolean;
@@ -15,5 +17,6 @@ export type NotesContextType =
       createNoteHandler: (val: CreateNoteFormType) => void; //eslint-disable-line
       deleteNoteHandler: VoidFunction; //eslint-disable-line
       togglePrivacyHandler: VoidFunction; //eslint-disable-line
+      colorUpdateHandler: RadioGroupProps['onChange'];
     } & NoteInfo)
   | null;

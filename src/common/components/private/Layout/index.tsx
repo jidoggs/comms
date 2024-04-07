@@ -16,7 +16,7 @@ type Props = {
 function Layout({ children, user }: Props) {
   return (
     <AntLayout className="!bg-custom-gray_100">
-      <div className="flex h-screen w-full">
+      <div className="flex h-screen w-full overflow-hidden">
         <SideNav role={user?.['role.name'] as UserPreDefinedRole} />
         <AntLayout className="flex h-screen w-full flex-col overflow-hidden">
           <AppHeader />
