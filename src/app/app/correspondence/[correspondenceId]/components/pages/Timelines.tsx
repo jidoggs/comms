@@ -5,7 +5,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import TimelineComponent from '@/common/components/TimelineComponent/TimelineComponent';
 import Title from '@/common/components/Title';
 import { TimelineDot } from '@/common/components/icons';
-import CustomAvatar from '@/common/components/Avatar/CustomAvatar';
+// import CustomAvatar from '@/common/components/Avatar/CustomAvatar';
 
 export const FormattedDate = ({ date }: { date: Dayjs }) => {
   return (
@@ -18,7 +18,7 @@ const Timelines = () => {
 
   return (
     <div className="relative flex size-full flex-col items-center justify-center">
-      <div className="mt-6 flex size-full flex-wrap items-center justify-center overflow-y-auto">
+      <div className="flex size-full flex-wrap items-center justify-center overflow-y-auto">
         <Timeline className="!mt-5">
           {[
             now,
@@ -87,19 +87,24 @@ const Timelines = () => {
                     key={idx}
                     dot={
                       idx === 0 && index === 0 ? (
-                        <CustomAvatar
-                          src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                          size="default"
-                          className="rounded-full border border-custom-main"
-                        />
+                        // <CustomAvatar
+                        //   src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                        //   size="default"
+                        //   className="rounded-full border border-custom-main"
+                        // />
+                        <div className="">
+                          <TimelineComponent timeline={timeline} />
+                        </div>
                       ) : (
                         <TimelineDot />
                       )
                     }
                   >
-                    {/* {idx === 0 && index === 0 ? null : ( */}
-                    <TimelineComponent timeline={timeline} />
-                    {/* )} */}
+                    {idx === 0 && index === 0 ? (
+                      <div className="h-10" />
+                    ) : (
+                      <TimelineComponent timeline={timeline} />
+                    )}
                   </Timeline.Item>
                 ))}
               </React.Fragment>
