@@ -1,61 +1,51 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
+import dayjs from 'dayjs';
+import { motion } from 'framer-motion';
 import Minutes from './components/pages/Minutes';
 import Timelines from './components/pages/Timelines';
 import Documents from './components/pages/Documents';
-// import CorrespondentDocument from './components/corrDocument/CorrespondentDocument';
-import { mergeClassName } from '@/common/utils';
-import { motion } from 'framer-motion';
 import CorrespondenceHeader from './components/CorrespondenceHeader';
 import CorrrespondenceMenu from './components/CorrrespondenceMenu';
-
-// type Props = {};
+import MinuteDetails from './components/MinuteDetails';
+import { DetailContext } from './service-context/DetailContextWrapper';
 
 const PageContent = () => {
-  const [activeTab, setActiveTab] = useState<string>('minutes');
-  // const [openCorrespondence, setOpenCorrespondence] = useState<boolean>(false);
-  const [openCorrespondenceDetails, setOpenCorrespondenceDetails] =
-    useState<boolean>(false);
-  const [correspondenceFile, setCorrespondenceFile] = useState<FileList | null>(
-    null
-  );
-
-  // console.log('correspondenceFile', correspondenceFile);
+  const detailsData = useContext(DetailContext);
+  const demoDetails = {
+    name: 'Export of Brewery Products',
+    from: 'Nigerian Breweries',
+    to: {
+      name: 'Adbul Jabar',
+      office: 'string',
+      date: dayjs('30 Jan 2024, 4:22pm', 'DD MMM YYYY, h:mmA'),
+    },
+    createdBy: {
+      name: 'Adbul Jabar',
+      office: 'string',
+      date: dayjs('30 Jan 2024, 4:22pm', 'DD MMM YYYY, h:mmA'),
+    },
+    dateCreated: '30-01-2024',
+  };
 
   return (
     <div className="flex w-full flex-col">
-      <CorrespondenceHeader
-        // setOpenCorrespondence={setOpenCorrespondence}
-        setOpenCorrespondenceDetails={setOpenCorrespondenceDetails}
-      />
-      <CorrrespondenceMenu
-        openCorrespondenceDetails={openCorrespondenceDetails}
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        // setOpenCorrespondence={setOpenCorrespondence}
-        setOpenCorrespondenceDetails={setOpenCorrespondenceDetails}
-      />
-      <div className="flex h-[calc(100vh_-_146px)] flex-row justify-between">
-        <div
-          className={mergeClassName(
-            'flex w-full flex-row items-center justify-between',
-            openCorrespondenceDetails && 'w-4/6'
-          )}
+      <CorrespondenceHeader />
+      <CorrrespondenceMenu />
+      <div className="flex h-[calc(100vh_-_144px)] flex-row justify-between">
+        <motion.div
+          animate={detailsData?.contentControls}
+          transition={{
+            duration: 0.2,
+          }}
+          className="flex w-full flex-row items-center justify-between"
         >
-          {activeTab === 'minutes' ? (
-            <Minutes
-              correspondenceFile={correspondenceFile}
-              setCorrespondenceFile={setCorrespondenceFile}
-              // setOpenCorrespondence={setOpenCorrespondence}
-              setOpenCorrespondenceDetails={setOpenCorrespondenceDetails}
-            />
-          ) : activeTab === 'timelines' ? (
-            <Timelines />
-          ) : (
-            activeTab === 'documents' && <Documents />
-          )}
-        </div>
-        {openCorrespondenceDetails && (
+          {detailsData?.activeTab === 'minutes' ? <Minutes /> : null}
+          {detailsData?.activeTab === 'timelines' ? <Timelines /> : null}
+          {detailsData?.activeTab === 'documents' ? <Documents /> : null}
+        </motion.div>
+
+        {detailsData?.openCorrespondenceDetails && (
           <motion.div
             initial={{
               x: 200,
@@ -65,13 +55,17 @@ const PageContent = () => {
               opacity: 1,
               x: 0,
             }}
+            exit={{
+              x: -200,
+              opacity: 0,
+            }}
             transition={{
-              duration: 0.5,
-              ease: 'easeInOut',
+              duration: 0.2,
             }}
             className="flex w-2/6 flex-row items-center justify-center border-l border-custom-gray_500"
           >
             {/* <CorrespondentDocument correspondenceFile={correspondenceFile} /> */}
+            <MinuteDetails corrMinuteDetails={demoDetails} />
           </motion.div>
         )}
       </div>

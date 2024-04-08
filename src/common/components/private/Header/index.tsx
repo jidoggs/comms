@@ -74,7 +74,7 @@ const AppHeader: React.FunctionComponent = () => {
           {isMutating ? (
             <SpinLoader size="24" />
           ) : (
-            <div className="flex cursor-pointer gap-x-2.5 items-center py-0.5 px-1.5">
+            <div className="flex cursor-pointer items-center gap-x-2.5 px-1.5 py-0.5">
               <Avatar
                 size={30}
                 src={dummyUser.img}
@@ -88,7 +88,7 @@ const AppHeader: React.FunctionComponent = () => {
                 <Title className="text-sm font-semibold">
                   {dummyUser?.first_name} {dummyUser?.last_name}
                 </Title>
-                <Title className="text-custom-gray_600 text-xs font-normal">
+                <Title small className="text-custom-gray_600">
                   {/* {dummyUser?.['role.name']} */}
                   HM Trade & Inv...
                 </Title>

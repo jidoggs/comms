@@ -1,9 +1,9 @@
 import React from 'react';
 import { Table } from 'antd';
-import { mergeClassName } from '@/common/utils';
-import { CustomTableProps } from './type';
-import CustomPaginationHeader from '../CustomPaginationHeader';
 import Title from '../Title';
+import CustomPaginationHeader from '../CustomPaginationHeader';
+import { CustomTableProps } from './type';
+import { mergeClassName } from '@/common/utils';
 
 const CustomTable = <T extends object>({
   tabs,
@@ -21,7 +21,7 @@ const CustomTable = <T extends object>({
   const paginationHeader = (
     <>
       {totalContent === 0 ? (
-        <Title type="h1" className="text-lg">
+        <Title tag="h1" className="text-lg">
           {tableTitle}
         </Title>
       ) : (

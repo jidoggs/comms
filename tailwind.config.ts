@@ -15,15 +15,29 @@ const config: Config = {
           ...customThemeColor,
         },
       },
+      width: {
+        100: '400px',
+      },
+      maxWidth: {
+        100: '400px',
+      },
       borderRadius: {
         10: '10px',
       },
       boxShadow: {
-        minuteCard: '0px 2px 4px 0px #0000001A',
         wordBox: '0px 2px 4px 0px #0000001A',
+      },
+      dropShadow: {
+        dropp: '0px 2px 8px 0px #000000E6',
       },
       gridTemplateColumns: {
         homeMax: '1fr 1fr minmax(180px, 320px)',
+      },
+      fontWeight: {
+        450: '450',
+      },
+      lineHeight: {
+        '4.5': '18px',
       },
     },
   },

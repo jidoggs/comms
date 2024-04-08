@@ -1,6 +1,9 @@
-import { mergeClassName } from '@/common/utils';
-import React from 'react';
+import React, { useContext } from 'react';
+import { motion } from 'framer-motion';
 import CorrepondenceTabs from './CorrepondenceTabs';
+import { DetailContext } from '../service-context/DetailContextWrapper';
+import Title from '@/common/components/Title';
+import CustomButton from '@/common/components/CustomButton';
 import {
   Briefcase,
   Close,
@@ -8,45 +11,21 @@ import {
   Send,
   Users,
 } from '@/common/components/icons';
-import { motion } from 'framer-motion';
-import Title from '@/common/components/Title';
-import { StateDispatch } from '@/types';
-import CustomButton from '@/common/components/CustomButton';
 
-type Props = {
-  // openCorrespondence?: boolean;
-  setOpenCorrespondence?: StateDispatch<boolean>;
-  openCorrespondenceDetails?: boolean;
-  setOpenCorrespondenceDetails?: StateDispatch<boolean>;
-  activeTab: string;
-  setActiveTab: StateDispatch<string>;
-};
-
-const CorrrespondenceMenu = ({
-  openCorrespondenceDetails,
-  activeTab,
-  setActiveTab,
-  setOpenCorrespondenceDetails,
-}: Props) => {
-  const handleCloseClick = () => {
-    if (setOpenCorrespondenceDetails) {
-      setOpenCorrespondenceDetails(false);
-    }
-  };
+const CorrrespondenceMenu = () => {
+  const detailsData = useContext(DetailContext);
 
   return (
     <div className="flex !h-[50px] flex-row justify-between border-b border-custom-gray_500 bg-custom-white_100">
-      <div
-        className={mergeClassName(
-          'flex w-full flex-row items-end justify-between pl-5',
-          openCorrespondenceDetails && 'w-4/6'
-        )}
+      <motion.div
+        animate={detailsData?.contentControls}
+        transition={{
+          duration: 0.2,
+        }}
+        className="flex w-full flex-row items-end justify-between pl-5"
       >
         <div>
-          <CorrepondenceTabs
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
-          />
+          <CorrepondenceTabs />
         </div>
 
         <div className="left flex h-full flex-row items-center gap-1 px-1">
@@ -73,8 +52,8 @@ const CorrrespondenceMenu = ({
             icon={<Send size={18} />}
           />
         </div>
-      </div>
-      {openCorrespondenceDetails && (
+      </motion.div>
+      {detailsData?.openCorrespondenceDetails ? (
         <motion.div
           initial={{
             x: 200,
@@ -85,20 +64,23 @@ const CorrrespondenceMenu = ({
             x: 0,
           }}
           transition={{
-            duration: 0.5,
-            ease: 'easeInOut',
+            duration: 0.2,
           }}
           className="flex w-2/6 flex-row items-center justify-between border-l border-custom-gray_500 bg-custom-white_100"
         >
-          <Title type="h1" className="ml-3 text-custom-gray_200">
+          <Title
+            tag="h5"
+            semibold
+            className="ml-3 leading-[20.24px] text-custom-gray_200"
+          >
             Details
           </Title>
           <Close
             className="mr-3 cursor-pointer rounded-full bg-custom-gray_100"
-            onClick={handleCloseClick}
+            onClick={detailsData?.closeDetailsHandler}
           />
         </motion.div>
-      )}
+      ) : null}
     </div>
   );
 };

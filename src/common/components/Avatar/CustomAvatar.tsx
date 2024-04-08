@@ -2,23 +2,22 @@ import React from 'react';
 import { Avatar } from 'antd';
 import { CustomAvatarProps } from './types';
 
-const titleHandler = (value?: string) => {
-  let val = '';
-  if (value) {
-    val = value.split('')?.[0];
-  }
-  return val;
-};
-
 const CustomAvatar = ({
-  firstName,
-  lastName,
   backgroundColor,
+  children,
   ...props
 }: CustomAvatarProps) => {
   return (
-    <Avatar {...props} style={{ ...props.style, backgroundColor }}>
-      {titleHandler(firstName)} {titleHandler(lastName)}
+    <Avatar
+      {...props}
+      style={{
+        ...props.style,
+        backgroundColor: props.style?.backgroundColor || backgroundColor,
+        border: props.style?.border || '1px solid white',
+        color: props.style?.color || 'white',
+      }}
+    >
+      {children}
     </Avatar>
   );
 };

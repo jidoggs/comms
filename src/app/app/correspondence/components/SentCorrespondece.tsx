@@ -29,9 +29,12 @@ function SentCorrespondece({
     >
       <div className="flex flex-col items-center gap-y-5 pb-5 text-custom-black_100">
         <Send size={170} />
-        <p className="text-[30px] font-bold leading-10 text-custom-black_100">
+        <Title
+          tag="h2"
+          className="text-[30px] font-bold leading-10 text-custom-black_100"
+        >
           Sent
-        </p>
+        </Title>
         <Title className="leading-5 text-custom-black_100">
           Correspondence has been created and pushed
         </Title>

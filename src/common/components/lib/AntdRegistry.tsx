@@ -33,7 +33,6 @@ const appTheme: ThemeConfig = {
       paddingContentVertical: 5,
       padding: 5,
       paddingContentHorizontal: 5,
-      
     },
     Button: {
       fontSize: 14,
@@ -45,6 +44,8 @@ const appTheme: ThemeConfig = {
       controlHeightSM: 34,
 
       borderRadius: 10,
+      borderRadiusSM: 10,
+
       lineHeight: 1,
       algorithm: true,
       contentLineHeight: 1,
@@ -68,6 +69,9 @@ const appTheme: ThemeConfig = {
       colorPrimaryTextHover: customThemeColor.main,
       colorPrimaryHover: customThemeColor.gray_500,
       colorPrimary: customThemeColor.white_100,
+      defaultBorderColor: 'transparent',
+      colorPrimaryBorder: customThemeColor.gray_400,
+      colorPrimaryBorderHover: customThemeColor.gray_400,
 
       // colorBgTextActive: 'transparent',
     },
@@ -280,8 +284,9 @@ const appTheme: ThemeConfig = {
       fontSize: 14,
     },
     Avatar: {
-      fontSize: 12,
-      groupOverlapping: -8,
+      fontSize: 10,
+      groupOverlapping: -6,
+      borderRadius: 0,
     },
   },
 };

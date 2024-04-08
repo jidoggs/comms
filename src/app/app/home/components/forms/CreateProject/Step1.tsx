@@ -79,11 +79,7 @@ function NewProjectForm({ onFinish }: Props) {
             {...item}
             className="flex flex-col"
           >
-            <CustomInput
-              name={item.name}
-              placeholder={item.placeholder}
-              type="text"
-            />
+            <CustomInput name={item.name} placeholder={item.placeholder} />
           </Form.Item>
         );
       })}

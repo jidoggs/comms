@@ -1,172 +1,118 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { Avatar, Timeline } from 'antd';
-import { TimelineDot } from '@/common/components/icons';
+import { Timeline } from 'antd';
+import { correspondenceTimeline } from '@/common/mockData/corrTimeline';
+import dayjs, { Dayjs } from 'dayjs';
+import TimelineComponent from '@/common/components/TimelineComponent/TimelineComponent';
 import Title from '@/common/components/Title';
-import { useIntials } from '@/common/hooks/corrUtils';
-// import { correspondenceTimeline } from '@/common/mockData/correspondenceTimeline';
+import { TimelineDot } from '@/common/components/icons';
+// import CustomAvatar from '@/common/components/Avatar/CustomAvatar';
 
-const Timelines = () => {
-  // const generateInitials = (name: string) =>
-  //   name
-  //     .split(' ')
-  //     .slice(0, 2)
-  //     .map((n) => <h1 key={n}>{n[0].toUpperCase()}</h1>);
-
-  // const generateInitials = (name: string) =>
-  //   name
-  //     .split(' ')
-  //     .map((name) => name[0].toUpperCase())
-  //     .join('');
-
+export const FormattedDate = ({ date }: { date: Dayjs }) => {
   return (
-    <motion.div
-      initial={{
-        opacity: 0,
-      }}
-      whileInView={{
-        opacity: 1,
-      }}
-      transition={{
-        duration: 0.5,
-      }}
-      className="relative flex size-full flex-col items-center justify-center"
-    >
-      <div className="flex size-full items-center justify-center">
-        <Timeline
-          // items={correspondenceTimeline.map((timeline, index): any => ({
-          //   dot: (
-          //     <Avatar
-          //       src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-          //       size="default"
-          //       className="rounded-full border border-custom-main"
-          //       //   className="mr-2"
-          //     />
-          //   ),
-          //   children: (
-          //     <div className="ml-5 flex flex-row items-center justify-start gap-3">
-          //       <Avatar
-          //         size="default"
-          //         className="rounded-full border border-custom-main"
-          //       >
-          //         {generateInitials(`${timeline.name}`)}
-          //       </Avatar>
-          //       <div className="flex flex-col gap-2">
-          //         <div className="circular text-sm font-medium leading-[17.71px] text-custom-main">
-          //           {timeline.name}
-          //         </div>
-          //         <p className="circular text-sm font-[450] leading-[15.18px] text-custom-gray_600">
-          //           <span className="office">{timeline.office} </span>-
-          //           <span className="date"> 30 Jan 2024, 4:22pm</span>
-          //         </p>
-          //       </div>
-          //     </div>
-          //   ),
-          // }))}
-          items={[
-            {
-              dot: <TimelineDot />,
-              children: <div className="h-10"></div>,
-              // dot: <TimelineDot />,
-            },
-            {
-              dot: <Title>Today</Title>,
-              // dot: <TimelineDot />,
-              children: (
-                <div className="ml-5 flex flex-row items-center justify-start gap-3">
-                  <Avatar
-                    size="large"
-                    className="rounded-full border border-custom-main"
-                  >
-                    {useIntials('Akan Gambe')}
-                  </Avatar>
-                  <div className="flex flex-col gap-2">
-                    <div className="circular text-sm font-medium leading-[17.71px] text-custom-main">
-                      Akan Gambe
-                    </div>
-                    <p className="circular text-sm font-[450] leading-[15.18px] text-custom-gray_600">
-                      <span className="office">Chief of Staff to... </span>-
-                      <span className="date"> 30 Jan 2024, 4:22pm</span>
-                    </p>
-                  </div>
-                </div>
-              ),
-            },
-            {
-              dot: <Title>Today</Title>,
-              // dot: <TimelineDot />,
-              children: (
-                <div className="ml-5 flex flex-row items-center justify-start gap-3">
-                  <Avatar
-                    size="large"
-                    className="rounded-full border border-custom-main"
-                  >
-                    {useIntials('Akan Gambe')}
-                  </Avatar>
-                  <div className="flex flex-col gap-2">
-                    <div className="circular text-sm font-medium leading-[17.71px] text-custom-main">
-                      Akan Gambe
-                    </div>
-                    <p className="circular text-sm font-[450] leading-[15.18px] text-custom-gray_600">
-                      <span className="office">Chief of Staff to... </span>-
-                      <span className="date"> 30 Jan 2024, 4:22pm</span>
-                    </p>
-                  </div>
-                </div>
-              ),
-            },
-            {
-              dot: (
-                <Avatar
-                  src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                  size="large"
-                  className="rounded-full border border-custom-main"
-                  //   className="mr-2"
-                />
-              ),
-              children: <div className="h-20"></div>,
-            },
-            {
-              dot: (
-                <Avatar
-                  src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                  size="large"
-                  className="rounded-full border border-custom-main"
-                  //   className="mr-2"
-                />
-              ),
-              children: <div className="h-20">G</div>,
-            },
-            {
-              dot: <Title>Today</Title>,
-              children: <div className="h-20"> </div>,
-            },
-            {
-              dot: (
-                <Avatar
-                  src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                  size="large"
-                  className="rounded-full border border-custom-main"
-                  //   className="mr-2"
-                />
-              ),
-              children: (
-                <div className="flex flex-col gap-2">
-                  <div className="circular text-sm font-medium leading-[17.71px] text-custom-main">
-                    Akan Gambe
-                  </div>
-                  <p className="circular text-sm font-[450] leading-[15.18px] text-custom-gray_600">
-                    <span className="office">Chief of Staff to... </span>-
-                    <span className="date"> 30 Jan 2024, 4:22pm</span>
-                  </p>
-                </div>
-              ),
-            },
-          ]}
-        />
-      </div>
-    </motion.div>
+    <span className="date">{dayjs(date).format('DD MMM YYYY, h:mm A')}</span>
   );
 };
 
+const Timelines = () => {
+  const now = dayjs();
+
+  return (
+    <div className="relative flex size-full flex-col items-center justify-center">
+      <div className="flex size-full flex-wrap items-center justify-center overflow-y-auto">
+        <Timeline className="!mt-5">
+          {[
+            now,
+            now.subtract(1, 'day'),
+            now.subtract(1, 'week'),
+            now.subtract(1, 'month'),
+          ].map((date, index) => {
+            const timelines = correspondenceTimeline.filter((timeline) => {
+              if (index === 0) return dayjs(timeline.date).isSame(date, 'day');
+              if (index === 1)
+                return (
+                  dayjs(timeline.date).isSame(date, 'day') &&
+                  !dayjs(timeline.date).isSame(now, 'day')
+                );
+              if (index === 2)
+                return (
+                  dayjs(timeline.date).isBefore(now, 'week') && // Before current week
+                  !dayjs(timeline.date).isSame(now, 'day') && // Not today
+                  !dayjs(timeline.date).isSame(now.subtract(1, 'day'), 'day') // Not yesterday
+                );
+
+              if (index === 3)
+                return (
+                  dayjs(timeline.date).isBefore(now, 'month') && // Before current month
+                  !dayjs(timeline.date).isSame(now, 'day') && // Not today
+                  !dayjs(timeline.date).isSame(now.subtract(1, 'day'), 'day') && // Not yesterday
+                  !dayjs(timeline.date).isSame(now.subtract(1, 'week'), 'week') // Not last week
+                );
+              // if (index === 2)
+              //   return (
+              //     dayjs(timeline.date).isBefore(now, 'week') &&
+              //     !dayjs(timeline.date).isSame(now, 'day') &&
+              //     !dayjs(timeline.date).isSame(now.subtract(1, 'day'), 'day')
+              //   );
+              // if (index === 3)
+              //   return (
+              //     dayjs(timeline.date).isBefore(now, 'month') &&
+              //     !dayjs(timeline.date).isSame(now, 'day') &&
+              //     !dayjs(timeline.date).isSame(now.subtract(1, 'day'), 'day') &&
+              //     !dayjs(timeline.date).isBefore(now, 'week')
+              //   );
+              return false;
+            });
+
+            return (
+              <React.Fragment key={date.toString()}>
+                {index === 0 ? (
+                  <Timeline.Item dot={<Title tag="h5">Today</Title>}>
+                    <div className="h-10" />
+                  </Timeline.Item>
+                ) : index === 1 ? (
+                  <Timeline.Item dot={<Title tag="h5">Yesterday</Title>}>
+                    <div className="h-10" />
+                  </Timeline.Item>
+                ) : index === 2 ? (
+                  <Timeline.Item dot={<Title tag="h5">Last Week</Title>}>
+                    <div className="h-10" />
+                  </Timeline.Item>
+                ) : (
+                  <Timeline.Item dot={<Title tag="h5">Last Month</Title>}>
+                    <div className="h-10" />
+                  </Timeline.Item>
+                )}
+                {timelines.map((timeline, idx) => (
+                  <Timeline.Item
+                    key={idx}
+                    dot={
+                      idx === 0 && index === 0 ? (
+                        // <CustomAvatar
+                        //   src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                        //   size="default"
+                        //   className="rounded-full border border-custom-main"
+                        // />
+                        <div className="">
+                          <TimelineComponent timeline={timeline} />
+                        </div>
+                      ) : (
+                        <TimelineDot />
+                      )
+                    }
+                  >
+                    {idx === 0 && index === 0 ? (
+                      <div className="h-10" />
+                    ) : (
+                      <TimelineComponent timeline={timeline} />
+                    )}
+                  </Timeline.Item>
+                ))}
+              </React.Fragment>
+            );
+          })}
+        </Timeline>
+      </div>
+    </div>
+  );
+};
 export default Timelines;

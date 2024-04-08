@@ -7,6 +7,7 @@ import {
   StickyNote,
 } from '@/common/components/icons';
 import { dummyAvatarData } from '@/common/mockData';
+import { generateInitials } from '@/common/utils';
 import React, { ReactNode } from 'react';
 
 type ItemProps = {
@@ -18,7 +19,7 @@ function ActivityInformationItem({ icon, value }: ItemProps) {
   return (
     <div className="flex items-start gap-x-2.5 p-1">
       <span>{icon}</span>
-      {typeof value === 'string' ? <Title type="sm">{value}</Title> : value}
+      {typeof value === 'string' ? <Title tag="span">{value}</Title> : value}
     </div>
   );
 }
@@ -58,13 +59,10 @@ function ActivityInformation() {
       </div>
       <div className="border-t border-custom-gray_500 pt-4">
         <div className="flex items-center gap-x-1 p-1">
-          <CustomAvatar
-            size={22}
-            firstName="Jane"
-            lastName="Doe"
-            src="/images/user1.jpeg"
-          />
-          <Title type="sm" className="font-medium text-custom-gray_200">
+          <CustomAvatar size={22} src="/images/user1.jpeg">
+            {generateInitials('Jane Doe')}
+          </CustomAvatar>
+          <Title tag="span" semibold className="text-custom-gray_200">
             Jane Doe
           </Title>
         </div>

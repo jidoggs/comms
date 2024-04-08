@@ -3,7 +3,13 @@ import TextMinute from './minuteTypes/TextMinute';
 import FileMinute from './minuteTypes/FileMinute';
 import MeetingMinute from './minuteTypes/MeetingMinute';
 
-const MinuteType = ({ fileSend, minute }: any) => {
+interface MinuteTypeProps {
+  fileSend?: any;
+  minute?: any;
+  userDetails?: any;
+}
+
+const MinuteType = ({ fileSend, minute, userDetails }: MinuteTypeProps) => {
   // const userDetails = minute.userDetails;
   // const initials = useIntials(minute.userDetails.name);
 
@@ -14,16 +20,15 @@ const MinuteType = ({ fileSend, minute }: any) => {
 
   return (
     <div className="flex flex-col items-start justify-between px-2">
-      <div></div>
       {minute && minute.type === 'text' ? (
         <TextMinute MinuteText={MinuteText} />
-      ) : minute && minute.type === 'document' ? (
+      ) : null}
+      {minute && minute.type === 'document' ? (
         <FileMinute fileSend={fileSend} />
-      ) : minute && minute.type === 'meeting' ? (
-        <MeetingMinute />
-      ) : (
-        ''
-      )}
+      ) : null}
+      {minute && minute.type === 'meeting' ? (
+        <MeetingMinute userDetails={userDetails} />
+      ) : null}
     </div>
   );
 };

@@ -1,44 +1,50 @@
-import CustomButton from '@/common/components/CustomButton';
-import { BackwardArrow, Dot, InfoCircle } from '@/common/components/icons';
-import Title from '@/common/components/Title';
-import { Avatar } from 'antd';
+import React, { useContext } from 'react';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import dayjs from 'dayjs';
+import CustomButton from '@/common/components/CustomButton';
+import Title from '@/common/components/Title';
+import { DetailContext } from '../service-context/DetailContextWrapper';
+import { BackwardArrow, Dot, InfoCircle } from '@/common/components/icons';
+import TimelineComponent from '@/common/components/TimelineComponent/TimelineComponent';
 
-type Props = {
-  setOpenCorrespondenceDetails: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-const CorrespondenceHeader = ({ setOpenCorrespondenceDetails }: Props) => {
+const CorrespondenceHeader = () => {
   const router = useRouter();
+  const detailsData = useContext(DetailContext);
+
+  const timeline = {
+    name: 'Adbul Jabar',
+    office: 'HM Trade & Inv...',
+    date: dayjs(new Date(), 'DD MMM YYYY, h:mmA'),
+    img: '/images/user2.jpeg',
+  };
+
   return (
     <div className="my-1.5 flex flex-row items-center justify-between px-5">
       <div className="flex flex-row items-center gap-3">
-        <BackwardArrow
-          size={34}
+        <CustomButton
+          description="Back"
+          type="primary"
+          size="small"
+          icon={<BackwardArrow size={18} />}
           onClick={() => router.back()}
-          className="cursor-pointer"
+          className="border !border-custom-gray_400"
+          descriptionPlacement="bottom"
         />
-        <Title type="h1" className="text-lg leading-[22.77px] text-[#11142D]">
+        <Title tag="h1" className="text-lg leading-[22.77px]">
           Export of Brewery Products
         </Title>
       </div>
-      <div className="flex flex-row items-center justify-between gap-3">
+      <div className="flex flex-row items-center justify-between gap-1">
         <div className="flex flex-row gap-2">
           <Dot />
-          <div>
-            <Avatar
-              src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-              size="default"
-              className="!border-full !border-1 !border-solid !border-black"
-            />
-          </div>
+          <TimelineComponent timeline={timeline} />
         </div>
         <CustomButton
           description="Correspondence"
-          type="primary"
+          type="text"
+          size="small"
           icon={<InfoCircle size={18} />}
-          onClick={() => setOpenCorrespondenceDetails(true)}
+          onClick={detailsData?.openDetailsHandler}
         />
       </div>
     </div>

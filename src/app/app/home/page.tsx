@@ -6,7 +6,7 @@ import CalenderList from './components/CalenderList';
 
 const HomePage = () => {
   return (
-    <div className="grid-cols-homeMax mx-auto grid size-full max-w-[1200px] gap-2.5 p-5">
+    <div className="grid-cols-homeMax mx-auto grid size-full max-w-[1200px] gap-2.5 py-5">
       <QueuedList />
       <OngoingList />
       <CalenderList />

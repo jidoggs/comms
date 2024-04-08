@@ -24,7 +24,7 @@ function NewCorrespondenceForm({ handleSubmit }: Props) {
               {...item}
               className="flex flex-col"
             >
-              <CustomInput name={item.name} type="text" />
+              <CustomInput name={item.name} />
             </Form.Item>
           ))}
         </div>
