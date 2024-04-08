@@ -50,7 +50,9 @@ const CustomInput: React.FC<CustomInputProps> = React.forwardRef<
       {type === 'textarea' ? (
         <Input.TextArea className={inputclassName} ref={ref} {...rest} />
       ) : null}
-      {!type ? <Input className={inputclassName} ref={ref} {...rest} /> : null}
+      {!type || type === 'email' ? (
+        <Input className={inputclassName} ref={ref} {...rest} />
+      ) : null}
     </div>
   );
 });
