@@ -54,7 +54,7 @@ const CustomCalendar: React.FC = () => {
         {!dataCount || dayOfWeek === 0 || dayOfWeek === 6 ? null : (
           <Title
             small
-            className="size-4 rounded-full px-1 py-[0.5px] text-center text-custom-white_100"
+            className="size-4 rounded-full bg-custom-main px-1 py-[0.5px] text-center text-custom-white_100"
           >
             {dataCount}
           </Title>
