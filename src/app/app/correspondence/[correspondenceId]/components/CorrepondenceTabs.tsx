@@ -22,15 +22,14 @@ const CorrepondenceTabs = () => {
   ];
 
   return (
-    <div className="flex h-full flex-row gap-5">
-      <CustomTab
-        items={items}
-        size="middle"
-        defaultKey={detailsData?.activeTab}
-        onChange={detailsData?.tabChangeHandler}
-        tabBarGutter={30}
-      />
-    </div>
+    <CustomTab
+      items={items}
+      size="middle"
+      defaultKey={detailsData?.activeTab}
+      onChange={detailsData?.tabChangeHandler}
+      tabBarGutter={24}
+      className='!bg-red-500'
+    />
   );
 };
 

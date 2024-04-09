@@ -29,6 +29,7 @@ const config: Config = {
       },
       dropShadow: {
         dropp: '0px 2px 8px 0px #000000E6',
+        chat: '-40px 2px 25px rgb(0 0 0/0.5)',
       },
       gridTemplateColumns: {
         homeMax: '1fr 1fr minmax(180px, 320px)',

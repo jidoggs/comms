@@ -23,11 +23,11 @@ const MinuteAction = () => {
     setIsModalOpen(false);
   };
   return (
-    <div className="w-full rounded-md bg-white drop-shadow-2xl ">
+    <div className="drop-shadow-chat w-full rounded-md bg-white ">
       <div className="flex flex-col p-3">
-        <div className="mb-2 flex flex-row items-center justify-between">
+        <div className="mb-2 flex items-center justify-between">
           <div className="left">Left</div>
-          <div className="flex flex-row gap-1">
+          <div className="flex gap-1">
             <CustomButton
               description="Create a meeting"
               type="primary"
