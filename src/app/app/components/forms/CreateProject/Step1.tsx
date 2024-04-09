@@ -5,7 +5,7 @@ import CustomButton from '@/common/components/CustomButton';
 import { ArrowRight, Link, PaperClip } from '@/common/components/icons';
 import { createProjectFormInputs } from './helper';
 import { ProjectData } from './types';
-import UploadCard from '../../UploadCard';
+import UploadCard from '../../../home/components/UploadCard';
 
 type FieldType = ProjectData;
 

@@ -12,7 +12,12 @@ function CreateNote() {
   const [form] = Form.useForm();
 
   const clearInputHandler = () => {
-    form.resetFields();
+    const value = form.getFieldValue('note');
+    if (value) {
+      form.resetFields();
+    } else {
+      noteContextInfo?.deleteNoteHandler();
+    }
   };
 
   return (

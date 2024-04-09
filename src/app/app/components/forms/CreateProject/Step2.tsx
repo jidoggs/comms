@@ -38,6 +38,7 @@ function NewProjectStatusForm({ onFinish }: Props) {
       <CustomButton
         type="text"
         htmlType="button"
+        size="small"
         className={{
           container: 'justify-start pb-4',
         }}

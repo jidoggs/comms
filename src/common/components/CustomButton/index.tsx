@@ -1,7 +1,7 @@
-import { mergeClassName } from '@/common/utils';
-import { Button, Tooltip } from 'antd';
 import React from 'react';
-import { CustomInputProps } from './types';
+import { Button, Tooltip } from 'antd';
+import { mergeClassName } from '@/common/utils';
+import { CustomButtonProps } from './types';
 
 function CustomButton({
   className,
@@ -16,11 +16,12 @@ function CustomButton({
   borderBottom,
   borderTop,
   ...props
-}: CustomInputProps) {
+}: CustomButtonProps) {
   const btnClassName = mergeClassName(
     '!flex items-center only:justify-center group/button',
     block && 'flex-1',
     typeof className === 'string' ? className : className?.button
+
   );
   return (
     <div
