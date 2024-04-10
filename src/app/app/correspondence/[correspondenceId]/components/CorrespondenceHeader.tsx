@@ -40,7 +40,7 @@ const CorrespondenceHeader = () => {
           <TimelineComponent timeline={timeline} />
         </div>
         <CustomButton
-          description="Correspondence"
+          description="Toggle detail"
           type="text"
           size="small"
           icon={<InfoCircle size={18} />}

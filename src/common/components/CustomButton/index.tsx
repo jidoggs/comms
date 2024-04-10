@@ -55,7 +55,7 @@ function CustomButton({
           {children}
         </Button>
       ) : (
-        <Tooltip placement={descriptionPlacement} title={description || title}>
+        <Tooltip  placement={descriptionPlacement} title={description || title}>
           <Button
             className={btnClassName}
             size={description ? 'small' : size}

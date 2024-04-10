@@ -6,7 +6,12 @@ import CustomButton from '@/common/components/CustomButton';
 import CreateProject from '@/app/app/components/actions/CreateProject';
 import CreateMeeting from '@/app/app/components/actions/CreateMeeting';
 import Title from '@/common/components/Title';
-import { CloseCircle, Search, Send } from '@/common/components/icons';
+import {
+  CloseCircle,
+  CloseCircled,
+  Search,
+  Send,
+} from '@/common/components/icons';
 import { mergeClassName } from '@/common/utils';
 
 const CorrrespondenceMenu = () => {
@@ -21,7 +26,11 @@ const CorrrespondenceMenu = () => {
         }}
         className="flex w-full items-end justify-between pl-5"
       >
-        <CorrepondenceTabs />
+        {detailsData?.multiSelect.isMultiSelectMode ? (
+          <Title semibold className='self-center'>Push items</Title>
+        ) : (
+          <CorrepondenceTabs />
+        )}
         <div
           className={mergeClassName(
             'flex h-full items-center gap-x-2.5',
@@ -33,15 +42,31 @@ const CorrrespondenceMenu = () => {
             type="primary"
             icon={<Search size={18} />}
           />
-          <div className="flex h-full items-center gap-x-2.5 border-x border-custom-gray_500 p-2.5">
-            <CreateProject />
-            <CreateMeeting />
-          </div>
-          <CustomButton
-            description="Push"
-            type="primary"
-            icon={<Send size={18} />}
-          />
+          {detailsData?.multiSelect.isMultiSelectMode ? (
+            <div className="flex h-full items-center gap-x-2.5 border-l border-custom-gray_500 p-2.5 pr-0">
+              <CustomButton
+                description="Cancel"
+                size="small"
+                type="primary"
+                icon={<CloseCircled size={18} />}
+                onClick={detailsData?.turnMultiSelectOFFHandler}
+              />
+            </div>
+          ) : (
+            <>
+              <div className="flex h-full items-center gap-x-2.5 border-x border-custom-gray_500 p-2.5">
+                <CreateProject />
+                <CreateMeeting />
+              </div>
+              <CustomButton
+                description="Push multiple"
+                type="primary"
+                size="small"
+                icon={<Send size={18} />}
+                onClick={detailsData?.turnMultiSelectOnHandler}
+              />
+            </>
+          )}
         </div>
       </motion.div>
       {detailsData?.openCorrespondenceDetails ? (

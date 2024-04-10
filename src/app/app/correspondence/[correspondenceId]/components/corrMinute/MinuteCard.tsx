@@ -13,6 +13,7 @@ import CustomButton from '@/common/components/CustomButton';
 import { dummyAvatarData } from '@/common/mockData';
 import { generateInitials, mergeClassName } from '@/common/utils';
 import { AnimatePresence } from 'framer-motion';
+import { Checkbox } from 'antd';
 
 type Props = {
   minuteId: number;
@@ -51,7 +52,7 @@ const MinuteCard = ({ className, minute }: Props) => {
               : 'order-1 rounded-bl-none'
           )}
         >
-          <header className="flex items-center justify-between p-1 hover:bg-custom-gray_100 hover:rounded-t-xl">
+          <header className="flex items-center justify-between p-1 hover:rounded-t-xl hover:bg-custom-gray_100">
             <div className="flex items-center gap-x-1">
               {userDetails.image ? (
                 <CustomAvatar
@@ -93,13 +94,20 @@ const MinuteCard = ({ className, minute }: Props) => {
             </div>
           </footer>
         </div>
-        <SideMenu
-          className={mergeClassName(
-            'invisible ease-in-out group-hover:visible',
-            minute.messageFrom ? 'order-1' : 'order-2'
-          )}
-          placement={minute.messageFrom ? 'left' : 'right'}
-        />
+        {detailContextInfo?.multiSelect.isMultiSelectMode ? (
+          <Checkbox
+            name={minute?.id}
+            onChange={detailContextInfo.selectItemHandler}
+          />
+        ) : (
+          <SideMenu
+            className={mergeClassName(
+              'invisible ease-in-out group-hover:visible',
+              minute.messageFrom ? 'order-1' : 'order-2'
+            )}
+            placement={minute.messageFrom ? 'left' : 'right'}
+          />
+        )}
       </div>
       <AnimatePresence>
         {noteContextInfo?.showNote ? (
