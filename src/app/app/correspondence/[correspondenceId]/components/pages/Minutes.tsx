@@ -16,7 +16,7 @@ const Minutes = () => {
                 minuteId={minute.id}
                 minute={minute}
                 className={mergeClassName(
-                  'group h-full first:mt-3 last:mb-3',
+                  'group first:mt-3 last:mb-3',
                   minute.messageFrom ? 'self-end' : 'self-start'
                 )}
               />
