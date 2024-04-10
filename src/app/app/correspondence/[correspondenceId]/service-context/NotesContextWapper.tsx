@@ -49,18 +49,20 @@ function NotesContextWapper({ children }: ContextWapper) {
   };
 
   return (
-    <NoteContext.Provider
-      value={{
-        ...noteInfo,
-        showNoteHandler,
-        createNoteHandler,
-        deleteNoteHandler,
-        togglePrivacyHandler,
-        colorUpdateHandler,
-      }}
-    >
-      {children}
-    </NoteContext.Provider>
+    <>
+      <NoteContext.Provider
+        value={{
+          ...noteInfo,
+          showNoteHandler,
+          createNoteHandler,
+          deleteNoteHandler,
+          togglePrivacyHandler,
+          colorUpdateHandler,
+        }}
+      >
+        {children}
+      </NoteContext.Provider>
+    </>
   );
 }
 

@@ -6,11 +6,7 @@ interface MinuteProps {
 }
 
 const TextMinute = ({ MinuteText }: MinuteProps) => {
-  return (
-    <Title tag="p" className="my-2">
-      {MinuteText}
-    </Title>
-  );
+  return <Title className="p-1">{MinuteText}</Title>;
 };
 
 export default TextMinute;

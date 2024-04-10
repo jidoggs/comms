@@ -3,6 +3,7 @@ import MinuteCard from '../corrMinute/MinuteCard';
 import MinuteAction from '../corrMinute/MinuteAction';
 import { correspondenceMinute } from '@/common/mockData/corrMinute';
 import NotesContextWapper from '../../service-context/NotesContextWapper';
+import { mergeClassName } from '@/common/utils';
 
 const Minutes = () => {
   return (
@@ -14,9 +15,10 @@ const Minutes = () => {
               <MinuteCard
                 minuteId={minute.id}
                 minute={minute}
-                className={
-                  'group h-full first:mt-3 last:mb-3 odd:self-start even:self-end'
-                }
+                className={mergeClassName(
+                  'group h-full first:mt-3 last:mb-3',
+                  minute.messageFrom ? 'self-end' : 'self-start'
+                )}
               />
             </NotesContextWapper>
           );

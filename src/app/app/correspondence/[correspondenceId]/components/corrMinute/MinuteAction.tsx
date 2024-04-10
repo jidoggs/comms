@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import TextArea from 'antd/es/input/TextArea';
-import CustomButton from '@/common/components/CustomButton';
+import ExpandedMinuteForm from './ExpandedMinuteForm';
 import CustomModal from '@/common/components/CustomModal';
+import CustomInput from '@/common/CustomInput';
+import CustomButton from '@/common/components/CustomButton';
 import {
   Briefcase,
   CloseCircled,
@@ -9,8 +10,6 @@ import {
   Send,
   Users,
 } from '@/common/components/icons';
-
-import ExpandedMinuteForm from './ExpandedMinuteForm';
 
 const MinuteAction = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -56,7 +55,7 @@ const MinuteAction = () => {
             />
           </div>
         </div>
-        <TextArea />
+        <CustomInput type="textarea" />
         <CustomButton
           icon={<Send size={18} />}
           className={{

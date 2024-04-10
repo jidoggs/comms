@@ -7,6 +7,7 @@ export const customThemeColor = {
   gray_500: '#E0E0E0',
   gray_600: '#808191',
   gray_700: '#4F4F4F',
+  gray_750: '#666666',
   gray_800: '#DEDEDE',
   gray_850: '#828282',
   gray_900: '#FAFAFA',
