@@ -1,8 +1,10 @@
 import React, { useContext } from 'react';
-import CustomButton from '@/common/components/CustomButton';
-import { Briefcase, Document, Users } from '@/common/components/icons';
-import { mergeClassName } from '@/common/utils';
 import { NoteContext } from '../service-context/NotesContextWapper';
+import CreateProject from '@/app/app/components/actions/CreateProject';
+import CreateMeeting from '@/app/app/components/actions/CreateMeeting';
+import CustomButton from '@/common/components/CustomButton';
+import { Document } from '@/common/components/icons';
+import { mergeClassName } from '@/common/utils';
 
 type Props = {
   className?: string;
@@ -32,21 +34,17 @@ const SideMenu = ({ className, placement }: Props) => {
             descriptionPlacement={placement}
             onClick={contextInfo?.showNoteHandler}
           />
-          <CustomButton
-            icon={<Users size={18} className="invisible group-hover:visible" />}
-            size="small"
-            type="text"
-            description="Create project"
+          <CreateProject
             descriptionPlacement={placement}
+            className={{
+              icon: 'invisible group-hover:visible',
+            }}
           />
-          <CustomButton
-            icon={
-              <Briefcase size={18} className="invisible group-hover:visible" />
-            }
-            size="small"
-            type="text"
-            description="Create a meeting"
+          <CreateMeeting
             descriptionPlacement={placement}
+            className={{
+              icon: 'invisible group-hover:visible',
+            }}
           />
         </div>
       </div>

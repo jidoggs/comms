@@ -8,8 +8,8 @@ import Colors from './Colors';
 function ReadNote() {
   const noteContextInfo = useContext(NoteContext);
   return (
-    <div>
-      <Title className="h-full min-h-20">{noteContextInfo?.note}</Title>
+    <div className="flex flex-col">
+      <Title className="h-full min-h-20 flex-1">{noteContextInfo?.note}</Title>
       <div className="flex items-center justify-between">
         <CustomButton
           size="small"

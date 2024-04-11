@@ -1,14 +1,14 @@
 import { useRouter } from 'next/navigation';
+import CreateMeeting from '../../components/actions/CreateMeeting';
+import CreateProject from '../../components/actions/CreateProject';
 import AvatarGroup from '@/common/components/Avatar/AvatarGroup';
 import CustomAvatar from '@/common/components/Avatar/CustomAvatar';
 import CustomButton from '@/common/components/CustomButton';
-import CreateMeeting from './CorrespondenceCardActions/CreateMeeting';
-import CreateProject from './CorrespondenceCardActions/CreateProject';
+import Title from '@/common/components/Title';
 import { Send, Folder } from '@/common/components/icons';
 import { dummyAvatarData } from '@/common/mockData';
 import { iHandleClick, iHandleKeyboard } from '../../correspondence/types';
 import { generateInitials } from '@/common/utils';
-import Title from '@/common/components/Title';
 
 const CorrespondenceCard = () => {
   const router = useRouter();

@@ -2,6 +2,7 @@ import React from 'react';
 import TextMinute from './minuteTypes/TextMinute';
 import FileMinute from './minuteTypes/FileMinute';
 import MeetingMinute from './minuteTypes/MeetingMinute';
+import LetterMinute from './minuteTypes/LetterMinute';
 
 interface MinuteTypeProps {
   fileSend?: any;
@@ -19,17 +20,14 @@ const MinuteType = ({ fileSend, minute, userDetails }: MinuteTypeProps) => {
   const MinuteText = minute.minuteDetails.minuteText;
 
   return (
-    <div className="flex flex-col items-start justify-between px-2">
-      {minute && minute.type === 'text' ? (
-        <TextMinute MinuteText={MinuteText} />
-      ) : null}
-      {minute && minute.type === 'document' ? (
-        <FileMinute fileSend={fileSend} />
-      ) : null}
-      {minute && minute.type === 'meeting' ? (
+    <>
+      {minute?.type === 'text' ? <TextMinute MinuteText={MinuteText} /> : null}
+      {minute?.type === 'document' ? <FileMinute fileSend={fileSend} /> : null}
+      {minute?.type === 'letter' ? <LetterMinute /> : null}
+      {minute?.type === 'meeting' ? (
         <MeetingMinute userDetails={userDetails} />
       ) : null}
-    </div>
+    </>
   );
 };
 

@@ -5,7 +5,6 @@ import dayjs, { Dayjs } from 'dayjs';
 import TimelineComponent from '@/common/components/TimelineComponent/TimelineComponent';
 import Title from '@/common/components/Title';
 import { TimelineDot } from '@/common/components/icons';
-// import CustomAvatar from '@/common/components/Avatar/CustomAvatar';
 
 export const FormattedDate = ({ date }: { date: Dayjs }) => {
   return (
@@ -47,38 +46,49 @@ const Timelines = () => {
                   !dayjs(timeline.date).isSame(now.subtract(1, 'day'), 'day') && // Not yesterday
                   !dayjs(timeline.date).isSame(now.subtract(1, 'week'), 'week') // Not last week
                 );
-              // if (index === 2)
-              //   return (
-              //     dayjs(timeline.date).isBefore(now, 'week') &&
-              //     !dayjs(timeline.date).isSame(now, 'day') &&
-              //     !dayjs(timeline.date).isSame(now.subtract(1, 'day'), 'day')
-              //   );
-              // if (index === 3)
-              //   return (
-              //     dayjs(timeline.date).isBefore(now, 'month') &&
-              //     !dayjs(timeline.date).isSame(now, 'day') &&
-              //     !dayjs(timeline.date).isSame(now.subtract(1, 'day'), 'day') &&
-              //     !dayjs(timeline.date).isBefore(now, 'week')
-              //   );
               return false;
             });
 
             return (
               <React.Fragment key={date.toString()}>
                 {index === 0 ? (
-                  <Timeline.Item dot={<Title tag="h5">Today</Title>}>
+                  <Timeline.Item
+                    dot={
+                      <Title tag="h6" className="font-medium">
+                        Today
+                      </Title>
+                    }
+                  >
                     <div className="h-10" />
                   </Timeline.Item>
                 ) : index === 1 ? (
-                  <Timeline.Item dot={<Title tag="h5">Yesterday</Title>}>
+                  <Timeline.Item
+                    dot={
+                      <Title tag="h6" className="font-medium">
+                        Yesterday
+                      </Title>
+                    }
+                  >
                     <div className="h-10" />
                   </Timeline.Item>
                 ) : index === 2 ? (
-                  <Timeline.Item dot={<Title tag="h5">Last Week</Title>}>
+                  <Timeline.Item
+                    dot={
+                      <Title tag="h6" className="font-medium">
+                        Last Week
+                      </Title>
+                    }
+                  >
                     <div className="h-10" />
                   </Timeline.Item>
                 ) : (
-                  <Timeline.Item dot={<Title tag="h5">Last Month</Title>}>
+                  <Timeline.Item
+                    dot={
+                      <Title tag="h6" className="font-medium">
+                        Last Month
+                      </Title>
+                    }
+                  >
                     <div className="h-10" />
                   </Timeline.Item>
                 )}
@@ -87,11 +97,6 @@ const Timelines = () => {
                     key={idx}
                     dot={
                       idx === 0 && index === 0 ? (
-                        // <CustomAvatar
-                        //   src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                        //   size="default"
-                        //   className="rounded-full border border-custom-main"
-                        // />
                         <div className="">
                           <TimelineComponent timeline={timeline} />
                         </div>

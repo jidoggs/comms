@@ -35,7 +35,8 @@ function NotesContextWapper({ children }: ContextWapper) {
   };
 
   const deleteNoteHandler = () => {
-    setNoteInfo((prev) => ({ ...prev, note: '', noteType: 'private' }));
+    // setNoteInfo((prev) => ({ ...prev, note: '', noteType: 'private' }));
+    setNoteInfo({ ...initialNoteInfo });
   };
 
   const togglePrivacyHandler = () => {
@@ -48,18 +49,20 @@ function NotesContextWapper({ children }: ContextWapper) {
   };
 
   return (
-    <NoteContext.Provider
-      value={{
-        ...noteInfo,
-        showNoteHandler,
-        createNoteHandler,
-        deleteNoteHandler,
-        togglePrivacyHandler,
-        colorUpdateHandler,
-      }}
-    >
-      {children}
-    </NoteContext.Provider>
+    <>
+      <NoteContext.Provider
+        value={{
+          ...noteInfo,
+          showNoteHandler,
+          createNoteHandler,
+          deleteNoteHandler,
+          togglePrivacyHandler,
+          colorUpdateHandler,
+        }}
+      >
+        {children}
+      </NoteContext.Provider>
+    </>
   );
 }
 

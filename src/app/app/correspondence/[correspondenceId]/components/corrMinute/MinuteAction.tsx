@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import TextArea from 'antd/es/input/TextArea';
-import CustomButton from '@/common/components/CustomButton';
+import ExpandedMinuteForm from './ExpandedMinuteForm';
 import CustomModal from '@/common/components/CustomModal';
+import CustomInput from '@/common/CustomInput';
+import CustomButton from '@/common/components/CustomButton';
 import {
   Briefcase,
   CloseCircled,
@@ -9,8 +10,6 @@ import {
   Send,
   Users,
 } from '@/common/components/icons';
-
-import ExpandedMinuteForm from './ExpandedMinuteForm';
 
 const MinuteAction = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,11 +22,11 @@ const MinuteAction = () => {
     setIsModalOpen(false);
   };
   return (
-    <div className="w-full rounded-md bg-white drop-shadow-2xl ">
+    <div className="drop-shadow-chat w-full rounded-md bg-white ">
       <div className="flex flex-col p-3">
-        <div className="mb-2 flex flex-row items-center justify-between">
+        <div className="mb-2 flex items-center justify-between">
           <div className="left">Left</div>
-          <div className="flex flex-row gap-1">
+          <div className="flex gap-1">
             <CustomButton
               description="Create a meeting"
               type="primary"
@@ -56,7 +55,7 @@ const MinuteAction = () => {
             />
           </div>
         </div>
-        <TextArea />
+        <CustomInput type="textarea" />
         <CustomButton
           icon={<Send size={18} />}
           className={{

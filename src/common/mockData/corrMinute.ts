@@ -17,12 +17,13 @@ export interface CorrespondenceMinute {
   };
   dateTime: string;
   secondary: string[];
+  messageFrom?: 'me';
 }
 
 export const correspondenceMinute = [
   {
     id: 1,
-    type: 'text',
+    type: 'letter',
     minuteDetails: {
       minuteText:
         'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Excepturi delectus odio expedita recusandae, corporis officiis laudantium accusamus mollitia inventore accusantium et voluptatum fuga commodi eos consectetur vel dignissimos repudiandae distinctio?',
@@ -64,6 +65,7 @@ export const correspondenceMinute = [
     },
     dateTime: '4:22pm, 16 Feb 2024',
     secondary: ['K', 'S', 'I'],
+    messageFrom: 'me',
   },
   {
     id: 3.1,
@@ -78,6 +80,7 @@ export const correspondenceMinute = [
     },
     dateTime: '4:22pm, 16 Feb 2024',
     secondary: ['P', 'T', 'O'],
+    messageFrom: 'me',
   },
   {
     id: 3.3,
@@ -125,10 +128,11 @@ export const correspondenceMinute = [
     },
     dateTime: '4:22pm, 16 Feb 2024',
     secondary: ['K', 'S', 'I'],
+    messageFrom: 'me',
   },
   {
     id: 6,
-    type: 'document',
+    type: 'letter',
     minuteDetails: {
       file: '/file/sample.pdf',
     },
@@ -154,5 +158,6 @@ export const correspondenceMinute = [
     },
     dateTime: '4:22pm, 16 Feb 2024',
     secondary: ['K', 'S', 'I'],
+    messageFrom: 'me',
   },
 ];
