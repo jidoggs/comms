@@ -1,14 +1,9 @@
-
-
 import React from 'react'
 
-
-const More = () => {
+const page = () => {
   return (
-    <div>
-    
-    </div>
+    <div>page</div>
   )
 }
 
-export default More
+export default page
