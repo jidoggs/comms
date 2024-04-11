@@ -48,7 +48,7 @@ const Title = ({
           ? 'text-sm font-450 leading-[17.71px]'
           : '',
         small ? 'text-xs' : '',
-        (tag.includes('h') && tag !== ('h5' || 'h6')) || bold
+        (tag.includes('h') && tag !== 'h5' && tag !== 'h6') || bold
           ? 'font-bold'
           : '',
         semibold ? 'font-medium' : '',
