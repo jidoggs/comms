@@ -1,32 +1,33 @@
-// useDateTimePicker.tsx
 import React, { useState } from 'react';
-import { Checkbox } from 'antd';
+import { Checkbox, TimePicker } from 'antd';
 import CustomButton from '@/common/components/CustomButton';
 import CustomDatePicker from '@/common/components/CustomDatePicker';
-import CustomTimeRangePicker from '@/common/components/CustomTimeRangePicker';
 import { Add } from '@/common/components/icons';
-import {  generateNewDateTimeEntry, INITIAL_DATE_TIME } from "./helper";
-import {DateTimeEntry,} from "./types"
+import { DateTimeEntry } from './types';
+import { generateNewDateTimeEntry } from './helper';
 
-const useDateTimePicker = () => {
-  const [dateTimes, setDateTimes] = useState<DateTimeEntry[]>([INITIAL_DATE_TIME]);
-  const [nextId, setNextId] = useState<number>(1);
+const DateTimePicker: React.FC = () => {
+  const [dateTimes, setDateTimes] = useState<DateTimeEntry[]>([]);
+  const [selectedDateId, setSelectedDateId] = useState<number | null>(null);
 
   const handleAddDateTime = () => {
-    const newDateTime: DateTimeEntry = generateNewDateTimeEntry(nextId);
-    setNextId(nextId + 1);
+    const newDateTime: DateTimeEntry = generateNewDateTimeEntry(dateTimes.length + 1);
     setDateTimes([...dateTimes, newDateTime]);
   };
 
   const handleDateTimeChange = (
     id: number,
     field: keyof DateTimeEntry,
-    value: any 
+    value: any
   ) => {
     const updatedDateTimes = dateTimes.map((dateTime) =>
       dateTime.id === id ? { ...dateTime, [field]: value } : dateTime
     );
     setDateTimes(updatedDateTimes);
+
+    if (field === 'date') {
+      setSelectedDateId(value ? id : null);
+    }
   };
 
   const renderDateAndTimePickers = () => {
@@ -37,29 +38,35 @@ const useDateTimePicker = () => {
           onChange={(value: any) =>
             handleDateTimeChange(dateTime.id, 'date', value)
           }
-         
         />
-        <CustomTimeRangePicker
+
+        <TimePicker.RangePicker
           value={dateTime.time}
           onChange={(value: any) =>
             handleDateTimeChange(dateTime.id, 'time', value)
           }
-         
+          disabled={!dateTime.date || dateTime.id !== selectedDateId}
         />
-        <div className="flex justify-center items-center">
+
+        <div className="flex items-center justify-center">
           <Checkbox>All day</Checkbox>
         </div>
       </div>
     ));
   };
 
-  const AddDateTimeButton = () => (
-    <CustomButton className={{container:"justify-start mx-5"}} icon={<Add />} onClick={handleAddDateTime}>
-      Add Date and Time
-    </CustomButton>
+  return (
+    <div>
+      {renderDateAndTimePickers()}
+      <CustomButton
+        className={{ container: 'mx-4 justify-start' }}
+        icon={<Add />}
+        onClick={handleAddDateTime}
+      >
+        Add Date & Time
+      </CustomButton>
+    </div>
   );
-
-  return { renderDateAndTimePickers, AddDateTimeButton };
 };
 
-export default useDateTimePicker;
+export default DateTimePicker;
