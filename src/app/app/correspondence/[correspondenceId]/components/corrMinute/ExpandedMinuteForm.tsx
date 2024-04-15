@@ -20,7 +20,7 @@ const ExpandedMinuteForm = () => {
   return (
     <>
       <>
-        <Title className='mb-6'>New Minute</Title>
+        <Title className="mb-6">New Minute</Title>
         <RichTextEditor value={editorValue} onChange={handleTextChange} />
       </>
 
