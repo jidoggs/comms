@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Checkbox, TimePicker } from 'antd';
+import { Checkbox, DatePicker, TimePicker } from 'antd';
 import CustomButton from '@/common/components/CustomButton';
-import CustomDatePicker from '@/common/components/CustomDatePicker';
+
 import { Add } from '@/common/components/icons';
 import { DateTimeEntry } from './types';
 import { generateNewDateTimeEntry } from './helper';
@@ -33,7 +33,7 @@ const DateTimePicker: React.FC = () => {
   const renderDateAndTimePickers = () => {
     return dateTimes.map((dateTime) => (
       <div key={dateTime.id} className="mb-2 flex gap-2">
-        <CustomDatePicker
+        <DatePicker
           value={dateTime.date}
           onChange={(value: any) =>
             handleDateTimeChange(dateTime.id, 'date', value)
