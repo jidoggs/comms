@@ -3,14 +3,25 @@ import { Checkbox, Form } from 'antd';
 import CustomInput from '@/common/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
 import { NoteContext } from '../../service-context/NotesContextWapper';
-import { StickyNote } from '@/common/components/icons';
+import { CloseCircled, StickyNote } from '@/common/components/icons';
 import { CreateNoteFormType } from './type';
 import Colors from './Colors';
 
 function CreateNote() {
   const noteContextInfo = useContext(NoteContext);
+  const [form] = Form.useForm();
+
+  const clearInputHandler = () => {
+    const value = form.getFieldValue('note');
+    if (value) {
+      form.resetFields();
+    } else {
+      noteContextInfo?.deleteNoteHandler();
+    }
+  };
+
   return (
-    <Form onFinish={noteContextInfo?.createNoteHandler}>
+    <Form form={form} onFinish={noteContextInfo?.createNoteHandler}>
       <Form.Item<CreateNoteFormType>
         name="note"
         rules={[{ required: true, message: 'This Field is required' }]}
@@ -19,6 +30,14 @@ function CreateNote() {
           className="!bg-custom-cream_100"
           prefix={<StickyNote size={24} className="text-custom-gray_850" />}
           placeholder="Add note here"
+          suffix={
+            <CustomButton
+              size="small"
+              type="text"
+              icon={<CloseCircled />}
+              onClick={clearInputHandler}
+            />
+          }
         />
       </Form.Item>
       <div className="flex items-center justify-between">

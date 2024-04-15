@@ -1,9 +1,15 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useCallback, useLayoutEffect, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useAnimation } from 'framer-motion';
-import { ContextWapper, DetailContextType } from '../../types';
+import { ContextWapper, DetailContextType, MultiSelectType } from '../../types';
+import { CheckboxChangeEvent } from 'antd/es/checkbox';
 
 export const DetailContext = React.createContext<DetailContextType>(null);
+
+const initialMutliSelect = {
+  isMultiSelectMode: false,
+  selectedItems: [],
+};
 
 function DetailContextWrapper({ children }: ContextWapper) {
   const pathname = usePathname();
@@ -15,6 +21,36 @@ function DetailContextWrapper({ children }: ContextWapper) {
     null
   );
   const contentControls = useAnimation();
+
+  const [multiSelect, setMultiSelect] =
+    useState<MultiSelectType>(initialMutliSelect);
+
+  const turnMultiSelectOnHandler = () => {
+    setMultiSelect((prev) => ({ ...prev, isMultiSelectMode: true }));
+  };
+  const turnMultiSelectOFFHandler = () => {
+    setMultiSelect({ ...initialMutliSelect });
+  };
+
+  const selectItemHandler = useCallback((e: CheckboxChangeEvent) => {
+    const { checked, name } = e.target;
+    if (!name) return;
+    if (checked) {
+      setMultiSelect((prev) => ({
+        ...prev,
+        selectedItems: [...prev.selectedItems, name],
+      }));
+    } else {
+      const otherSelectedItems = multiSelect.selectedItems.filter(
+        (item) => item !== name
+      );
+      setMultiSelect((prev) => ({
+        ...prev,
+        selectedItems: [...otherSelectedItems],
+      }));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const tabChangeHandler = (state: string) => {
     router.push(`${pathname}?tab=${state}`);
@@ -57,6 +93,10 @@ function DetailContextWrapper({ children }: ContextWapper) {
         tabChangeHandler,
         activeTab,
         contentControls,
+        turnMultiSelectOnHandler,
+        turnMultiSelectOFFHandler,
+        selectItemHandler,
+        multiSelect,
       }}
     >
       {children}

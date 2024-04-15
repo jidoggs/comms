@@ -2,7 +2,25 @@ import { Folder } from '@/common/components/icons';
 import TimelineComponent from '@/common/components/TimelineComponent/TimelineComponent';
 import Title from '@/common/components/Title';
 import { TimelineProps } from '@/common/mockData/corrTimeline';
-import React from 'react';
+import React, { ReactNode } from 'react';
+
+type ItemProps = {
+  title: string;
+  detail: string | ReactNode;
+};
+
+const MinuteDetailItem = ({ title, detail }: ItemProps) => (
+  <div className="flex items-start gap-x-2.5 border-b border-custom-gray_500 py-2.5">
+    <Title className="w-2/6 text-custom-gray_850">{title}</Title>
+    {typeof detail === 'string' ? (
+      <Title bold className="w-4/6 text-custom-gray_700">
+        {detail}
+      </Title>
+    ) : (
+      detail
+    )}
+  </div>
+);
 
 interface DetailsProps {
   corrMinuteDetails: {
@@ -16,55 +34,28 @@ interface DetailsProps {
 
 const MinuteDetails = ({ corrMinuteDetails }: DetailsProps) => {
   return (
-    <div className="flex size-full flex-col bg-custom-white_100 px-3 pt-4">
-      <div className="mb-5 flex size-20 items-center justify-center rounded-lg bg-custom-gray_100 text-custom-main">
+    <div className="flex size-full flex-col gap-y-2.5 bg-custom-white_100 p-5">
+      <div className="self-start rounded-10 bg-custom-gray_100 p-8 text-custom-main">
         <Folder size={18} />
       </div>
-      <div className="flex">
-        <Title tag="h6" className="w-2/6 text-custom-gray_850">
-          Name
-        </Title>
-        <Title tag="h6" bold className="w-4/6 text-custom-gray_700">
-          {corrMinuteDetails.name}
-        </Title>
+      <div className="flex flex-col gap-y-2.5">
+        <MinuteDetailItem title="Name" detail={corrMinuteDetails.name} />
+        <MinuteDetailItem title="From" detail={corrMinuteDetails.from} />
+        <MinuteDetailItem
+          title="To"
+          detail={<TimelineComponent timeline={corrMinuteDetails.to} nogap />}
+        />
+        <MinuteDetailItem
+          title="Created By"
+          detail={
+            <TimelineComponent timeline={corrMinuteDetails.createdBy} nogap />
+          }
+        />
+        <MinuteDetailItem
+          title="Date of creation"
+          detail={corrMinuteDetails.dateCreated}
+        />
       </div>
-      <div className="my-2 h-px w-full bg-custom-gray_500" />
-      <div className="mt-3 flex">
-        <Title tag="h6" className="w-2/6 text-custom-gray_850">
-          From
-        </Title>
-        <Title tag="h6" bold className="w-4/6 text-custom-gray_700">
-          {corrMinuteDetails.from}
-        </Title>
-      </div>
-      <div className="my-2 h-px w-full bg-custom-gray_500" />
-      <div className="mt-3 flex">
-        <Title tag="h6" className="w-2/6 text-custom-gray_850">
-          To
-        </Title>
-        <Title tag="h6" bold className="w-4/6 text-custom-gray_700">
-          <TimelineComponent timeline={corrMinuteDetails.to} />
-        </Title>
-      </div>
-      <div className="my-2 h-px w-full bg-custom-gray_500" />
-      <div className="mt-3 flex">
-        <Title tag="h6" className="w-2/6 text-custom-gray_850">
-          Created By
-        </Title>
-        <Title tag="h6" bold className="w-4/6 text-custom-gray_700">
-          <TimelineComponent timeline={corrMinuteDetails.createdBy} />
-        </Title>
-      </div>
-      <div className="my-2 h-px w-full bg-custom-gray_500" />
-      <div className="mt-3 flex">
-        <Title tag="h6" className="w-2/6 text-custom-gray_850">
-          Date of creation
-        </Title>
-        <Title tag="h6" bold className="w-4/6 text-custom-gray_700">
-          {corrMinuteDetails.dateCreated}
-        </Title>
-      </div>
-      <div className="my-2 h-px w-full bg-custom-gray_500" />
     </div>
   );
 };

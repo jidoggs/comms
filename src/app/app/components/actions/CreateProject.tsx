@@ -1,12 +1,13 @@
+import React, { useState } from 'react';
 import CustomButton from '@/common/components/CustomButton';
 import CustomModal from '@/common/components/CustomModal';
-import React, { useState } from 'react';
 import { ArrowRight, Briefcase } from '@/common/components/icons';
 import Step1 from '../forms/CreateProject/Step1';
 import Step2 from '../forms/CreateProject/Step2';
 import { ProjectData } from '../forms/CreateProject/types';
+import { CustomButtonProps } from '@/common/components/CustomButton/types';
 
-function CreateProject() {
+function CreateProject({ descriptionPlacement, className }: CustomButtonProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [stage, setStage] = useState(1);
 
@@ -23,7 +24,7 @@ function CreateProject() {
           icon={<ArrowRight className="rotate-180" />}
           size="small"
           className={{
-            button: '!text-xl !font-bold !leading-6',
+            button: '!p-1 !text-xl !font-bold !leading-none',
             container: 'justify-start',
           }}
         >
@@ -57,15 +58,23 @@ function CreateProject() {
       <CustomButton
         size="small"
         type="text"
-        icon={<Briefcase />}
+        icon={
+          <Briefcase
+            className={typeof className === 'string' ? '' : className?.icon}
+          />
+        }
         description="Create a project"
         onClick={handleOpen}
+        descriptionPlacement={descriptionPlacement}
       />
       <CustomModal
         title={<RenderTitle />}
         width={400}
         open={isModalOpen}
         onCancel={handleClose}
+        classNames={{
+          header: '!p-0 [&_.ant-modal-title]:!leading-none',
+        }}
       >
         {stage === 1 ? (
           <Step1 onFinish={submitHandler} />

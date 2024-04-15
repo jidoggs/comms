@@ -26,7 +26,7 @@ function ActivityInformationItem({ icon, value }: ItemProps) {
 
 function ActivityInformation() {
   return (
-    <div>
+    <>
       <div className="space-y-2.5 py-4">
         <ActivityInformationItem value="Friday, 16 February 2024 . 12:30pm - 1:30pm" />
         <ActivityInformationItem
@@ -67,7 +67,7 @@ function ActivityInformation() {
           </Title>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

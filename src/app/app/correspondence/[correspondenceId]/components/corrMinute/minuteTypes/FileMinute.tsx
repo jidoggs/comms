@@ -1,3 +1,4 @@
+import Title from '@/common/components/Title';
 import React from 'react';
 
 interface MinuteProps {
@@ -6,8 +7,8 @@ interface MinuteProps {
 
 const FileMinute = ({ fileSend }: MinuteProps) => {
   return (
-    <div className="w-full flex-col items-center justify-end gap-5 rounded-md border !border-custom-gray_500 p-5">
-      <h1 className="text-center text-black">Upload PDF in Next js</h1>
+    <div className="flex-col items-center justify-end gap-y-5 rounded-md border border-custom-gray_500 p-2.5">
+      <Title className="text-center text-black">Upload PDF in Next js</Title>
       {/* <button onClick={fileSend()}></button> */}
       <input
         type="file"

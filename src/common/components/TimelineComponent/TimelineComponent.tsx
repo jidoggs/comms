@@ -1,8 +1,8 @@
-import { generateInitials } from '@/common/utils';
 import dayjs, { Dayjs } from 'dayjs';
 import React from 'react';
 import CustomAvatar from '../Avatar/CustomAvatar';
 import Title from '../Title';
+import { generateInitials, mergeClassName } from '@/common/utils';
 
 interface TimelineProps {
   timeline: {
@@ -11,6 +11,7 @@ interface TimelineProps {
     date: Dayjs;
     img?: string;
   };
+  nogap?: boolean;
 }
 
 export const FormattedDate = ({ date }: { date: Dayjs }) => {
@@ -19,29 +20,26 @@ export const FormattedDate = ({ date }: { date: Dayjs }) => {
   );
 };
 
-const TimelineComponent = ({ timeline }: TimelineProps) => {
+const TimelineComponent = ({ timeline, nogap }: TimelineProps) => {
   // console.log('timeline.date', timeline.date);
 
   return (
-    <div>
-      <div className="flex flex-row items-center justify-start gap-3">
-        <CustomAvatar
-          size="default"
-          className="rounded-full border border-custom-main"
-          src={timeline.img}
-        >
-          {generateInitials(`${timeline.name}`)}
-        </CustomAvatar>
-        <div className="flex flex-col gap-2">
-          <Title semibold>{timeline.name}</Title>
-          <Title className="leading-[15.18px] text-custom-gray_600">
-            <span className="office">{timeline.office} </span>-
-            <span className="date">
-              {' '}
-              <FormattedDate date={timeline.date} />
-            </span>
-          </Title>
-        </div>
+    <div className="flex items-center justify-start gap-3">
+      <CustomAvatar
+        size="default"
+        className="rounded-full border border-custom-main"
+        src={timeline.img}
+      >
+        {generateInitials(`${timeline.name}`)}
+      </CustomAvatar>
+      <div className={mergeClassName('flex flex-col items-start', nogap ? '' : 'gap-y-1')}>
+        <Title semibold>{timeline.name}</Title>
+        <Title className="leading-[15.18px] text-custom-gray_600">
+          <span className="office">{timeline.office} </span>-
+          <span className="date">
+            <FormattedDate date={timeline.date} />
+          </span>
+        </Title>
       </div>
     </div>
   );

@@ -3,9 +3,9 @@ import { Icon } from './type';
 
 const Dot: Icon = ({ size = '30', fill = 'currentColor', ...props }) => (
   <svg
+    {...props}
     width={size}
     height={size}
-    {...props}
     viewBox="0 0 40 34"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"

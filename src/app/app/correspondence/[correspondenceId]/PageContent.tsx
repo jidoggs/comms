@@ -32,13 +32,13 @@ const PageContent = () => {
     <div className="flex w-full flex-col">
       <CorrespondenceHeader />
       <CorrrespondenceMenu />
-      <div className="flex h-[calc(100vh_-_144px)] flex-row justify-between">
+      <div className="flex h-[calc(100vh_-_140px)] justify-between">
         <motion.div
           animate={detailsData?.contentControls}
           transition={{
             duration: 0.2,
           }}
-          className="flex w-full flex-row items-center justify-between"
+          className="flex w-full items-center justify-between"
         >
           {detailsData?.activeTab === 'minutes' ? <Minutes /> : null}
           {detailsData?.activeTab === 'timelines' ? <Timelines /> : null}
@@ -62,7 +62,7 @@ const PageContent = () => {
             transition={{
               duration: 0.2,
             }}
-            className="flex w-2/6 flex-row items-center justify-center border-l border-custom-gray_500"
+            className="flex w-2/6 items-center justify-center border-l border-custom-gray_500"
           >
             {/* <CorrespondentDocument correspondenceFile={correspondenceFile} /> */}
             <MinuteDetails corrMinuteDetails={demoDetails} />
