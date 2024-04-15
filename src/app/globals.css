@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import '/font/Circular-std-master/css/circular-std.css';
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -29,5 +31,131 @@ body {
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+  /* Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
+/* * {
+  outline: 1px solid red;
+} */
+
+.bebas {
+  font-family: var(--bebas);
+}
+
+.manrope {
+  font-family: var(--font-manrope);
+}
+
+.inter {
+  font-family: var(--font-inter);
+}
+
+.circular {
+  font-family: 'Circular Std', sans-serif; /* Use a fallback font */
+}
+
+.circularMedium {
+  font-family: 'Circular Std', sans-serif; /* Use a fallback font */
+  font-weight: 400;
+}
+
+.circularBold {
+  font-family: 'Circular Std', sans-serif; /* Use a fallback font */
+  font-weight: 700;
+}
+
+.ant-table-footer {
+  @apply border-b border-custom-gray_200/10;
+}
+.react-pdf__Page__canvas {
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 2px !important;
+}
+
+.ant-picker-calendar tbody td.ant-picker-cell-today,
+.ant-picker-calendar tbody td.ant-picker-cell-selected,
+.ant-picker-calendar tbody td:hover {
+  @apply rounded !bg-custom-gray_500;
+}
+.ant-picker-calendar tbody tr:not(:has(td.ant-picker-cell-in-view)) {
+  @apply hidden;
+}
+.ant-picker-calendar tbody td {
+  @apply !p-0;
+}
+.ant-picker-calendar thead th {
+  @apply !py-3 text-sm leading-4;
+}
+.ant-picker-cell-disabled::before {
+  @apply !bg-transparent;
+}
+
+.ant-picker-calendar .ant-select-selection-item {
+  @apply !text-sm !font-medium !leading-4 !text-custom-gray_200;
+}
+
+.ant-menu-inline-collapsed li {
+  @apply !flex-col justify-center !px-0.5 !pb-1 !pt-2.5;
+}
+.ant-menu-inline-collapsed .ant-menu-title-content {
+  @apply text-center !opacity-100;
+}
+
+.ant-breadcrumb-separator {
+  @apply flex items-center justify-center;
+}
+
+.ant-table-footer {
+  @apply !p-0;
+}
+
+.ant-btn-text:disabled,
+.ant-btn-text.ant-btn-disabled {
+  @apply !text-custom-gray_400;
+}
+
+.ant-btn-primary:not(:disabled):not(.ant-btn-disabled):hover {
+  @apply !text-custom-main;
+}
+.ant-upload-btn {
+  @apply !p-0;
+}
+
+.otpInputStyle {
+  /* @apply !size-10 rounded-md border border-custom-gray_300 px-2 py-1 !text-custom-main focus:border-custom-gray_300 focus-visible:outline-custom-gray_300 md:!size-12 md:px-4 md:py-3; */
+  height: 40px !important;
+  width: 40px !important;
+  border-radius: 5px;
+  border: 1px solid #bdbdbd;
+  color: #11142d;
+  padding: 4px 8px;
+}
+.otpInputStyle:focus {
+  border: 1px solid #333333;
+}
+
+.RichTextEditor__root___2QXK- {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.Dropdown__root___3ALmx,
+.IconButton__icon-strikethrough___QtE2X, .IconButton__icon-image___1gW7U, .InputPopover__root___3Hpj9 {
+  display: none !important;
+}
+
+@media screen and (min-width: 768px) {
+  .otpInputStyle {
+    height: 48px !important;
+    width: 48px !important;
   }
 }
