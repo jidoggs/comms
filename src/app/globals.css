@@ -143,6 +143,16 @@ body {
   border: 1px solid #333333;
 }
 
+.RichTextEditor__root___2QXK- {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.Dropdown__root___3ALmx,
+.IconButton__icon-strikethrough___QtE2X, .IconButton__icon-image___1gW7U, .InputPopover__root___3Hpj9 {
+  display: none !important;
+}
+
 @media screen and (min-width: 768px) {
   .otpInputStyle {
     height: 48px !important;
