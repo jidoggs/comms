@@ -1,28 +1,49 @@
-/* eslint-disable no-unused-vars */
-
 'use client';
 import Title from '@/common/components/Title';
 import { mergeClassName } from '@/common/utils';
-// import { useParams, usePathname, useSearchParams } from 'next/navigation';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import React from 'react';
 
-type Props = {};
+const Params = () => {
+  const pathname = usePathname();
+  const currentRoute = pathname?.split('/').pop(); // Extract the last segment
 
-const Params = (props: Props) => {
-  //   const pathname = usePathname();
-  //   const searchParams = useSearchParams();
-  //   const params = useParams<{ tag: string; item: string }>();
-  //   const [activeKey, setActiveKey] = useState('');
-
-  //   console.log('usePathname', pathname);
-  //   console.log('searchParams', searchParams);
-  //   console.log('params', params);
+  const routes = [
+    {
+      id: 1,
+      link: '/onboarding/personal-info',
+      param: 'personal-info',
+      title: 'Personal info.',
+    },
+    {
+      id: 2,
+      link: '/onboarding/office-info',
+      param: 'office-info',
+      title: 'Office info.',
+    },
+    {
+      id: 3,
+      link: '/onboarding/set-password',
+      param: 'set-password',
+      title: 'Set Password.',
+    },
+  ];
 
   return (
     <div className="flex w-full flex-row gap-3">
-      <Title className={mergeClassName('p')}>1. Personal info.</Title>
-      <Title>2. Office info.</Title>
-      <Title>3. Set password.</Title>
+      {routes.map((route) => (
+        <Link href={route.link} key={route.id}>
+          <Title
+            className={mergeClassName(
+              'text-custom-gray_600',
+              currentRoute === route.param && 'text-custom-main'
+            )}
+          >
+            {route.id}. {route.title}
+          </Title>
+        </Link>
+      ))}
     </div>
   );
 };

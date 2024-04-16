@@ -16,7 +16,6 @@ const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
       className="flex h-screen w-screen items-center justify-center bg-cover bg-center"
       style={{
         backgroundImage: 'url(/images/onboardingImage.png)',
-        backgroundColor: 'red',
       }}
     >
       <div className="flex w-[410px] items-center justify-center rounded-2xl bg-custom-gray_100">
