@@ -9,9 +9,9 @@ import {
   rootSubmenuKeys,
 } from '@/common/components/private/SideNav/helper';
 import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint';
-import { UserPreDefinedRole } from '@/app/auth/types/auth';
 import { Collapse, Logout } from '@/common/components/icons';
 import { mergeClassName } from '@/common/utils';
+import { UserPreDefinedRole } from '@/types';
 
 const { Sider } = Layout;
 

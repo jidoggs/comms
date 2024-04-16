@@ -1,14 +1,14 @@
 import React, { lazy, Suspense } from 'react';
-import { Dropdown, MenuProps, Avatar, Layout /* message */ } from 'antd';
-// import { useAuth, useSession } from "@/app/auth/hooks";
+import { useRouter } from 'next/navigation';
+import { Dropdown, MenuProps, Avatar, Layout, message } from 'antd';
+import { clearUserDetails } from '@/service/storage';
+import Title from '@/common/components/Title';
 import {
   Logout,
   NotificationBell,
   Profile,
   SpinLoader,
 } from '@/common/components/icons';
-// import { apiErrorHandler } from "@/services";
-import Title from '@/common/components/Title';
 import { dummyUser } from '@/common/mockData/user';
 
 const { Header } = Layout;
@@ -16,23 +16,14 @@ const { Header } = Layout;
 const BreadCrumb = lazy(() => import('./BreadCrumb'));
 
 const AppHeader: React.FunctionComponent = () => {
-  // const { user, logoutUser } = useSession();
-  // const [messageApi, contextHolder] = message.useMessage();
-  // const {
-  //   logoutMutationSWR: { trigger: triggerLogout, isMutating },
-  // } = useAuth();
+  const router = useRouter();
+  const [messageApi] = message.useMessage();
+
   const isMutating = false;
   const handleLogout = async () => {
-    // try {
-    //   await triggerLogout();
-    //   logoutUser();
-    // } catch (error) {
-    //   messageApi.open({
-    //     type: "error",
-    //     content: apiErrorHandler(error),
-    //   });
-    //   logoutUser();
-    // }
+    clearUserDetails();
+    router.replace('/auth/login');
+    messageApi.success('Logout Successful');
   };
 
   const items: MenuProps['items'] = [
@@ -77,7 +68,7 @@ const AppHeader: React.FunctionComponent = () => {
             <div className="flex cursor-pointer items-center gap-x-2.5 px-1.5 py-0.5">
               <Avatar
                 size={30}
-                src={dummyUser.img}
+                src={(dummyUser as any).img}
                 icon={
                   <span className="flex h-full flex-1 items-center justify-center">
                     <Profile size="22" className="stroke-white" />
@@ -86,7 +77,7 @@ const AppHeader: React.FunctionComponent = () => {
               />
               <div className="flex flex-col">
                 <Title className="text-sm font-semibold">
-                  {dummyUser?.first_name} {dummyUser?.last_name}
+                  {dummyUser?.firstname} {dummyUser?.lastname}
                 </Title>
                 <Title small className="text-custom-gray_600">
                   {/* {dummyUser?.['role.name']} */}

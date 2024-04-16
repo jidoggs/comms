@@ -25,7 +25,7 @@ const appTheme: ThemeConfig = {
   components: {
     Form: {
       fontWeightStrong: 500,
-      itemMarginBottom: 10,
+      itemMarginBottom: 15,
       labelColor: customThemeColor.main,
       labelHeight: 18,
       verticalLabelPadding: '0 0 5px',

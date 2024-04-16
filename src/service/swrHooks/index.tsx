@@ -1,14 +1,15 @@
-import useSWR, { SWRConfiguration } from "swr";
-import useSWRMutation from "swr/mutation";
-import { message } from "antd";
+import useSWR, { SWRConfiguration } from 'swr';
+import useSWRMutation from 'swr/mutation';
+import { message } from 'antd';
 import {
   apiRequestorArgs,
   makeAuthRequest,
   makeAuthFetch,
   makeRequest,
   makeGetRequest,
-} from "../request";
-import { APIResponseSuccessModel } from "@/types";
+  apiErrorHandler,
+} from '../request';
+import { APIResponseSuccessModel } from '@/types';
 
 export const useAuthRequest = <T,>(url: string) => {
   const { trigger, isMutating, data, error } = useSWRMutation<
@@ -18,7 +19,7 @@ export const useAuthRequest = <T,>(url: string) => {
     apiRequestorArgs
   >(url, makeAuthRequest, {
     onError: (error) => {
-      message.error(error);
+      message.error(apiErrorHandler(error));
     },
   });
 
@@ -38,7 +39,12 @@ export const useAuthGetRequest = <T,>(
 ) => {
   const { data, error, mutate, isValidating, isLoading } = useSWR<
     APIResponseSuccessModel<T>
-  >(url, makeAuthFetch(url), options);
+  >(url, makeAuthFetch, {
+    ...options,
+    onError: (error) => {
+      message.error(apiErrorHandler(error));
+    },
+  });
 
   return {
     data,
@@ -57,7 +63,7 @@ export const useNonAuthRequest = <T,>(url: string) => {
     apiRequestorArgs
   >(url, makeRequest, {
     onError: (error) => {
-      message.error(error);
+      message.error(apiErrorHandler(error));
     },
   });
 
@@ -77,7 +83,12 @@ export const useNonAuthGetRequest = <T,>(
 ) => {
   const { data, error, mutate, isValidating, isLoading } = useSWR<
     APIResponseSuccessModel<T>
-  >(url, makeGetRequest(url), options);
+  >(url, makeGetRequest, {
+    ...options,
+    onError: (error) => {
+      message.error(apiErrorHandler(error));
+    },
+  });
 
   return {
     data,

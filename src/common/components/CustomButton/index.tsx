@@ -21,7 +21,6 @@ function CustomButton({
     '!flex items-center only:justify-center group/button',
     block && 'flex-1',
     typeof className === 'string' ? className : className?.button
-
   );
   return (
     <div
@@ -46,21 +45,21 @@ function CustomButton({
     >
       {children || !description ? (
         <Button
+          {...props}
           className={btnClassName}
           size={size}
           block={block}
           title={title}
-          {...props}
         >
           {children}
         </Button>
       ) : (
-        <Tooltip  placement={descriptionPlacement} title={description || title}>
+        <Tooltip placement={descriptionPlacement} title={description || title}>
           <Button
+            {...props}
             className={btnClassName}
             size={description ? 'small' : size}
             block={block}
-            {...props}
           >
             {children}
           </Button>

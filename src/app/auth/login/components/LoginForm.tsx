@@ -1,105 +1,68 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Form } from 'antd';
 import Link from 'next/link';
 import CustomInput from '@/common/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
-
-// import { apiErrorHandler } from "@/services";
-// import { useRouter } from "next/navigation";
-// import { setLocalStorageItem } from "@/util";
-// import useAuth from "@/components/hooks/useAuth";
+import useAuth from '../../hooks/useAuth';
+import { useRouter } from 'next/navigation';
+import { storeRefreshToken, storeUserToken } from '@/service/storage';
 
 type FieldType = {
   email?: string;
   password?: string;
-  remember?: string;
 };
 
 const LoginForm = () => {
-  const [clientReady, setClientReady] = useState<boolean>(false);
-  // To disable submit button at the beginning.
-  const [form] = Form.useForm();
-  // const router = useRouter();
+  const { loginTrigger, loginIsMutating } = useAuth({ login: true });
+  const router = useRouter();
 
-  // Watch all values
-  // const values = Form.useWatch([], form);
-
-  useEffect(() => {
-    form.validateFields({ validateOnly: true }).then(
-      () => {
-        setClientReady(true);
-      },
-      () => {
-        setClientReady(false);
-      }
-    );
-  }, [form]);
-
-  // const {
-  //   loginSWR: { error, isMutating, trigger },
-  // } = useAuth();
-
-  // const onFinish = (values: any) => {
-  // console.log("values", values);
-  // trigger({
-  //   data: values,
-  // })
-  //   .then((data) => {
-  //     message.open({
-  //       type: "success",
-  //       content: "Successfully logged in",
-  //     });
-  //     setLocalStorageItem("user_details", data.data);
-  //     router.push("/app/registrations");
-  //   })
-  //   .catch(() => {
-  //     message.open({
-  //       type: "error",
-  //       content: apiErrorHandler(error),
-  //     });
-  //   });
-  // };
+  const onFinish = (data: FieldType) => {
+    loginTrigger({ data, type: 'post' }).then((res) => {
+      router.push('/app/home');
+      storeUserToken(res.data.access_token);
+      storeRefreshToken(res.data.refresh_token);
+    });
+  };
 
   return (
-    <Form
-      name="basic"
-      // onFinish={onFinish}
-      autoComplete="off"
-      layout="vertical"
-      className="!my-5 !w-full"
-      style={{ width: '100%' }}
-    >
-      <Form.Item<FieldType>>
-        <CustomInput label="Email" type="email" placeholder="user@gmail.com" />
-      </Form.Item>
-
-      <Form.Item<FieldType>>
+    <Form<FieldType> onFinish={onFinish} autoComplete="off" layout="vertical">
+      <Form.Item<FieldType>
+        label="Email"
+        name="email"
+        rules={[{ required: true, message: 'Email is required' }]}
+      >
         <CustomInput
-          label="Password"
-          placeholder="Enter Password"
-          type="password"
+          type="email"
+          name="email"
+          placeholder="user@email.com"
+          disabled={loginIsMutating}
         />
       </Form.Item>
-
-      <Form.Item className="flex justify-center">
+      <Form.Item<FieldType>
+        label="Password"
+        name="password"
+        rules={[{ required: true, message: 'Password is required' }]}
+      >
+        <CustomInput
+          placeholder="Enter Password"
+          type="password"
+          name="password"
+          disabled={loginIsMutating}
+        />
+      </Form.Item>
+      <div className="flex flex-col gap-y-5">
         <Link
-          href={'/auth/forgot-password'}
-          className="!text-center !text-[14px] !font-bold !leading-[17.71px] !text-custom-black_200"
+          href="/auth/forgot-password"
+          className="px-2.5 py-1 !text-center !text-[14px] !font-bold !leading-[17.71px] !text-custom-black_200"
         >
           Forgot Password?
         </Link>
-      </Form.Item>
 
-      <Form.Item>
-        <CustomButton
-          // isLoading={isMutating}
-          disabled={!clientReady}
-          block
-        >
+        <CustomButton loading={loginIsMutating} htmlType="submit" block>
           Login
         </CustomButton>
-      </Form.Item>
+      </div>
     </Form>
   );
 };

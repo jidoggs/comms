@@ -1,6 +1,5 @@
 import React from 'react';
 import type { MenuProps } from 'antd';
-import { UserPreDefinedRole, UserRoles } from '@/app/auth/types/auth';
 import {
   Home,
   More,
@@ -8,6 +7,7 @@ import {
   Message,
   FolderOpen,
 } from '@/common/components/icons';
+import { UserPreDefinedRole, UserRoles } from '@/types';
 
 type MenuItem = Required<MenuProps>['items'][number];
 

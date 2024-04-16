@@ -1,24 +1,32 @@
-import axios, { AxiosError, AxiosResponse } from "axios";
-import { BASE_URL as API_URL, REQUEST_TIMEOUT } from "../config/constant";
-import { fetchUserToken, clearData } from "../storage";
-import { APIResponseSuccessModel } from "../../types";
-import { FetcherResponse } from "swr/_internal";
+import axios, { AxiosError, AxiosResponse } from 'axios';
+import { BASE_URL as API_URL, REQUEST_TIMEOUT } from '../config/constant';
+import { fetchUserToken, clearData, fetchRefreshToken } from '../storage';
+import { APIResponseSuccessModel } from '../../types';
+import { FetcherResponse } from 'swr/_internal';
 
 export type apiRequestorArgs<T = object> = {
   data: T;
-  type?: "post" | "put" | "patch" | "delete";
+  type?: 'post' | 'put' | 'patch' | 'delete';
 };
 
 /** general headers **/
 const headers = {
-  "Content-Type": "application/json",
-  Accept: "application/json",
+  'Content-Type': 'application/json',
+  Accept: 'application/json',
 };
 
 /** authorization header for logged in user **/
 const setAuthorization = () => ({
   Authorization: `Bearer ${fetchUserToken()}`,
 });
+
+const setRefreshToken = (url: string) => {
+  return url.includes('refresh/token')
+    ? {
+        'X-Refresh-Token': fetchRefreshToken(),
+      }
+    : {};
+};
 
 /** axios instance **/
 export const instance = axios.create({
@@ -58,29 +66,29 @@ instance.interceptors.response.use(
     return data;
   },
   (error: AxiosError) => {
-    if (error.code === "ERR_CANCELED") {
+    if (error.code === 'ERR_CANCELED') {
       return Promise.reject({});
     }
     if (error.response?.status !== undefined && error.response.status >= 500) {
       return Promise.reject({
-        message: "Server Error",
+        message: 'Server Error',
       });
     }
     if (error.response?.status === 401) {
-      if (window.location.pathname.includes("auth")) {
+      if (window.location.pathname.includes('auth')) {
         return Promise.reject(error.response.data);
       }
 
       clearData();
-      window.location.replace("/auth/login");
+      window.location.replace('/auth/login');
     }
 
     return Promise.reject(
       error
         ? error.response
           ? error.response.data
-          : { message: "Something went Wrong" }
-        : { message: "Something went Wrong" }
+          : { message: 'Something went Wrong' }
+        : { message: 'Something went Wrong' }
     );
   }
 );
@@ -88,7 +96,7 @@ instance.interceptors.response.use(
 /** make an axios get request **/
 export const makeGetRequest: FetcherResponse<any> = async (url: string) => {
   return await instance.request({
-    method: "get",
+    method: 'get',
     url,
     headers,
   });
@@ -100,7 +108,7 @@ export const makeRequest: FetcherResponse<any> = async (
   { arg }: { arg: apiRequestorArgs }
 ) => {
   return await instance.request({
-    method: arg.type || "post",
+    method: arg.type || 'post',
     url: url,
     data: arg.data,
     headers,
@@ -109,11 +117,12 @@ export const makeRequest: FetcherResponse<any> = async (
 
 export const makeAuthFetch: FetcherResponse<any> = async (url: string) => {
   return await instance.request({
-    method: "get",
+    method: 'get',
     url: url,
     headers: {
       ...headers,
       ...setAuthorization(),
+      ...setRefreshToken(url),
     },
   });
 };
@@ -124,7 +133,7 @@ export const makeAuthRequest: FetcherResponse<any> = async (
 ) => {
   try {
     const response = await instance.request({
-      method: arg.type || "post",
+      method: arg.type || 'post',
       url: url,
       data: arg.data,
       headers: {
@@ -135,9 +144,21 @@ export const makeAuthRequest: FetcherResponse<any> = async (
     return {
       data: response.data,
       success: true,
-      message: "Success",
+      message: 'Success',
     };
   } catch (error: any) {
     throw new Error(error);
+  }
+};
+
+export const apiErrorHandler = (error: any) => {
+  if (axios.isAxiosError(error)) {
+    if (error.response) {
+      return error.response.data.message;
+    } else {
+      return error.message;
+    }
+  } else {
+    return error?.message;
   }
 };
