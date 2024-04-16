@@ -9,13 +9,15 @@ import { Send, Folder } from '@/common/components/icons';
 import { dummyAvatarData } from '@/common/mockData';
 import { iHandleClick, iHandleKeyboard } from '../../correspondence/types';
 import { generateInitials } from '@/common/utils';
+import { useState } from 'react';
+import AddContent from '@/common/modal/AddContent';
 
 const CorrespondenceCard = () => {
   const router = useRouter();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const handleClick = () => {
     router.push('correspondence/export_of_brewery_products');
   };
-
   const handleKeyDown: iHandleKeyboard = (e) => {
     if (e.key === 'Tab') return;
     handleClick();
@@ -29,6 +31,7 @@ const CorrespondenceCard = () => {
   };
 
   return (
+    <>
     <div
       role="button"
       tabIndex={0}
@@ -86,11 +89,15 @@ const CorrespondenceCard = () => {
               type="text"
               icon={<Send />}
               description="Push"
+              onClick={()=>setIsModalOpen(true)}
             />
           </div>
         </div>
       </div>
     </div>
+
+    <AddContent isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}/>
+    </>
   );
 };
 

@@ -89,9 +89,8 @@ const StepOneForm = () => {
           disabled={!clientReady}
           block
           size="small"
-          // icon={}
         >
-          Continue
+          <span className="pr-1">Continue</span>
           <ArrowRight />
         </CustomButton>
       </Form.Item>
