@@ -26,7 +26,7 @@ const LoginForm = () => {
   };
 
   return (
-    <Form<FieldType> onFinish={onFinish} autoComplete="off" layout="vertical">
+    <Form<FieldType> onFinish={onFinish} autoComplete="off" layout="vertical" >
       <Form.Item<FieldType>
         label="Email"
         name="email"
