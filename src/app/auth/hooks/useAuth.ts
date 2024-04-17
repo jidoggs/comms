@@ -33,7 +33,7 @@ function useAuth(props?: Props) {
     isValidating: userIsValidating,
     revalidate: userRevalidate,
   } = useAuthGetRequest<User>(
-    props?.user && !cachedData[GET_USER] ? GET_USER : '',
+    props?.user && !cachedData[GET_USER]?._id ? GET_USER : '',
     {
       revalidateOnFocus: false,
       revalidateOnMount: true,

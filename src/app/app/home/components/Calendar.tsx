@@ -43,9 +43,11 @@ const getDataCount = (value: Dayjs) => {
   return dataCount || '';
 };
 
+const isNewAccount = true;
+
 const CustomCalendar: React.FC = () => {
   const dateCellRender = (value: Dayjs) => {
-    const dataCount = getDataCount(value);
+    const dataCount = isNewAccount ? '' : getDataCount(value);
     const dayOfWeek = dayjs(value).day();
 
     return (
