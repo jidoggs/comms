@@ -4,8 +4,10 @@ import {
   useAuthRequest,
   useNonAuthRequest,
 } from '@/service/swrHooks';
-import { User, UserSession } from '../types/auth';
+import { SessionResponse, User, UserSession } from '../types/auth';
 import { useCache } from '@/common/hooks';
+import { REFRESH_INTERVAL } from '@/service/config/constant';
+import { storeRefreshToken, storeUserToken } from '@/service/storage';
 
 type RequestType =
   | 'login'
@@ -19,6 +21,7 @@ type Props = Partial<Record<RequestType, boolean>>;
 
 const { FORGOT_PASSWORD, UPDATE_USER_PASSWORD } = ENDPOINTS.AUTH;
 const { GET_USER, LOGIN, RESET_PASSWORD } = ENDPOINTS.AUTH;
+const { REFRESH_TOKEN } = ENDPOINTS.AUTH;
 
 function useAuth(props?: Props) {
   const { cachedData } = useCache();
@@ -33,8 +36,19 @@ function useAuth(props?: Props) {
     props?.user && !cachedData[GET_USER] ? GET_USER : '',
     {
       revalidateOnFocus: false,
+      revalidateOnMount: true,
+      revalidateIfStale: false,
     }
   );
+
+  useAuthGetRequest<SessionResponse>(props?.refresh ? REFRESH_TOKEN : '', {
+    refreshInterval: REFRESH_INTERVAL,
+    onSuccess(res) {
+      storeUserToken(res?.data?.access_token);
+      storeRefreshToken(res?.data?.refresh_token);
+    },
+  });
+
   const {
     data: loginData,
     trigger: loginTrigger,
@@ -66,7 +80,7 @@ function useAuth(props?: Props) {
     loginTrigger,
     loginIsMutating,
     LoginError,
-    userData: cachedData[GET_USER]
+    userData: cachedData?.[GET_USER]?._id
       ? (cachedData[GET_USER] as User)
       : userData?.data,
     userError,

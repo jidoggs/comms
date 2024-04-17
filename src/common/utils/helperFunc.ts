@@ -1,6 +1,7 @@
 import * as clsx from 'clsx';
-
+import dayjs from 'dayjs';
 import { twMerge } from 'tailwind-merge';
+// import { REFRESH_BEFORE } from '@/service/config/constant';
 
 export const mergeClassName = (...className: clsx.ClassValue[]) => {
   return twMerge(clsx.clsx(...className));
@@ -29,3 +30,11 @@ export const generateRandomColor = (): string => {
   }
   return color;
 };
+
+export function requestRefreshToken(epoch: number): boolean {
+  const now = dayjs();
+  const expire = dayjs(epoch * 1000);
+  const differenceInMinutes = expire.diff(now, 'minute');
+
+  return epoch !== 0 ? differenceInMinutes <= 10 : false;
+}
