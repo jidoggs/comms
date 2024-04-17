@@ -5,6 +5,7 @@ import {
   useNonAuthRequest,
 } from '@/service/swrHooks';
 import { User, UserSession } from '../types/auth';
+import { useCache } from '@/common/hooks';
 
 type RequestType =
   | 'login'
@@ -16,15 +17,11 @@ type RequestType =
 
 type Props = Partial<Record<RequestType, boolean>>;
 
-const endpoints = ENDPOINTS.AUTH;
+const { FORGOT_PASSWORD, UPDATE_USER_PASSWORD } = ENDPOINTS.AUTH;
+const { GET_USER, LOGIN, RESET_PASSWORD } = ENDPOINTS.AUTH;
 
 function useAuth(props?: Props) {
-  const {
-    data: loginData,
-    trigger: loginTrigger,
-    isMutating: loginIsMutating,
-    error: LoginError,
-  } = useNonAuthRequest<UserSession>(props?.login ? endpoints.LOGIN : '');
+  const { cachedData } = useCache();
 
   const {
     data: userData,
@@ -32,41 +29,46 @@ function useAuth(props?: Props) {
     isLoading: userIsLoading,
     isValidating: userIsValidating,
     revalidate: userRevalidate,
-  } = useAuthGetRequest<User>(props?.user ? endpoints.GET_USER : '', {
-    revalidateOnFocus: false,
-  });
+  } = useAuthGetRequest<User>(
+    props?.user && !cachedData[GET_USER] ? GET_USER : '',
+    {
+      revalidateOnFocus: false,
+    }
+  );
+  const {
+    data: loginData,
+    trigger: loginTrigger,
+    isMutating: loginIsMutating,
+    error: LoginError,
+  } = useNonAuthRequest<UserSession>(props?.login ? LOGIN : '');
 
   const {
     data: updatePasswordData,
     error: updatePasswordError,
     isMutating: updatePasswordIsMutating,
     trigger: updatePasswordTrigger,
-  } = useAuthRequest<User>(
-    props?.user_password ? endpoints.UPDATE_USER_PASSWORD : ''
-  );
+  } = useAuthRequest<User>(props?.user_password ? UPDATE_USER_PASSWORD : '');
   const {
     data: forgortPasswordData,
     error: forgortPasswordError,
     isMutating: forgortPasswordIsMutating,
     trigger: forgortPasswordTrigger,
-  } = useNonAuthRequest<User>(
-    props?.forgot_password ? endpoints.FORGOT_PASSWORD : ''
-  );
+  } = useNonAuthRequest<User>(props?.forgot_password ? FORGOT_PASSWORD : '');
   const {
     data: resetPasswordData,
     error: resetPasswordError,
     isMutating: resetPasswordIsMutating,
     trigger: resetPasswordTrigger,
-  } = useNonAuthRequest<User>(
-    props?.reset_password ? endpoints.RESET_PASSWORD : ''
-  );
+  } = useNonAuthRequest<User>(props?.reset_password ? RESET_PASSWORD : '');
 
   return {
     loginData,
     loginTrigger,
     loginIsMutating,
     LoginError,
-    userData,
+    userData: cachedData[GET_USER]
+      ? (cachedData[GET_USER] as User)
+      : userData?.data,
     userError,
     userIsLoading,
     userIsValidating,

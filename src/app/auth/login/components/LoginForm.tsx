@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import { Form } from 'antd';
 import Link from 'next/link';
 import CustomInput from '@/common/CustomInput';
@@ -14,7 +14,8 @@ type FieldType = {
 };
 
 const LoginForm = () => {
-  const { loginTrigger, loginIsMutating } = useAuth({ login: true });
+  const [user, setUser] = useState(false);
+  const { loginTrigger, loginIsMutating } = useAuth({ login: true, user });
   const router = useRouter();
 
   const onFinish = (data: FieldType) => {
@@ -22,11 +23,17 @@ const LoginForm = () => {
       router.push('/app/home');
       storeUserToken(res.data.access_token);
       storeRefreshToken(res.data.refresh_token);
+      setUser(true);
     });
   };
 
   return (
-    <Form<FieldType> onFinish={onFinish} autoComplete="off" layout="vertical" >
+    <Form<FieldType>
+      onFinish={onFinish}
+      autoComplete="off"
+      requiredMark={false}
+      layout="vertical"
+    >
       <Form.Item<FieldType>
         label="Email"
         name="email"

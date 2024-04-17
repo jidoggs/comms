@@ -1,7 +1,8 @@
 import React, { lazy, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import { Dropdown, MenuProps, Avatar, Layout, message } from 'antd';
-import { clearUserDetails } from '@/service/storage';
+import { useSWRConfig } from 'swr';
+import useAuth from '@/app/auth/hooks/useAuth';
 import Title from '@/common/components/Title';
 import {
   Logout,
@@ -9,7 +10,7 @@ import {
   Profile,
   SpinLoader,
 } from '@/common/components/icons';
-import { dummyUser } from '@/common/mockData/user';
+import { clearUserDetails } from '@/service/storage';
 
 const { Header } = Layout;
 
@@ -17,13 +18,18 @@ const BreadCrumb = lazy(() => import('./BreadCrumb'));
 
 const AppHeader: React.FunctionComponent = () => {
   const router = useRouter();
-  const [messageApi] = message.useMessage();
-
+  const { userData } = useAuth({ user: true });
+  const [messageApi, contextHolder] = message.useMessage();
+  const { mutate } = useSWRConfig();
   const isMutating = false;
   const handleLogout = async () => {
     clearUserDetails();
-    router.replace('/auth/login');
-    messageApi.success('Logout Successful');
+    //eslint-disable-next-line
+    mutate((_) => true, undefined, { revalidate: false }).then(() => {
+      messageApi.success('Logging User out...').then(() => {
+        router.replace('/auth/login');
+      });
+    });
   };
 
   const items: MenuProps['items'] = [
@@ -51,7 +57,7 @@ const AppHeader: React.FunctionComponent = () => {
   ];
   return (
     <Header className="flex w-full items-center justify-between !px-5 !py-0.5">
-      {/* {contextHolder} */}
+      {contextHolder}
       <Suspense fallback={<div />}>
         <BreadCrumb />
       </Suspense>
@@ -68,7 +74,7 @@ const AppHeader: React.FunctionComponent = () => {
             <div className="flex cursor-pointer items-center gap-x-2.5 px-1.5 py-0.5">
               <Avatar
                 size={30}
-                src={(dummyUser as any).img}
+                src={userData?.img}
                 icon={
                   <span className="flex h-full flex-1 items-center justify-center">
                     <Profile size="22" className="stroke-white" />
@@ -76,12 +82,11 @@ const AppHeader: React.FunctionComponent = () => {
                 }
               />
               <div className="flex flex-col">
-                <Title className="text-sm font-semibold">
-                  {dummyUser?.firstname} {dummyUser?.lastname}
+                <Title semibold>
+                  {userData?.firstname} {userData?.lastname}
                 </Title>
                 <Title small className="text-custom-gray_600">
-                  {/* {dummyUser?.['role.name']} */}
-                  HM Trade & Inv...
+                  {userData?.title}
                 </Title>
               </div>
             </div>
