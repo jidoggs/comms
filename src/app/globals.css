@@ -42,6 +42,14 @@ body {
     scrollbar-width: none; /* Firefox */
   }
 }
+
+@layer base {
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
 /* * {
   outline: 1px solid red;
 } */
@@ -130,19 +138,6 @@ body {
   @apply !p-0;
 }
 
-.otpInputStyle {
-  /* @apply !size-10 rounded-md border border-custom-gray_300 px-2 py-1 !text-custom-main focus:border-custom-gray_300 focus-visible:outline-custom-gray_300 md:!size-12 md:px-4 md:py-3; */
-  height: 40px !important;
-  width: 40px !important;
-  border-radius: 5px;
-  border: 1px solid #bdbdbd;
-  color: #11142d;
-  padding: 4px 8px;
-}
-.otpInputStyle:focus {
-  border: 1px solid #333333;
-}
-
 .RichTextEditor__root___2QXK- {
   display: flex;
   flex-direction: column-reverse;
@@ -153,11 +148,4 @@ body {
 .IconButton__icon-image___1gW7U,
 .InputPopover__root___3Hpj9 {
   display: none !important;
-}
-
-@media screen and (min-width: 768px) {
-  .otpInputStyle {
-    height: 48px !important;
-    width: 48px !important;
-  }
 }

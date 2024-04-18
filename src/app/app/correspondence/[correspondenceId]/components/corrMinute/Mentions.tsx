@@ -17,7 +17,7 @@ function CustomMention({ data = [] }: CustomMentionProps) {
     setSearch(event.target.value);
 
     const filtered = data.filter((item) => {
-      return item?.first_name
+      return item?.firstname
         ?.toLowerCase()
         .includes(event.target.value.toLowerCase());
     });
@@ -39,8 +39,8 @@ function CustomMention({ data = [] }: CustomMentionProps) {
     e.stopPropagation();
   };
 
-  const handleRemove = (id: number) => {
-    const filteredUsers = selectedUsers?.filter((user) => user?.id !== id);
+  const handleRemove = (id: string) => {
+    const filteredUsers = selectedUsers?.filter((user) => user?._id !== id);
     setSelectedUsers(filteredUsers);
   };
 
@@ -51,10 +51,10 @@ function CustomMention({ data = [] }: CustomMentionProps) {
         <div className="flex gap-1">
           {selectedUsers?.map((user, idx) => (
             <div className="flex items-center gap-1" key={idx}>
-              <CustomAvatar>{user?.first_name}</CustomAvatar>
-              <p>{user?.first_name}</p>
+              <CustomAvatar>{user?.firstname}</CustomAvatar>
+              <p>{user?.firstname}</p>
               <CloseCircle
-                onClick={() => handleRemove(user?.id as number)}
+                onClick={() => handleRemove(user?._id as string)}
                 cursor="pointer"
               />
             </div>
@@ -71,14 +71,14 @@ function CustomMention({ data = [] }: CustomMentionProps) {
         <div>
           {searchResults?.map((result) => (
             <div
-              key={result?.id}
+              key={result?._id}
               tabIndex={0}
               role="button"
               className="cursor-pointer"
               onKeyDown={actionsKeyboardHandler}
               onClick={(e) => handleSelect(e, result)}
             >
-              <p>{result?.first_name}</p>
+              <p>{result?.firstname}</p>
             </div>
           ))}
         </div>

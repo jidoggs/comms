@@ -1,29 +1,34 @@
 'use client';
 
 import CustomButton from '@/common/components/CustomButton';
-import { useRouter } from 'next/navigation';
 import React from 'react';
+import PageTitle from '../components/PageTitle';
+import Image from 'next/image';
 
 const PageContent = () => {
-  const router = useRouter();
   return (
-    <>
-      <h1 className="bebas mb-3 text-center text-[24px] font-normal uppercase leading-[28.8px] text-custom-black_200">
-        Password Reset
-      </h1>
-      <p className="text-center text-[14px] font-[500] leading-[17.71px] text-custom-gray_200">
-        Your password has been updated successfully
-      </p>
-      <div className="my-5 flex flex-col gap-3">
-        <CustomButton onClick={() => router.push('/app/dashboard')}>
-          Go to Dashboard
-        </CustomButton>
-
-        <CustomButton type="text" onClick={() => router.push('/auth/login')}>
-          Back to Login
-        </CustomButton>
-      </div>
-    </>
+    <div className="flex flex-col">
+      <Image
+        className="mb-5 size-24 self-center"
+        src="/success.gif"
+        alt="success"
+        width={100}
+        height={100}
+      />
+      <PageTitle
+        title="Password Reset"
+        description="Your password has been updated successfully"
+      >
+        <div className="flex flex-col gap-y-5">
+          <CustomButton block href="/app/dashboard">
+            Go to Dashboard
+          </CustomButton>
+          <CustomButton block type="text" href="/auth/login">
+            Back to Login
+          </CustomButton>
+        </div>
+      </PageTitle>
+    </div>
   );
 };
 

@@ -22,13 +22,13 @@ const ExpandedMinuteForm = () => {
 
   const dummyData: Partial<User>[] = [
     {
-      id: 1,
-      first_name: 'Ochade',
+      _id: '1',
+      firstname: 'Ochade',
     },
 
     {
-      id: 2,
-      first_name: 'Derek',
+      _id: '2',
+      firstname: 'Derek',
     },
   ];
   return (

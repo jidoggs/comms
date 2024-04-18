@@ -20,16 +20,9 @@ export type Promolve<ResT = void, RejT = Error> = {
 export type BaseDataModel = {
   created_at: string;
   deleted_at: string;
-  id: string;
+  active: boolean;
+  _id: string;
   updated_at: string;
-};
-
-export type BaseStoreItemModel<T> = {
-  data: T;
-  loading: boolean;
-  page?: number;
-  limit?: number;
-  total?: number
 };
 
 export type PaginatedData<T> = {
