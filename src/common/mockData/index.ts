@@ -4,3 +4,4 @@ export * from './corrData';
 export * from './correspondence';
 export * from './avatarData';
 export * from './projects';
+export * from './person';

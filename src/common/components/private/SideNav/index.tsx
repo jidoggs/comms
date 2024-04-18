@@ -1,19 +1,18 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { Layout, Menu } from 'antd';
-import type { MenuProps } from 'antd';
+import { Layout, Menu, MenuProps, Grid } from 'antd';
 import {
   generateDefaultKey,
   menuItemRenderer,
   rootSubmenuKeys,
-} from '@/common/components/private/SideNav/helper';
-import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint';
+} from './helper';
 import { Collapse, Logout } from '@/common/components/icons';
 import { mergeClassName } from '@/common/utils';
 import { UserPreDefinedRole } from '@/types';
 
 const { Sider } = Layout;
+const { useBreakpoint } = Grid;
 
 function SideNav({ role }: { role: UserPreDefinedRole }) {
   const router = useRouter();
