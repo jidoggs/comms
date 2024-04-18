@@ -5,6 +5,8 @@ import RichTextEditor, { EditorValue } from 'react-rte';
 import { Send } from '@/common/components/icons';
 import CustomButton from '@/common/components/CustomButton';
 import Title from '@/common/components/Title';
+import CustomMention from './Mentions';
+import { User } from '@/app/auth/types/auth';
 
 const ExpandedMinuteForm = () => {
   const [value, setValue] = useState('');
@@ -17,10 +19,23 @@ const ExpandedMinuteForm = () => {
     setEditorValue(value);
     setValue(value?.toString('markdown'));
   };
+
+  const dummyData: Partial<User>[] = [
+    {
+      id: 1,
+      first_name: 'Ochade',
+    },
+
+    {
+      id: 2,
+      first_name: 'Derek',
+    },
+  ];
   return (
     <>
       <>
-        <Title className='mb-6'>New Minute</Title>
+        <Title className="mb-6">New Minute</Title>
+        <CustomMention data={dummyData} />
         <RichTextEditor value={editorValue} onChange={handleTextChange} />
       </>
 

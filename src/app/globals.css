@@ -149,7 +149,9 @@ body {
 }
 
 .Dropdown__root___3ALmx,
-.IconButton__icon-strikethrough___QtE2X, .IconButton__icon-image___1gW7U, .InputPopover__root___3Hpj9 {
+.IconButton__icon-strikethrough___QtE2X,
+.IconButton__icon-image___1gW7U,
+.InputPopover__root___3Hpj9 {
   display: none !important;
 }
 
