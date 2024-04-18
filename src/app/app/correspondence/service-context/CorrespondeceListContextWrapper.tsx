@@ -1,19 +1,19 @@
 'use client';
-import React, { createContext, useLayoutEffect, useState } from 'react';
+import React, { createContext, useState } from 'react';
 import { TabsProps } from 'antd';
 import TableRowAction from '../components/TableRowAction';
 import { Document } from '@/common/components/icons';
-import { mergeClassName } from '@/common/utils';
 import {
   dummyCorrespondence,
   singleDummyCorrespondenceData,
 } from '@/common/mockData';
+import { useTabChange } from '@/common/hooks';
+import { mergeClassName } from '@/common/utils';
 import {
   ContextWapper,
   CorrespondenceListContextType,
   EditableTableColumnTypes,
 } from '../types';
-import { useRouter, useSearchParams } from 'next/navigation';
 
 export const CorrespondeceListContext =
   createContext<CorrespondenceListContextType>(null);
@@ -114,36 +114,26 @@ const defaultColumns: (EditableTableColumnTypes[number] & {
   ...itm,
   className: mergeClassName('!py-4 text-sm font-medium', itm.className),
 }));
+const tabItemList: TabsProps['items'] = [
+  {
+    key: 'draft',
+    label: 'Draft',
+  },
+  {
+    key: 'archive',
+    label: 'Archive',
+  },
+  {
+    key: 'sent',
+    label: 'Sent',
+  },
+];
 
 function CorrespondeceListContextWrapper({ children }: ContextWapper) {
   const [dataSource, setDataSource] = useState(dummyCorrespondence);
-  const router = useRouter();
-  const tabItem = useSearchParams().get('tab') as string;
-  const tabItemList: TabsProps['items'] = [
-    {
-      key: 'draft',
-      label: 'Draft',
-    },
-    {
-      key: 'archive',
-      label: 'Archive',
-    },
-    {
-      key: 'sent',
-      label: 'Sent',
-    },
-  ];
-
-  useLayoutEffect(() => {
-    if (!tabItem) {
-      router.replace('/app/correspondence?tab=draft');
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tabItem]);
-
-  const handleTabChange = (state: string) => {
-    router.push(`correspondence?tab=${state}`);
-  };
+  const tabs = useTabChange({
+    defaultKey: '/app/correspondence?tab=draft',
+  });
 
   const handleDelete = (id: string | number) => {
     const newData = dataSource.filter((item) => item.id !== id);
@@ -180,7 +170,7 @@ function CorrespondeceListContextWrapper({ children }: ContextWapper) {
   };
 
   const columns: any = defaultColumns.map((col) => {
-    if (!col.editable || tabItem === 'sent') {
+    if (!col.editable || tabs.tabItem === 'sent') {
       return col;
     }
     return {
@@ -198,12 +188,11 @@ function CorrespondeceListContextWrapper({ children }: ContextWapper) {
   return (
     <CorrespondeceListContext.Provider
       value={{
+        ...tabs,
         handleAdd,
         columns,
         dataSource,
         handleDelete,
-        handleTabChange,
-        tabItem,
         tabItemList,
       }}
     >
