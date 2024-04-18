@@ -1,55 +1,39 @@
 'use client';
-// import useAuth from "@/components/hooks/useAuth";
-// import { apiErrorHandler } from "@/services";
-import { Form, Input } from 'antd';
-// import { useRouter, useSearchParams } from "next/navigation";
-// import Input from "rc-input";
-import React, { useState } from 'react';
-import { EyeInvisibleOutlined } from '@ant-design/icons';
+import React from 'react';
+import { Form } from 'antd';
+import { useRouter, useSearchParams } from 'next/navigation';
 import CustomButton from '@/common/components/CustomButton';
+import CustomInput from '@/common/CustomInput';
+import useAuth from '../../hooks/useAuth';
 
-// type FormValues = {
-//   code: string;
-//   newPassword: string;
-//   confirmPassword: boolean;
-// };
+type FieldType = {
+  new_password: string;
+  confirm_password: string;
+};
 
 const passwordReqexPattern =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*_])[A-Za-z\d!@#$%^&*_]{8,}$/;
 
 const ResetPasswordForm = () => {
-  // const router = useRouter();
-  const [showPassword, setShowPassword] = useState(false);
-  // const [correctPassword, setCorrectPassword] = useState(false);
-  // const {
-  //   resetTokenSWR: { error, isMutating, trigger },
-  // } = useAuth();
-  // const searchParams = useSearchParams();
-  // const email = searchParams.get("email");
-  // const token = searchParams.get("token");
+  const router = useRouter();
+  const { resetPasswordTrigger, resetPasswordIsMutating } = useAuth({
+    reset_password: true,
+  });
+  const searchParams = useSearchParams();
+  const email = searchParams.get('email');
+  const code = searchParams.get('token');
 
-  // const handleResetCode = (values: FormValues) => {
-  // const data = {
-  //   email,
-  //   code: token,
-  //   new_password: values.newPassword,
-  //   // confirm_password: values?.confirmPassword,
-  // };
-  // trigger({ data })
-  //   .then(() => {
-  //     message.open({
-  //       type: "success",
-  //       content: "Email successfully verified",
-  //     });
-  //     router.push(`/auth/success`);
-  //   })
-  //   .catch(() => {
-  //     message.open({
-  //       type: "error",
-  //       content: apiErrorHandler(error),
-  //     });
-  //   });
-  // };
+  const onFinish = (data: FieldType) => {
+    resetPasswordTrigger({
+      data: {
+        email,
+        code,
+        password: data.new_password,
+      },
+    }).then(() => {
+      router.push(`/auth/success`);
+    });
+  };
 
   return (
     <div className="my-5">
@@ -62,25 +46,14 @@ const ResetPasswordForm = () => {
           closable
         />
       )} */}
-      <Form
+      <Form<FieldType>
         layout="vertical"
-        // onFinish={handleResetCode}
+        onFinish={onFinish}
         requiredMark={false}
       >
-        {/* <Form.Item
-          name="code"
-          label="OTP Code"
-          rules={[{ required: true, message: "Please input your code" }]}
-        >
-          <Input
-            // type="text"
-            disabled={isMutating}
-            placeholder="Enter OTP Code"
-          />
-        </Form.Item> */}
-        <Form.Item
-          name="newPassword"
+        <Form.Item<FieldType>
           label="New Password"
+          name="new_password"
           rules={[
             { required: true, message: 'Please input your Password!' },
             {
@@ -90,28 +63,25 @@ const ResetPasswordForm = () => {
             },
           ]}
         >
-          <Input
-            suffix={
-              <EyeInvisibleOutlined
-                onClick={() => setShowPassword(!showPassword)}
-              />
-            }
-            type={showPassword ? 'text' : 'password'}
-            // disabled={isMutating}
-            placeholder="Password"
+          <CustomInput
+            placeholder="Enter Password"
+            type="password"
+            name="new_password"
+            disabled={resetPasswordIsMutating}
           />
         </Form.Item>
+
         <Form.Item
-          name="confirmPassword"
+          name="confirm_password"
           label="Confirm Password"
-          dependencies={['newPassword']}
+          dependencies={['new_password']}
           rules={[
             {
               required: true,
             },
             ({ getFieldValue }) => ({
               validator(_, value) {
-                if (!value || getFieldValue('newPassword') === value) {
+                if (!value || getFieldValue('new_password') === value) {
                   return Promise.resolve();
                 }
                 return Promise.reject(
@@ -121,25 +91,22 @@ const ResetPasswordForm = () => {
             }),
           ]}
         >
-          <Input
-            suffix={
-              <EyeInvisibleOutlined
-                onClick={() => setShowPassword(!showPassword)}
-              />
-            }
-            // disabled={isMutating}
+          <CustomInput
             placeholder="Password"
-            type={showPassword ? 'text' : 'password'}
+            type="password"
+            name="confirm_password"
+            disabled={resetPasswordIsMutating}
           />
         </Form.Item>
-        <Form.Item style={{ marginBottom: 0 }} className="mt-10">
-          <CustomButton
-          // disabled={isMutating}
-          // isLoading={isMutating}
-          >
-            Reset Password
-          </CustomButton>
-        </Form.Item>
+
+        <CustomButton
+          htmlType="submit"
+          disabled={resetPasswordIsMutating}
+          loading={resetPasswordIsMutating}
+          block
+        >
+          Reset Password
+        </CustomButton>
       </Form>
     </div>
   );

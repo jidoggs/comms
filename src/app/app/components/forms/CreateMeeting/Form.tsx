@@ -62,7 +62,7 @@ function NewMeetingForm({ onFinish }: Props) {
             Mark as tentative
           </Checkbox>
         </Form.Item>
-        <CustomButton htmlType="submit" icon={<Send />} size="small">
+        <CustomButton htmlType="submit"  icon={<Send />} size="small">
           Push
         </CustomButton>
       </div>

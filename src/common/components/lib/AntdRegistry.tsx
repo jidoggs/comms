@@ -25,7 +25,7 @@ const appTheme: ThemeConfig = {
   components: {
     Form: {
       fontWeightStrong: 500,
-      itemMarginBottom: 10,
+      itemMarginBottom: 15,
       labelColor: customThemeColor.main,
       labelHeight: 18,
       verticalLabelPadding: '0 0 5px',
@@ -112,11 +112,16 @@ const appTheme: ThemeConfig = {
       controlHeight: 44,
       colorBgContainer: customThemeColor.gray_900,
       controlPaddingHorizontal: 15,
-      borderRadius: 8,
+      borderRadius: 10,
       fontSize: 16,
-      colorText: customThemeColor.gray_600,
+      colorText: customThemeColor.gray_400,
       fontWeightStrong: 400,
-      colorBorderBg: customThemeColor.gray_800,
+      colorBorderBg: customThemeColor.gray_100,
+      multipleItemBg:customThemeColor.gray_200,
+  
+
+    
+
     },
     Pagination: {
       itemActiveBg: customThemeColor.blue_100,

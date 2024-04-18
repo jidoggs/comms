@@ -1,100 +1,58 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Form } from 'antd';
-import Link from 'next/link';
-// import { apiErrorHandler } from "@/services";
 import { useRouter } from 'next/navigation';
 import CustomInput from '@/common/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
-
-// import { useAuth } from "@/components/hooks";
+import useAuth from '../../hooks/useAuth';
 
 type FieldType = {
-  email?: string;
-  password?: string;
-  remember?: string;
+  email: string;
 };
 
 const ForgotForm = () => {
-  const [clientReady, setClientReady] = useState<boolean>(false);
-  // To disable submit button at the beginning.
-  const [form] = Form.useForm();
+  const { forgortPasswordTrigger, forgortPasswordIsMutating } = useAuth({
+    forgot_password: true,
+  });
   const router = useRouter();
 
-  // Watch all values
-  const values = Form.useWatch([], form);
-
-  useEffect(() => {
-    if (values?.email) {
-      setClientReady(true);
-    } else {
-      setClientReady(false);
-    }
-    // form.validateFields({ validateOnly: true }).then(
-    //   () => {
-    //     setClientReady(true);
-    //   },
-    //   () => {
-    //     setClientReady(false);
-    //   }
-    // );
-  }, [form, values]);
-
-  // const {
-  //   forgotPasswordSWR: { error, isMutating, trigger },
-  // } = useAuth();
-
-  const onFinish = (values: any) => {
-    // console.log("values", values);
-    router.push(`/auth/verify?email=${values.email}`);
-    // trigger({
-    //   data: values,
-    // })
-    //   .then(() => {
-    //     message.open({
-    //       type: "success",
-    //       content: "Reset email successfully sent",
-    //     });
-    //     router.push(`/auth/verify?email=${values.email}`);
-    //   })
-    //   .catch(() => {
-    //     message.open({
-    //       type: "error",
-    //       content: apiErrorHandler(error),
-    //     });
-    //   });
+  const onFinish = (data: FieldType) => {
+    forgortPasswordTrigger({ data, type: 'post' }).then(() => {
+      router.push(`/auth/verify?email=${data.email}`);
+    });
   };
 
-  // console.log("clientReady", clientReady);
-  // console.log("values", values);
-
   return (
-    <Form
-      name="basic"
-      onFinish={onFinish}
-      autoComplete="off"
-      layout="vertical"
-      className="!my-5 !w-full"
-      style={{ width: '100%' }}
-    >
-      <Form.Item<FieldType>>
-        <CustomInput label="Email" type="email" placeholder="user@email.com" />
+    <Form<FieldType> onFinish={onFinish} layout="vertical">
+      <Form.Item<FieldType>
+        label="Email"
+        name="email"
+        rules={[{ required: true, message: 'Email is required' }]}
+      >
+        <CustomInput
+          type="email"
+          placeholder="user@email.com"
+          disabled={forgortPasswordIsMutating}
+        />
       </Form.Item>
-
-      <Form.Item>
-        <CustomButton disabled={!clientReady} block>
+      <div className="flex flex-col gap-y-5">
+        <CustomButton
+          htmlType="submit"
+          loading={forgortPasswordIsMutating}
+          disabled={forgortPasswordIsMutating}
+          block
+        >
           Continue
         </CustomButton>
-      </Form.Item>
-
-      <Form.Item className="flex justify-center">
-        <Link
-          href={'/auth/login'}
-          className="!text-center !text-[14px] !font-bold !leading-[17.71px] !text-custom-main"
+        <CustomButton
+          href="/auth/login"
+          disabled={forgortPasswordIsMutating}
+          type="text"
+          block
         >
           Login
-        </Link>
-      </Form.Item>
+        </CustomButton>
+      </div>
     </Form>
   );
 };
