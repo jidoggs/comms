@@ -67,7 +67,7 @@ function CustomMention({ data = [] }: CustomMentionProps) {
           onChange={handleSearchChange}
         />
       </div>
-      {searchResults?.length > 0 ? (
+      {searchResults?.length > 0 && (
         <div>
           {searchResults?.map((result) => (
             <div
@@ -81,10 +81,6 @@ function CustomMention({ data = [] }: CustomMentionProps) {
               <p>{result?.first_name}</p>
             </div>
           ))}
-        </div>
-      ) : (
-        <div>
-          <p>No user found</p>
         </div>
       )}
     </div>
