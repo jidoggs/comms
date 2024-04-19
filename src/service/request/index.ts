@@ -1,13 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { BASE_URL as API_URL, REQUEST_TIMEOUT } from '../config/constant';
 import { fetchUserToken, clearData, fetchRefreshToken } from '../storage';
-import { APIResponseSuccessModel } from '../../types';
-import { FetcherResponse } from 'swr/_internal';
-
-export type apiRequestorArgs<T = object> = {
-  data: T;
-  type?: 'post' | 'put' | 'patch' | 'delete';
-};
+import * as tp from '../../types';
 
 /** general headers **/
 const headers = {
@@ -16,16 +10,19 @@ const headers = {
 };
 
 /** authorization header for logged in user **/
-const setAuthorization = () => ({
-  Authorization: `Bearer ${fetchUserToken()}`,
-});
-
-const setRefreshToken = (url: string) => {
-  return url.includes('refresh/token')
+const setAuthorization = (url?: string) => {
+  const authorize = {
+    Authorization: `Bearer ${fetchUserToken()}`,
+  };
+  const refresh = {
+    'X-Refresh-Token': fetchRefreshToken(),
+  };
+  return url?.includes('refresh/token')
     ? {
-        'X-Refresh-Token': fetchRefreshToken(),
+        ...authorize,
+        ...refresh,
       }
-    : {};
+    : authorize;
 };
 
 /** axios instance **/
@@ -62,7 +59,7 @@ export const cancelToken = cancelTokenSource;
 
 /** axios interceptor to trigger a logout on unauthorized error response code **/
 instance.interceptors.response.use(
-  ({ data }: AxiosResponse): AxiosResponse<APIResponseSuccessModel> => {
+  ({ data }: AxiosResponse): AxiosResponse<tp.APIResponseSuccessModel> => {
     return data;
   },
   (error: AxiosError) => {
@@ -74,11 +71,10 @@ instance.interceptors.response.use(
         message: 'Server Error',
       });
     }
-    if (error.response?.status === 401) {
-      if (window.location.pathname.includes('auth')) {
-        return Promise.reject(error.response.data);
-      }
-
+    if (
+      error.response?.status === 401 &&
+      error.config?.url?.includes('refresh/token') // only redirect to auth when refresh token has expired
+    ) {
       clearData();
       window.location.replace('/auth/login');
     }
@@ -94,7 +90,7 @@ instance.interceptors.response.use(
 );
 
 /** make an axios get request **/
-export const makeGetRequest: FetcherResponse<any> = async (url: string) => {
+export const makeGetRequest: tp.Request = async (url: string) => {
   return await instance.request({
     method: 'get',
     url,
@@ -103,9 +99,9 @@ export const makeGetRequest: FetcherResponse<any> = async (url: string) => {
 };
 
 /** make an axios post request **/
-export const makeRequest: FetcherResponse<any> = async (
+export const makeRequest: tp.Request = async (
   url: string,
-  { arg }: { arg: apiRequestorArgs }
+  { arg }: { arg: tp.apiRequestorArgs }
 ) => {
   return await instance.request({
     method: arg.type || 'post',
@@ -115,50 +111,35 @@ export const makeRequest: FetcherResponse<any> = async (
   });
 };
 
-export const makeAuthFetch: FetcherResponse<any> = async (url: string) => {
+export const makeAuthFetch: tp.Request = async (url: string) => {
   return await instance.request({
     method: 'get',
     url: url,
     headers: {
       ...headers,
-      ...setAuthorization(),
-      ...setRefreshToken(url),
+      ...setAuthorization(url), // refresh token added here because it is a get request
     },
   });
 };
 
-export const makeAuthRequest: FetcherResponse<any> = async (
+export const makeAuthRequest: tp.Request = async (
   url: string,
-  { arg }: { arg: apiRequestorArgs }
+  { arg }: { arg: tp.apiRequestorArgs }
 ) => {
-  try {
-    const response = await instance.request({
-      method: arg.type || 'post',
-      url: url,
-      data: arg.data,
-      headers: {
-        ...headers,
-        ...setAuthorization(),
-      },
-    });
-    return {
-      data: response.data,
-      success: true,
-      message: 'Success',
-    };
-  } catch (error: any) {
-    throw new Error(error);
-  }
+  return await instance.request({
+    method: arg.type || 'post',
+    url: url,
+    data: arg.data,
+    headers: {
+      ...headers,
+      ...setAuthorization(),
+    },
+  });
 };
 
 export const apiErrorHandler = (error: any) => {
-  if (axios.isAxiosError(error)) {
-    if (error.response) {
-      return error.response.data.message;
-    } else {
-      return error.message;
-    }
-  } else {
-    return error?.message;
+  if (error?.response?.data?.message) {
+    return error.response.data.message;
   }
+  return error?.message ?? 'Something went Wrong';
 };

@@ -1,13 +1,15 @@
+import { useRouter } from 'next/navigation';
 import { ENDPOINTS } from '@/service/config/endpoint';
 import {
   useAuthGetRequest,
   useAuthRequest,
   useNonAuthRequest,
 } from '@/service/swrHooks';
-import { SessionResponse, User, UserSession } from '../types/auth';
 import { useCache } from '@/common/hooks';
 import { REFRESH_INTERVAL } from '@/service/config/constant';
 import { storeRefreshToken, storeUserToken } from '@/service/storage';
+import { SessionResponse, User, UserSession } from '../types/auth';
+import { UserPreDefinedRole } from '@/types';
 
 type RequestType =
   | 'login'
@@ -25,14 +27,9 @@ const { REFRESH_TOKEN } = ENDPOINTS.AUTH;
 
 function useAuth(props?: Props) {
   const { cachedData } = useCache();
+  const router = useRouter();
 
-  const {
-    data: userData,
-    error: userError,
-    isLoading: userIsLoading,
-    isValidating: userIsValidating,
-    revalidate: userRevalidate,
-  } = useAuthGetRequest<User>(
+  const userSwr = useAuthGetRequest<User>(
     props?.user && !cachedData[GET_USER]?._id ? GET_USER : '',
     {
       revalidateOnFocus: false,
@@ -45,61 +42,51 @@ function useAuth(props?: Props) {
   useAuthGetRequest<SessionResponse>(props?.refresh ? REFRESH_TOKEN : '', {
     refreshInterval: REFRESH_INTERVAL,
     onSuccess(res) {
-      storeUserToken(res?.data?.access_token);
-      storeRefreshToken(res?.data?.refresh_token);
+      storeUserToken(res.data.access_token);
+      storeRefreshToken(res.data.refresh_token);
     },
   });
 
-  const {
-    data: loginData,
-    trigger: loginTrigger,
-    isMutating: loginIsMutating,
-    error: LoginError,
-  } = useNonAuthRequest<UserSession>(props?.login ? LOGIN : '');
+  const loginSwr = useNonAuthRequest<UserSession>(props?.login ? LOGIN : '', {
+    onSuccess: (res) => {
+      storeUserToken(res.data.access_token);
+      storeRefreshToken(res.data.refresh_token);
+      if (res?.data?.role?.name === UserPreDefinedRole.PRIMARYADMIN) {
+        router.push('/admin/people');
+      } else {
+        router.push('/app/home');
+      }
+    },
+  });
 
-  const {
-    data: updatePasswordData,
-    error: updatePasswordError,
-    isMutating: updatePasswordIsMutating,
-    trigger: updatePasswordTrigger,
-  } = useAuthRequest<User>(props?.user_password ? UPDATE_USER_PASSWORD : '');
-  const {
-    data: forgortPasswordData,
-    error: forgortPasswordError,
-    isMutating: forgortPasswordIsMutating,
-    trigger: forgortPasswordTrigger,
-  } = useNonAuthRequest<User>(props?.forgot_password ? FORGOT_PASSWORD : '');
-  const {
-    data: resetPasswordData,
-    error: resetPasswordError,
-    isMutating: resetPasswordIsMutating,
-    trigger: resetPasswordTrigger,
-  } = useNonAuthRequest<User>(props?.reset_password ? RESET_PASSWORD : '');
+  const updatePasswordSwr = useAuthRequest<User>(
+    props?.user_password ? UPDATE_USER_PASSWORD : ''
+  );
+
+  const forgotPasswordSwr = useNonAuthRequest<User>(
+    props?.forgot_password ? FORGOT_PASSWORD : ''
+  );
+
+  const resetPasswordSwr = useNonAuthRequest<User>(
+    props?.reset_password ? RESET_PASSWORD : '',
+    {
+      onSuccess: () => {
+        router.push(`/auth/success`);
+      },
+    }
+  );
 
   return {
-    loginData,
-    loginTrigger,
-    loginIsMutating,
-    LoginError,
-    userData: (cachedData?.[GET_USER]?._id
-      ? cachedData[GET_USER]
-      : userData?.data) as User,
-    userError,
-    userIsLoading,
-    userIsValidating,
-    userRevalidate,
-    updatePasswordData,
-    updatePasswordError,
-    updatePasswordIsMutating,
-    updatePasswordTrigger,
-    forgortPasswordData,
-    forgortPasswordError,
-    forgortPasswordIsMutating,
-    forgortPasswordTrigger,
-    resetPasswordData,
-    resetPasswordError,
-    resetPasswordIsMutating,
-    resetPasswordTrigger,
+    loginSwr,
+    userSwr: {
+      ...userSwr,
+      data: (cachedData?.[GET_USER]?._id
+        ? cachedData[GET_USER]
+        : userSwr?.data?.data) as User,
+    },
+    updatePasswordSwr,
+    forgotPasswordSwr,
+    resetPasswordSwr,
   };
 }
 

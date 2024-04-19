@@ -15,14 +15,14 @@ const VerifyForm = () => {
   const [otp, setOtp] = useState('');
   const { count, counter, start, reset } = useCounter(600);
   const router = useRouter();
-  const { forgortPasswordTrigger, forgortPasswordIsMutating } = useAuth({
+  const { trigger, isMutating } = useAuth({
     forgot_password: true,
-  });
+  }).forgotPasswordSwr;
   const searchParams = useSearchParams();
   const email = searchParams.get('email');
 
   const requestOtpHandler = () => {
-    forgortPasswordTrigger({ data: { email }, type: 'post' });
+    trigger({ data: { email }, type: 'post' });
   };
 
   useEffect(() => {
@@ -74,7 +74,9 @@ const VerifyForm = () => {
             ]}
           >
             <OTPInput
-              renderInput={(props) => <input {...props} />}
+              renderInput={(props) => (
+                <input {...props} disabled={isMutating} />
+              )}
               onChange={handleOtpChange}
               numInputs={6}
               inputStyle="!size-10 rounded border md:!size-12 text-center py-1 px-2 focus:border-customThemeColor-gray_300 focus-within:border-customThemeColor-gray_300 border-customThemeColor-gray_400 text-main"
@@ -85,14 +87,14 @@ const VerifyForm = () => {
           <div className="flex flex-col gap-y-5">
             <CustomButton
               htmlType="submit"
-              disabled={otp.length !== 6 || forgortPasswordIsMutating}
+              disabled={otp.length !== 6 || isMutating}
               block
             >
               Verify
             </CustomButton>
             <CustomButton
-              disabled={counter > 0 || forgortPasswordIsMutating}
-              loading={forgortPasswordIsMutating}
+              disabled={counter > 0 || isMutating}
+              loading={isMutating}
               onClick={requestOtpHandler}
               type="text"
               block
