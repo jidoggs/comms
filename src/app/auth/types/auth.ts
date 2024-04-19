@@ -16,9 +16,12 @@ export interface User extends BaseDataModel {
   othername: string;
   email: string;
   title: string;
+  phone: string;
   office: string;
   parastatal: string;
+  department: string;
   last_seen: string;
+  date_created: string;
   img: string;
   role: UserRole;
 }
