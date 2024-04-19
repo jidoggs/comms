@@ -10,7 +10,9 @@ export const dummyUser: User = {
     updated_at: '',
     active: true,
   },
-
+  phone: '+234703425522',
+  date_created: '2024-04-16T13:46:06.595Z',
+  department: 'Finance',
   active: true,
   created_at: '2024-04-16T13:46:06.595Z',
   deleted_at: '',

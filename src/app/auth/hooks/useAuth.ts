@@ -38,6 +38,7 @@ function useAuth(props?: Props) {
       revalidateOnFocus: false,
       revalidateOnMount: true,
       revalidateIfStale: false,
+      errorRetryCount: process.env.NODE_ENV === 'development' ? 1 : 3,
     }
   );
 
@@ -80,9 +81,9 @@ function useAuth(props?: Props) {
     loginTrigger,
     loginIsMutating,
     LoginError,
-    userData: cachedData?.[GET_USER]?._id
-      ? (cachedData[GET_USER] as User)
-      : userData?.data,
+    userData: (cachedData?.[GET_USER]?._id
+      ? cachedData[GET_USER]
+      : userData?.data) as User,
     userError,
     userIsLoading,
     userIsValidating,

@@ -3,3 +3,4 @@ export { default as useBreadCrumbs } from './useBreadCrumbs';
 export { default as useDebounce } from './useDebounce';
 export { default as useCounter } from './useCounter';
 export { default as useCache } from './useCache';
+export { default as useTabChange } from './useTabChange';
