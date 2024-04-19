@@ -5,8 +5,6 @@ import Link from 'next/link';
 import CustomInput from '@/common/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
 import useAuth from '../../hooks/useAuth';
-import { useRouter } from 'next/navigation';
-import { storeRefreshToken, storeUserToken } from '@/service/storage';
 
 type FieldType = {
   email?: string;
@@ -16,13 +14,9 @@ type FieldType = {
 const LoginForm = () => {
   const [user, setUser] = useState(false);
   const { loginTrigger, loginIsMutating } = useAuth({ login: true, user });
-  const router = useRouter();
 
   const onFinish = (data: FieldType) => {
-    loginTrigger({ data, type: 'post' }).then((res) => {
-      router.push('/app/home');
-      storeUserToken(res.data.access_token);
-      storeRefreshToken(res.data.refresh_token);
+    loginTrigger({ data, type: 'post' }).then(() => {
       setUser(true);
     });
   };

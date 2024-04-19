@@ -1,3 +1,4 @@
+import { useRouter } from 'next/navigation';
 import { ENDPOINTS } from '@/service/config/endpoint';
 import {
   useAuthGetRequest,
@@ -25,6 +26,7 @@ const { REFRESH_TOKEN } = ENDPOINTS.AUTH;
 
 function useAuth(props?: Props) {
   const { cachedData } = useCache();
+  const router = useRouter();
 
   const {
     data: userData,
@@ -45,8 +47,8 @@ function useAuth(props?: Props) {
   useAuthGetRequest<SessionResponse>(props?.refresh ? REFRESH_TOKEN : '', {
     refreshInterval: REFRESH_INTERVAL,
     onSuccess(res) {
-      storeUserToken(res?.data?.access_token);
-      storeRefreshToken(res?.data?.refresh_token);
+      storeUserToken(res.data.access_token);
+      storeRefreshToken(res.data.refresh_token);
     },
   });
 
@@ -55,7 +57,13 @@ function useAuth(props?: Props) {
     trigger: loginTrigger,
     isMutating: loginIsMutating,
     error: LoginError,
-  } = useNonAuthRequest<UserSession>(props?.login ? LOGIN : '');
+  } = useNonAuthRequest<UserSession>(props?.login ? LOGIN : '', {
+    onSuccess: (res) => {
+      storeUserToken(res.data.access_token);
+      storeRefreshToken(res.data.refresh_token);
+      router.push('/app/home');
+    },
+  });
 
   const {
     data: updatePasswordData,

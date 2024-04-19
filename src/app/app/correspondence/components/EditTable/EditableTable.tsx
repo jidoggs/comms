@@ -27,7 +27,7 @@ interface EditableRowProps {
 }
 
 export const EditableRow: React.FC<EditableRowProps> = ({
-  index,
+  // index,
   ...props
 }) => {
   const [currentEnter, setcurrentEnter] = useState('');
