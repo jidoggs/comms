@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { Form } from 'antd';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import CustomButton from '@/common/components/CustomButton';
 import CustomInput from '@/common/CustomInput';
 import useAuth from '../../hooks/useAuth';
@@ -15,23 +15,20 @@ const passwordReqexPattern =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*_])[A-Za-z\d!@#$%^&*_]{8,}$/;
 
 const ResetPasswordForm = () => {
-  const router = useRouter();
-  const { resetPasswordTrigger, resetPasswordIsMutating } = useAuth({
+  const { trigger, isMutating } = useAuth({
     reset_password: true,
-  });
+  }).resetPasswordSwr;
   const searchParams = useSearchParams();
   const email = searchParams.get('email');
   const code = searchParams.get('token');
 
   const onFinish = (data: FieldType) => {
-    resetPasswordTrigger({
+    trigger({
       data: {
         email,
         code,
         password: data.new_password,
       },
-    }).then(() => {
-      router.push(`/auth/success`);
     });
   };
 
@@ -67,7 +64,7 @@ const ResetPasswordForm = () => {
             placeholder="Enter Password"
             type="password"
             name="new_password"
-            disabled={resetPasswordIsMutating}
+            disabled={isMutating}
           />
         </Form.Item>
 
@@ -95,14 +92,14 @@ const ResetPasswordForm = () => {
             placeholder="Password"
             type="password"
             name="confirm_password"
-            disabled={resetPasswordIsMutating}
+            disabled={isMutating}
           />
         </Form.Item>
 
         <CustomButton
           htmlType="submit"
-          disabled={resetPasswordIsMutating}
-          loading={resetPasswordIsMutating}
+          disabled={isMutating}
+          loading={isMutating}
           block
         >
           Reset Password

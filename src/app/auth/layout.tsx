@@ -1,7 +1,9 @@
 // import { MainLayout } from "@/components/layout";
 import Title from '@/common/components/Title';
+import { fetchUserToken } from '@/service/storage';
 import { Content } from 'antd/lib/layout/layout';
 import Image from 'next/image';
+import { redirect } from 'next/navigation';
 import React from 'react';
 
 interface LayoutProps {
@@ -9,6 +11,12 @@ interface LayoutProps {
 }
 
 const layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
+  const token = fetchUserToken() || '';
+
+  if (token) {
+    redirect('/app/home');
+  }
+
   return (
     <div>
       <Content className="min-h-screen bg-custom-white_100">

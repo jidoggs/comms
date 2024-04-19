@@ -11,13 +11,13 @@ type FieldType = {
 };
 
 const ForgotForm = () => {
-  const { forgortPasswordTrigger, forgortPasswordIsMutating } = useAuth({
+  const { trigger, isMutating } = useAuth({
     forgot_password: true,
-  });
+  }).forgotPasswordSwr;
   const router = useRouter();
 
   const onFinish = (data: FieldType) => {
-    forgortPasswordTrigger({ data, type: 'post' }).then(() => {
+    trigger({ data, type: 'post' }).then(() => {
       router.push(`/auth/verify?email=${data.email}`);
     });
   };
@@ -32,21 +32,21 @@ const ForgotForm = () => {
         <CustomInput
           type="email"
           placeholder="user@email.com"
-          disabled={forgortPasswordIsMutating}
+          disabled={isMutating}
         />
       </Form.Item>
       <div className="flex flex-col gap-y-5">
         <CustomButton
           htmlType="submit"
-          loading={forgortPasswordIsMutating}
-          disabled={forgortPasswordIsMutating}
+          loading={isMutating}
+          disabled={isMutating}
           block
         >
           Continue
         </CustomButton>
         <CustomButton
           href="/auth/login"
-          disabled={forgortPasswordIsMutating}
+          disabled={isMutating}
           type="text"
           block
         >

@@ -1,8 +1,6 @@
-import { User } from '@/app/auth/types/auth';
-
-export const dummyUser: User = {
-  roles: {
-    name: 'Admin',
+export const dummyUser = {
+  role: {
+    name: 'primary_admin',
     created_at: '',
     deleted_at: '',
     _id: '',

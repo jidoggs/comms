@@ -18,7 +18,7 @@ const BreadCrumb = lazy(() => import('./BreadCrumb'));
 
 const AppHeader: React.FunctionComponent = () => {
   const router = useRouter();
-  const { userData } = useAuth({ user: true });
+  const { data } = useAuth({ user: true }).userSwr;
   const [messageApi, contextHolder] = message.useMessage();
   const { mutate } = useSWRConfig();
   const isMutating = false;
@@ -74,7 +74,7 @@ const AppHeader: React.FunctionComponent = () => {
             <div className="flex cursor-pointer items-center gap-x-2.5 px-1.5 py-0.5">
               <Avatar
                 size={30}
-                src={userData?.img}
+                src={data?.img}
                 icon={
                   <span className="flex h-full flex-1 items-center justify-center">
                     <Profile size="22" className="stroke-white" />
@@ -83,10 +83,10 @@ const AppHeader: React.FunctionComponent = () => {
               />
               <div className="flex flex-col">
                 <Title semibold>
-                  {userData?.firstname} {userData?.lastname}
+                  {data?.firstname} {data?.lastname}
                 </Title>
                 <Title small className="text-custom-gray_600">
-                  {userData?.title}
+                  {data?.title}
                 </Title>
               </div>
             </div>

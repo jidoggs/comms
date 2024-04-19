@@ -13,10 +13,10 @@ type FieldType = {
 
 const LoginForm = () => {
   const [user, setUser] = useState(false);
-  const { loginTrigger, loginIsMutating } = useAuth({ login: true, user });
+  const { trigger, isMutating } = useAuth({ login: true, user }).loginSwr;
 
   const onFinish = (data: FieldType) => {
-    loginTrigger({ data, type: 'post' }).then(() => {
+    trigger({ data, type: 'post' }).then(() => {
       setUser(true);
     });
   };
@@ -37,7 +37,7 @@ const LoginForm = () => {
           type="email"
           name="email"
           placeholder="user@email.com"
-          disabled={loginIsMutating}
+          disabled={isMutating}
         />
       </Form.Item>
       <Form.Item<FieldType>
@@ -49,7 +49,7 @@ const LoginForm = () => {
           placeholder="Enter Password"
           type="password"
           name="password"
-          disabled={loginIsMutating}
+          disabled={isMutating}
         />
       </Form.Item>
       <div className="flex flex-col gap-y-5">
@@ -60,7 +60,7 @@ const LoginForm = () => {
           Forgot Password?
         </Link>
 
-        <CustomButton loading={loginIsMutating} htmlType="submit" block>
+        <CustomButton loading={isMutating} htmlType="submit" block>
           Login
         </CustomButton>
       </div>
