@@ -3,18 +3,18 @@ import Title from '@/common/components/Title';
 import { Close, Delete } from '@/common/components/icons';
 import Image from 'next/image';
 import React from 'react';
-import FieldRow from './FieldRow';
+import FieldRow from '../../../components/FieldRow';
 import dayjs from 'dayjs';
 import Tick from '@/common/components/icons/Tick';
 import { User } from '@/app/auth/types/auth';
 
-type RegistrationDetailsModalProps = {
-  registrationData: User;
+type RegistrationContentProps = {
+  registrationData: User | null;
 };
 
-const RegistrationDetailsModal = ({
+const RegistrationContent = ({
   registrationData,
-}: RegistrationDetailsModalProps) => {
+}: RegistrationContentProps) => {
   return (
     <div className="flex w-full justify-center pb-8">
       <div className="w-2/4">
@@ -88,4 +88,4 @@ const RegistrationDetailsModal = ({
   );
 };
 
-export default RegistrationDetailsModal;
+export default RegistrationContent;

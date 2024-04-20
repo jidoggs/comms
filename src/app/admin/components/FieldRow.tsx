@@ -1,8 +1,8 @@
 import React from 'react';
 
 type FieldRowProps = {
-  title: string;
-  value: string;
+  title?: string;
+  value?: string;
 };
 
 const FieldRow = ({ title, value }: FieldRowProps) => {

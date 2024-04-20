@@ -1,12 +1,11 @@
 import React from 'react';
-import { createAppointment } from './type';
 import { Form } from 'antd';
 import CustomInput from '@/common/CustomInput';
 import DatePickerAndTimeRange from '@/app/app/home/components/DateAndTimePicker';
-import { correspondenceCreateMeeting } from './helper';
 import CustomButton from '@/common/components/CustomButton';
 import { Send } from '@/common/components/icons';
-
+import { correspondenceCreateMeeting } from './helper';
+import { createAppointment } from './type';
 
 type FieldType = createAppointment;
 
@@ -26,7 +25,7 @@ const CreateAppointmentForm = ({ handleSubmit }: Props) => {
         <DatePickerAndTimeRange />
       </div>
 
-      {correspondenceCreateMeeting?.map((item) => (
+      {correspondenceCreateMeeting.map((item) => (
         <Form.Item<FieldType> key={item.name}>
           <div className="flex flex-col gap-1">
             <CustomInput
@@ -39,12 +38,14 @@ const CreateAppointmentForm = ({ handleSubmit }: Props) => {
       ))}
       <hr />
       <div className="flex items-center justify-between">
-        <div className='flex justify-start items-center  gap-1'>
+        <div className="flex items-center justify-start  gap-1">
           <input type="checkbox" />
           <label htmlFor="id">mark as tentative</label>
         </div>
         <div>
-          <CustomButton icon={<Send/>}  size="small">Push</CustomButton>
+          <CustomButton icon={<Send />} size="small">
+            Push
+          </CustomButton>
         </div>
       </div>
     </Form>

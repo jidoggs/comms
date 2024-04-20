@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Tooltip } from 'antd';
 import { mergeClassName } from '@/common/utils';
 import { CustomButtonProps } from './types';
+export * from './types';
 
 function CustomButton({
   className,
