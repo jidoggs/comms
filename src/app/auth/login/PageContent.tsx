@@ -4,27 +4,20 @@ import { useSearchParams } from 'next/navigation';
 import PageTitle from '../components/PageTitle';
 import useSession from '@/common/hooks/useSession';
 import LoginForm from './components/LoginForm';
-import { clearUserDetails, fetchUserToken } from '@/service/storage';
+import { isServer } from '@/common/utils';
 
 const LoginPageContent: React.FunctionComponent = () => {
-  const token = fetchUserToken() || '';
   const { loggoutSuccessHandler, messageContext } = useSession();
   const searchParams = useSearchParams();
   const session_end = searchParams.get('session');
 
-  const isServer = typeof window === 'undefined';
-
   useLayoutEffect(() => {
+    if (isServer) return;
     if (session_end) {
-      loggoutSuccessHandler(session_end);
+      loggoutSuccessHandler(session_end); // notifies user when he logs out
     }
-    if (!token || isServer) {
-      return;
-    }
-    if (token) {
-      clearUserDetails();
-    }
-  }, [token, isServer, session_end]); //eslint-disable-line
+  }, [isServer, session_end]); //eslint-disable-line
+
   return (
     <>
       {messageContext}

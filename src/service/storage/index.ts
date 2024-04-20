@@ -1,19 +1,29 @@
+import { isClient } from '@/common/utils';
 import { STORAGE_KEYS } from '../config/constant';
 
 export const getItem = (key: string) => {
-  if (typeof window !== 'undefined') return localStorage.getItem(key) || null;
+  if (isClient) {
+    return localStorage.getItem(key) || '';
+  }
+  return '';
 };
 
 export const removeItem = (key: string) => {
-  if (typeof window !== 'undefined') return localStorage.removeItem(key);
+  if (isClient) {
+    return localStorage.removeItem(key);
+  }
 };
 
 export const setItem = (key: string, value: any) => {
-  if (typeof window !== 'undefined') return localStorage.setItem(key, value);
+  if (isClient) {
+    return localStorage.setItem(key, value);
+  }
 };
 
 export const clearData = () => {
-  if (typeof window !== 'undefined') return localStorage.clear();
+  if (isClient) {
+    return localStorage.clear();
+  }
 };
 
 export const clearUserDetails = () => {
@@ -36,15 +46,21 @@ export const fetchRefreshToken = () => {
 };
 
 export const getSessionItem = (key: string) => {
-  if (typeof window !== 'undefined') return sessionStorage.getItem(key) || null;
+  if (isClient) {
+    return sessionStorage.getItem(key) || null;
+  }
 };
 
 export const removeSessionItem = (key: string) => {
-  if (typeof window !== 'undefined') return sessionStorage.removeItem(key);
+  if (isClient) {
+    return sessionStorage.removeItem(key);
+  }
 };
 
 export const setSessionItem = (key: string, value: any) => {
-  if (typeof window !== 'undefined') return sessionStorage.setItem(key, value);
+  if (isClient) {
+    return sessionStorage.setItem(key, value);
+  }
 };
 
 export const clearSessionData = () => sessionStorage.clear();

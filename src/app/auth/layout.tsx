@@ -1,9 +1,24 @@
-import React from 'react';
+'use client';
+import React, { useLayoutEffect } from 'react';
 import Image from 'next/image';
 import { Content } from 'antd/lib/layout/layout';
 import Title from '@/common/components/Title';
+import { clearUserDetails, fetchUserToken } from '@/service/storage';
+import { isServer } from '@/common/utils';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+  const token = fetchUserToken();
+
+  useLayoutEffect(() => {
+    if (!token || isServer) {
+      return;
+    }
+
+    if (token && !document.referrer) {
+      // clears token if user access login page
+      clearUserDetails();
+    }
+  }, [token, isServer]);
   return (
     <div>
       <Content className="min-h-screen bg-custom-white_100">
