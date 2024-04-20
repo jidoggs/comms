@@ -26,9 +26,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <Image
             src={'/images/authImg.png'}
             alt="login image"
+            priority
             width={726}
             height={982}
-            className="hidden sm:flex sm:h-full sm:w-1/2"
+            className="hidden sm:flex sm:h-full sm:w-1/2 object-cover"
           />
           <div className="flex w-[90%] items-center justify-center sm:w-1/2">
             <div className="flex w-[375px] items-center justify-center rounded-2xl border border-custom-gray_850 bg-custom-white_100">

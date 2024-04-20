@@ -30,7 +30,7 @@ function Protected({ children }: ContextWapper) {
   }, [token, isLoading]);
 
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<FullPageLoader fullscreen />}>
       {!role || isServer ? (
         <FullPageLoader fullscreen />
       ) : (

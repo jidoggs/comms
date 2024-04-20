@@ -20,6 +20,8 @@ function useSession() {
     userInfo?.user?.role.name === UserPreDefinedRole.PRIMARYADMIN;
   const isSecondaryAdmin =
     userInfo?.user?.role.name === UserPreDefinedRole.SECONDARYADMIN;
+  const isBasicUser =
+    userInfo?.user?.role.name === UserPreDefinedRole.BASICUSER;
 
   const storeUserHandler = (res: User | null) => {
     if (!userInfo?.storeUserHandler) return;
@@ -58,6 +60,7 @@ function useSession() {
     loggoutSuccessHandler,
     isPrimaryAdmin,
     isSecondaryAdmin,
+    isBasicUser,
   };
 }
 

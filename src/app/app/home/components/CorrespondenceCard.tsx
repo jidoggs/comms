@@ -10,7 +10,7 @@ import { dummyAvatarData } from '@/common/mockData';
 import { iHandleClick, iHandleKeyboard } from '../../correspondence/types';
 import { generateInitials } from '@/common/utils';
 import { useState } from 'react';
-import AddContent from '@/common/modal/AddContent';
+import AddContent from '@/common/tempoaryforms/AddContent';
 
 const CorrespondenceCard = () => {
   const router = useRouter();

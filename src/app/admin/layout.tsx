@@ -6,15 +6,15 @@ import useSession from '../../common/hooks/useSession';
 import { isServer } from '@/common/utils';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const { isPrimaryAdmin, data } = useSession();
+  const { isBasicUser, data } = useSession();
   const role = data?.role?.name;
 
   useLayoutEffect(() => {
     if (isServer || !role) return;
-    if (isPrimaryAdmin) {
+    if (isBasicUser) {
       redirect('/app/home');
     }
-  }, [role, isPrimaryAdmin]);
+  }, [role, isBasicUser]);
 
   return <Protected>{children}</Protected>;
 }

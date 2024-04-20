@@ -58,9 +58,9 @@ function useAuth(props?: Props) {
       const temp = { ...res.data };
       storeUserHandler(temp);
       if (res?.data?.role?.name === UserPreDefinedRole.PRIMARYADMIN) {
-        router.push('/app/home');
-      } else {
         router.push('/admin/people');
+      } else {
+        router.push('/app/home');
       }
     },
   });

@@ -95,7 +95,7 @@ const navItems = {
       </span>,
       navClassName
     ),
-    ARCHIVES: getItem(
+    ADMIN_ARCHIVES: getItem(
       <span>Archive</span>,
       '/admin/archive',
       <span className="">
@@ -103,7 +103,7 @@ const navItems = {
       </span>,
       navClassName
     ),
-    MORE: getItem(
+    ADMIN_MORE: getItem(
       <span>More</span>,
       '/admin/more',
       <span className="">
@@ -117,10 +117,13 @@ const navItems = {
 const getUserNavItemsByRole = (role: UserRoles) => {
   switch (role) {
     case UserPreDefinedRole.PRIMARYADMIN:
-      return generateRoutes(navItems.user);
+      return generateRoutes({ ...navItems.user, ...navItems.admin });
 
     case UserPreDefinedRole.SECONDARYADMIN:
       return generateRoutes(navItems.admin);
+
+    case UserPreDefinedRole.BASICUSER:
+      return generateRoutes(navItems.user);
 
     default:
       return generateRoutes(navItems.user);
