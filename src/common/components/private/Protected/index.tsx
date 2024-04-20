@@ -1,12 +1,13 @@
-import React, { lazy, useMemo } from 'react';
+'use client';
+import React, { lazy, useLayoutEffect, useMemo } from 'react';
 import { SWRConfig } from 'swr';
 import { jwtDecode } from 'jwt-decode';
+// import { redirect, useSearchParams } from 'next/navigation';
 import FullPageLoader from '../../FullPageLoader';
 import useAuth from '@/app/auth/hooks/useAuth';
 import { requestRefreshToken } from '@/common/utils';
 import { fetchUserToken } from '@/service/storage';
 import { ContextWapper } from '@/types';
-import { redirect } from 'next/navigation';
 
 const AppLayout = lazy(() => import('../Layout'));
 
@@ -18,14 +19,19 @@ function Protected({ children }: ContextWapper) {
     return requestRefreshToken(decodedToken);
   }, [token]); //eslint-disable-line
 
-  const { data } = useAuth({ user: true, refresh }).userSwr;
+  const { isLoading, data } = useAuth({ user: !!token, refresh }).userSwr;
+  // const searchParams = useSearchParams();
+  // const session_end = searchParams.get('session');
   const role = data?.role?.name;
 
-  if (!token) {
-    redirect('/auth/login');
-  }
+  useLayoutEffect(() => {
+    if (typeof window === 'undefined' || isLoading) return;
+    // if (!token && !session_end) {
+    //   redirect('/auth/login');
+    // }
+  }, [token, role, isLoading /* session_end */]);
 
-  return !role ? (
+  return !role || typeof window === 'undefined' ? (
     <FullPageLoader fullscreen />
   ) : (
     <SWRConfig value={{ provider: () => new Map() }}>

@@ -1,22 +1,9 @@
-// import { MainLayout } from "@/components/layout";
-import Title from '@/common/components/Title';
-import { fetchUserToken } from '@/service/storage';
-import { Content } from 'antd/lib/layout/layout';
-import Image from 'next/image';
-import { redirect } from 'next/navigation';
 import React from 'react';
+import Image from 'next/image';
+import { Content } from 'antd/lib/layout/layout';
+import Title from '@/common/components/Title';
 
-interface LayoutProps {
-  children: React.ReactNode;
-}
-
-const layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
-  const token = fetchUserToken() || '';
-
-  if (token) {
-    redirect('/app/home');
-  }
-
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div>
       <Content className="min-h-screen bg-custom-white_100">
@@ -42,6 +29,4 @@ const layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
       </Content>
     </div>
   );
-};
-
-export default layout;
+}

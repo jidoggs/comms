@@ -96,8 +96,8 @@ const navItems = {
       navClassName
     ),
     ARCHIVES: getItem(
-      <span>Archives</span>,
-      '/admin/archives',
+      <span>Archive</span>,
+      '/admin/archive',
       <span className="">
         <FolderOpen size={22} />
       </span>,
@@ -116,14 +116,14 @@ const navItems = {
 
 const getUserNavItemsByRole = (role: UserRoles) => {
   switch (role) {
-    case UserPreDefinedRole.BASICUSER:
+    case UserPreDefinedRole.PRIMARYADMIN:
       return generateRoutes(navItems.user);
 
-    case UserPreDefinedRole.SUPERADMIN:
+    case UserPreDefinedRole.SECONDARYADMIN:
       return generateRoutes(navItems.admin);
 
     default:
-      return generateRoutes(navItems.admin);
+      return generateRoutes(navItems.user);
   }
 };
 
@@ -135,5 +135,3 @@ export const menuItemRenderer = (role: UserRoles) => {
 export const generateDefaultKey = (path: string) => {
   return path.split('/').splice(0, 3).join('/').split('?')?.[0];
 };
-
-export const rootSubmenuKeys = ['sub1', 'sub2', 'sub3'];

@@ -1,3 +1,4 @@
+'use client';
 import { Suspense, lazy } from 'react';
 import CorrespondeceListContextWrapper from './service-context/CorrespondeceListContextWrapper';
 
@@ -5,7 +6,7 @@ const CorrespondenceContent = lazy(() => import('./PageContent'));
 
 const CreateCorrespondencePage = () => {
   return (
-    <Suspense>
+    <Suspense fallback={null}>
       <CorrespondeceListContextWrapper>
         <CorrespondenceContent />
       </CorrespondeceListContextWrapper>

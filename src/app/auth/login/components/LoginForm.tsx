@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React from 'react';
 import { Form } from 'antd';
 import Link from 'next/link';
 import CustomInput from '@/common/CustomInput';
@@ -12,13 +12,10 @@ type FieldType = {
 };
 
 const LoginForm = () => {
-  const [user, setUser] = useState(false);
-  const { trigger, isMutating } = useAuth({ login: true, user }).loginSwr;
+  const { trigger, isMutating } = useAuth({ login: true }).loginSwr;
 
   const onFinish = (data: FieldType) => {
-    trigger({ data, type: 'post' }).then(() => {
-      setUser(true);
-    });
+    trigger({ data, type: 'post' });
   };
 
   return (

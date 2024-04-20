@@ -1,3 +1,4 @@
+"use client"
 import { useRouter } from 'next/navigation';
 import { ENDPOINTS } from '@/service/config/endpoint';
 import {
@@ -5,11 +6,11 @@ import {
   useAuthRequest,
   useNonAuthRequest,
 } from '@/service/swrHooks';
-import { useCache } from '@/common/hooks';
 import { REFRESH_INTERVAL } from '@/service/config/constant';
 import { storeRefreshToken, storeUserToken } from '@/service/storage';
 import { SessionResponse, User, UserSession } from '../types/auth';
 import { UserPreDefinedRole } from '@/types';
+import useSession from '../../../common/hooks/useSession';
 
 type RequestType =
   | 'login'
@@ -26,16 +27,19 @@ const { GET_USER, LOGIN, RESET_PASSWORD } = ENDPOINTS.AUTH;
 const { REFRESH_TOKEN } = ENDPOINTS.AUTH;
 
 function useAuth(props?: Props) {
-  const { cachedData } = useCache();
   const router = useRouter();
+  const { data, storeUserHandler } = useSession();
 
   const userSwr = useAuthGetRequest<User>(
-    props?.user && !cachedData[GET_USER]?._id ? GET_USER : '',
+    props?.user && !data?._id ? GET_USER : '',
     {
       revalidateOnFocus: false,
       revalidateOnMount: true,
       revalidateIfStale: false,
       errorRetryCount: process.env.NODE_ENV === 'development' ? 1 : 3,
+      onSuccess(res) {
+        storeUserHandler(res.data);
+      },
     }
   );
 
@@ -51,10 +55,12 @@ function useAuth(props?: Props) {
     onSuccess: (res) => {
       storeUserToken(res.data.access_token);
       storeRefreshToken(res.data.refresh_token);
+      const temp = { ...res.data };
+      storeUserHandler(temp);
       if (res?.data?.role?.name === UserPreDefinedRole.PRIMARYADMIN) {
-        router.push('/admin/people');
-      } else {
         router.push('/app/home');
+      } else {
+        router.push('/admin/people');
       }
     },
   });
@@ -80,9 +86,7 @@ function useAuth(props?: Props) {
     loginSwr,
     userSwr: {
       ...userSwr,
-      data: (cachedData?.[GET_USER]?._id
-        ? cachedData[GET_USER]
-        : userSwr?.data?.data) as User,
+      data,
     },
     updatePasswordSwr,
     forgotPasswordSwr,

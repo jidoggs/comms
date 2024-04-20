@@ -1,16 +1,19 @@
 'use client';
-import React from 'react';
-import useAuth from '../auth/hooks/useAuth';
-import Protected from '@/common/components/private/Protected';
+import React, { useLayoutEffect } from 'react';
 import { redirect } from 'next/navigation';
-import { UserPreDefinedRole } from '@/types';
+import Protected from '@/common/components/private/Protected';
+import useSession from '../../common/hooks/useSession';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const { data } = useAuth({ user: true }).userSwr;
+  const { isPrimaryAdmin, data } = useSession();
+  const role = data?.role?.name;
 
-  if (data?.role?.name !== UserPreDefinedRole.PRIMARYADMIN) {
-    return redirect('/app/home');
-  }
+  useLayoutEffect(() => {
+    if (typeof window === 'undefined' || !role) return;
+    if (isPrimaryAdmin) {
+      redirect('/app/home');
+    }
+  }, [role, isPrimaryAdmin]);
 
   return <Protected>{children}</Protected>;
 }
