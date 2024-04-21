@@ -8,6 +8,7 @@
 
 # testing
 /coverage
+package-lock.json
 
 # next.js
 /.next/
@@ -35,3 +36,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+
+.env
+.fenvcon.json
+.fenvcon_prod.json
+tsconfig.tsbuildinfo

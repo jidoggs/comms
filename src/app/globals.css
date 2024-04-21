@@ -149,3 +149,33 @@ body {
 .InputPopover__root___3Hpj9 {
   display: none !important;
 }
+
+.ant-cascader-picker-header {
+  display: flex; /* Allow header content to flex */
+  justify-content: space-between; /* Align header content */
+  align-items: center; /* Center header content vertically */
+  padding: 5px 10px; /* Add some padding for the header */
+  border-bottom: 1px solid #ddd; /* Optional: Add a border for separation */
+  background-color: #f0f2f5; /* Optional: Set a background color for the header */
+}
+
+.ant-cascader-picker-header-title {
+  /* Style the header title (optional) */
+  font-weight: bold;
+}
+
+.ant-cascader-menu {
+  /* width: 100%; */
+}
+.ant-cascader-menu-item {
+  /* background-color: red; */
+  width: 100%;
+  color: #11142d;
+  margin: 10px 0;
+}
+.ant-cascader-menu-item:hover {
+  /* background-color: #dddef6 !important; */
+}
+.ant-cascader-menu-item-active {
+  /* background-color: #dddef6 !important; */
+}
