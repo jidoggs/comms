@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { lazy } from 'react';
+
+const PeopleContent = lazy(() => import('./components/PageContent'));
 
 function page() {
   return (
-    <div>page</div>
-  )
+    <div className="">
+      <PeopleContent />
+    </div>
+  );
 }
 
-export default page
+export default page;
