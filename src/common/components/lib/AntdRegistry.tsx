@@ -21,6 +21,7 @@ const appTheme: ThemeConfig = {
     colorText: customThemeColor.gray_200,
     colorFillTertiary: customThemeColor.gray_800,
     colorBgContainer: customThemeColor.gray_100,
+    fontFamily:""
   },
   components: {
     Form: {

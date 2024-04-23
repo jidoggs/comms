@@ -2,7 +2,7 @@ import React from 'react';
 import type { Metadata } from 'next';
 import StyledComponentsRegistry from '@/common/components/lib/AntdRegistry';
 import './globals.css';
-import { bebas, inter, manrope } from './font';
+import { circularStd } from '../common/font';
 import AuthWrapper from '@/common/components/private/Protected/AuthWrapper';
 
 export const metadata: Metadata = {
@@ -17,9 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-        className={`${bebas.variable} ${inter.variable} ${manrope.className} circular`}
-      >
+      <body style={circularStd.style}>
         <AuthWrapper>
           <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
         </AuthWrapper>
