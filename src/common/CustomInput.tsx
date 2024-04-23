@@ -1,10 +1,14 @@
 import React from 'react';
-
-import { GetRef, Input, InputProps } from 'antd';
-
+import dynamic from 'next/dynamic';
+import { InputProps } from 'antd/lib/input/index';
 import { mergeClassName } from './utils';
+import { GetRef } from 'antd/lib/_util/type';
 
-type InputRef = GetRef<typeof Input> | any;
+const Input = dynamic(() => import('antd/es/input/Input'));
+const Password = dynamic(() => import('antd/es/input/Password'));
+const TextArea = dynamic(() => import('antd/es/input/TextArea'));
+
+type InputRef = GetRef<any> | any;
 
 type ClassName = 'container' | 'label' | 'input';
 
@@ -47,7 +51,7 @@ const CustomInput: React.FC<CustomInputProps> = React.forwardRef<
         </label>
       )}
       {type === 'password' ? (
-        <Input.Password
+        <Password
           className={inputClassName}
           ref={ref}
           {...rest}
@@ -55,7 +59,7 @@ const CustomInput: React.FC<CustomInputProps> = React.forwardRef<
         />
       ) : null}
       {type === 'textarea' ? (
-        <Input.TextArea
+        <TextArea
           className={inputClassName}
           ref={ref}
           {...rest}
