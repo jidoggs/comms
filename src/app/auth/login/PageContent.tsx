@@ -5,6 +5,11 @@ import PageTitle from '../components/PageTitle';
 import useSession from '@/common/hooks/useSession';
 // import LoginForm from './components/LoginForm';
 import { isServer } from '@/common/utils';
+import dynamic from 'next/dynamic';
+
+const LoginForm = dynamic(() => import('./components/LoginForm'), {
+  loading: () => <p>Loading...</p>,
+});
 
 const LoginPageContent: React.FunctionComponent = () => {
   const { loggoutSuccessHandler, messageContext } = useSession();
@@ -22,8 +27,7 @@ const LoginPageContent: React.FunctionComponent = () => {
     <>
       {messageContext}
       <PageTitle title="Welcome Back!" description="Please enter your details.">
-        <></>
-        {/* <LoginForm /> */}
+        <LoginForm />
       </PageTitle>
     </>
   );
