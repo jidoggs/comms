@@ -1,8 +1,11 @@
 import React from 'react';
-import { Button, Tooltip } from 'antd';
+import dynamic from 'next/dynamic';
 import { mergeClassName } from '@/common/utils';
 import { CustomButtonProps } from './types';
 export * from './types';
+
+const Button = dynamic(() => import('antd/es/button'));
+const Tooltip = dynamic(() => import('antd/es/tooltip'));
 
 function CustomButton({
   className,
