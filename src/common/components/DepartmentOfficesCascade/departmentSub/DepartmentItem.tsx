@@ -14,6 +14,7 @@ interface Props
   setParastatal: React.Dispatch<React.SetStateAction<string>>;
   office: string;
   setOffice: React.Dispatch<React.SetStateAction<string>>;
+  setCurrentStep: React.Dispatch<React.SetStateAction<number>>;
 }
 
 function DepartmentItem({
@@ -26,6 +27,7 @@ function DepartmentItem({
   step,
   itemClickHandler,
   setSelectedItem,
+  setCurrentStep,
   // parastatal,
   // setParastatal,
   // office,
@@ -35,7 +37,15 @@ function DepartmentItem({
 
   const handleClick = () => {
     itemClickHandler(item, step);
-    setSelectedItem(item.value);
+
+    if (step === 1) {
+      setCurrentStep(2);
+    } else if (step === 2) {
+      setCurrentStep(3);
+    } else if (step === 3) {
+      setCurrentStep(3);
+      setSelectedItem(item.value);
+    }
     // console.log('stepping', id);
   };
 
