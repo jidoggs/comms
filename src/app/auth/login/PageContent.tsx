@@ -1,7 +1,7 @@
 'use client';
 import React, { useLayoutEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import PageTitle from '../components/PageTitle';
+// import PageTitle from '../components/PageTitle';
 import useSession from '@/common/hooks/useSession';
 // import LoginForm from './components/LoginForm';
 import { isServer } from '@/common/utils';
@@ -26,9 +26,9 @@ const LoginPageContent: React.FunctionComponent = () => {
   return (
     <>
       {messageContext}
-      <PageTitle title="Welcome Back!" description="Please enter your details.">
-        <LoginForm />
-      </PageTitle>
+      {/* <PageTitle title="Welcome Back!" description="Please enter your details."> */}
+      <LoginForm />
+      {/* </PageTitle> */}
     </>
   );
 };
