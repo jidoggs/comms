@@ -18,7 +18,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       // clears token if user access login page
       clearUserDetails();
     }
-  }, [token, isServer]);
+  }, [token]);
   return (
     <div>
       <Content className="min-h-screen bg-custom-white_100">
@@ -29,7 +29,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             priority
             width={726}
             height={982}
-            className="hidden sm:flex sm:h-full sm:w-1/2 object-cover"
+            className="hidden object-cover sm:flex sm:h-full sm:w-1/2"
           />
           <div className="flex w-[90%] items-center justify-center sm:w-1/2">
             <div className="flex w-[375px] items-center justify-center rounded-2xl border border-custom-gray_850 bg-custom-white_100">

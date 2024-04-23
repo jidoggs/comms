@@ -10,7 +10,7 @@ type Props = {
 
 function PageTitle({ children, title, description }: Props) {
   return (
-    <>
+    <div className="self-stretch">
       <header className="mb-5 flex flex-col gap-y-4">
         <Title
           tag="h1"
@@ -23,7 +23,7 @@ function PageTitle({ children, title, description }: Props) {
         </Title>
       </header>
       {children}
-    </>
+    </div>
   );
 }
 
