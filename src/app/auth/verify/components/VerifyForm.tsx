@@ -1,20 +1,30 @@
 'use client';
-import Form from 'antd/es/form';
 import dynamic from 'next/dynamic';
 import React, { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import CustomButton from '@/common/components/CustomButton';
 import useAuth from '../../hooks/useAuth';
 import { useCounter } from '@/common/hooks';
+import type { FormInstance, FormProps } from 'antd/lib/form/Form';
+import type { FormItemProps } from 'antd/lib/form/FormItem';
 
-const OTPInput = dynamic(() => import('react-otp-input'));
-// const it = dynamic(() =>
-//   import('antd/es/form').then((itm) => itm.default.Item)
-// );
+type Gha<T> = React.ComponentType<
+  FormProps<T> & {
+    children?: React.ReactNode;
+  } & React.RefAttributes<FormInstance<T>>
+>;
+
+type Rsa<T> = React.ComponentType<FormItemProps<T>>;
 
 type FieldType = {
   verification_code: string;
 };
+
+const OTPInput = dynamic(() => import('react-otp-input'));
+const Form: Gha<FieldType> = dynamic(() =>
+  import('antd/es/form').then((itm) => itm.default)
+);
+const Item: Rsa<any> = dynamic(() => import('antd/es/form/FormItem'));
 
 const VerifyForm = () => {
   const [otp, setOtp] = useState('');
@@ -55,21 +65,8 @@ const VerifyForm = () => {
         <span className="text-base font-semibold leading-[21.86px] text-custom-gray_200">
           {count.minutes}:{count.seconds} mins
         </span>
-        {/* {error && (
-          <Alert
-            className="mb-2"
-            message={apiErrorHandler(error)}
-            type="error"
-            showIcon
-            closable
-          />
-        )} */}
-        <Form<FieldType>
-          layout="vertical"
-          onFinish={onFinish}
-          requiredMark={false}
-        >
-          <Form.Item<FieldType>
+        <Form layout="vertical" onFinish={onFinish} requiredMark={false}>
+          <Item
             name="verification_code"
             rules={[
               {
@@ -88,7 +85,7 @@ const VerifyForm = () => {
               containerStyle="justify-between w-full flex"
               inputType="number"
             />
-          </Form.Item>
+          </Item>
           <div className="flex flex-col gap-y-5">
             <CustomButton
               htmlType="submit"
