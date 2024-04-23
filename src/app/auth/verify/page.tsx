@@ -1,14 +1,13 @@
-import React, { Suspense, lazy } from 'react';
+import React from 'react';
 import PageLoader from '../components/PageLoader';
+import dynamic from 'next/dynamic';
 
-const PageContent = lazy(() => import('./PageContent'));
+const PageContent = dynamic(() => import('./PageContent'), {
+  loading: () => <PageLoader />,
+});
 
 const Verify = () => {
-  return (
-    <Suspense fallback={<PageLoader />}>
-      <PageContent />
-    </Suspense>
-  );
+  return <PageContent />;
 };
 
 export default Verify;

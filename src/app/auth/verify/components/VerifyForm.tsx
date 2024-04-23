@@ -1,14 +1,16 @@
 'use client';
 import Form from 'antd/es/form';
+import dynamic from 'next/dynamic';
 import React, { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import CustomButton from '@/common/components/CustomButton';
 import useAuth from '../../hooks/useAuth';
 import { useCounter } from '@/common/hooks';
-import dynamic from 'next/dynamic';
 
 const OTPInput = dynamic(() => import('react-otp-input'));
-// const Form = dynamic(() => import('react-otp-input'));
+// const it = dynamic(() =>
+//   import('antd/es/form').then((itm) => itm.default.Item)
+// );
 
 type FieldType = {
   verification_code: string;
