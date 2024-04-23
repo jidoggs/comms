@@ -3,7 +3,7 @@ import React, { useLayoutEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import PageTitle from '../components/PageTitle';
 import useSession from '@/common/hooks/useSession';
-import LoginForm from './components/LoginForm';
+// import LoginForm from './components/LoginForm';
 import { isServer } from '@/common/utils';
 
 const LoginPageContent: React.FunctionComponent = () => {
@@ -22,7 +22,8 @@ const LoginPageContent: React.FunctionComponent = () => {
     <>
       {messageContext}
       <PageTitle title="Welcome Back!" description="Please enter your details.">
-        <LoginForm />
+        <></>
+        {/* <LoginForm /> */}
       </PageTitle>
     </>
   );
