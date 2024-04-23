@@ -43,7 +43,7 @@ export const circularStd = localFont({
       style: 'normal',
     },
   ],
-  preload: true,
+  preload: false,
   fallback: ['ui-sans-serif', 'arial', 'helvetica', 'sans-serif'],
   // variable: '--circular-std',
 });
