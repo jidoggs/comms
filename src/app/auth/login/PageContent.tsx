@@ -1,11 +1,10 @@
 'use client';
 import React, { useLayoutEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
-// import PageTitle from '../components/PageTitle';
-import useSession from '@/common/hooks/useSession';
-// import LoginForm from './components/LoginForm';
-import { isServer } from '@/common/utils';
 import dynamic from 'next/dynamic';
+import { useSearchParams } from 'next/navigation';
+import PageTitle from '../components/PageTitle';
+import useSession from '@/common/hooks/useSession';
+import { isServer } from '@/common/utils';
 
 const LoginForm = dynamic(() => import('./components/LoginForm'), {
   loading: () => <p>Loading...</p>,
@@ -26,9 +25,9 @@ const LoginPageContent: React.FunctionComponent = () => {
   return (
     <>
       {messageContext}
-      {/* <PageTitle title="Welcome Back!" description="Please enter your details."> */}
-      <LoginForm />
-      {/* </PageTitle> */}
+      <PageTitle title="Welcome Back!" description="Please enter your details.">
+        <LoginForm />
+      </PageTitle>
     </>
   );
 };
