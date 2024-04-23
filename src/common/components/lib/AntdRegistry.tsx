@@ -1,9 +1,13 @@
 'use client';
 import React from 'react';
 import { ConfigProvider, ThemeConfig } from 'antd';
-import { AntdRegistry } from '@ant-design/nextjs-registry';
 import { customThemeColor } from '@/common/utils';
 import { pdfjs } from 'react-pdf';
+import dynamic from 'next/dynamic';
+
+const AntdRegistry = dynamic(
+  () => import('@ant-design/nextjs-registry/es/AntdRegistry')
+);
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.js',
@@ -21,7 +25,7 @@ const appTheme: ThemeConfig = {
     colorText: customThemeColor.gray_200,
     colorFillTertiary: customThemeColor.gray_800,
     colorBgContainer: customThemeColor.gray_100,
-    fontFamily:""
+    fontFamily: '',
   },
   components: {
     Form: {
