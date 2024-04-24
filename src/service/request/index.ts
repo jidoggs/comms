@@ -66,6 +66,9 @@ instance.interceptors.response.use(
     if (error.code === 'ERR_CANCELED') {
       return Promise.reject({});
     }
+    if (error.code === 'ERR_NETWORK') {
+      return Promise.reject({ message: 'You are Offline' });
+    }
     if (error.response?.status !== undefined && error.response.status >= 500) {
       return Promise.reject({
         message: 'Server Error',

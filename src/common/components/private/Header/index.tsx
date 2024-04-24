@@ -1,8 +1,7 @@
+"use client"
 import React, { lazy, Suspense } from 'react';
-import { useRouter } from 'next/navigation';
-import { Dropdown, MenuProps, Avatar, Layout, message } from 'antd';
-import { useSWRConfig } from 'swr';
-import useAuth from '@/app/auth/hooks/useAuth';
+import { Dropdown, MenuProps, Avatar, Layout } from 'antd';
+import useSession from '@/common/hooks/useSession';
 import Title from '@/common/components/Title';
 import {
   Logout,
@@ -10,27 +9,15 @@ import {
   Profile,
   SpinLoader,
 } from '@/common/components/icons';
-import { clearUserDetails } from '@/service/storage';
 
 const { Header } = Layout;
 
 const BreadCrumb = lazy(() => import('./BreadCrumb'));
 
 const AppHeader: React.FunctionComponent = () => {
-  const router = useRouter();
-  const { data } = useAuth({ user: true }).userSwr;
-  const [messageApi, contextHolder] = message.useMessage();
-  const { mutate } = useSWRConfig();
+  const { data, handleLogout, messageContext } = useSession();
+
   const isMutating = false;
-  const handleLogout = async () => {
-    clearUserDetails();
-    //eslint-disable-next-line
-    mutate((_) => true, undefined, { revalidate: false }).then(() => {
-      messageApi.success('Logging User out...').then(() => {
-        router.replace('/auth/login');
-      });
-    });
-  };
 
   const items: MenuProps['items'] = [
     {
@@ -57,7 +44,7 @@ const AppHeader: React.FunctionComponent = () => {
   ];
   return (
     <Header className="flex w-full items-center justify-between !px-5 !py-0.5">
-      {contextHolder}
+      {messageContext}
       <Suspense fallback={<div />}>
         <BreadCrumb />
       </Suspense>

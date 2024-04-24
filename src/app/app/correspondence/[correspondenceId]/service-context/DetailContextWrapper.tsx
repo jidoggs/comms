@@ -1,4 +1,4 @@
-import React, { useCallback, useLayoutEffect, useState } from 'react';
+import React, { Suspense, useCallback, useLayoutEffect, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useAnimation } from 'framer-motion';
 import { ContextWapper, DetailContextType, MultiSelectType } from '../../types';
@@ -83,24 +83,26 @@ function DetailContextWrapper({ children }: ContextWapper) {
     }
   };
   return (
-    <DetailContext.Provider
-      value={{
-        openCorrespondenceDetails,
-        openDetailsHandler,
-        closeDetailsHandler,
-        correspondenceFile,
-        handleUpdateFile,
-        tabChangeHandler,
-        activeTab,
-        contentControls,
-        turnMultiSelectOnHandler,
-        turnMultiSelectOFFHandler,
-        selectItemHandler,
-        multiSelect,
-      }}
-    >
-      {children}
-    </DetailContext.Provider>
+    <Suspense fallback={null}>
+      <DetailContext.Provider
+        value={{
+          openCorrespondenceDetails,
+          openDetailsHandler,
+          closeDetailsHandler,
+          correspondenceFile,
+          handleUpdateFile,
+          tabChangeHandler,
+          activeTab,
+          contentControls,
+          turnMultiSelectOnHandler,
+          turnMultiSelectOFFHandler,
+          selectItemHandler,
+          multiSelect,
+        }}
+      >
+        {children}
+      </DetailContext.Provider>
+    </Suspense>
   );
 }
 

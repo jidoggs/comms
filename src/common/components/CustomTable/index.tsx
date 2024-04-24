@@ -4,6 +4,7 @@ import Title from '../Title';
 import CustomPaginationHeader from '../CustomPaginationHeader';
 import { CustomTableProps } from './type';
 import { mergeClassName } from '@/common/utils';
+export * from './type';
 
 const CustomTable = <T extends object>({
   tabs,

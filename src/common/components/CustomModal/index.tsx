@@ -5,7 +5,7 @@ import { mergeClassName } from '@/common/utils';
 
 type OmitProps = 'closeIcon' | 'footer';
 
-interface Props extends Omit<ModalProps, OmitProps> {
+export interface CustomModalProps extends Omit<ModalProps, OmitProps> {
   hideCloseIcon?: boolean;
 }
 
@@ -15,7 +15,7 @@ function CustomModal({
   classNames,
   hideCloseIcon,
   ...props
-}: Props) {
+}: CustomModalProps) {
   return (
     <Modal
       {...props}

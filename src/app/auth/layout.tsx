@@ -1,22 +1,24 @@
-// import { MainLayout } from "@/components/layout";
-import Title from '@/common/components/Title';
-import { fetchUserToken } from '@/service/storage';
-import { Content } from 'antd/lib/layout/layout';
+'use client';
+import React, { useLayoutEffect } from 'react';
 import Image from 'next/image';
-import { redirect } from 'next/navigation';
-import React from 'react';
+import { Content } from 'antd/lib/layout/layout';
+import Title from '@/common/components/Title';
+import { clearUserDetails, fetchUserToken } from '@/service/storage';
+import { isServer } from '@/common/utils';
 
-interface LayoutProps {
-  children: React.ReactNode;
-}
+export default function Layout({ children }: { children: React.ReactNode }) {
+  const token = fetchUserToken();
 
-const layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
-  const token = fetchUserToken() || '';
+  useLayoutEffect(() => {
+    if (!token || isServer) {
+      return;
+    }
 
-  if (token) {
-    redirect('/app/home');
-  }
-
+    if (token && !document.referrer) {
+      // clears token if user access login page
+      clearUserDetails();
+    }
+  }, [token, isServer]);
   return (
     <div>
       <Content className="min-h-screen bg-custom-white_100">
@@ -24,9 +26,10 @@ const layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
           <Image
             src={'/images/authImg.png'}
             alt="login image"
+            priority
             width={726}
             height={982}
-            className="hidden sm:flex sm:h-full sm:w-1/2"
+            className="hidden sm:flex sm:h-full sm:w-1/2 object-cover"
           />
           <div className="flex w-[90%] items-center justify-center sm:w-1/2">
             <div className="flex w-[375px] items-center justify-center rounded-2xl border border-custom-gray_850 bg-custom-white_100">
@@ -42,6 +45,4 @@ const layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
       </Content>
     </div>
   );
-};
-
-export default layout;
+}

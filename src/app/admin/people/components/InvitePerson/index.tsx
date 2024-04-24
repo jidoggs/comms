@@ -31,7 +31,12 @@ function InvitePerson() {
       >
         Add
       </CustomButton>
-      <CustomModal width={600} title="Invite" open={isOpen} onCancel={closeModalHandler}>
+      <CustomModal
+        width={600}
+        title="Invite"
+        open={isOpen}
+        onCancel={closeModalHandler}
+      >
         <InviteForm onFinish={onFinishHandler} />
       </CustomModal>
     </>

@@ -1,12 +1,9 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { Layout, Menu, MenuProps, Grid } from 'antd';
-import {
-  generateDefaultKey,
-  menuItemRenderer,
-  rootSubmenuKeys,
-} from './helper';
+import { Layout, Menu, Grid } from 'antd';
+import { generateDefaultKey, menuItemRenderer } from './helper';
+import useSession from '@/common/hooks/useSession';
 import { Collapse, Logout } from '@/common/components/icons';
 import { mergeClassName } from '@/common/utils';
 import { UserPreDefinedRole } from '@/types';
@@ -17,9 +14,10 @@ const { useBreakpoint } = Grid;
 function SideNav({ role }: { role: UserPreDefinedRole }) {
   const router = useRouter();
   const pathname = usePathname();
-  const [openKeys, setOpenKeys] = useState(['sub1']);
   const [collapsed, setCollapsed] = useState(false);
   const { lg } = useBreakpoint();
+
+  const { handleLogout, messageContext } = useSession();
 
   useEffect(() => {
     if (lg) {
@@ -31,17 +29,9 @@ function SideNav({ role }: { role: UserPreDefinedRole }) {
     setCollapsed(!collapsed);
   };
 
-  const onOpenChange: MenuProps['onOpenChange'] = (keys) => {
-    const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
-    if (latestOpenKey && rootSubmenuKeys.indexOf(latestOpenKey!) === -1) {
-      setOpenKeys(keys);
-    } else {
-      setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
-    }
-  };
-
   return (
     <Sider collapsed={collapsed} width={200} collapsedWidth={118}>
+      {messageContext}
       <div
         className="flex items-end justify-between"
         style={{ paddingRight: 16 }}
@@ -62,8 +52,6 @@ function SideNav({ role }: { role: UserPreDefinedRole }) {
       </div>
       <Menu
         mode="inline"
-        openKeys={openKeys}
-        onOpenChange={onOpenChange}
         defaultSelectedKeys={[generateDefaultKey(pathname)]}
         selectedKeys={[generateDefaultKey(pathname)]}
         onClick={({ key }) => router.push(key)}
@@ -75,6 +63,7 @@ function SideNav({ role }: { role: UserPreDefinedRole }) {
           'group absolute bottom-5 left-1 right-1 flex cursor-pointer items-center px-4 py-5 text-xs text-custom-white_100 ease-linear hover:text-custom-red_100',
           collapsed ? 'flex-col gap-y-0.5 pb-0.5 pt-2.5' : 'gap-x-2.5'
         )}
+        onClick={handleLogout}
       >
         <Logout className="group-hover:scale-105" size="22" />
         <span>Logout</span>

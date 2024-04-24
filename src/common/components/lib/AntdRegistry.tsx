@@ -117,11 +117,7 @@ const appTheme: ThemeConfig = {
       colorText: customThemeColor.gray_400,
       fontWeightStrong: 400,
       colorBorderBg: customThemeColor.gray_100,
-      multipleItemBg:customThemeColor.gray_200,
-  
-
-    
-
+      multipleItemBg: customThemeColor.gray_200,
     },
     Pagination: {
       itemActiveBg: customThemeColor.blue_100,
@@ -280,9 +276,14 @@ const appTheme: ThemeConfig = {
       tailColor: customThemeColor.gray_200,
     },
     Cascader: {
-      optionSelectedBg: customThemeColor.gray_500,
+      optionSelectedBg: customThemeColor.purple_500,
       optionSelectedFontWeight: 400,
-      colorBorder: customThemeColor.black_100,
+      controlItemBgActiveHover: customThemeColor.purple_500,
+      // colorBorder: customThemeColor.black_100,
+      // colorBorder: customThemeColor.gray_200,
+      // borderRadius: 5,
+      // controlWidth: 0,
+      // colorBorderBg: customThemeColor.gray_500,
       // optionPadding
     },
     Checkbox: {
