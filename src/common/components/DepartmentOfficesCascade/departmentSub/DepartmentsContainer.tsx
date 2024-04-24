@@ -1,82 +1,65 @@
 'use client';
 import React from 'react';
 import DepartmentItem from './DepartmentItem';
-import { ArrowRight } from '@/common/components/icons';
-import Title from '../../Title';
+import Title from '@/common/components/Title';
+import { ArrowRight, TickCircle } from '@/common/components/icons';
+import { iHandleClick } from '@/types';
+import { mergeClassName } from '@/common/utils';
 
 type Props = {
   items: any[];
-  itemClickHandler: (dep: any, step: number) => void; //eslint-disable-line
-  step: number;
-  selectedItem: string;
-  setSelectedItem: React.Dispatch<React.SetStateAction<string>>;
-  currentStep: number;
-  setCurrentStep: React.Dispatch<React.SetStateAction<number>>;
-  parastatal: string;
-  setParastatal: React.Dispatch<React.SetStateAction<string>>;
-  office: string;
-  setOffice: React.Dispatch<React.SetStateAction<string>>;
-  // setCurrentStep: (step: number) => void;
+  title?: string;
+  step?: string;
+  clickHandler: iHandleClick;
+  activeIdentifier: string;
 };
 
 function DepartmentsContainer({
   items,
-  itemClickHandler,
+  title,
   step,
-  // selectedItem,
-  setSelectedItem,
-  parastatal,
-  setParastatal,
-  office,
-  setOffice,
-  // currentStep,
-  setCurrentStep,
+  clickHandler,
+  activeIdentifier,
 }: Props) {
-  // console.log('items', items);
-  // console.log('selectedItem', selectedItem);
-
   return (
-    <div className="flex flex-col gap-y-2.5 border-r border-custom-gray_500 bg-custom-white_100">
-      {step === 1 && (
-        <Title className="flex h-12 items-center border-b border-custom-gray_500 bg-custom-gray_900 px-3 py-2.5">
-          Parastatals
-        </Title>
-      )}
-      {step === 2 && (
-        <Title className="flex h-12 items-center border-b border-custom-gray_500 bg-custom-gray_900 px-3 py-2.5">
-          {parastatal}
-        </Title>
-      )}
-      {step === 3 && (
-        <Title className="flex h-12 items-center border-b border-custom-gray_500 bg-custom-gray_900 px-3 py-2.5">
-          {office}
-        </Title>
-      )}
-      {items?.map((item, index) => {
-        // console.log('item', item?.isActive);
-        return (
-          <DepartmentItem
-            key={index}
-            value={item?.value}
-            item={item}
-            itemClickHandler={itemClickHandler}
-            className={item?.isActive ? 'm-1 bg-custom-purple_500' : ''}
-            step={step}
-            setSelectedItem={setSelectedItem}
-            parastatal={parastatal}
-            setParastatal={setParastatal}
-            office={office}
-            setOffice={setOffice}
-            setCurrentStep={setCurrentStep}
-            hasChild={
-              <span className="flex flex-1 justify-end">
-                <ArrowRight size={12} />
-              </span>
-            }
-          />
-        );
-      })}
-    </div>
+    <section className="flex max-w-[350px] flex-col border-r border-custom-gray_500 bg-custom-white_100 [&:last-child:not(:only-child)]:border-none">
+      <Title className="flex h-12 items-center border-b border-custom-gray_500 bg-custom-gray_900 px-3 py-2.5">
+        {title}
+      </Title>
+      <div className="flex flex-col ">
+        {items?.map((item, index) => {
+          return (
+            <DepartmentItem
+              key={index}
+              className={
+                item?.value === activeIdentifier
+                  ? 'bg-custom-purple_500'
+                  : 'hover:bg-custom-purple_500'
+              }
+              data-step={step}
+              data-value={item?.value}
+              onClick={clickHandler}
+              hasChild={
+                <span
+                  className={mergeClassName(
+                    'p-2',
+                    item?.value === activeIdentifier ? 'visible' : 'invisible'
+                  )}
+                >
+                  {item?.children !== undefined ? (
+                    <ArrowRight size={18} />
+                  ) : (
+                    <TickCircle size={18} />
+                  )}
+                </span>
+              }
+            >
+              {item?.value}
+            </DepartmentItem>
+          );
+        })}
+      </div>
+    </section>
   );
 }
 

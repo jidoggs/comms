@@ -18,7 +18,7 @@ const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
         backgroundImage: 'url(/images/onboardingImage.png)',
       }}
     >
-      <div className="flex w-[410px] items-center justify-center rounded-2xl">
+      <div className="flex items-center justify-center rounded-2xl">
         {children}
       </div>
     </Content>
