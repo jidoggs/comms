@@ -1,15 +1,18 @@
 'use client';
 import React, { createContext } from 'react';
-import { TabsProps } from 'antd';
+import { Popover, TabsProps } from 'antd';
 import TableRowAction from '../components/TableRowAction';
 import { mergeClassName } from '@/common/utils';
 import {
   ContextWapper,
   PeopleDataContextType,
   EditableTableColumnTypes,
+  iHandleKeyboard,
 } from '../types';
 import { useTabChange } from '@/common/hooks';
 import { dummyPersonsPending, dummyPersons } from '@/common/mockData';
+import Tick from '@/common/components/icons/Tick';
+import { CloseCircle } from '@/common/components/icons';
 
 export const PeopleDataContext = createContext<PeopleDataContextType>(null);
 const onboardingKeys = [
@@ -30,6 +33,35 @@ const personKeys = [
   'date_created',
   '',
 ];
+
+const actionsKeyboardHandler: iHandleKeyboard = (e) => {
+  e.stopPropagation();
+};
+
+const content = (
+  <div>
+    <div
+      role="button"
+      className="flex cursor-pointer items-center gap-1"
+      tabIndex={0}
+      onClick={(e) => e.stopPropagation()}
+      onKeyDown={actionsKeyboardHandler}
+    >
+      <Tick size={16} color="green" />
+      <p>Approve</p>
+    </div>
+    <div
+      className="flex cursor-pointer items-center gap-1"
+      role="button"
+      tabIndex={0}
+      onClick={(e) => e.stopPropagation()}
+      onKeyDown={actionsKeyboardHandler}
+    >
+      <CloseCircle size={18} color="red" />
+      <p>Decline</p>
+    </div>
+  </div>
+);
 
 const defaultColumns: (EditableTableColumnTypes[number] & {
   dataIndex: string;
@@ -109,7 +141,13 @@ const defaultColumns: (EditableTableColumnTypes[number] & {
     ellipsis: true,
     width: 65,
     render: (_: any, __: any, record: any) => {
-      return <TableRowAction data={record} />;
+      return (
+        <Popover content={content} className="!w-full cursor-pointer">
+          <>
+            <TableRowAction data={record} />
+          </>
+        </Popover>
+      );
     },
   },
 ].map((itm) => ({

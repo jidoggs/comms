@@ -117,7 +117,7 @@ const navItems = {
 const getUserNavItemsByRole = (role: UserRoles) => {
   switch (role) {
     case UserPreDefinedRole.PRIMARYADMIN:
-      return generateRoutes({ ...navItems.user, ...navItems.admin });
+      return generateRoutes({ ...navItems.admin });
 
     case UserPreDefinedRole.SECONDARYADMIN:
       return generateRoutes(navItems.admin);

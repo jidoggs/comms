@@ -18,18 +18,8 @@ const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
         backgroundImage: 'url(/images/onboardingImage.png)',
       }}
     >
-      <div className="flex w-[410px] items-center justify-center rounded-2xl bg-custom-white_100">
-        <div className="flex w-full flex-col items-center justify-center gap-y-3 p-5">
-          {/* <Title
-            tag="h4"
-            bold
-            className="mt-5 w-full text-left text-custom-main"
-          >
-            Onboarding
-          </Title> */}
-          {/* <Params /> */}
-          {children}
-        </div>
+      <div className="flex w-[410px] items-center justify-center rounded-2xl">
+        {children}
       </div>
     </Content>
   );

@@ -8,7 +8,7 @@ import React from 'react';
 const LoginPageContent: React.FunctionComponent = () => {
   const router = useRouter();
   return (
-    <div className="flex w-full flex-col items-center">
+    <div className="flex w-full flex-col items-center gap-y-3">
       <Image src="/success.gif" alt="success-svg" width={100} height={100} />
       <Title tag="h4">Password Set</Title>
       <Title className="py-3 text-center text-custom-gray_600">

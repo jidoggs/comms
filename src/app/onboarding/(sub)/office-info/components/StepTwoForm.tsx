@@ -1,5 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+// /* eslint-disable @typescript-eslint/no-unused-vars */
+// /* eslint-disable no-unused-vars */
 'use client';
 import React, { useState } from 'react';
 import { Form } from 'antd';
@@ -12,12 +14,9 @@ import useOnboarding from '@/app/auth/hooks/useOnboarding';
 import Title from '@/common/components/Title';
 import DepartmentOfficesCascade from '@/common/components/DepartmentOfficesCascade/DepartmentOfficesCascade';
 
-// import { apiErrorHandler } from "@/services";
-// import { setLocalStorageItem } from "@/util";
-// import useAuth from "@/components/hooks/useAuth";
-
 const StepTwoForm = () => {
   const router = useRouter();
+  // const [currentStep, setCurrentStep] = useState<number>(1);
   const [selectedDepartment, setSelectedDepartment] = useState<string>('');
   const { officeInfoTrigger, officeInfoIsMutating } = useOnboarding({
     office_info: true,
@@ -28,9 +27,9 @@ const StepTwoForm = () => {
       selectedDepartment,
     };
     // router.push('/onboarding/set-password');
-    officeInfoTrigger({ data: department, type: 'post' }).then(() => {
-      router.push('/onboarding/set-password');
-    });
+    // officeInfoTrigger({ data: department, type: 'post' }).then(() => {
+    //   router.push('/onboarding/set-password');
+    // });
   };
 
   return (
@@ -46,6 +45,8 @@ const StepTwoForm = () => {
       <DepartmentOfficesCascade
         selectedDepartment={selectedDepartment}
         setSelectedDepartment={setSelectedDepartment}
+        // currentStep={currentStep}
+        // setCurrentStep={setCurrentStep}
       />
       <div className="flex flex-row justify-end gap-2">
         <Form.Item>

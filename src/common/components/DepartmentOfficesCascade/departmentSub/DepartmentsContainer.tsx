@@ -10,6 +10,8 @@ type Props = {
   step: number;
   selectedItem: string;
   setSelectedItem: React.Dispatch<React.SetStateAction<string>>;
+  currentStep: number;
+  setCurrentStep: React.Dispatch<React.SetStateAction<number>>;
   parastatal: string;
   setParastatal: React.Dispatch<React.SetStateAction<string>>;
   office: string;
@@ -21,26 +23,37 @@ function DepartmentsContainer({
   items,
   itemClickHandler,
   step,
-  selectedItem,
+  // selectedItem,
   setSelectedItem,
   parastatal,
   setParastatal,
   office,
   setOffice,
+  // currentStep,
+  setCurrentStep,
 }: Props) {
+  // console.log('items', items);
+  // console.log('selectedItem', selectedItem);
+
   return (
     <div className="flex flex-col gap-y-2.5 border-r border-custom-gray_500 bg-custom-white_100">
-      <Title className="flex h-12 items-center border-b border-custom-gray_500 bg-custom-gray_900 px-3 py-2.5">
-        {step === 1 ? 'Parastatals' : selectedItem}
-        {/* {
-          step === 1
-            ? 'Parastatals'
-            : step === 2
-              ? parastatal // Show the selected parastatal
-              : office // Show the selected office
-        } */}
-      </Title>
-      {items.map((item, index) => {
+      {step === 1 && (
+        <Title className="flex h-12 items-center border-b border-custom-gray_500 bg-custom-gray_900 px-3 py-2.5">
+          Parastatals
+        </Title>
+      )}
+      {step === 2 && (
+        <Title className="flex h-12 items-center border-b border-custom-gray_500 bg-custom-gray_900 px-3 py-2.5">
+          {parastatal}
+        </Title>
+      )}
+      {step === 3 && (
+        <Title className="flex h-12 items-center border-b border-custom-gray_500 bg-custom-gray_900 px-3 py-2.5">
+          {office}
+        </Title>
+      )}
+      {items?.map((item, index) => {
+        // console.log('item', item?.isActive);
         return (
           <DepartmentItem
             key={index}
@@ -54,6 +67,7 @@ function DepartmentsContainer({
             setParastatal={setParastatal}
             office={office}
             setOffice={setOffice}
+            setCurrentStep={setCurrentStep}
             hasChild={
               <span className="flex flex-1 justify-end">
                 <ArrowRight size={12} />
