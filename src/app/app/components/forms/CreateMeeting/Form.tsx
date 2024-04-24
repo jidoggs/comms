@@ -1,7 +1,7 @@
 import React from 'react';
 import { Checkbox, CheckboxProps, Form } from 'antd';
 import CustomTimeRangePicker from '@/common/components/CustomTimeRangePicker';
-import CustomInput from '@/common/CustomInput';
+import CustomInput from '@/common/components/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
 import { Send } from '@/common/components/icons';
 import { createMeetingFormInputs } from './helper';
@@ -62,7 +62,7 @@ function NewMeetingForm({ onFinish }: Props) {
             Mark as tentative
           </Checkbox>
         </Form.Item>
-        <CustomButton htmlType="submit"  icon={<Send />} size="small">
+        <CustomButton htmlType="submit" icon={<Send />} size="small">
           Push
         </CustomButton>
       </div>

@@ -1,10 +1,14 @@
 'use client';
 import React, { useLayoutEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { useSearchParams } from 'next/navigation';
 import PageTitle from '../components/PageTitle';
 import useSession from '@/common/hooks/useSession';
-import LoginForm from './components/LoginForm';
 import { isServer } from '@/common/utils';
+
+const LoginForm = dynamic(() => import('./components/LoginForm'), {
+  loading: () => <p>Loading...</p>,
+});
 
 const LoginPageContent: React.FunctionComponent = () => {
   const { loggoutSuccessHandler, messageContext } = useSession();

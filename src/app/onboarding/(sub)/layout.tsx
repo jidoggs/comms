@@ -6,6 +6,7 @@ import { Content } from 'antd/lib/layout/layout';
 import React from 'react';
 import Params from '../components/Params';
 // import Params from './components/Params';
+import { helveticaNeue } from '@/common/font';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -23,8 +24,7 @@ const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
         <div className="flex w-full flex-col items-center justify-center gap-y-3 p-5">
           <Title
             tag="h4"
-            bold
-            className="mt-5 w-full text-left text-custom-main"
+            className={`mt-5 w-full text-left ${helveticaNeue.className}`}
           >
             Onboarding
           </Title>

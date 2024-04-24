@@ -1,4 +1,4 @@
-import CustomInput from '@/common/CustomInput';
+import CustomInput from '@/common/components/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
 import { Form, FormProps } from 'antd';
 import React from 'react';

@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Form } from 'antd';
-import CustomInput from '@/common/CustomInput';
+import CustomInput from '@/common/components/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
 import { ArrowRight, Link, PaperClip } from '@/common/components/icons';
 import { createProjectFormInputs } from './helper';

@@ -37,7 +37,7 @@ const Title = ({
     <Tag
       {...props}
       className={mergeClassName(
-        'circular text-custom-main',
+        'text-custom-main',
         tag === 'h1' ? 'text-4xl' : '',
         tag === 'h2' ? 'text-3xl' : '',
         tag === 'h3' ? 'text-2xl' : '',

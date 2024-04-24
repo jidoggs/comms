@@ -1,12 +1,13 @@
-// import { PageHeader } from "@/components/common";
-import React, { lazy } from "react";
+import dynamic from 'next/dynamic';
+import React from 'react';
 
-const PageContent = lazy(() => import("./PageContent"));
+const PageContent = dynamic(() => import('./PageContent'), {
+  loading: () => <p>Loading...</p>,
+});
 
 const page = () => {
   return (
-    <div className="!w-full">
-      {/* <PageHeader title="Reset Password" description="Admin Reset Password" /> */}
+    <div className="self-stretch">
       <PageContent />
     </div>
   );

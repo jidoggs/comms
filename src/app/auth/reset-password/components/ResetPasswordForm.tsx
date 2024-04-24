@@ -3,7 +3,7 @@ import React from 'react';
 import { Form } from 'antd';
 import { useSearchParams } from 'next/navigation';
 import CustomButton from '@/common/components/CustomButton';
-import CustomInput from '@/common/CustomInput';
+import CustomInput from '@/common/components/CustomInput';
 import useAuth from '../../hooks/useAuth';
 
 type FieldType = {

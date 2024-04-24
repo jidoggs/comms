@@ -1,6 +1,6 @@
 import React from 'react';
 import InvitePerson from './InvitePerson';
-import CustomInput from '@/common/CustomInput';
+import CustomInput from '@/common/components/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
 import { Document, Search } from '@/common/components/icons';
 

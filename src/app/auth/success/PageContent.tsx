@@ -1,5 +1,4 @@
 'use client';
-
 import CustomButton from '@/common/components/CustomButton';
 import React from 'react';
 import PageTitle from '../components/PageTitle';

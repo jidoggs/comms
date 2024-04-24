@@ -1,9 +1,16 @@
 import React from 'react';
 import type { Metadata } from 'next';
-import StyledComponentsRegistry from '@/common/components/lib/AntdRegistry';
-import './globals.css';
-import { bebas, inter, manrope } from './font';
 import AuthWrapper from '@/common/components/private/Protected/AuthWrapper';
+import StyledComponentsRegistry from '@/common/components/lib/AntdRegistry';
+import { circularStd } from '../common/font';
+import './globals.css';
+
+// const StyledComponentsRegistry = dynamic(
+//   () => import('@/common/components/lib/AntdRegistry'),
+//   {
+//     loading: () => <></>,
+//   }
+// );
 
 export const metadata: Metadata = {
   title: 'Correspondence',
@@ -17,9 +24,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-        className={`${bebas.variable} ${inter.variable} ${manrope.className} circular`}
-      >
+      <body style={circularStd.style}>
         <AuthWrapper>
           <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
         </AuthWrapper>
