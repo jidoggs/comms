@@ -1,5 +1,7 @@
-import { Spin } from 'antd';
+import dynamic from 'next/dynamic';
 import { SpinLoader } from './icons';
+
+const Spin = dynamic(() => import('antd/es/spin'));
 
 type FullPageLoaderProps = {
   background?: string;

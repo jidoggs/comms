@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { Form } from 'antd';
-import CustomInput from '@/common/CustomInput';
+import CustomInput from '@/common/components/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
 import { ArrowRight } from '@/common/components/icons';
 import useOnboarding from '@/app/auth/hooks/useOnboarding';

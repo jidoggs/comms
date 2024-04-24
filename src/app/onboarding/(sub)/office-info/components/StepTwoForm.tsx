@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import { Form } from 'antd';
 // import Link from 'next/link';
-import CustomInput from '@/common/CustomInput';
+import CustomInput from '@/common/components/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
 import { ArrowRight, ArrowRightBreak } from '@/common/components/icons';
 import { useRouter } from 'next/navigation';

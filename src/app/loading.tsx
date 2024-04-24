@@ -1,9 +1,10 @@
-import React, { lazy } from 'react';
+import dynamic from 'next/dynamic';
+import React from 'react';
 
-const PageLoader = lazy(() => import('../common/components/FullPageLoader'));
+const PageLoader = dynamic(() => import('../common/components/FullPageLoader'));
 
 const Loading: React.FunctionComponent = () => {
-  return <PageLoader />;
+  return <PageLoader fullscreen />;
 };
 
 export default Loading;

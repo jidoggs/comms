@@ -4,7 +4,7 @@ import React from 'react';
 const Skeleton = dynamic(() => import('antd/es/skeleton'));
 
 const PageLoader: React.FunctionComponent = () => {
-  return <Skeleton />;
+  return <Skeleton loading />;
 };
 
 export default PageLoader;

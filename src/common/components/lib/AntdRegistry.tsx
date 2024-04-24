@@ -1,13 +1,9 @@
 'use client';
 import React from 'react';
 import { ConfigProvider, ThemeConfig } from 'antd';
+import AntdRegistry from '@ant-design/nextjs-registry/es/AntdRegistry';
 import { customThemeColor } from '@/common/utils';
 import { pdfjs } from 'react-pdf';
-import dynamic from 'next/dynamic';
-
-const AntdRegistry = dynamic(
-  () => import('@ant-design/nextjs-registry/es/AntdRegistry')
-);
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   'pdfjs-dist/build/pdf.worker.min.js',

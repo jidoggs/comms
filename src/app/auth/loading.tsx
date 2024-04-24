@@ -1,7 +1,5 @@
-import FullPageLoader from '@/common/components/FullPageLoader';
+import FullPageLoader from './components/PageLoader';
 import React from 'react';
-
-// const PageLoader = lazy(() => import("./components/PageLoader"));
 
 const Loading: React.FunctionComponent = () => {
   return <FullPageLoader />;

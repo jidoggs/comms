@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Checkbox, Form } from 'antd';
-import CustomInput from '@/common/CustomInput';
+import CustomInput from '@/common/components/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
 import { NoteContext } from '../../service-context/NotesContextWapper';
 import { CloseCircled, StickyNote } from '@/common/components/icons';

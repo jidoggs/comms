@@ -1,48 +1,25 @@
 'use client';
-import Link from 'next/link';
 import React from 'react';
-import { Button, Layout, Result } from 'antd';
-// import PublicHeader from "@/components/public/header";
-// import PublicFooter from "@/components/public/footer";
-
-const { Content } = Layout;
-
-const contentStyle: React.CSSProperties = {
-  margin: '50px',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-};
+import dynamic from 'next/dynamic';
+const Result = dynamic(() => import('antd/es/result/index'));
+const CustomButton = dynamic(() => import('@/common/components/CustomButton'));
 
 const NotFound = () => {
   return (
-    // <div>
-    //   <h2>Not Found</h2>
-    //   <p>Could not find requested resource</p>
-    //   <Link href="/">Return Home</Link>
-    // </div>
-    <Layout className="w-full">
-      <Layout>
-        {/* <PublicHeader /> */}
-        <Content style={contentStyle}>
-          <Result
-            status="404"
-            title="404"
-            subTitle="Sorry, the page you visited does not exist."
-            extra={
-              <div className="flex w-full items-center justify-center">
-                <Link href="/">
-                  <Button type="primary" className="bg-green-minst">
-                    Return Home
-                  </Button>
-                </Link>
-              </div>
-            }
-          />
-        </Content>
-        {/* <PublicFooter /> */}
-      </Layout>
-    </Layout>
+    <div className="flex h-screen w-full items-center justify-center bg-custom-gray_100">
+      <Result
+        status="404"
+        title="404"
+        subTitle="Sorry, the page you visited does not exist."
+        extra={
+          <div className="flex w-full items-center justify-center">
+            <CustomButton href="/" type="primary">
+              Return Home
+            </CustomButton>
+          </div>
+        }
+      />
+    </div>
   );
 };
 

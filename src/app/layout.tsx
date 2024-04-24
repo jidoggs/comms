@@ -1,21 +1,16 @@
 import React from 'react';
 import type { Metadata } from 'next';
-import dynamic from 'next/dynamic';
-import './globals.css';
+import AuthWrapper from '@/common/components/private/Protected/AuthWrapper';
+import StyledComponentsRegistry from '@/common/components/lib/AntdRegistry';
 import { circularStd } from '../common/font';
+import './globals.css';
 
-const StyledComponentsRegistry = dynamic(
-  () => import('@/common/components/lib/AntdRegistry'),
-  {
-    loading: () => <></>,
-  }
-);
-const AuthWrapper = dynamic(
-  () => import('@/common/components/private/Protected/AuthWrapper'),
-  {
-    loading: () => <></>,
-  }
-);
+// const StyledComponentsRegistry = dynamic(
+//   () => import('@/common/components/lib/AntdRegistry'),
+//   {
+//     loading: () => <></>,
+//   }
+// );
 
 export const metadata: Metadata = {
   title: 'Correspondence',
