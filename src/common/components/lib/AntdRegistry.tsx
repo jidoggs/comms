@@ -3,12 +3,6 @@ import React from 'react';
 import { ConfigProvider, ThemeConfig } from 'antd';
 import AntdRegistry from '@ant-design/nextjs-registry/es/AntdRegistry';
 import { customThemeColor } from '@/common/utils';
-import { pdfjs } from 'react-pdf';
-
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  'pdfjs-dist/build/pdf.worker.min.js',
-  import.meta.url
-).toString();
 
 const appTheme: ThemeConfig = {
   token: {
@@ -21,7 +15,6 @@ const appTheme: ThemeConfig = {
     colorText: customThemeColor.gray_200,
     colorFillTertiary: customThemeColor.gray_800,
     colorBgContainer: customThemeColor.gray_100,
-    fontFamily: '',
   },
   components: {
     Form: {
