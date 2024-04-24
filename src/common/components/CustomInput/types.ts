@@ -1,15 +1,23 @@
-import Input from 'antd/es/input/Input';
-import { GetRef } from 'antd/lib/_util/type';
-import { InputProps } from 'antd/lib/input/index';
+import { InputRef as AntdInputRef, InputProps } from 'antd/es/input/Input';
+import { PasswordProps, TextAreaProps } from 'antd/es/input/';
 
-export type InputRef = GetRef<typeof Input> | any;
+export type InputRef = AntdInputRef;
 
 type ClassName = 'container' | 'label' | 'input';
 
-type InputType = 'password' | 'textarea' | 'email' | 'number';
+// type InputType = 'password' | 'textarea' | 'email' | 'number';
 
-export interface CustomInputProps extends Omit<InputProps, 'className'> {
-  type?: InputType;
-  className?: string | Partial<Record<ClassName, string>>;
-  ref?: InputRef;
+interface InputProp extends Omit<InputProps, 'className'> {
+  type?: 'email';
 }
+interface PasswordProp extends Omit<PasswordProps, 'className'> {
+  type: 'password';
+}
+interface TextAreaProp extends Omit<TextAreaProps, 'className'> {
+  type: 'textarea';
+}
+
+export type CustomInputProps = (InputProp | PasswordProp | TextAreaProp) & {
+  className?: string | Partial<Record<ClassName, string>>;
+  ref?: any;
+};

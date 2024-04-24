@@ -6,6 +6,7 @@ import CustomButton from '@/common/components/CustomButton';
 import { ArrowRight } from '@/common/components/icons';
 import { useRouter } from 'next/navigation';
 import useOnboarding from '@/app/auth/hooks/useOnboarding';
+import { formatPhoneNumber, phoneNumberValidator } from '@/common/utils';
 
 const StepOneForm = () => {
   const [form] = Form.useForm();
@@ -15,19 +16,19 @@ const StepOneForm = () => {
   const router = useRouter();
 
   const onFinish = (values: any) => {
-    const formatPhoneNumber = (phoneNumber: string) => {
-      return phoneNumber.length === 10
-        ? `+234${phoneNumber}`
-        : phoneNumber.length === 11 && phoneNumber.startsWith('0')
-          ? `+234${phoneNumber?.slice(1)}`
-          : phoneNumber.length === 11
-            ? `+234${phoneNumber?.slice(0, 10)}`
-            : phoneNumber.length === 13 && phoneNumber.startsWith('+234')
-              ? phoneNumber
-              : phoneNumber.length === 14 && phoneNumber.startsWith('+234')
-                ? phoneNumber
-                : '';
-    };
+    // const formatPhoneNumber = (phoneNumber: string) => {
+    //   return phoneNumber.length === 10
+    //     ? `+234${phoneNumber}`
+    //     : phoneNumber.length === 11 && phoneNumber.startsWith('0')
+    //       ? `+234${phoneNumber?.slice(1)}`
+    //       : phoneNumber.length === 11
+    //         ? `+234${phoneNumber?.slice(0, 10)}`
+    //         : phoneNumber.length === 13 && phoneNumber.startsWith('+234')
+    //           ? phoneNumber
+    //           : phoneNumber.length === 14 && phoneNumber.startsWith('+234')
+    //             ? phoneNumber
+    //             : '';
+    // };
 
     const allValues = {
       firstname: values.firstName,
@@ -88,31 +89,14 @@ const StepOneForm = () => {
       <Form.Item
         label="Phone Number"
         name="phoneNumber"
-        rules={[
-          { required: true },
-          {
-            min: 11,
-            message: 'Phone number should not be less than 11 character',
-          },
-          {
-            max: 14,
-            message: 'Phone number should not be more than 14 character',
-          },
-        ]}
-        validateStatus="success"
+        rules={[{ required: true, validator: phoneNumberValidator }]}
       >
-        <CustomInput
-          placeholder="Aa"
-          pattern="[0-9]" // Regular expression for only digits
-          type="number"
-          disabled={personalInfoIsMutating}
-        />
+        <CustomInput placeholder="Aa" disabled={personalInfoIsMutating} />
       </Form.Item>
 
       <Form.Item className="flex justify-end">
         <CustomButton
           loading={personalInfoIsMutating}
-          // disabled={!clientReady}
           htmlType="submit"
           block
           size="small"
