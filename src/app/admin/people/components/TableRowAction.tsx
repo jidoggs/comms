@@ -10,9 +10,14 @@ export const TableRowActionContext = React.createContext<Props | null>(null);
 
 function TableRowAction({ data }: Props) {
   const icon = 'transition-all hover:scale-125 group/button-hover:scale-125';
+
   return (
     <TableRowActionContext.Provider value={{ data }}>
-      <div className="hidden items-center gap-x-1 px-2.5 group-hover:flex">
+      <div
+        className="relative hidden items-center gap-x-1 px-2.5 group-hover:flex"
+        role="button"
+        tabIndex={0}
+      >
         <CustomButton
           icon={<MoreFile className={icon} />}
           size="small"
