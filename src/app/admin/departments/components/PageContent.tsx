@@ -13,10 +13,11 @@ const PageContent = () => {
         </Title>
         <div>Search Bar</div>
       </div>
-      <div className="h-screen bg-custom-white_100">
+      <div className="h-screen bg-custom-white_100 px-3">
         <DepartmentOfficesCascade
           selectedDepartment={selectedDepartment}
           setSelectedDepartment={setSelectedDepartment}
+          className="rounded-none"
         />
       </div>
     </div>

@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { ReactNode } from 'react';
 import { mergeClassName } from '@/common/utils';
+import { OfficeProps, ParastatalProps } from '../data';
 
 interface Props
   extends React.InputHTMLAttributes<Omit<HTMLButtonElement, 'type'>> {
@@ -8,13 +9,13 @@ interface Props
   hasChild?: ReactNode;
   item?: any;
   itemClickHandler: (dep: any, step: number) => void; //eslint-disable-line
-  setSelectedItem: React.Dispatch<React.SetStateAction<string>>;
+  // setSelectedItem: React.Dispatch<React.SetStateAction<string>>;
   step: number;
-  parastatal: string;
-  setParastatal: React.Dispatch<React.SetStateAction<string>>;
-  office: string;
-  setOffice: React.Dispatch<React.SetStateAction<string>>;
-  setCurrentStep: React.Dispatch<React.SetStateAction<number>>;
+  parastatal?: ParastatalProps;
+  setParastatal?: React.Dispatch<React.SetStateAction<ParastatalProps>>;
+  office?: OfficeProps;
+  setOffice?: React.Dispatch<React.SetStateAction<OfficeProps>>;
+  setCurrentStep?: React.Dispatch<React.SetStateAction<number>>;
 }
 
 function DepartmentItem({
@@ -26,7 +27,7 @@ function DepartmentItem({
   item,
   step,
   itemClickHandler,
-  setSelectedItem,
+  // setSelectedItem,
   setCurrentStep,
   // parastatal,
   // setParastatal,
@@ -39,12 +40,12 @@ function DepartmentItem({
     itemClickHandler(item, step);
 
     if (step === 1) {
-      setCurrentStep(2);
+      setCurrentStep && setCurrentStep(2);
     } else if (step === 2) {
-      setCurrentStep(3);
+      setCurrentStep && setCurrentStep(3);
     } else if (step === 3) {
-      setCurrentStep(3);
-      setSelectedItem(item.value);
+      setCurrentStep && setCurrentStep(3);
+      // setSelectedItem(item.value);
     }
     // console.log('stepping', id);
   };
