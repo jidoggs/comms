@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-// /* eslint-disable @typescript-eslint/no-unused-vars */
-// /* eslint-disable no-unused-vars */
+
 'use client';
 import React, { useState } from 'react';
 import { Form } from 'antd';
@@ -70,10 +69,14 @@ const StepTwoForm = () => {
       className="!w-full"
     >
       <Title>Click to select Parastatal, office and department</Title>
-      <DepartmentOfficesCascade
-        clickHandler={clickHandler}
-        dataList={dataList}
-      />
+      {/* is-onboard and group are style identifies */}
+      <div className="is-onboard group w-full max-w-screen-lg overflow-x-scroll py-2">
+        <DepartmentOfficesCascade
+          clickHandler={clickHandler}
+          dataList={dataList}
+          className="overflow-hidden rounded-lg"
+        />
+      </div>
       <div className="flex items-center justify-end gap-x-2">
         <CustomButton
           size="small"

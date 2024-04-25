@@ -5,13 +5,22 @@ import { governmentData } from './data';
 import DepartmentsContainer from './departmentSub/DepartmentsContainer';
 import { AnimatePresence } from 'framer-motion';
 import { iHandleClick } from '@/types';
+import { mergeClassName } from '@/common/utils';
 
 interface Props {
   dataList: Record<string, string>;
   clickHandler: iHandleClick;
+  className?: string;
+  isEditable?: boolean;
 }
 
-const DepartmentOfficesCascade = ({ clickHandler, dataList }: Props) => {
+const DepartmentOfficesCascade = ({
+  clickHandler,
+  dataList,
+  className,
+  isEditable,
+}: Props) => {
+  // const { getListSwr } = useParastals({ get_all: true });
   const stepOne = governmentData;
   const stepTwo =
     useMemo(
@@ -26,48 +35,70 @@ const DepartmentOfficesCascade = ({ clickHandler, dataList }: Props) => {
         stepTwo?.find((office) => office.value === dataList.office)?.children,
       [dataList.office]
     ) || [];
+  const stepFour =
+    useMemo(
+      () =>
+        stepTwo?.find((office) => office.value === dataList.office)?.children,
+      [dataList.department]
+    ) || [];
 
   return (
-    <div className="w-full max-w-screen-lg overflow-x-scroll py-2">
-      <div className="flex w-full flex-row overflow-scroll rounded-lg border border-custom-gray_500 bg-custom-white_100">
-        {/* <Cascader.Panel
+    <div
+      className={mergeClassName(
+        'flex w-full border border-custom-gray_500 bg-custom-white_100',
+        className
+      )}
+    >
+      {/* <Cascader.Panel
           options={departmentData || governmentData}
           onChange={onChange}
         /> */}
+      <AnimatePresence>
+        {stepOne.length ? (
+          <DepartmentsContainer
+            items={governmentData}
+            title="Parastatals"
+            step="parastatals"
+            clickHandler={clickHandler}
+            activeIdentifier={dataList.parastatal}
+          />
+        ) : null}
+      </AnimatePresence>
+      <AnimatePresence>
+        {stepTwo.length ? (
+          <DepartmentsContainer
+            items={stepTwo}
+            title={`${dataList.parastatal} (${stepTwo.length} offices)`}
+            step="office"
+            clickHandler={clickHandler}
+            activeIdentifier={dataList.office}
+          />
+        ) : null}
+      </AnimatePresence>
+      <AnimatePresence>
+        {stepThree.length ? (
+          <DepartmentsContainer
+            items={stepThree}
+            title={`${dataList.office} (${stepThree.length} departments)`}
+            step="department"
+            clickHandler={clickHandler}
+            activeIdentifier={dataList.department}
+            isEditable={isEditable}
+          />
+        ) : null}
+      </AnimatePresence>
+      {isEditable ? (
         <AnimatePresence>
-          {stepOne.length ? (
+          {stepFour.length ? (
             <DepartmentsContainer
-              items={governmentData}
-              title="Parastatals"
-              step="parastatals"
+              items={stepFour}
+              title={`${dataList.department} (${stepFour.length} members)`}
+              step="person"
               clickHandler={clickHandler}
-              activeIdentifier={dataList.parastatal}
             />
           ) : null}
         </AnimatePresence>
-        <AnimatePresence>
-          {stepTwo.length ? (
-            <DepartmentsContainer
-              items={stepTwo}
-              title={`${dataList.parastatal} (${stepTwo.length} offices)`}
-              step="office"
-              clickHandler={clickHandler}
-              activeIdentifier={dataList.office}
-            />
-          ) : null}
-        </AnimatePresence>
-        <AnimatePresence>
-          {stepThree.length ? (
-            <DepartmentsContainer
-              items={stepThree}
-              title={`${dataList.office} (${stepThree.length} departments)`}
-              step="department"
-              clickHandler={clickHandler}
-              activeIdentifier={dataList.department}
-            />
-          ) : null}
-        </AnimatePresence>
-      </div>
+      ) : null}
     </div>
   );
 };

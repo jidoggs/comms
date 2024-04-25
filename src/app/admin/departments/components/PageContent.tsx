@@ -41,6 +41,7 @@ const PageContent = () => {
         break;
     }
   };
+
   return (
     <div className="">
       <div className="flex flex-row justify-between px-5 py-3">
@@ -49,10 +50,13 @@ const PageContent = () => {
         </Title>
         <div>Search Bar</div>
       </div>
-      <div className="h-screen bg-custom-white_100">
+      {/* is-admin and group are style identifies */}
+      <div className="is-admin group h-screen bg-custom-white_100 px-2.5">
         <DepartmentOfficesCascade
           clickHandler={clickHandler}
           dataList={dataList}
+          className="h-full"
+          isEditable
         />
       </div>
     </div>

@@ -61,4 +61,5 @@ export { default as TickCircle } from './TickCircle';
 export { default as TimelineDot } from './TimelineDot';
 export { default as ThreeDots } from './ThreeDots';
 export { default as Undo } from './Undo';
+export { default as UserAdd } from './UserAdd';
 export { default as Users } from './Users';

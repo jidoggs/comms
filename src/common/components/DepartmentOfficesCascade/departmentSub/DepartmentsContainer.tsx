@@ -5,13 +5,15 @@ import Title from '@/common/components/Title';
 import { ArrowRight, TickCircle } from '@/common/components/icons';
 import { iHandleClick } from '@/types';
 import { mergeClassName } from '@/common/utils';
+import SectionMoreOptions from '@/app/admin/departments/components/actions/SectionMoreOptions';
 
 type Props = {
   items: any[];
   title?: string;
-  step?: string;
+  step: 'parastatals' | 'office' | 'department' | 'person';
   clickHandler: iHandleClick;
-  activeIdentifier: string;
+  activeIdentifier?: string;
+  isEditable?: boolean;
 };
 
 function DepartmentsContainer({
@@ -20,12 +22,14 @@ function DepartmentsContainer({
   step,
   clickHandler,
   activeIdentifier,
+  isEditable,
 }: Props) {
   return (
-    <section className="flex max-w-[350px] flex-col border-r border-custom-gray_500 bg-custom-white_100 [&:last-child:not(:only-child)]:border-none">
-      <Title className="flex h-12 items-center border-b border-custom-gray_500 bg-custom-gray_900 px-3 py-2.5">
-        {title}
-      </Title>
+    <section className="flex max-w-[350px] flex-col border-r border-custom-gray_500 bg-custom-white_100">
+      <header className="group/title flex h-12 items-center justify-between border-b border-custom-gray_500 bg-custom-gray_900 px-3 py-2.5">
+        <Title>{title}</Title>
+        <SectionMoreOptions />
+      </header>
       <div className="flex flex-col ">
         {items?.map((item, index) => {
           return (
@@ -33,8 +37,8 @@ function DepartmentsContainer({
               key={index}
               className={
                 item?.value === activeIdentifier
-                  ? 'bg-custom-purple_500'
-                  : 'hover:bg-custom-purple_500'
+                  ? 'group-[.is-admin]:bg-custom-gray_500 group-[.is-onboard]:bg-custom-purple_500'
+                  : 'group-[.is-admin]:hover:bg-custom-gray_500 group-[.is-onboard]:hover:bg-custom-purple_500'
               }
               data-step={step}
               data-value={item?.value}
@@ -49,7 +53,10 @@ function DepartmentsContainer({
                   {item?.children !== undefined ? (
                     <ArrowRight size={18} />
                   ) : (
-                    <TickCircle size={18} />
+                    <TickCircle
+                      size={18}
+                      className={mergeClassName(isEditable ? 'invisible' : '')}
+                    />
                   )}
                 </span>
               }
