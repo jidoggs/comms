@@ -38,3 +38,26 @@ export function requestRefreshToken(epoch: number): boolean {
 
   return epoch !== 0 ? differenceInMinutes <= 10 : false;
 }
+
+export const formatPhoneNumber = (value: string) => {
+  if (!value) return value;
+  const stringVal = value?.toString();
+  if (stringVal.length === 10) {
+    return '+234' + value;
+  }
+  if (stringVal.length === 11) {
+    return '+234' + value.substring(1);
+  }
+  if (stringVal.startsWith('234')) {
+    return '+' + stringVal;
+  }
+  return stringVal;
+};
+
+export async function copyTextToClipboard(text: string) {
+  if ('clipboard' in navigator) {
+    return await navigator.clipboard.writeText(text);
+  } else {
+    return document.execCommand('copy', true, text);
+  }
+}
