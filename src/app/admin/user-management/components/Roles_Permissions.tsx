@@ -17,7 +17,7 @@ const Roles_Permissions = () => {
       <div className="mt-4 grid grid-cols-10 bg-custom-white_100 p-4">
         <div className="col-span-2">Main Administrator</div>
         <div className="col-span-8 flex flex-row justify-between">
-          <Title>Parastatal</Title>{' '}
+          <Title>Parastatal</Title>
           <div className="flex flex-row gap-2">
             <CustomButton
               icon={<MorePlain />}
