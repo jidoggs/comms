@@ -63,7 +63,7 @@ const StepTwoForm = () => {
         <Form.Item>
           <CustomButton
             loading={officeInfoIsMutating}
-            disabled={selectedDepartment === ''}
+            disabled={selectedDepartment === '' || officeInfoIsMutating}
             htmlType="submit"
             block
             size="small"

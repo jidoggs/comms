@@ -1,11 +1,35 @@
-// export interface Option {
-//   value: string | number;
-//   label: string;
-//   children?: Option[];
-//   isActive: boolean;
-//   type: string;
-//   id: number;
-// }
+export interface Option {
+  value: string | number;
+  label: string;
+  children?: Option[];
+  isActive: boolean;
+  type: string;
+  id: number;
+}
+export interface ParastatalProps {
+  value: string | number;
+  label: string;
+  children?: Option[];
+  isActive: boolean;
+  type: string;
+  id: number;
+}
+export interface OfficeProps {
+  value: string | number;
+  label: string;
+  children?: Option[];
+  isActive: boolean;
+  type: string;
+  id: number;
+}
+export interface DepartmentProps {
+  value: string | number;
+  label: string;
+  children?: Option[];
+  isActive: boolean;
+  type: string;
+  id: number;
+}
 
 // export const governmentData: Option[] = [
 //   {
