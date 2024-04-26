@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import CustomInput from '@/common/CustomInput';
+import CustomInput from '@/common/components/CustomInput';
 import UploadDocs from './UploadDocs';
 import { EditCellProps } from './type';
 

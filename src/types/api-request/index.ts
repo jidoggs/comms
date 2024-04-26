@@ -1,5 +1,9 @@
 import { FetcherResponse } from 'swr/_internal';
-import { APIResponseSuccessModel } from '../api-response';
+import {
+  APIResponseErrorModel,
+  APIResponseSuccessModel,
+} from '../api-response';
+import { TriggerWithArgs } from 'swr/mutation';
 
 export type apiRequestorArgs<T = object> = {
   data: T;
@@ -10,3 +14,10 @@ export type Request = (
   key: string,
   options: Readonly<{ arg: apiRequestorArgs }>
 ) => FetcherResponse<APIResponseSuccessModel<any>>;
+
+export type Mutate = TriggerWithArgs<
+  APIResponseSuccessModel<any>,
+  APIResponseErrorModel,
+  string,
+  apiRequestorArgs
+>;

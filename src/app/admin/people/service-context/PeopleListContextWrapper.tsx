@@ -1,18 +1,15 @@
 'use client';
 import React, { createContext } from 'react';
-import { Popover, TabsProps } from 'antd';
-import TableRowAction from '../components/TableRowAction';
+import { TabsProps } from 'antd';
 import { mergeClassName } from '@/common/utils';
 import {
   ContextWapper,
   PeopleDataContextType,
   EditableTableColumnTypes,
-  iHandleKeyboard,
 } from '../types';
 import { useTabChange } from '@/common/hooks';
 import { dummyPersonsPending, dummyPersons } from '@/common/mockData';
-import Tick from '@/common/components/icons/Tick';
-import { CloseCircle } from '@/common/components/icons';
+import TableRowAction from '../components/TableRowAction';
 
 export const PeopleDataContext = createContext<PeopleDataContextType>(null);
 const onboardingKeys = [
@@ -33,35 +30,6 @@ const personKeys = [
   'date_created',
   '',
 ];
-
-const actionsKeyboardHandler: iHandleKeyboard = (e) => {
-  e.stopPropagation();
-};
-
-const content = (
-  <div>
-    <div
-      role="button"
-      className="flex cursor-pointer items-center gap-1"
-      tabIndex={0}
-      onClick={(e) => e.stopPropagation()}
-      onKeyDown={actionsKeyboardHandler}
-    >
-      <Tick size={16} color="green" />
-      <p>Approve</p>
-    </div>
-    <div
-      className="flex cursor-pointer items-center gap-1"
-      role="button"
-      tabIndex={0}
-      onClick={(e) => e.stopPropagation()}
-      onKeyDown={actionsKeyboardHandler}
-    >
-      <CloseCircle size={18} color="red" />
-      <p>Decline</p>
-    </div>
-  </div>
-);
 
 const defaultColumns: (EditableTableColumnTypes[number] & {
   dataIndex: string;
@@ -140,38 +108,14 @@ const defaultColumns: (EditableTableColumnTypes[number] & {
     dataIndex: '',
     ellipsis: true,
     width: 65,
-    render: (_: any, __: any, record: any) => {
-      return (
-        <Popover content={content} className="!w-full cursor-pointer">
-          <>
-            <TableRowAction data={record} />
-          </>
-        </Popover>
-      );
+    render: (_: any, record: any) => {
+      return <TableRowAction data={record} />;
     },
   },
 ].map((itm) => ({
   ...itm,
   className: mergeClassName('!py-4 text-sm font-medium', itm.className),
 }));
-const tabItemList: TabsProps['items'] = [
-  {
-    key: 'pending',
-    label: 'Pending onboarding',
-  },
-  {
-    key: 'onboarded',
-    label: 'Onboarded',
-  },
-  {
-    key: 'approved',
-    label: 'Approved',
-  },
-  {
-    key: 'declined',
-    label: 'Declined',
-  },
-];
 
 function PeopleListContextWrapper({ children }: ContextWapper) {
   const tabs = useTabChange({
@@ -183,6 +127,25 @@ function PeopleListContextWrapper({ children }: ContextWapper) {
   const handleDelete = (id: string | number) => {
     console.log(id); //eslint-disable-line
   };
+
+  const tabItemList: TabsProps['items'] = [
+    {
+      key: 'pending',
+      label: 'Pending onboarding',
+    },
+    {
+      key: 'onboarded',
+      label: 'Onboarded',
+    },
+    {
+      key: 'approved',
+      label: 'Approved',
+    },
+    {
+      key: 'declined',
+      label: 'Declined',
+    },
+  ];
 
   const columns = defaultColumns
     .filter((itm) =>
@@ -221,18 +184,45 @@ function PeopleListContextWrapper({ children }: ContextWapper) {
   const handleAdd = () => {};
 
   return (
-    <PeopleDataContext.Provider
-      value={{
-        ...tabs,
-        handleAdd,
-        columns,
-        dataSource,
-        handleDelete,
-        tabItemList,
-      }}
-    >
-      {children}
-    </PeopleDataContext.Provider>
+    <>
+      <PeopleDataContext.Provider
+        value={{
+          ...tabs,
+          handleAdd,
+          columns,
+          dataSource,
+          handleDelete,
+          tabItemList,
+        }}
+      >
+        {children}
+      </PeopleDataContext.Provider>
+      {/* <div>
+        <DeclineRequestModalContent
+          handleCancel={handleCancel}
+          isModalOpen={isModalOpen}
+          setIsSuccessModalOpen={() => setIsSuccessModalOpen(true)}
+        />
+        <SubmittedResponseModal
+          handleCancel={() => setIsSuccessModalOpen(false)}
+          isModalOpen={isSuccessModalOpen}
+        />
+        <CustomModal width={320} open={isModalOpen} onCancel={handleCancel}>
+          <div className="flex flex-col items-center gap-2 text-base text-custom-gray_200">
+            <InfoCircle size={90} />
+
+            <p className="text-center">
+              Are you sure you want to approve this registration?
+            </p>
+            <Divider className="!border-custom-gray_500" />
+            <div className="-mt-2 flex w-full justify-between">
+              <CustomButton type="text">Cancel</CustomButton>
+              <CustomButton type="text">Yes, Approve</CustomButton>
+            </div>
+          </div>
+        </CustomModal>
+      </div> */}
+    </>
   );
 }
 

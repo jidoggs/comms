@@ -1,6 +1,6 @@
 import React from 'react';
 import type { MenuProps } from 'antd';
-import { Message, Users, Building } from '@/common/components/icons';
+import { Message, Users, Building, Settings } from '@/common/components/icons';
 import { Home, More, Schedule, FolderOpen } from '@/common/components/icons';
 import { UserPreDefinedRole, UserRoles } from '@/types';
 
@@ -95,6 +95,17 @@ const navItems = {
       </span>,
       navClassName
     ),
+    ADMIN_USER_MANAGEMENT: getItem(
+      <span>
+        User <br className="" />
+        Management
+      </span>,
+      '/admin/user-management',
+      <span className="">
+        <Settings size={22} />
+      </span>,
+      navClassName
+    ),
     ADMIN_ARCHIVES: getItem(
       <span>Archive</span>,
       '/admin/archive',
@@ -115,19 +126,22 @@ const navItems = {
 };
 
 const getUserNavItemsByRole = (role: UserRoles) => {
+  let routes = null;
   switch (role) {
     case UserPreDefinedRole.PRIMARYADMIN:
-      return generateRoutes({ ...navItems.admin });
-
+      routes = generateRoutes({ ...navItems.user, ...navItems.admin }); // this user should be able to see both the pages
+      break;
     case UserPreDefinedRole.SECONDARYADMIN:
-      return generateRoutes(navItems.admin);
-
+      routes = generateRoutes(navItems.admin);
+      break;
     case UserPreDefinedRole.BASICUSER:
-      return generateRoutes(navItems.user);
-
+      routes = generateRoutes(navItems.user);
+      break;
     default:
-      return generateRoutes(navItems.user);
+      routes = generateRoutes(navItems.user);
+      break;
   }
+  return routes;
 };
 
 export const menuItemRenderer = (role: UserRoles) => {

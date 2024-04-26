@@ -1,31 +1,60 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-// /* eslint-disable @typescript-eslint/no-unused-vars */
-// /* eslint-disable no-unused-vars */
+
 'use client';
 import React, { useState } from 'react';
 import { Form } from 'antd';
-// import Link from 'next/link';
-// import CustomInput from '@/common/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
 import { ArrowRight, ArrowRightBreak } from '@/common/components/icons';
 import { useRouter } from 'next/navigation';
 import useOnboarding from '@/app/auth/hooks/useOnboarding';
 import Title from '@/common/components/Title';
-import DepartmentOfficesCascade from '@/common/components/DepartmentOfficesCascade/DepartmentOfficesCascade';
+import SectionCascade from '@/common/components/SectionCascade';
+import { iHandleClick } from '@/types';
+
+const initialDataList = { parastatal: '', office: '', department: '' };
 
 const StepTwoForm = () => {
   const router = useRouter();
-  // const [currentStep, setCurrentStep] = useState<number>(1);
-  const [selectedDepartment, setSelectedDepartment] = useState<string>('');
+  const [dataList, setDataList] = useState(initialDataList);
   const { officeInfoTrigger, officeInfoIsMutating } = useOnboarding({
     office_info: true,
   });
 
+  const clickHandler: iHandleClick = (e) => {
+    const dataset = e.currentTarget.dataset;
+    const value = dataset.value as string;
+
+    switch (dataset.step) {
+      case 'parastatals':
+        setDataList({
+          ...initialDataList,
+          parastatal: value,
+        });
+        break;
+      case 'office':
+        setDataList((prev) => ({
+          ...prev,
+          office: value,
+          department: '',
+        }));
+        break;
+      case 'department':
+        setDataList((prev) => ({
+          ...prev,
+          department: value,
+        }));
+        break;
+
+      default:
+        setDataList({
+          ...initialDataList,
+        });
+        break;
+    }
+  };
+
   const onFinish = () => {
-    const department = {
-      selectedDepartment,
-    };
     // router.push('/onboarding/set-password');
     // officeInfoTrigger({ data: department, type: 'post' }).then(() => {
     //   router.push('/onboarding/set-password');
@@ -34,44 +63,39 @@ const StepTwoForm = () => {
 
   return (
     <Form
-      name="basic"
       onFinish={onFinish}
       autoComplete="off"
       layout="vertical"
       className="!w-full"
-      style={{ width: '100%' }}
     >
       <Title>Click to select Parastatal, office and department</Title>
-      <DepartmentOfficesCascade
-        selectedDepartment={selectedDepartment}
-        setSelectedDepartment={setSelectedDepartment}
-        // currentStep={currentStep}
-        // setCurrentStep={setCurrentStep}
-      />
-      <div className="flex flex-row justify-end gap-2">
-        <Form.Item>
-          <CustomButton
-            block
-            size="small"
-            type="primary"
-            onClick={() => router.push('/onboarding/set-password')}
-          >
-            <span className="pr-1">Skip step and add</span>
-            <ArrowRightBreak />
-          </CustomButton>
-        </Form.Item>
-        <Form.Item>
-          <CustomButton
-            loading={officeInfoIsMutating}
-            disabled={selectedDepartment === ''}
-            htmlType="submit"
-            block
-            size="small"
-          >
-            <span className="pr-1">Continue</span>
-            {officeInfoIsMutating ? null : <ArrowRight />}
-          </CustomButton>
-        </Form.Item>
+      {/* is-onboard and group are style identifies */}
+      <div className="is-onboard group w-full max-w-screen-lg overflow-x-scroll py-2">
+        <SectionCascade
+          clickHandler={clickHandler}
+          dataList={dataList}
+          className="overflow-hidden rounded-lg"
+        />
+      </div>
+      <div className="flex items-center justify-end gap-x-2">
+        <CustomButton
+          size="small"
+          type="primary"
+          onClick={() => router.push('/onboarding/set-password')}
+        >
+          <span className="pr-1">Skip step and add</span>
+          <ArrowRightBreak />
+        </CustomButton>
+
+        <CustomButton
+          loading={officeInfoIsMutating}
+          disabled={dataList.department === ''}
+          htmlType="submit"
+          size="small"
+        >
+          <span className="pr-1">Submit details</span>
+          {officeInfoIsMutating ? null : <ArrowRight />}
+        </CustomButton>
       </div>
     </Form>
   );

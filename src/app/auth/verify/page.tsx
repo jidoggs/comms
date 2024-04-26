@@ -1,15 +1,13 @@
-// import { PageHeader } from "@/components/common";
-import React, { lazy } from "react";
+import React from 'react';
+import PageLoader from '../components/PageLoader';
+import dynamic from 'next/dynamic';
 
-const PageContent = lazy(() => import("./PageContent"));
+const PageContent = dynamic(() => import('./PageContent'), {
+  loading: () => <PageLoader />,
+});
 
 const Verify = () => {
-  return (
-    <div className="!w-full">
-      {/* <PageHeader title="Forgot" description="Admin Forgot Password" /> */}
-      <PageContent />
-    </div>
-  );
+  return <PageContent />;
 };
 
 export default Verify;

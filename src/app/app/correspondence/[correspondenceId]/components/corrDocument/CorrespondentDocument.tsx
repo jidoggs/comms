@@ -1,11 +1,11 @@
 'use client';
 import React, { useState } from 'react';
-import { Document, Page } from 'react-pdf';
+import { Document, Page, pdfjs } from 'react-pdf';
 
-// pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-//   'pdfjs-dist/build/pdf.worker.min.js',
-//   import.meta.url
-// ).toString();
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  'pdfjs-dist/build/pdf.worker.min.js',
+  import.meta.url
+).toString();
 
 // Create Document Component
 const CorrespondentDocument = ({ correspondenceFile }: any) => {

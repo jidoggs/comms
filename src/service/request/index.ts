@@ -146,3 +146,20 @@ export const apiErrorHandler = (error: any) => {
   }
   return error?.message ?? 'Something went Wrong';
 };
+
+export const queryHandler = (req: Record<string, string | number>) => {
+  let params = '';
+  const keys = Object.keys(req) as Array<keyof typeof req>;
+  keys.forEach((key) => {
+    if (req[key]) {
+      if (params.length === 0) {
+        params += '?';
+      } else {
+        params += '&';
+      }
+
+      params += `${key}=${req[key]}`;
+    }
+  });
+  return params;
+};

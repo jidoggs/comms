@@ -1,6 +1,10 @@
 import React from 'react';
-import ForgotForm from './components/ForgotForm';
+import dynamic from 'next/dynamic';
 import PageTitle from '../components/PageTitle';
+
+const ForgotForm = dynamic(() => import('./components/ForgotForm'), {
+  loading: () => <p>Loading...</p>,
+});
 
 const ForgotPageContent: React.FunctionComponent = () => {
   return (

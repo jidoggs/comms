@@ -2,7 +2,7 @@
 import React from 'react';
 import { Form } from 'antd';
 import Link from 'next/link';
-import CustomInput from '@/common/CustomInput';
+import CustomInput from '@/common/components/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
 import useAuth from '../../hooks/useAuth';
 

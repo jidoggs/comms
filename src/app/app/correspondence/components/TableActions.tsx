@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import CustomInput from '@/common/CustomInput';
+import CustomInput from '@/common/components/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
 import { Add, Search } from '@/common/components/icons';
 

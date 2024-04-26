@@ -16,4 +16,19 @@ export const ENDPOINTS = {
     // FORGOT_PASSWORD: '/auth/forgot_password',
     // RESET_PASSWORD: '/auth/reset_password',
   },
+  PARASTATALS: {
+    CREATE: '/parastatals',
+    GET_ALL: '/parastatals/all',
+    UPDATE: (query: string) => `/parastatals/${query}`,
+  },
+  DEPARTMENT: {
+    CREATE: '/departments',
+    GET_ALL: '/departments/all',
+    UPDATE: (query: string) => `/departments/${query}`,
+  },
+  OFFICE: {
+    CREATE: '/offices',
+    GET_ALL: '/offices/all',
+    UPDATE: (query: string) => `/offices/${query}`,
+  },
 };

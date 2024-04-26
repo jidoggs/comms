@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ExpandedMinuteForm from './ExpandedMinuteForm';
 import CustomModal from '@/common/components/CustomModal';
-import CustomInput from '@/common/CustomInput';
+import CustomInput from '@/common/components/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
 import {
   Briefcase,
@@ -22,7 +22,7 @@ const MinuteAction = () => {
     setIsModalOpen(false);
   };
   return (
-    <div className="drop-shadow-chat w-full rounded-md bg-white ">
+    <div className="w-full rounded-md bg-white drop-shadow-chat ">
       <div className="flex flex-col p-3">
         <div className="mb-2 flex items-center justify-between">
           <div className="left">Left</div>

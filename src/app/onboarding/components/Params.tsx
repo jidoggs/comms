@@ -11,19 +11,16 @@ const Params = () => {
 
   const routes = [
     {
-      id: 1,
       link: '/onboarding/personal-info',
       param: 'personal-info',
       title: 'Personal info.',
     },
     {
-      id: 2,
       link: '/onboarding/office-info',
       param: 'office-info',
       title: 'Office info.',
     },
     {
-      id: 3,
       link: '/onboarding/set-password',
       param: 'set-password',
       title: 'Set Password.',
@@ -31,20 +28,27 @@ const Params = () => {
   ];
 
   return (
-    <div className="flex w-full flex-row gap-3">
-      {routes.map((route) => (
-        <Link href={route.link} key={route.id}>
-          <Title
-            className={mergeClassName(
-              'text-custom-gray_600',
-              currentRoute === route.param && 'text-custom-main'
-            )}
+    <ul className="flex list-inside list-decimal gap-x-3 self-stretch">
+      {routes.map((route, id) => (
+        <li
+          key={id}
+          className={mergeClassName(
+            currentRoute === route.param
+              ? 'text-custom-main '
+              : 'text-custom-gray_600 hover:text-custom-main'
+          )}
+        >
+          <Link
+            href={route.link}
+            className="-ml-2 text-inherit hover:text-inherit"
           >
-            {route.id}. {route.title}
-          </Title>
-        </Link>
+            <Title tag="span" className="text-inherit">
+              {route.title}
+            </Title>
+          </Link>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 };
 

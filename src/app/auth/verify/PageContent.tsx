@@ -1,6 +1,10 @@
 import React from 'react';
+import dynamic from 'next/dynamic';
 import PageTitle from '../components/PageTitle';
-import VerifyForm from './components/VerifyForm';
+
+const VerifyForm = dynamic(() => import('./components/VerifyForm'), {
+  loading: () => <p>Loading...</p>,
+});
 
 const VerifyPageContent: React.FunctionComponent = () => {
   return (

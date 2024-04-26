@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form } from 'antd';
-import CustomInput from '@/common/CustomInput';
+import CustomInput from '@/common/components/CustomInput';
 import DatePickerAndTimeRange from '@/app/app/home/components/DateAndTimePicker';
 import CustomButton from '@/common/components/CustomButton';
 import { Send } from '@/common/components/icons';
@@ -16,23 +16,21 @@ type Props = {
 const CreateAppointmentForm = ({ handleSubmit }: Props) => {
   return (
     <Form layout="vertical" onFinish={handleSubmit}>
-      <CustomInput
-        name="Name of appointment"
-        label="Name of Appointment"
-        placeholder="Aa"
-      />
+      <Form.Item<FieldType> label="Name of Appointment">
+        <CustomInput name="Name of appointment" placeholder="Aa" />
+      </Form.Item>
       <div className="my-6">
         <DatePickerAndTimeRange />
       </div>
 
       {correspondenceCreateMeeting.map((item) => (
-        <Form.Item<FieldType> key={item.name}>
+        <Form.Item<FieldType>
+          key={item.name}
+          label={item.label}
+          name={item.name}
+        >
           <div className="flex flex-col gap-1">
-            <CustomInput
-              name={item.name}
-              label={item.label}
-              placeholder={item.placeholder}
-            />
+            <CustomInput name={item.name} placeholder={item.placeholder} />
           </div>
         </Form.Item>
       ))}

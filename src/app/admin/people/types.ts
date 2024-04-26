@@ -3,6 +3,7 @@
 import { Table, TabsProps } from 'antd';
 import { AnimationControls } from 'framer-motion';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
+import { MutableRefObject } from 'react';
 export * from '../../../types';
 export interface CorrespondenceData {
   sent_by: string;
@@ -35,6 +36,7 @@ export type PeopleDataContextType = {
   handleDelete: (id: string | number) => void;
   tabItem: string;
   tabItemList: TabsProps['items'];
+  pageRef?: MutableRefObject<HTMLElement | null>;
 } | null;
 
 export type DetailContextType = {

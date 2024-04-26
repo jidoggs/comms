@@ -1,14 +1,8 @@
 'use client';
 import React from 'react';
 import { ConfigProvider, ThemeConfig } from 'antd';
-import { AntdRegistry } from '@ant-design/nextjs-registry';
+import AntdRegistry from '@ant-design/nextjs-registry/es/AntdRegistry';
 import { customThemeColor } from '@/common/utils';
-import { pdfjs } from 'react-pdf';
-
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  'pdfjs-dist/build/pdf.worker.min.js',
-  import.meta.url
-).toString();
 
 const appTheme: ThemeConfig = {
   token: {
@@ -96,16 +90,18 @@ const appTheme: ThemeConfig = {
       paddingBlock: 10,
       paddingInline: 15,
       borderRadius: 8,
-      fontSize: 16,
-      colorText: customThemeColor.gray_600,
+      fontSize: 14,
+      colorText: customThemeColor.main,
       colorBgContainer: customThemeColor.gray_900,
       fontWeightStrong: 400,
-      colorBorderBg: customThemeColor.gray_800,
+      colorBorderBg: customThemeColor.gray_400,
       colorTextPlaceholder: customThemeColor.gray_600,
       colorBgContainerDisabled: customThemeColor.gray_900,
       margin: 0,
-      controlHeight: 48,
-      lineHeight: 1,
+      controlHeight: 44,
+      controlHeightSM: 24,
+      paddingBlockSM: 0,
+      paddingInlineSM: 0,
     },
 
     Select: {

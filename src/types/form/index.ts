@@ -1,6 +1,5 @@
 import { Rule } from 'antd/es/form';
 import React from 'react';
-/* eslint-disable no-unused-vars  */
 
 export type iHandleChange = (e: React.ChangeEvent<HTMLInputElement>) => void;
 

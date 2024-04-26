@@ -1,4 +1,4 @@
-import CustomInput from '@/common/CustomInput';
+import CustomInput from '@/common/components/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
 import CustomSelect from '@/common/components/CustomSelect';
 import { CloseCircled } from '@/common/components/icons';
@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 
 type Props = {
   onFinish: FormProps['onFinish'];
+  isLoading: boolean;
 };
 
 const OPTION = [
@@ -15,7 +16,7 @@ const OPTION = [
   { value: '@operations.fmiti.ng', label: '@operations.fmiti.ng' },
 ];
 
-function AddForm({ onFinish }: Props) {
+function AddForm({ onFinish, isLoading }: Props) {
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   return (
     <Form layout="vertical" onFinish={onFinish}>
@@ -24,18 +25,19 @@ function AddForm({ onFinish }: Props) {
         name="name"
         rules={[{ required: true, message: 'Please input the name!' }]}
       >
-        <CustomInput placeholder="Aa" />
+        <CustomInput placeholder="Aa" disabled={isLoading} />
       </Form.Item>
 
       <Form.Item
         label={<span className="font-bold">Domain(s)</span>}
-        name="title"
+        name="domains"
         rules={[{ required: true, message: 'Please input the title!' }]}
       >
         <CustomSelect
           value={selectedItems}
           options={OPTION}
           onChange={setSelectedItems}
+          disabled={isLoading}
           mode="multiple"
           placeholder="Add domains here "
           removeIcon={<CloseCircled className="text-white" />}
@@ -43,7 +45,7 @@ function AddForm({ onFinish }: Props) {
       </Form.Item>
 
       <div className="flex items-center justify-end  border-t border-custom-gray_500 py-2">
-        <CustomButton size="small" htmlType="submit">
+        <CustomButton loading={isLoading} size="small" htmlType="submit">
           Create
         </CustomButton>
       </div>
