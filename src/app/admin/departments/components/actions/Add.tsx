@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import AddForm from '../forms/Add/Form';
-import CustomModal from '@/common/components/CustomModal';
-import Title from '@/common/components/Title';
-import { Building, Link } from '@/common/components/icons';
+import AddModal from '../modals/AddModal';
 import CustomButton, {
   CustomButtonProps,
 } from '@/common/components/CustomButton';
+import { Building } from '@/common/components/icons';
 
 function Add({ className }: CustomButtonProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -37,26 +35,12 @@ function Add({ className }: CustomButtonProps) {
       >
         Add
       </CustomButton>
-      <CustomModal
-        width={500}
-        title={
-          <div className="flex items-center justify-between">
-            <Title tag="h2">Add</Title>
-            <div className="flex items-center gap-x-2">
-              <span className="text-custom-purple_100">
-                <Link size={20} />
-              </span>
-              <Title tag="span" className="text-custom-purple_100">
-                copy link
-              </Title>
-            </div>
-          </div>
-        }
-        open={isModalOpen}
-        onCancel={handleCancel}
-      >
-        <AddForm onFinish={submitHandler} />
-      </CustomModal>
+      <AddModal
+        handleCancel={handleCancel}
+        handleSubmit={submitHandler}
+        isModalOpen={isModalOpen}
+        isLoading={false}
+      />
     </>
   );
 }

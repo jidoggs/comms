@@ -1,4 +1,4 @@
-"use client"
+'use client';
 import { useRouter } from 'next/navigation';
 import { ENDPOINTS } from '@/service/config/endpoint';
 import {
@@ -57,7 +57,7 @@ function useAuth(props?: Props) {
       storeRefreshToken(res.data.refresh_token);
       const temp = { ...res.data };
       storeUserHandler(temp);
-      if (res?.data?.role?.name === UserPreDefinedRole.PRIMARYADMIN) {
+      if (res?.data?.role?.name === UserPreDefinedRole.SECONDARYADMIN) {
         router.push('/admin/people');
       } else {
         router.push('/app/home');

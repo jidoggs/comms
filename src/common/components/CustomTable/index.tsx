@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { Table } from 'antd';
 import Title from '../Title';
 import CustomPaginationHeader from '../CustomPaginationHeader';
@@ -6,19 +6,20 @@ import { CustomTableProps } from './type';
 import { mergeClassName } from '@/common/utils';
 export * from './type';
 
-const CustomTable = <T extends object>({
-  tabs,
-  searchPanel,
-  tableTitle,
-  currentPage = 1,
-  dataSource,
-  pageSize = 100,
-  totalContent = 0,
-  pageChangeCallBack,
-  className,
-  rowClassName,
-  ...otherTableProps
-}: CustomTableProps<T>) => {
+const CustomTable = forwardRef<any, CustomTableProps<any>>((props, ref) => {
+  const {
+    tabs,
+    searchPanel,
+    tableTitle,
+    currentPage = 1,
+    dataSource,
+    pageSize = 100,
+    totalContent = 0,
+    pageChangeCallBack,
+    className,
+    rowClassName,
+    ...otherTableProps
+  } = props;
   const paginationHeader = (
     <>
       {totalContent === 0 ? (
@@ -98,6 +99,7 @@ const CustomTable = <T extends object>({
             pagination={false}
             tableLayout="auto"
             dataSource={dataSource}
+            ref={ref}
             rowClassName={mergeClassName('bg-transparent', rowClassName)}
             rowKey={'id'}
             className={mergeClassName(
@@ -109,6 +111,8 @@ const CustomTable = <T extends object>({
       </div>
     </section>
   );
-};
+});
+
+CustomTable.displayName = 'CustomTable';
 
 export default CustomTable;
