@@ -20,13 +20,14 @@ export type CorrespondenceContextNewType = {
 
 export type UserMgmtDataContextType = {
   handleAdd: VoidFunction;
-  handleAddRoll?: VoidFunction;
+  handleAddRole?: VoidFunction;
   handleTabChange: (state: string) => void;
   // columns: EditableTableColumnTypes;
   dataSource: any[];
   handleDelete: (id: string | number) => void;
   tabItem: string;
   tabItemList: TabsProps['items'];
+  editRole?: boolean;
 } | null;
 
 export type DetailContextType = {
