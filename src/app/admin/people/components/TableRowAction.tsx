@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
-import { Dropdown, MenuProps } from 'antd';
+import {  Dropdown, MenuProps } from 'antd';
 import CustomButton from '@/common/components/CustomButton';
-import { CloseCircled, MoreFile, TickCircle } from '@/common/components/icons';
+import {
+  CloseCircled,
+  MoreFile,
+  TickCircle,
+} from '@/common/components/icons';
 import { iHandleClick } from '../types';
+import DeclineRequestModalContent from './DeclineRequestModalContent';
+import SubmittedResponseModal from './SubmittedResponseModal';
+import ApproveModalContent from './ApproveModalContent';
 
 type Props = {
   data: any;
@@ -13,6 +20,7 @@ export const TableRowActionContext = React.createContext<Props | null>(null);
 const initialModalState = {
   approve: false,
   decline: false,
+  success: false,
 };
 
 function TableRowAction({ data }: Props) {
@@ -72,6 +80,21 @@ function TableRowAction({ data }: Props) {
             icon={<MoreFile />}
           />
         </Dropdown>
+        <div>
+          <DeclineRequestModalContent
+            handleCancel={handleCancel}
+            isModalOpen={isModalOpen.decline}
+            setIsSuccessModalOpen={showModal}
+          />
+          <SubmittedResponseModal
+            handleCancel={handleCancel}
+            isModalOpen={isModalOpen.success}
+          />
+          <ApproveModalContent
+            isModalOpen={isModalOpen.approve}
+            handleCancel={handleCancel}
+          />
+        </div>
       </div>
     </TableRowActionContext.Provider>
   );
