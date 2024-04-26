@@ -1,5 +1,5 @@
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useLayoutEffect } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 
 type Props = {
   defaultKey: string;
@@ -7,6 +7,7 @@ type Props = {
 function useTabChange({ defaultKey }: Props) {
   const router = useRouter();
   const tabItem = useSearchParams().get('tab') as string;
+  const pageRef = useRef<HTMLElement | null>(null);
 
   const base = defaultKey.split('=')?.[0].split('/');
   const query = base[base.length - 1];
@@ -20,10 +21,12 @@ function useTabChange({ defaultKey }: Props) {
 
   const handleTabChange = (state: string) => {
     router.push(`${query}=${state}`);
+    pageRef.current?.scrollTo({ top: 0 });
   };
   return {
     handleTabChange,
     tabItem,
+    pageRef,
   };
 }
 

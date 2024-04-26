@@ -9,7 +9,7 @@ import { ArrowRight, ArrowRightBreak } from '@/common/components/icons';
 import { useRouter } from 'next/navigation';
 import useOnboarding from '@/app/auth/hooks/useOnboarding';
 import Title from '@/common/components/Title';
-import DepartmentOfficesCascade from '@/common/components/DepartmentOfficesCascade/DepartmentOfficesCascade';
+import SectionCascade from '@/common/components/SectionCascade';
 import { iHandleClick } from '@/types';
 
 const initialDataList = { parastatal: '', office: '', department: '' };
@@ -71,7 +71,7 @@ const StepTwoForm = () => {
       <Title>Click to select Parastatal, office and department</Title>
       {/* is-onboard and group are style identifies */}
       <div className="is-onboard group w-full max-w-screen-lg overflow-x-scroll py-2">
-        <DepartmentOfficesCascade
+        <SectionCascade
           clickHandler={clickHandler}
           dataList={dataList}
           className="overflow-hidden rounded-lg"

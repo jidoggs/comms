@@ -44,6 +44,7 @@ const CorrespondencePage = () => {
         size="large"
         rowClassName="group"
         onRow={rowClickHandler}
+
       />
       <RegistrationDetail
         open={isModalOpen}

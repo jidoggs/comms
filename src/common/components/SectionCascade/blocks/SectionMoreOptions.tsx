@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Dropdown, MenuProps } from 'antd';
-import AddModal from '../modals/AddModal';
+import AddModal from '../../../../app/admin/departments/components/modals/AddModal';
 import InvitePersonModal from '@/app/admin/people/components/InvitePerson/Modal';
 import CustomButton from '@/common/components/CustomButton';
 import {
@@ -9,6 +9,7 @@ import {
   MoreFile,
   UserAdd,
 } from '@/common/components/icons';
+import { Mutate } from '@/types';
 
 const initialModalState = {
   add: false,
@@ -16,19 +17,31 @@ const initialModalState = {
   details: false,
 };
 
-function SectionMoreOptions() {
+type Props = {
+  addTrigger: Mutate;
+  addIsLoading: boolean;
+  inviteTrigger?: Mutate;
+  inviteIsLoading?: boolean;
+};
+
+function SectionMoreOptions({ addIsLoading, addTrigger }: Props) {
   const [isModalOpen, setIsModalOpen] = useState(initialModalState);
 
   const showModal = (val: keyof typeof initialModalState) => {
     setIsModalOpen({ ...initialModalState, [val]: true });
   };
 
-  const handleCancel = () => {
+  const handleClose = () => {
     setIsModalOpen({ ...initialModalState });
   };
 
-  const submitHandler = (value: any) => {
-    console.log(value); //eslint-disable-line
+  const addSubmitHandler = (data: any) => {
+    addTrigger({ data, type: 'post' }).finally(handleClose);
+  };
+
+  //eslint-disable-next-line
+  const inviteSubmitHandler = (values: any) => {
+    // inviteTrigger(values).finally(handleClose);
   };
 
   const items: MenuProps['items'] = [
@@ -68,21 +81,23 @@ function SectionMoreOptions() {
     <>
       <Dropdown menu={{ items }} placement="bottom" className="flex h-auto">
         <CustomButton
-          className="group-hover/title:visible invisible"
+          className="invisible group-hover/title:visible"
           size="small"
           type="text"
           icon={<MoreFile />}
         />
       </Dropdown>
       <AddModal
-        handleCancel={handleCancel}
-        handleSubmit={submitHandler}
+        handleCancel={handleClose}
+        handleSubmit={addSubmitHandler}
         isModalOpen={isModalOpen.add}
+        isLoading={addIsLoading}
       />
       <InvitePersonModal
-        handleCancel={handleCancel}
-        handleSubmit={submitHandler}
+        handleCancel={handleClose}
+        handleSubmit={inviteSubmitHandler}
         isModalOpen={isModalOpen.invite}
+        isLoading={false}
       />
     </>
   );

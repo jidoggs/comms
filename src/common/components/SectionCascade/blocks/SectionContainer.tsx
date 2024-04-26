@@ -1,13 +1,10 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
-import React from 'react';
-import DepartmentItem from './DepartmentItem';
+import React, { ReactNode } from 'react';
+import DepartmentItem from './SectionItem';
 import Title from '@/common/components/Title';
 import { ArrowRight, TickCircle } from '@/common/components/icons';
 import { iHandleClick } from '@/types';
 import { mergeClassName } from '@/common/utils';
-import SectionMoreOptions from '@/app/admin/departments/components/actions/SectionMoreOptions';
 
 type Props = {
   items: any[];
@@ -15,22 +12,26 @@ type Props = {
   step: 'parastatals' | 'office' | 'department' | 'person';
   clickHandler: iHandleClick;
   activeIdentifier?: string;
-  isEditable?: boolean;
+  hasChild?: boolean;
+  showTick?: boolean;
+  moreOptions?: ReactNode;
 };
 
-function DepartmentsContainer({
+function SectionContainer({
   items,
   title,
   step,
   clickHandler,
   activeIdentifier,
-  isEditable,
+  hasChild,
+  showTick,
+  moreOptions,
 }: Props) {
   return (
     <section className="flex max-w-[350px] flex-col border-r border-custom-gray_500 bg-custom-white_100">
       <header className="group/title flex h-12 items-center justify-between border-b border-custom-gray_500 bg-custom-gray_900 px-3 py-2.5">
         <Title>{title}</Title>
-        <SectionMoreOptions />
+        {moreOptions}
       </header>
       <div className="flex flex-col ">
         {items?.map((item, index) => {
@@ -38,32 +39,32 @@ function DepartmentsContainer({
             <DepartmentItem
               key={index}
               className={
-                item?.value === activeIdentifier
+                item?.name === activeIdentifier
                   ? 'group-[.is-admin]:bg-custom-gray_500 group-[.is-onboard]:bg-custom-purple_500'
                   : 'group-[.is-admin]:hover:bg-custom-gray_500 group-[.is-onboard]:hover:bg-custom-purple_500'
               }
               data-step={step}
-              data-value={item?.value}
+              data-value={item?.name}
               onClick={clickHandler}
               hasChild={
                 <span
                   className={mergeClassName(
                     'p-2',
-                    item?.value === activeIdentifier ? 'visible' : 'invisible'
+                    item?.name === activeIdentifier ? 'visible' : 'invisible'
                   )}
                 >
-                  {item?.children !== undefined ? (
+                  {hasChild ? (
                     <ArrowRight size={18} />
                   ) : (
                     <TickCircle
                       size={18}
-                      className={mergeClassName(isEditable ? 'invisible' : '')}
+                      className={mergeClassName(showTick ? '' : 'invisible')}
                     />
                   )}
                 </span>
               }
             >
-              {item?.value}
+              {item?.name}
             </DepartmentItem>
           );
         })}
@@ -72,4 +73,4 @@ function DepartmentsContainer({
   );
 }
 
-export default DepartmentsContainer;
+export default SectionContainer;

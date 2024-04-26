@@ -6,7 +6,7 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
   hasChild?: ReactNode;
 }
 
-function DepartmentItem({ children, hasChild, className, ...props }: Props) {
+function SectionItem({ children, hasChild, className, ...props }: Props) {
   return (
     <button
       {...props}
@@ -21,4 +21,4 @@ function DepartmentItem({ children, hasChild, className, ...props }: Props) {
   );
 }
 
-export default DepartmentItem;
+export default SectionItem;

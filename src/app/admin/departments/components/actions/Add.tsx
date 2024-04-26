@@ -39,6 +39,7 @@ function Add({ className }: CustomButtonProps) {
         handleCancel={handleCancel}
         handleSubmit={submitHandler}
         isModalOpen={isModalOpen}
+        isLoading={false}
       />
     </>
   );

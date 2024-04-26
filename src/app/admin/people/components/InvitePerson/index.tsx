@@ -34,6 +34,7 @@ function InvitePerson() {
         handleCancel={closeModalHandler}
         handleSubmit={onFinishHandler}
         isModalOpen={isOpen}
+        isLoading={false}
       />
     </>
   );

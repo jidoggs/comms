@@ -5,11 +5,17 @@ import CustomModalTitle from '@/common/components/CustomModalTitle';
 
 type Props = {
   isModalOpen: boolean;
+  isLoading: boolean;
   handleCancel: VoidFunction; //eslint-disable-line
   handleSubmit: (val: any) => void; //eslint-disable-line
 };
 
-function AddModal({ handleCancel, handleSubmit, isModalOpen }: Props) {
+function AddModal({
+  handleCancel,
+  handleSubmit,
+  isModalOpen,
+  isLoading,
+}: Props) {
   return (
     <CustomModal
       width={500}
@@ -18,7 +24,7 @@ function AddModal({ handleCancel, handleSubmit, isModalOpen }: Props) {
       onCancel={handleCancel}
       destroyOnClose
     >
-      <AddForm onFinish={handleSubmit} />
+      <AddForm onFinish={handleSubmit} isLoading={isLoading} />
     </CustomModal>
   );
 }

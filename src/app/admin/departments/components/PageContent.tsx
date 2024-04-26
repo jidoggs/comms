@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import Title from '@/common/components/Title';
-import DepartmentOfficesCascade from '@/common/components/DepartmentOfficesCascade/DepartmentOfficesCascade';
+import SectionCascade from '@/common/components/SectionCascade';
 import { iHandleClick } from '../../people/types';
 
 const initialDataList = { parastatal: '', office: '', department: '' };
@@ -52,11 +52,11 @@ const PageContent = () => {
       </div>
       {/* is-admin and group are style identifies */}
       <div className="is-admin group h-screen bg-custom-white_100 px-2.5">
-        <DepartmentOfficesCascade
+        <SectionCascade
           clickHandler={clickHandler}
           dataList={dataList}
           className="h-full"
-          isEditable
+          showMembers
         />
       </div>
     </div>

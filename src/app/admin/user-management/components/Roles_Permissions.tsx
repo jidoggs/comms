@@ -6,7 +6,7 @@ import React from 'react';
 const Roles_Permissions = () => {
   return (
     <div className="flex flex-col">
-      <div className="grid grid-cols-10 border-b border-custom-black_200 border-opacity-10 p-4">
+      <div className="grid grid-cols-10 border-b border-custom-black_200/10 p-4">
         <Title className="col-span-2 font-medium text-custom-gray_600">
           Role
         </Title>
