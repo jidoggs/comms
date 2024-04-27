@@ -22,10 +22,20 @@ type Props = {
   addIsLoading: boolean;
   inviteTrigger?: Mutate;
   inviteIsLoading?: boolean;
+  selectedParastatalId?: any;
+  selectedOfficeId?: any;
+  selectedDepartmentId?: any;
 };
 
-function SectionMoreOptions({ addIsLoading, addTrigger }: Props) {
+function SectionMoreOptions({
+  addIsLoading,
+  addTrigger,
+  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+  selectedParastatalId,
+}: Props) {
   const [isModalOpen, setIsModalOpen] = useState(initialModalState);
+
+  // console.log('selectedParastatalId', selectedParastatalId);
 
   const showModal = (val: keyof typeof initialModalState) => {
     setIsModalOpen({ ...initialModalState, [val]: true });

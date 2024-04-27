@@ -31,4 +31,20 @@ export const ENDPOINTS = {
     GET_ALL: '/offices/all',
     UPDATE: (query: string) => `/offices/${query}`,
   },
+  ROLES: {
+    CREATE: '/roles',
+    GET_ALL: '/roles/all',
+    ADD_PERMISSION_TO_ROLE: '/roles/',
+    // GET_SPECIFIC_ROLE: (query: string) => `/roles/${query}`,
+    // DELETE_SPECIFIC_ROLE: (query: string) => `/roles/${query}`,
+    UPDATE: (query: string) => `/roles/${query}`,
+  },
+  PERMISSIONS: {
+    CREATE: '/permissions',
+    VIEW_ALL_PERMISSIONS: '/permissions/all',
+    GET_ALL_LOCAL: '/permissions/local',
+    GET_SPECIFIC_PERMISSION: (query: string) => `/permissions/${query}`,
+    DELETE_SPECIFIC_PERMISSION: (query: string) => `/permissions/${query}`,
+    UPDATE: (query: string) => `/permissions/${query}`,
+  },
 };

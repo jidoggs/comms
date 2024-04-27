@@ -2,6 +2,7 @@ const singleData = {
   firstname: 'Jane Doe',
   lastname: 'Jane Doe',
   full_name: 'Jane Doe',
+  role: 'Administrator',
   email: 'janedoe@email.ng',
   title: 'Honourable Minister',
   office: 'Office of the Minister',
