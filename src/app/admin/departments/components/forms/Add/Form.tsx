@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 
 type Props = {
   onFinish: FormProps['onFinish'];
-  isLoading: boolean;
+  isLoading?: boolean;
 };
 
 const OPTION = [

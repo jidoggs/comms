@@ -1,6 +1,7 @@
+/* eslint-disable no-console */
 'use client';
 import React, { ReactNode } from 'react';
-import DepartmentItem from './SectionItem';
+import SectionItem from './SectionItem';
 import Title from '@/common/components/Title';
 import { ArrowRight, TickCircle } from '@/common/components/icons';
 import { iHandleClick } from '@/types';
@@ -27,6 +28,10 @@ function SectionContainer({
   showTick,
   moreOptions,
 }: Props) {
+  // console.log('title', title);
+  // console.log('items', items);
+  // console.log('activeIdentifier', activeIdentifier);
+
   return (
     <section className="flex max-w-[350px] flex-col border-r border-custom-gray_500 bg-custom-white_100">
       <header className="group/title flex h-12 items-center justify-between border-b border-custom-gray_500 bg-custom-gray_900 px-3 py-2.5">
@@ -36,7 +41,7 @@ function SectionContainer({
       <div className="flex flex-col ">
         {items?.map((item, index) => {
           return (
-            <DepartmentItem
+            <SectionItem
               key={index}
               className={
                 item?.name === activeIdentifier
@@ -65,7 +70,7 @@ function SectionContainer({
               }
             >
               {item?.name}
-            </DepartmentItem>
+            </SectionItem>
           );
         })}
       </div>

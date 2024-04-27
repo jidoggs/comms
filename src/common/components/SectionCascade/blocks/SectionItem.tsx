@@ -1,12 +1,14 @@
 import React, { ReactNode } from 'react';
 import { mergeClassName } from '@/common/utils';
 
-
 interface Props extends React.HTMLAttributes<HTMLButtonElement> {
   hasChild?: ReactNode;
 }
 
 function SectionItem({ children, hasChild, className, ...props }: Props) {
+  // console.log('title', title);
+  // console.log('items', items);
+  // console.log('activeIdentifier', activeIdentifier);
   return (
     <button
       {...props}
