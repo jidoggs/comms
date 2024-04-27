@@ -267,6 +267,7 @@ const appTheme: ThemeConfig = {
       titleColor: customThemeColor.gray_300,
       borderRadius: 5,
       borderRadiusSM: 0,
+      // colorBgMask: 'rgba(240, 240, 240, 0.5)',
     },
     Timeline: {
       tailColor: customThemeColor.gray_200,

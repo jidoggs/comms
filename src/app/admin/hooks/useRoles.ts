@@ -5,7 +5,8 @@ import { useState } from 'react';
 
 type RequestType =
   | 'create'
-  | 'get_all'
+  | 'get_all_roles'
+  | 'get_all_permissions'
   | 'get_specific_role'
   | 'delete_specific_role'
   | 'add_permission_to_role'
@@ -17,7 +18,8 @@ type Props = Partial<Record<RequestType, boolean>> &
 
 const {
   CREATE,
-  GET_ALL,
+  GET_ALL_ROLES,
+  // GET_ALL_PERMISSIONS,
   ADD_PERMISSION_TO_ROLE,
   // GET_SPECIFIC_ROLE,
   // DELETE_SPECIFIC_ROLE,
@@ -27,14 +29,14 @@ const {
 const { VIEW_ALL_PERMISSIONS } = ENDPOINTS.PERMISSIONS;
 
 function useRoles(props: Props) {
-  const isQuery = props._id && props._id;
+  const isQuery = props._id;
   const query = props._id || '';
 
   const [refreshList, setRefreshList] = useState(false); // stores state to trigger new list after CUD has been done
 
   const revalidateListHandler = () => {
     setRefreshList(true);
-    getListSwr.revalidate();
+    getAllRolesSwr.revalidate();
   };
 
   const resetRefreshList = () => {
@@ -44,15 +46,25 @@ function useRoles(props: Props) {
   };
 
   const createRoleSwr = useAuthRequest(props?.create ? CREATE : '');
-  const getListSwr = useAuthGetRequest(props?.get_all ? GET_ALL : '', {
-    revalidateOnFocus: false,
-    revalidateOnMount: true,
-    revalidateIfStale: false,
-    errorRetryCount: process.env.NODE_ENV === 'development' ? 1 : 3,
-    onSuccess: resetRefreshList,
-  });
+  const getAllRolesSwr = useAuthGetRequest(
+    props?.get_all_roles ? GET_ALL_ROLES : '',
+    {
+      revalidateOnFocus: false,
+      revalidateOnMount: true,
+      revalidateIfStale: false,
+      errorRetryCount: process.env.NODE_ENV === 'development' ? 1 : 3,
+      // onSuccess: resetRefreshList,
+    }
+  );
   const getAllPermissionsSwr = useAuthGetRequest(
-    props?.get_all ? VIEW_ALL_PERMISSIONS : ''
+    props?.get_all_permissions ? VIEW_ALL_PERMISSIONS : '',
+    {
+      revalidateOnFocus: false,
+      revalidateOnMount: true,
+      revalidateIfStale: false,
+      errorRetryCount: process.env.NODE_ENV === 'development' ? 1 : 3,
+      // onSuccess: resetRefreshList,
+    }
   );
   const addPermissionSwr = useAuthRequest(
     props?.add_permission_to_role ? ADD_PERMISSION_TO_ROLE : ''
@@ -63,17 +75,17 @@ function useRoles(props: Props) {
   const updateItemSwr = useAuthRequest<OfficeType>(
     props?.update && isQuery ? UPDATE(query) : ''
   );
-  const deleteItemSwr = useAuthRequest<null>(
+  const deleteRoleSwr = useAuthRequest<null>(
     props?.delete_specific_role && isQuery ? UPDATE(query) : ''
   );
   return {
     createRoleSwr,
-    getListSwr,
+    getAllRolesSwr,
     getAllPermissionsSwr,
     addPermissionSwr,
     getItemSwr,
     updateItemSwr,
-    deleteItemSwr,
+    deleteRoleSwr,
   };
 }
 

@@ -1,19 +1,20 @@
 import CustomButton from '@/common/components/CustomButton';
 import { ArrowDown, CloseCircle } from '@/common/components/icons';
 import Title from '@/common/components/Title';
-import { Dropdown, Menu, Skeleton } from 'antd';
+import { Dropdown, MenuProps, Skeleton } from 'antd';
 import React, { useContext } from 'react';
 import { UserMgmtDataContext } from '../service-context/UserMgmtContextWrapper';
 
 interface PermissionSectionProps {
+  currentRole: any;
+  allRoles: any;
+  setAllRoles: React.Dispatch<any>;
+  allPermissions: any;
   title: string;
   permissions: string[];
-  handleCancelPermission: (permission: string) => void;
-  handleAddPermission: (key: string) => void;
   options: { _id: string; name: string }[];
-  role?: any;
+  selectedRole?: any;
   editRole?: any;
-  currentRole?: any;
 }
 
 const RoleTitle = ({ children }: any) => (
@@ -21,18 +22,78 @@ const RoleTitle = ({ children }: any) => (
 );
 
 const PermissionSection = ({
+  currentRole,
+  allRoles,
+  setAllRoles,
+  allPermissions,
   title,
   permissions,
-  handleCancelPermission,
-  handleAddPermission,
   options,
-  role,
+  selectedRole,
 }: PermissionSectionProps) => {
-  const contextInfo = useContext(UserMgmtDataContext);
+  const contextInfo = useContext(UserMgmtDataContext); // Create a state to hold the updated role object
+
   if (!contextInfo) {
     // Handle the case where contextInfo is null
     return <Skeleton active />;
   }
+  const items: MenuProps['items'] = [
+    ...options.map((option) => {
+      return {
+        key: option._id,
+        label: option.name.replace(/_/g, ' '),
+        onClick: () => {
+          // console.log('optioning', option);
+          handleAddPermission(option);
+        },
+      };
+    }),
+  ];
+
+  const handleCancelPermission = (permission: any) => {
+    const normalPermission = permission.replace(/ /g, '_');
+    const tempData = allRoles;
+    const findSelectedRole = tempData.find(
+      (role: any) => role._id === selectedRole._id
+    );
+    const tempRole = {
+      ...findSelectedRole,
+      permissions: findSelectedRole.permissions.filter(
+        (p: any) => p.name !== normalPermission
+      ),
+    };
+    setAllRoles((prevRoles: any) =>
+      prevRoles.map((role: any) =>
+        role._id === tempRole._id ? tempRole : role
+      )
+    );
+  };
+
+  const handleAddPermission = (permission: any) => {
+    const findSelectedRole = allRoles.find(
+      (role: any) => role._id === selectedRole._id
+    );
+    const particularPermission = allPermissions.find(
+      (p: any) => p._id === permission._id
+    );
+
+    const tempRole = {
+      ...findSelectedRole,
+      permissions: [
+        ...findSelectedRole.permissions,
+        particularPermission,
+      ].filter(
+        (p: any, index, self) =>
+          self.findIndex((t: any) => t._id === p._id) === index
+      ),
+    };
+
+    const updatedRolePermissions = allRoles.map((role: any) =>
+      role._id === selectedRole._id ? tempRole : role
+    );
+
+    setAllRoles(updatedRolePermissions);
+  };
 
   return (
     <div className="flex flex-col justify-between">
@@ -45,8 +106,8 @@ const PermissionSection = ({
           >
             <Title>{permission}</Title>
             <button onClick={() => handleCancelPermission(permission)}>
-              {(contextInfo.editRole && contextInfo.currentRole === role._id) ||
-              role.name === '' ? (
+              {(contextInfo.editRole && currentRole === selectedRole._id) ||
+              selectedRole.name === '' ? (
                 <CloseCircle size="18" />
               ) : (
                 ''
@@ -54,19 +115,9 @@ const PermissionSection = ({
             </button>
           </div>
         ))}
-        {(contextInfo.editRole && contextInfo.currentRole === role._id) ||
-        role.name === '' ? (
-          <Dropdown
-            overlay={
-              <Menu onClick={({ key }) => handleAddPermission(key.toString())}>
-                {options.map((option) => (
-                  <Menu.Item key={option._id}>
-                    {option.name.replace(/_/g, ' ')}
-                  </Menu.Item>
-                ))}
-              </Menu>
-            }
-          >
+        {(contextInfo.editRole && currentRole === selectedRole._id) ||
+        selectedRole.name === '' ? (
+          <Dropdown menu={{ items }}>
             <CustomButton
               type="primary"
               size="middle"

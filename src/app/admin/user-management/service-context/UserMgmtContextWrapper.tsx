@@ -1,10 +1,13 @@
-// /* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+// /* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
 // /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 import React, { createContext, useState } from 'react';
 import { TabsProps, message } from 'antd';
 import {
   ContextWapper,
+  PermissionGroup,
   Role,
   UserMgmtDataContextType,
 } from '../types';
@@ -145,26 +148,6 @@ const defaultColumns: (EditableTableColumnTypes[number] & {
 export const initialNewRole = { name: '', _id: 0 };
 
 function UserMgmtContextWrapper({ children }: ContextWapper) {
-  const roleProps = useRoles({
-    get_all: true,
-    create: true,
-    add_permission_to_role: true,
-    update: true,
-  });
-
-  const {
-    createRoleSwr,
-    getListSwr,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
-    getItemSwr,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
-    updateItemSwr,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
-    deleteItemSwr,
-    addPermissionSwr,
-    getAllPermissionsSwr,
-  } = roleProps;
-
   const tabs = useTabChange({
     defaultKey: '/admin/user-management?tab=roles-permissions',
   });
@@ -179,11 +162,6 @@ function UserMgmtContextWrapper({ children }: ContextWapper) {
   const [updateNewRoleData, setUpdateNewRoleData] = useState(initialNewRole);
   const [editedRole, setEditedRole] = useState<any>();
   const [editRole, setEditRole] = useState<boolean>(false);
-  const [currentRole, setCurrentRole] = useState<number>(0);
-
-  const handleDelete = (id: string | number) => {
-    console.log(id); //eslint-disable-line
-  };
 
   const columns = defaultColumns
     .filter((itm) =>
@@ -221,102 +199,55 @@ function UserMgmtContextWrapper({ children }: ContextWapper) {
 
   const handleAdd = () => {};
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
-  const { trigger: createRoleTrigger, isMutating: createRoleIsMutating } =
-    createRoleSwr;
+  function groupPermissions(allPermissions: any[]): PermissionGroup[] {
+    const groups: PermissionGroup[] = [];
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
-  const { trigger: addPermissionTrigger } = addPermissionSwr;
-
-  const allRoles =
-    getListSwr && getListSwr.data && (getListSwr.data.data as any);
-
-  const allPermissions =
-    getAllPermissionsSwr &&
-    getAllPermissionsSwr.data &&
-    getAllPermissionsSwr.data.data;
-
-  const submitNewRole = () => {
-    if (updateNewRoleData.name === '') {
-      return null;
-    } else {
-      createRoleTrigger({
-        data: { name: updateNewRoleData.name },
-        type: 'post',
-      }).then((res) => {
-        message.success(res.message);
-        setUpdateNewRoleData && setUpdateNewRoleData(initialNewRole);
-      });
+    // Ensure allPermissions is defined and not empty
+    if (!Array.isArray(allPermissions) || allPermissions.length === 0) {
+      return groups;
     }
-  };
 
-  const addRole = () => {
-    const newRole = {
-      _id: allRoles.length + 1,
-      name: '', // Set to empty initially
-      role: '', // Set to empty initially
-      permissions: [],
-    };
-    setNewRoles && setNewRoles([newRole]);
-  };
+    allPermissions.forEach((permission) => {
+      const requestTypeMatch = permission.name.match(
+        /(CREATE|EDIT|DELETE|GET|ADD|REMOVE|SEND|REVOKE)/
+      );
+      const permissionTypeMatch = permission.name.match(
+        /(PARASTATALS?|DEPARTMENTS?|OFFICES?|ROLES?|INVITES?)/
+      );
 
-  const updateExitingRole = () => {
-    createRoleTrigger({
-      data: { name: updateRoleData.name },
-      type: 'post',
-    }).then((res) => {
-      message.success(res.message);
+      let requestType = 'USER';
+      let permissionType = 'USER';
+
+      if (requestTypeMatch) {
+        requestType = requestTypeMatch[0];
+      }
+
+      if (permissionTypeMatch) {
+        permissionType = permissionTypeMatch[0];
+      }
+
+      // Check if a group for this combination already exists
+      const existingGroupIndex = groups.findIndex(
+        (group) =>
+          group.requestType === requestType &&
+          group.permissionType === permissionType
+      );
+
+      if (existingGroupIndex !== -1) {
+        // Add the permission to the existing group
+        groups[existingGroupIndex].permissions.push(permission.name);
+      } else {
+        // Create a new group
+        groups.push({
+          requestType,
+          permissionType,
+          permissions: [permission.name],
+        });
+      }
     });
-  };
 
-  const handleNameChange = ({ name, _id }: any) => {
-    setEditedRole &&
-      setEditedRole({
-        ...editedRole,
-        name: name,
-        _id: _id,
-      });
-  };
-
-  const handleAddPermission = (permissionId: any) => {
-    const specificPermission =
-      Array.isArray(allPermissions) &&
-      allPermissions.find((permis: any) => permis._id === permissionId);
-
-    const updatedPermissions =
-      editedRole && editedRole.permissions
-        ? [...editedRole.permissions, permissionId]
-        : [specificPermission._id];
-    setEditedRole &&
-      setEditedRole({
-        ...editedRole,
-        permissions: updatedPermissions,
-      });
-  };
-
-  const handleRemovePermission = (permissionId: any) => {
-    const updatedPermissions = editedRole.permissions.filter(
-      (perm: any) => perm !== permissionId
-    );
-    setEditedRole &&
-      setEditedRole({
-        ...editedRole,
-        permissions: updatedPermissions,
-      });
-  };
-
-  const handleCancelPermission = (
-    permission: string,
-    type: 'parastatals' | 'offices' | 'departments'
-  ) => {
-    // Remove the permission from the role's permissions list
-    // eslint-disable-next-line no-console
-    console.log(`Removing permission "${permission}" from ${type}`);
-  };
-
-  const options = Array.isArray(allPermissions)
-    ? allPermissions.map((permission: any) => permission)
-    : [];
+    return groups;
+  }
 
   return (
     <UserMgmtDataContext.Provider
@@ -325,7 +256,6 @@ function UserMgmtContextWrapper({ children }: ContextWapper) {
         handleAdd,
         columns,
         dataSource,
-        handleDelete,
         tabItemList,
         newRoles,
         setNewRoles,
@@ -337,17 +267,8 @@ function UserMgmtContextWrapper({ children }: ContextWapper) {
         setEditedRole,
         editRole,
         setEditRole,
-        currentRole,
-        allRoles,
-        setCurrentRole,
-        submitNewRole,
-        addRole,
-        updateExitingRole,
-        handleNameChange,
-        handleAddPermission,
-        handleRemovePermission,
-        handleCancelPermission,
-        options,
+        // currentRole,
+        // setCurrentRole,
       }}
     >
       {children}

@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
-import { Dropdown, MenuProps } from 'antd';
+import { Dropdown, MenuProps, message } from 'antd';
 // import AddModal from '../modals/AddModal';
 // import InvitePersonModal from '@/app/admin/people/components/InvitePerson/Modal';
 // import CustomButton from '@/common/components/CustomButton';
@@ -11,25 +13,30 @@ import {
 } from '@/common/components/icons';
 import CustomButton from '@/common/components/CustomButton';
 import DeleteModal from '../modals/DeleteModal';
+import IsDeletedModal from '../modals/IsDeletedModal';
+import useRoles from '@/app/admin/hooks/useRoles';
 // import Title from '@/common/components/Title';
 
 const initialModalState = {
   delete: false,
+  isDeleted: false,
 };
 
 interface SectionMoreProps {
   editRole: boolean;
   setEditRole?: React.Dispatch<React.SetStateAction<boolean>>;
-  activeRole: number;
-  setCurrentRole?: React.Dispatch<React.SetStateAction<number>>;
+  role: any;
+  currentRoleId: string;
+  setCurrentRoleId?: React.Dispatch<React.SetStateAction<string>>;
   setEditedRole: any;
 }
 
 function SectionMoreOptions({
   editRole,
   setEditRole,
-  activeRole,
-  setCurrentRole,
+  role,
+  currentRoleId,
+  setCurrentRoleId,
   setEditedRole,
 }: SectionMoreProps) {
   const [isModalOpen, setIsModalOpen] = useState(initialModalState);
@@ -38,20 +45,49 @@ function SectionMoreOptions({
     setIsModalOpen({ ...initialModalState, [val]: true });
   };
 
-  const handleCancel = () => {
-    setIsModalOpen({ ...initialModalState });
-  };
+  const { deleteRoleSwr } = useRoles({
+    delete_specific_role: true,
+    _id: currentRoleId,
+  });
+  const { trigger: deleteRoleTrigger, isMutating: deleteRoleIsMutating } =
+    deleteRoleSwr;
+
+  // const handleCancelIsDeleted = () => {
+  //   setIsModalOpen({ ...initialModalState });
+  // };
+
+  // console.log('currentRole', currentRole);
+  // console.log('role', role);
+  // console.log('currentRoleId', currentRoleId);
 
   const handleRoleEdit = () => {
-    setCurrentRole && setCurrentRole(activeRole);
-    setEditedRole({ _id: activeRole });
+    setCurrentRoleId && setCurrentRoleId(role._id);
+    setEditedRole({ _id: role._id });
     setEditRole && setEditRole(!editRole);
     // setIsModalOpen({ ...initialModalState });
   };
 
-  const submitHandler = (value: any) => {
-    console.log(value); //eslint-disable-line
+  const deleteSpecificRole = () => {
+    // console.log('delete role called');
+
+    deleteRoleTrigger({
+      data: {},
+      type: 'delete',
+    }).then((res) => {
+      message.success(res.data);
+      setIsModalOpen({ ...initialModalState, isDeleted: true, delete: false });
+    });
   };
+
+  const handleCancel = () => {
+    setIsModalOpen({ ...initialModalState });
+  };
+
+  // const deleteHandler = () => {
+  //   deleteSpecificRole();
+  //   setIsModalOpen({ ...initialModalState });
+  //   // console.log(value); //eslint-disable-line
+  // };
 
   const items: MenuProps['items'] = [
     {
@@ -67,8 +103,6 @@ function SectionMoreOptions({
     },
   ];
 
-  // console.log('isModalOpen', isModalOpen);
-
   return (
     <>
       <Dropdown menu={{ items }} placement="bottom" className="flex h-auto">
@@ -77,13 +111,23 @@ function SectionMoreOptions({
           size="small"
           type="text"
           icon={<MoreFile />}
+          onClick={() =>
+            setCurrentRoleId && setCurrentRoleId(role._id as string)
+          }
+          onMouseEnter={() =>
+            setCurrentRoleId && setCurrentRoleId(role._id as string)
+          }
         />
       </Dropdown>
       {/* <Title>Edit this role</Title> */}
       <DeleteModal
         handleCancel={handleCancel}
-        handleSubmit={submitHandler}
+        handleSubmit={deleteSpecificRole}
         isModalOpen={isModalOpen.delete}
+      />
+      <IsDeletedModal
+        handleCancel={handleCancel}
+        isModalOpen={isModalOpen.isDeleted}
       />
       {/* <InvitePersonModal
         handleCancel={handleCancel}

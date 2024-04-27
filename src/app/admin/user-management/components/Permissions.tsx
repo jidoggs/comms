@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
-import PermissionSection from './PermissionSection';
 import { Skeleton } from 'antd';
 import { UserMgmtDataContext } from '../service-context/UserMgmtContextWrapper';
+import PermissionSection from './PermissionSection';
 
 interface Permission {
   _id: string;
@@ -11,7 +11,7 @@ interface Permission {
 
 type PermissionType = 'parastatal' | 'office' | 'department';
 
-function categorizePermissions(
+export function categorizePermissions(
   permissions: Permission[],
   permissionType: PermissionType
 ): string[] {
@@ -19,7 +19,14 @@ function categorizePermissions(
 
   switch (permissionType) {
     case 'parastatal':
-      validTypes.push('parastatal', 'parastatals');
+      validTypes.push(
+        'parastatal',
+        'parastatals',
+        'role',
+        'roles',
+        'invite',
+        'invites'
+      );
       break;
     case 'office':
       validTypes.push('office', 'offices');
@@ -41,10 +48,22 @@ function categorizePermissions(
 }
 
 interface PermissionProps {
+  currentRoleId: any;
+  allRoles: any;
+  setAllRoles: React.Dispatch<any>;
+  allPermissions: any;
   role: any;
+  options: any;
 }
 
-const Permissions = ({ role }: PermissionProps) => {
+const Permissions = ({
+  currentRoleId,
+  allRoles,
+  setAllRoles,
+  allPermissions,
+  role,
+  options,
+}: PermissionProps) => {
   const contextInfo = useContext(UserMgmtDataContext);
   if (!contextInfo) {
     // Handle the case where contextInfo is null
@@ -55,40 +74,40 @@ const Permissions = ({ role }: PermissionProps) => {
     <div className="col-span-7 flex flex-col justify-between">
       {role.permissions && (
         <PermissionSection
+          currentRole={currentRoleId}
+          allRoles={allRoles}
+          setAllRoles={setAllRoles}
+          allPermissions={allPermissions}
           title="Parastatal"
           permissions={categorizePermissions(role.permissions, 'parastatal')}
-          handleCancelPermission={(permission) =>
-            contextInfo.handleCancelPermission(permission, 'parastatals')
-          }
-          handleAddPermission={(key) => contextInfo.handleAddPermission(key)}
-          options={contextInfo.options}
-          role={role}
+          options={options}
+          selectedRole={role}
         />
       )}
 
       {role.permissions && (
         <PermissionSection
+          currentRole={currentRoleId}
+          allRoles={allRoles}
+          setAllRoles={setAllRoles}
+          allPermissions={allPermissions}
           title="Offices"
           permissions={categorizePermissions(role.permissions, 'office')}
-          handleCancelPermission={(permission) =>
-            contextInfo.handleCancelPermission(permission, 'offices')
-          }
-          handleAddPermission={(key) => contextInfo.handleAddPermission(key)}
-          options={contextInfo.options}
-          role={role}
+          options={options}
+          selectedRole={role}
         />
       )}
 
       {role.permissions && (
         <PermissionSection
+          currentRole={currentRoleId}
+          allRoles={allRoles}
+          setAllRoles={setAllRoles}
+          allPermissions={allPermissions}
           title="Department"
           permissions={categorizePermissions(role.permissions, 'department')}
-          handleCancelPermission={(permission) =>
-            contextInfo.handleCancelPermission(permission, 'departments')
-          }
-          handleAddPermission={(key) => contextInfo.handleAddPermission(key)}
-          options={contextInfo.options}
-          role={role}
+          options={options}
+          selectedRole={role}
         />
       )}
     </div>
