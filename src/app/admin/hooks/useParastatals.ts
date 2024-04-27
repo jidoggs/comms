@@ -8,7 +8,7 @@ import { ServiceParams } from './types';
 
 const { CREATE, GET_ALL, UPDATE } = ENDPOINTS.PARASTATALS;
 
-function useParastals(props: ServiceParams) {
+function useParastatals(props: ServiceParams) {
   const [refreshList, setRefreshList] = useState(false); // stores state to trigger new list after CUD has been done
   const { isPrimaryAdmin } = useSession();
   const query = props._id ? queryHandler({ _id: props._id }) : '';
@@ -63,4 +63,4 @@ function useParastals(props: ServiceParams) {
   return { createSwr, getListSwr, getItemSwr, updateItemSwr, deleteItemSwr };
 }
 
-export default useParastals;
+export default useParastatals;

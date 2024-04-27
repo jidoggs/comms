@@ -1,82 +1,24 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
-import React, { useContext, useEffect, useState } from 'react';
-// import CustomTable, { CustomTableProps } from '@/common/components/CustomTable';
+import React, { useContext } from 'react';
 import CustomTab from '@/common/components/CustomTab';
-// import TableActions from './TableActions';
-import { UserMgmtDataContext } from '../service-context/UserMgmtContextWrapper';
 import Title from '@/common/components/Title';
 import Roles_Permissions from './Roles_Permissions';
 import Users from './Users';
 import CustomButton from '@/common/components/CustomButton';
 import { Add, File, Search } from '@/common/components/icons';
 import CustomInput from '@/common/components/CustomInput';
-import { roles } from './data';
-import useRoles from '../../hooks/useRoles';
-import { message } from 'antd';
-// import RegistrationDetail from './RegistrationDetail';
-// import { User } from '@/app/auth/types/auth';
+import { Skeleton } from 'antd';
+import { UserMgmtDataContext } from '../service-context/UserMgmtContextWrapper';
+
+export const initialNewRole = { name: '', _id: 0 };
 
 const CorrespondencePage = () => {
   const contextInfo = useContext(UserMgmtDataContext);
-  const [newRoles, setNewRoles] = useState<any>([]);
-  const [updateRoleData, setUpdateRoleData] = useState({
-    name: '',
-    id: 0,
-  });
 
-  // console.log('contextInfo?.tabItem', contextInfo?.tabItem);
-
-  // console.log('updateRoleData', updateRoleData);
-  // console.log('updateRoleData', updateRoleData);
-
-  // const UpdateRoleValue = () => {};
-
-  const {
-    createRoleSwr,
-    getListSwr,
-    getItemSwr,
-    updateItemSwr,
-    deleteItemSwr,
-  } = useRoles({ get_all: true, create: true });
-
-  const { trigger: createRoleTrigger, isMutating: createRoleIsMutating } =
-    createRoleSwr;
-
-  const allRoles =
-    getListSwr && getListSwr.data && (getListSwr.data.data as any);
-
-  // useEffect(() => {
-  //   setAllRoles(getListSwr && getListSwr.data.data);
-  // }, []);
-
-  const updateAllRoles = () => {
-    // setAllRoles;
-  };
-  // console.log('getListSwr', getListSwr);
-  // console.log('getItemSwr', getItemSwr);
-  const submitNewRole = () => {
-    // setPasswordTrigger({ data: values, type: 'post' }).then(() => {
-    //   router.push('/onboarding/success');
-    // });
-    createRoleTrigger({
-      data: { name: updateRoleData.name },
-      type: 'post',
-    }).then((res) => {
-      message.success(res.message);
-    });
-  };
-
-  const addRole = () => {
-    const newRole = {
-      id: allRoles.length + 1,
-      name: '', // Set to empty initially
-      role: '', // Set to empty initially
-      permissions: [],
-    };
-    setNewRoles([newRole]);
-  };
+  if (!contextInfo) {
+    // Handle the case where contextInfo is null
+    return <Skeleton active />;
+  }
 
   return (
     <div className="pt-4">
@@ -101,7 +43,7 @@ const CorrespondencePage = () => {
                 type="default"
                 icon={<Add />}
                 size="small"
-                onClick={addRole}
+                onClick={contextInfo.addRole}
               >
                 Add Role
               </CustomButton>
@@ -114,17 +56,14 @@ const CorrespondencePage = () => {
             </div>
           ) : null}
         </div>
-        {/* <div className="w-full py-2"> */}
         {contextInfo?.tabItem === 'roles-permissions' ? (
-          <Roles_Permissions
-            newRoles={newRoles}
-            allRoles={allRoles}
-            setUpdateRoleData={setUpdateRoleData}
-            submitNewRole={submitNewRole}
-          />
+          contextInfo.allRoles && contextInfo.allRoles.length ? (
+            <Roles_Permissions />
+          ) : (
+            <Skeleton active />
+          )
         ) : null}
         {contextInfo?.tabItem === 'users' ? <Users /> : null}
-        {/* </div> */}
       </div>
     </div>
   );

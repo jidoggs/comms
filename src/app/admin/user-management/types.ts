@@ -3,20 +3,23 @@
 import { Table, TabsProps } from 'antd';
 import { AnimationControls } from 'framer-motion';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
+import { EditableTableColumnTypes } from '../people/types';
 export * from '../../../types';
 
-type EditableTableProps = Parameters<typeof Table>[0];
-export type EditableTableColumnTypes = Exclude<
-  EditableTableProps['columns'],
-  undefined
->;
+export interface Role {
+  _id: any;
+  name: string;
+  role: string;
+  permissions: never[];
+}
 
-export type CorrespondenceContextNewType = {
-  handleAdd: VoidFunction;
-  columns: EditableTableColumnTypes;
-  dataSource: any[];
-  handleDelete: (id: string | number) => void;
-} | null;
+export interface Permission {
+  _id: string;
+  name: string;
+  code: string;
+}
+
+export type PermissionType = 'parastatal' | 'office' | 'department';
 
 export type UserMgmtDataContextType = {
   handleAdd: VoidFunction;
@@ -27,25 +30,38 @@ export type UserMgmtDataContextType = {
   handleDelete: (id: string | number) => void;
   tabItem: string;
   tabItemList: TabsProps['items'];
-  editRole?: boolean;
+  editRole: boolean;
+  newRoles?: Role[];
+  setNewRoles?: React.Dispatch<React.SetStateAction<Role[]>>;
+  updateRoleData?: any;
+  setUpdateRoleData?: React.Dispatch<
+    React.SetStateAction<{
+      name: string;
+      _id: number;
+    }>
+  >;
+  updateNewRoleData?: any;
+  setUpdateNewRoleData?: React.Dispatch<
+    React.SetStateAction<{
+      name: string;
+      _id: number;
+    }>
+  >;
+  allRoles: any;
+  editedRole?: any;
+  setEditedRole?: React.Dispatch<any>;
+  setEditRole: React.Dispatch<React.SetStateAction<boolean>>;
+  currentRole: number;
+  setCurrentRole: React.Dispatch<React.SetStateAction<number>>;
+  submitNewRole: () => null | undefined;
+  addRole: () => void;
+  updateExitingRole: () => void;
+  handleNameChange: ({ name, _id }: any) => void;
+  handleAddPermission: (permissionId: any) => void;
+  handleRemovePermission: (permissionId: any) => void;
+  handleCancelPermission: (
+    permission: string,
+    type: 'parastatals' | 'offices' | 'departments'
+  ) => void;
+  options: any;
 } | null;
-
-export type DetailContextType = {
-  openCorrespondenceDetails: boolean;
-  openDetailsHandler: VoidFunction;
-  closeDetailsHandler: VoidFunction;
-  correspondenceFile: FileList | null;
-  handleUpdateFile: (files: FileList) => void;
-  tabChangeHandler: (state: string) => void;
-  activeTab: string;
-  contentControls: AnimationControls;
-  turnMultiSelectOnHandler: VoidFunction;
-  turnMultiSelectOFFHandler: VoidFunction;
-  selectItemHandler: (e: CheckboxChangeEvent) => void;
-  multiSelect: MultiSelectType;
-} | null;
-
-export type MultiSelectType = {
-  isMultiSelectMode: boolean;
-  selectedItems: string[];
-};

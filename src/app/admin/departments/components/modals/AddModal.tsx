@@ -5,7 +5,7 @@ import CustomModalTitle from '@/common/components/CustomModalTitle';
 
 type Props = {
   isModalOpen: boolean;
-  isLoading: boolean;
+  isLoading?: boolean;
   handleCancel: VoidFunction; //eslint-disable-line
   handleSubmit: (val: any) => void; //eslint-disable-line
 };
@@ -19,7 +19,7 @@ function AddModal({
   return (
     <CustomModal
       width={500}
-      title={<CustomModalTitle title="Add" hasLink />}
+      title={<CustomModalTitle title="Add" />}
       open={isModalOpen}
       onCancel={handleCancel}
       destroyOnClose

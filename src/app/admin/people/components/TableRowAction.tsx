@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
-import {  Dropdown, MenuProps } from 'antd';
+import { Dropdown, MenuProps } from 'antd';
 import CustomButton from '@/common/components/CustomButton';
-import {
-  CloseCircled,
-  MoreFile,
-  TickCircle,
-} from '@/common/components/icons';
+import { CloseCircled, MoreFile, TickCircle } from '@/common/components/icons';
 import { iHandleClick } from '../types';
 import DeclineRequestModalContent from './DeclineRequestModalContent';
 import SubmittedResponseModal from './SubmittedResponseModal';
-import ApproveModalContent from './ApproveModalContent';
+import ApproveModalContent from '../../../../common/components/ApproveModalContent';
 
 type Props = {
   data: any;

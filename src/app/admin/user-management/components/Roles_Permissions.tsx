@@ -2,29 +2,21 @@
 import CustomButton from '@/common/components/CustomButton';
 import { ArrowUp, CloseCircled } from '@/common/components/icons';
 import Title from '@/common/components/Title';
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import SectionMoreOptions from './actions/SectionMoreOptions';
 import CustomInput from '@/common/components/CustomInput';
 import Permissions from './Permissions';
 import Tick from '@/common/components/icons/Tick';
+import { initialNewRole } from './PageContent';
+import { Skeleton } from 'antd';
+import { UserMgmtDataContext } from '../service-context/UserMgmtContextWrapper';
 
-interface Roles_PermissionsProps {
-  newRoles: any;
-  allRoles: any;
-  setUpdateRoleData?: any;
-  submitNewRole?: VoidFunction; //eslint-disable-line
-}
-
-const Roles_Permissions = ({
-  allRoles,
-  // newRoles,
-  setUpdateRoleData,
-  submitNewRole,
-}: Roles_PermissionsProps) => {
-  const [editRole, setEditRole] = useState<boolean>(false);
-  const [currentRole, setCurrentRole] = useState<number>(0);
-
-  // console.log('allRoles', allRoles);
+const Roles_Permissions = () => {
+  const contextInfo = useContext(UserMgmtDataContext);
+  if (!contextInfo) {
+    // Handle the case where contextInfo is null
+    return <Skeleton active />;
+  }
 
   return (
     <div className="flex flex-col">
@@ -36,52 +28,59 @@ const Roles_Permissions = ({
           Permissions
         </Title>
       </div>
-      <div className="h-full max-h-[calc(100vh_-_15.625rem)] overflow-y-scroll">
-        {/* {newRoles && newRoles.length > 0
-          ? newRoles.map((role: any) => (
+      <div className="h-full max-h-[calc(100vh_-_13.225rem)] overflow-y-scroll">
+        {contextInfo.newRoles && contextInfo.newRoles
+          ? contextInfo.newRoles.map((newRole: any) => (
               <div
                 className="mt-2 grid grid-cols-10 items-start bg-custom-white_100 p-4"
-                key={role.id}
+                key={newRole.id}
               >
                 <div className="col-span-2 pr-4">
-                  {(editRole && currentRole === role.id) || role.name === '' ? (
-                    <CustomInput
-                      className="w-1/2 !px-2"
-                      size="small"
-                      onChange={(e) =>
-                        setUpdateRoleData({ name: e.target.value, id: role.id })
-                      }
-                    />
-                  ) : (
-                    role.name
-                  )}
+                  <CustomInput
+                    className="w-1/2 !px-2"
+                    size="small"
+                    onChange={(e) =>
+                      contextInfo.setUpdateNewRoleData &&
+                      contextInfo.setUpdateNewRoleData({
+                        name: e.target.value,
+                        _id: newRole.id,
+                      })
+                    }
+                  />
                 </div>
-                <Permissions role={role} />
+                <Permissions role={newRole} />
 
-                {(editRole && currentRole === role.id) || role.name === '' ? (
+                {(contextInfo.editRole &&
+                  contextInfo.currentRole === newRole._id) ||
+                newRole.name === '' ? (
                   <div className="flex w-full flex-row justify-end gap-2">
                     <CustomButton
                       icon={<Tick size="18" />}
                       description="Save"
                       type="text"
                       size="small"
-                      onClick={submitNewRole}
+                      onClick={contextInfo.submitNewRole}
                     />
                     <CustomButton
                       icon={<CloseCircled size="18" />}
                       description="Cancel"
                       type="text"
                       size="small"
-                      onClick={() => setEditRole(false)}
+                      onClick={() => {
+                        contextInfo.setNewRoles && contextInfo.setNewRoles([]);
+                        contextInfo.setUpdateNewRoleData &&
+                          contextInfo.setUpdateNewRoleData(initialNewRole);
+                      }}
                     />
                   </div>
                 ) : (
                   <div className="flex w-full flex-row justify-end gap-2">
                     <SectionMoreOptions
-                      editRole={editRole}
-                      setEditRole={setEditRole}
-                      activeRole={role.id}
-                      setCurrentRole={setCurrentRole}
+                      editRole={contextInfo.editRole}
+                      setEditRole={contextInfo.setEditRole}
+                      activeRole={newRole._id}
+                      setCurrentRole={contextInfo.setCurrentRole}
+                      setEditedRole={contextInfo.setEditedRole}
                     />
                     <CustomButton
                       icon={<ArrowUp />}
@@ -93,22 +92,28 @@ const Roles_Permissions = ({
                 )}
               </div>
             ))
-          : ''} */}
-        {allRoles &&
-          allRoles.length &&
-          allRoles.map((role: any) => (
+          : null}
+        {contextInfo.allRoles &&
+          contextInfo.allRoles.length &&
+          contextInfo.allRoles.map((role: any) => (
             <div
               className="mt-2 grid grid-cols-10 items-start bg-custom-white_100 p-4"
               key={role._id}
             >
               <div className="col-span-2 pr-4">
-                {(editRole && currentRole === role._id) || role.name === '' ? (
+                {(contextInfo.editRole &&
+                  contextInfo.currentRole === role._id) ||
+                role.name === '' ? (
                   <CustomInput
                     className="w-1/2 !px-2"
                     size="small"
                     onChange={(e) =>
-                      setUpdateRoleData({ name: e.target.value, id: role._id })
+                      contextInfo.handleNameChange({
+                        name: e.target.value,
+                        _id: role._id,
+                      })
                     }
+                    defaultValue={role.name}
                   />
                 ) : (
                   role.name
@@ -116,30 +121,32 @@ const Roles_Permissions = ({
               </div>
               <Permissions role={role} />
 
-              {(editRole && currentRole === role._id) || role.name === '' ? (
+              {(contextInfo.editRole && contextInfo.currentRole === role._id) ||
+              role.name === '' ? (
                 <div className="flex w-full flex-row justify-end gap-2">
                   <CustomButton
                     icon={<Tick size="18" />}
                     description="Save"
                     type="text"
                     size="small"
-                    onClick={submitNewRole}
+                    onClick={contextInfo.updateExitingRole}
                   />
                   <CustomButton
                     icon={<CloseCircled size="18" />}
                     description="Cancel"
                     type="text"
                     size="small"
-                    onClick={() => setEditRole(false)}
+                    onClick={() => contextInfo.setEditRole(false)}
                   />
                 </div>
               ) : (
                 <div className="flex w-full flex-row justify-end gap-2">
                   <SectionMoreOptions
-                    editRole={editRole}
-                    setEditRole={setEditRole}
+                    editRole={contextInfo.editRole}
+                    setEditRole={contextInfo.setEditRole}
                     activeRole={role._id}
-                    setCurrentRole={setCurrentRole}
+                    setCurrentRole={contextInfo.setCurrentRole}
+                    setEditedRole={contextInfo.setEditedRole}
                   />
                   <CustomButton
                     icon={<ArrowUp />}

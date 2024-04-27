@@ -22,6 +22,7 @@ interface SectionMoreProps {
   setEditRole?: React.Dispatch<React.SetStateAction<boolean>>;
   activeRole: number;
   setCurrentRole?: React.Dispatch<React.SetStateAction<number>>;
+  setEditedRole: any;
 }
 
 function SectionMoreOptions({
@@ -29,6 +30,7 @@ function SectionMoreOptions({
   setEditRole,
   activeRole,
   setCurrentRole,
+  setEditedRole,
 }: SectionMoreProps) {
   const [isModalOpen, setIsModalOpen] = useState(initialModalState);
 
@@ -42,6 +44,7 @@ function SectionMoreOptions({
 
   const handleRoleEdit = () => {
     setCurrentRole && setCurrentRole(activeRole);
+    setEditedRole({ _id: activeRole });
     setEditRole && setEditRole(!editRole);
     // setIsModalOpen({ ...initialModalState });
   };

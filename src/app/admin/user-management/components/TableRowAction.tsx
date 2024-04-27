@@ -4,7 +4,7 @@ import CustomButton from '@/common/components/CustomButton';
 import { Delete, Edit, MoreFile } from '@/common/components/icons';
 import { iHandleClick } from '../types';
 import RegistrationDetail from '../../people/components/RegistrationDetail';
-import ApproveModalContent from '../../people/components/ApproveModalContent';
+import ApproveModalContent from '../../../../common/components/ApproveModalContent';
 
 type Props = {
   data: any;
@@ -84,21 +84,6 @@ function TableRowAction({ data }: Props) {
           isModalOpen={isModalOpen.delete}
           handleCancel={handleCancel}
         />
-        {/* <div>
-          <DeclineRequestModalContent
-            handleCancel={handleCancel}
-            isModalOpen={isModalOpen.decline}
-            setIsSuccessModalOpen={showModal}
-          />
-          <SubmittedResponseModal
-            handleCancel={handleCancel}
-            isModalOpen={isModalOpen.success}
-          />
-          <ApproveModalContent
-            isModalOpen={isModalOpen.approve}
-            handleCancel={handleCancel}
-          />
-        </div> */}
       </div>
     </TableRowActionContext.Provider>
   );
