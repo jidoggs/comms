@@ -34,8 +34,8 @@ const {
 } = ENDPOINTS.PERMISSIONS;
 
 function useRoles(props: Props) {
-  const isQuery = props._id;
-  const query = props._id ? queryHandler({ _id: props._id }) : '';
+  const isQuery = props._id && props._id !== '';
+  const query = props._id || '';
 
   const createRoleSwr = useAuthRequest(props?.create ? CREATE : '');
   const getListSwr = useAuthGetRequest(props?.get_all ? GET_ALL : '', {

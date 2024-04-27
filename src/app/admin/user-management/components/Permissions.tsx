@@ -66,12 +66,15 @@ const Permissions = ({ role }: any) => {
     getAllPermissionsSwr.data.data;
 
   const options = Array.isArray(allPermissions)
-    ? allPermissions.map((permission: any) =>
-        permission.name.replace(/_/g, ' ')
+    ? allPermissions.map(
+        (permission: any) =>
+          // permission.name.replace(/_/g, ' ')
+          permission
       )
     : [];
 
   console.log('allPermissions', allPermissions);
+  console.log('options', options);
 
   //   for (let i = 10; i < 36; i++) {
   //     options.push({
@@ -109,7 +112,7 @@ const Permissions = ({ role }: any) => {
   ) => {
     // Send the permission to the backend for the specific role and type (parastatals/offices/departments)
     // console.log(`Adding permission "${permission}" to ${type}`);
-    // console.log('selectedId', role);
+    console.log('selectedId', permission);
 
     setSelectedId(role._id);
     // handleAddPermissionTrigger(permission, role);
@@ -117,7 +120,7 @@ const Permissions = ({ role }: any) => {
     const datar = {
       name: role.name,
       status: 'add',
-      permissions: [role._id],
+      permissions: [permission],
       //   _id: selectedId,
       //   role: true,
       //   role: role.name,
@@ -183,12 +186,12 @@ const Permissions = ({ role }: any) => {
             <Dropdown
               overlay={
                 <Menu
-                  onClick={({ key }) =>
+                  onClick={({ key }: any) =>
                     handleAddPermission(key.toString(), 'parastatals', role)
                   }
                 >
                   {options.map((option) => (
-                    <Menu.Item key={option}>{option}</Menu.Item>
+                    <Menu.Item key={option?._id}>{option?.name}</Menu.Item>
                   ))}
                 </Menu>
               }
