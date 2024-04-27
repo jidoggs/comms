@@ -3,6 +3,7 @@
 import { Table, TabsProps } from 'antd';
 import { AnimationControls } from 'framer-motion';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
+import { EditableTableColumnTypes } from '../people/types';
 export * from '../../../types';
 
 export interface Role {
@@ -24,7 +25,7 @@ export type UserMgmtDataContextType = {
   handleAdd: VoidFunction;
   handleAddRole?: VoidFunction;
   handleTabChange: (state: string) => void;
-  // columns: EditableTableColumnTypes;
+  columns: EditableTableColumnTypes;
   dataSource: any[];
   handleDelete: (id: string | number) => void;
   tabItem: string;

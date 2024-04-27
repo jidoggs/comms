@@ -1,7 +1,6 @@
 'use client';
 import React, { useContext } from 'react';
 import CustomTab from '@/common/components/CustomTab';
-import { UserMgmtDataContext } from '../service-context/UserMgmtContextWrapper';
 import Title from '@/common/components/Title';
 import Roles_Permissions from './Roles_Permissions';
 import Users from './Users';
@@ -9,6 +8,7 @@ import CustomButton from '@/common/components/CustomButton';
 import { Add, File, Search } from '@/common/components/icons';
 import CustomInput from '@/common/components/CustomInput';
 import { Skeleton } from 'antd';
+import { UserMgmtDataContext } from '../service-context/UserMgmtContextWrapper';
 
 export const initialNewRole = { name: '', _id: 0 };
 

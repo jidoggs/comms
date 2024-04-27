@@ -1,7 +1,6 @@
 import { ENDPOINTS } from '@/service/config/endpoint';
 import { useAuthGetRequest, useAuthRequest } from '@/service/swrHooks';
-import { queryHandler } from '@/service/request';
-import { AllOfficeType, OfficeType } from '../types';
+import { OfficeType } from '../types';
 import { useState } from 'react';
 
 type RequestType =
