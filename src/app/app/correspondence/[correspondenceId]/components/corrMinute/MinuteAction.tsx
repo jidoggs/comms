@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ExpandedMinuteForm from './ExpandedMinuteForm';
 import CustomModal from '@/common/components/CustomModal';
-import CustomInput from '@/common/components/CustomInput';
+import { CustomTextArea } from '@/common/components/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
 import {
   Briefcase,
@@ -55,7 +55,7 @@ const MinuteAction = () => {
             />
           </div>
         </div>
-        <CustomInput type="textarea" />
+        <CustomTextArea />
         <CustomButton
           icon={<Send size={18} />}
           className={{

@@ -1,11 +1,10 @@
 'use client';
 import React, { useContext, useState } from 'react';
 import CustomTable, { CustomTableProps } from '@/common/components/CustomTable';
-
-import { User } from '@/app/auth/types/auth';
 import { UserMgmtDataContext } from '../service-context/UserMgmtContextWrapper';
 import TableActions from './TableActions';
 import RegistrationDetail from '../../people/components/RegistrationDetail';
+import { User } from '../types';
 
 const Users = () => {
   const contextInfo = useContext(UserMgmtDataContext);

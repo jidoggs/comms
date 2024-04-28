@@ -6,7 +6,8 @@ import React from 'react';
 import FieldRow from '../../../components/FieldRow';
 import dayjs from 'dayjs';
 import Tick from '@/common/components/icons/Tick';
-import { User } from '@/app/auth/types/auth';
+import { User } from '../../types';
+
 
 type RegistrationContentProps = {
   registrationData: User | null;

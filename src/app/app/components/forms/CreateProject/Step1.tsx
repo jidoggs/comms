@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Form } from 'antd';
-import CustomInput from '@/common/components/CustomInput';
+import CustomInput, { CustomTextArea } from '@/common/components/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
 import { ArrowRight, Link, PaperClip } from '@/common/components/icons';
 import { createProjectFormInputs } from './helper';
@@ -65,11 +65,7 @@ function NewProjectForm({ onFinish }: Props) {
               {...item}
               className="flex flex-col"
             >
-              <CustomInput
-                name={item.name}
-                placeholder={item.placeholder}
-                type="textarea"
-              />
+              <CustomTextArea name={item.name} placeholder={item.placeholder} />
             </Form.Item>
           );
         }

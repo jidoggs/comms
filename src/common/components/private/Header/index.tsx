@@ -1,7 +1,8 @@
-"use client"
+'use client';
 import React, { lazy, Suspense } from 'react';
 import { Dropdown, MenuProps, Avatar, Layout } from 'antd';
-import useSession from '@/common/hooks/useSession';
+import { useAuth } from '@/app/auth/hooks';
+import { useSession } from '@/common/hooks';
 import Title from '@/common/components/Title';
 import {
   Logout,
@@ -15,7 +16,8 @@ const { Header } = Layout;
 const BreadCrumb = lazy(() => import('./BreadCrumb'));
 
 const AppHeader: React.FunctionComponent = () => {
-  const { data, handleLogout, messageContext } = useSession();
+  const { handleLogout, messageContext } = useAuth();
+  const { data } = useSession();
 
   const isMutating = false;
 

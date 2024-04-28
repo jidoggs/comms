@@ -1,33 +1,21 @@
-const VALIDATION_RULES = [
+import { Rule } from 'antd/es/form';
+
+const PASSWORD_VALIDATION_RULES = [
   {
-    id: 1,
-    title: '1 Capital Letter',
-    passed: false,
+    title: '1 uppercase character',
     regex: '^(?=.*?[A-Z])',
   },
-  { id: 2, title: '1 Number', passed: false, regex: '(?=.*?[0-9])' },
   {
-    id: 3,
-    title: '1 Special Character from !@#$%^&_',
-    passed: false,
+    title: '1 lowercase character',
+    regex: '^(?=.*?[a-z])',
+  },
+  { title: '1 numeric character', regex: '(?=.*?[0-9])' },
+  {
+    title: '1 special character',
     regex: '(?=.*[!@#$%^&_])',
   },
-  { id: 4, title: '8 Characters', passed: false, regex: '.{8,}' },
+  { title: '8 characters', regex: '.{8,}' },
 ];
-
-export const CheckPasswordStrength = (
-  password: string
-): { count: number; total: number } => {
-  if (!password) return { count: 0, total: VALIDATION_RULES.length };
-
-  let count = 0;
-
-  VALIDATION_RULES.forEach((rule) => {
-    if (password.match(rule.regex)) count += 1;
-  });
-
-  return { count, total: VALIDATION_RULES.length };
-};
 
 export const validationRules = {
   string: /(.|\s)*\S(.|\s)*/,
@@ -39,6 +27,16 @@ export const validationRules = {
     /^http:\/\/localhost|https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/, //eslint-disable-line
 };
 
+export const emailValidator = (_: any, value: string) => {
+  if (!value) {
+    return Promise.reject('Email is required');
+  }
+  const validated = value.match(validationRules.email);
+  if (!validated) {
+    return Promise.reject('Email is not valid');
+  }
+  return Promise.resolve();
+};
 export const phoneNumberValidator = (_: any, value: string) => {
   const validated = value.match(validationRules.number);
   const hasPrefix = value.startsWith('234');
@@ -60,3 +58,38 @@ export const phoneNumberValidator = (_: any, value: string) => {
   }
   return Promise.resolve();
 };
+
+export const passwordStrengthValidator = (_: any, value: string) => {
+  if (!value) {
+    return Promise.reject(
+      'Password must contain lowercase, upppercase, number, symbols and a min. of 8 Characters'
+    );
+  }
+  const error = [];
+  for (let index = 0; index < PASSWORD_VALIDATION_RULES.length; index++) {
+    const rule = PASSWORD_VALIDATION_RULES[index];
+    const validated = value.match(rule.regex);
+    if (!validated) {
+      error.push(rule.title);
+    }
+  }
+
+  if (error.length > 0) {
+    const lang = `Password should have at least ${error.join(', ')}`;
+    return Promise.reject(lang);
+  }
+
+  return Promise.resolve();
+};
+
+export const confirmPasswordValidator: Rule = ({ getFieldValue }) => ({
+  validator(_, value) {
+    if (!value || getFieldValue('new_password') === value) {
+      return Promise.resolve();
+    }
+    return Promise.reject(
+      new Error('The new password that you entered do not match!')
+    );
+  },
+  required: true,
+});

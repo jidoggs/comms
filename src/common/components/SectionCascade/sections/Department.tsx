@@ -1,38 +1,56 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import SectionContainer from '../blocks/SectionContainer';
-import { iHandleClick } from '@/types';
-import useSession from '@/common/hooks/useSession';
-import useDepartment from '@/app/admin/hooks/useDepartment';
 import SectionMoreOptions from '../blocks/SectionMoreOptions';
+import { useSession } from '@/common/hooks';
+import { useDepartment } from '@/app/admin/hooks';
+import { queryHandler } from '@/service/request';
+import { CascadeContext } from '..';
 
 interface Props {
-  dataList: Record<string, string>;
-  clickHandler: iHandleClick;
   showMembers?: boolean;
 }
 
-const Options = () => {
+type OptionsType = {
+  query: string;
+};
+
+const Options = ({ query }: OptionsType) => {
+  const contextInfo = useContext(CascadeContext);
+  const parastatalId = contextInfo?.dataList?.parastatal?.id;
+  const officeId = contextInfo?.dataList?.office?.id;
   const { isBasicUser } = useSession();
   const { createSwr } = useDepartment({
     create: !isBasicUser,
+    query,
   });
   return (
-    <SectionMoreOptions
-      addTrigger={createSwr.trigger}
-      addIsLoading={createSwr.isMutating}
-      // inviteIsLoading={createSwr.isMutating}
-      // inviteTrigger={createSwr.trigger}
-    />
+    <>
+      {isBasicUser ? null : (
+        <SectionMoreOptions
+          addTrigger={createSwr.trigger}
+          addIsLoading={createSwr.isMutating}
+          otherAddData={{ office: officeId, parastatal: parastatalId }}
+          // inviteIsLoading={createSwr.isMutating}
+          // inviteTrigger={createSwr.trigger}
+        />
+      )}
+    </>
   );
 };
 
-function Department({ clickHandler, dataList, showMembers }: Props) {
-  const { isPrimaryAdmin, isBasicUser } = useSession();
+function Department({ showMembers }: Props) {
+  const contextInfo = useContext(CascadeContext);
+  const { isPrimaryAdmin } = useSession();
+  const query = queryHandler({
+    parastatal: contextInfo?.dataList?.parastatal?.id,
+    office: contextInfo?.dataList?.office?.id,
+  });
 
   const { getListSwr, getItemSwr } = useDepartment({
     get_all: isPrimaryAdmin,
     _id: '', // you should get this from user object
     get_id: !isPrimaryAdmin,
+    query,
   });
 
   const list = getListSwr.data?.data || [];
@@ -42,13 +60,14 @@ function Department({ clickHandler, dataList, showMembers }: Props) {
   return (
     <SectionContainer
       items={data}
-      title={`${dataList.office} (${data.length} departments)`}
+      title={`${contextInfo?.dataList?.office?.title} (${data.length} departments)`}
       step="department"
-      clickHandler={clickHandler}
-      activeIdentifier={dataList.department}
-      moreOptions={isBasicUser ? null : <Options />}
+      clickHandler={contextInfo?.clickHandler}
+      activeIdentifier={contextInfo?.dataList?.department?.id}
+      moreOptions={<Options query={query} />}
       hasChild={showMembers}
       showTick={!showMembers}
+      loader={getListSwr.isLoading}
     />
   );
 }

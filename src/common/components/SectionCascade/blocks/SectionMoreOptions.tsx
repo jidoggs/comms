@@ -19,23 +19,15 @@ const initialModalState = {
 
 type Props = {
   addTrigger: Mutate;
+  otherAddData?: Record<string, any>;
   addIsLoading: boolean;
   inviteTrigger?: Mutate;
   inviteIsLoading?: boolean;
-  selectedParastatalId?: any;
-  selectedOfficeId?: any;
-  selectedDepartmentId?: any;
+  otherinviteData?: Record<string, any>;
 };
 
-function SectionMoreOptions({
-  addIsLoading,
-  addTrigger,
-  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-  selectedParastatalId,
-}: Props) {
+function SectionMoreOptions({ addIsLoading, addTrigger, otherAddData }: Props) {
   const [isModalOpen, setIsModalOpen] = useState(initialModalState);
-
-  // console.log('selectedParastatalId', selectedParastatalId);
 
   const showModal = (val: keyof typeof initialModalState) => {
     setIsModalOpen({ ...initialModalState, [val]: true });
@@ -45,18 +37,20 @@ function SectionMoreOptions({
     setIsModalOpen({ ...initialModalState });
   };
 
-  const addSubmitHandler = (data: any) => {
+  const addSubmitHandler = (values: any) => {
+    const data = { ...otherAddData, ...values };
     addTrigger({ data, type: 'post' }).finally(handleClose);
   };
 
   //eslint-disable-next-line
   const inviteSubmitHandler = (values: any) => {
-    // inviteTrigger(values).finally(handleClose);
+    // const data = { ...otherinviteData, ...values };
+    // inviteTrigger(data).finally(handleClose);
   };
 
   const items: MenuProps['items'] = [
     {
-      key: '1',
+      key: 'add',
       icon: (
         <span className="">
           <Building size="18" />
@@ -66,7 +60,7 @@ function SectionMoreOptions({
       onClick: () => showModal('add'),
     },
     {
-      key: '2',
+      key: 'person',
       icon: (
         <span className="">
           <UserAdd size="18" />
@@ -76,7 +70,7 @@ function SectionMoreOptions({
       onClick: () => showModal('invite'),
     },
     {
-      key: '3',
+      key: 'details',
       icon: (
         <span className="">
           <InfoCircle size="18" />

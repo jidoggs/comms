@@ -1,38 +1,49 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import SectionContainer from '../blocks/SectionContainer';
-import { iHandleClick } from '@/types';
-import useSession from '@/common/hooks/useSession';
-import useOffice from '@/app/admin/hooks/useOffice';
 import SectionMoreOptions from '../blocks/SectionMoreOptions';
+import { useSession } from '@/common/hooks';
+import { useOffice } from '@/app/admin/hooks';
+import { queryHandler } from '@/service/request';
+import { CascadeContext } from '..';
 
-interface Props {
-  dataList: Record<string, string>;
-  clickHandler: iHandleClick;
-}
+type OptionsType = {
+  query: string;
+};
 
-const Options = () => {
+const Options = ({ query }: OptionsType) => {
+  const id = useContext(CascadeContext)?.dataList?.parastatal?.id;
   const { isBasicUser } = useSession();
   const { createSwr } = useOffice({
     create: !isBasicUser,
+    query,
   });
   return (
-    <SectionMoreOptions
-      addTrigger={createSwr.trigger}
-      addIsLoading={createSwr.isMutating}
-      // inviteIsLoading={createSwr.isMutating}
-      // inviteTrigger={createSwr.trigger}
-    />
+    <>
+      {isBasicUser ? null : (
+        <SectionMoreOptions
+          addTrigger={createSwr.trigger}
+          addIsLoading={createSwr.isMutating}
+          otherAddData={{ parastatal: id }}
+          // inviteIsLoading={createSwr.isMutating}
+          // inviteTrigger={createSwr.trigger}
+        />
+      )}
+    </>
   );
 };
 
-function Office({ clickHandler, dataList }: Props) {
-  const { isPrimaryAdmin, isBasicUser } = useSession();
+function Office() {
+  const contextInfo = useContext(CascadeContext);
+  const { isPrimaryAdmin } = useSession();
+  const query = queryHandler({
+    parastatal: contextInfo?.dataList?.parastatal?.id,
+  });
 
   const { getListSwr, getItemSwr } = useOffice({
     get_all: isPrimaryAdmin,
     _id: '', // you should get this from user object
-    parastatal: '', // you should get this from user object
     get_id: !isPrimaryAdmin,
+    query,
   });
 
   const list = getListSwr.data?.data || [];
@@ -42,12 +53,13 @@ function Office({ clickHandler, dataList }: Props) {
   return (
     <SectionContainer
       items={data}
-      title={`${dataList.parastatal} (${data.length} offices)`}
+      title={`${contextInfo?.dataList?.parastatal?.title} (${data.length} offices)`}
       step="office"
-      clickHandler={clickHandler}
-      activeIdentifier={dataList.office}
-      moreOptions={isBasicUser ? null : <Options />}
+      clickHandler={contextInfo?.clickHandler}
+      activeIdentifier={contextInfo?.dataList?.office?.id}
+      moreOptions={<Options query={query} />}
       hasChild
+      loader={getListSwr.isLoading}
     />
   );
 }

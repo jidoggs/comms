@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAuthGetRequest, useAuthRequest } from '@/service/swrHooks';
-import useSession from '@/common/hooks/useSession';
+import { useSession } from '@/common/hooks';
 import { ENDPOINTS } from '@/service/config/endpoint';
 import { queryHandler } from '@/service/request';
 import { AllParastatalType, ParastatalType } from '../types';

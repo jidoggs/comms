@@ -1,7 +1,6 @@
 'use client';
 import React, { createContext, useState } from 'react';
-import { User } from '@/app/auth/types/auth';
-import { ContextWapper } from '@/types';
+import { ContextWapper, User } from '@/types';
 
 type ContextType = {
   user: User | null;

@@ -3,21 +3,16 @@ import { PasswordProps, TextAreaProps } from 'antd/es/input/';
 
 export type InputRef = AntdInputRef;
 
-type ClassName = 'container' | 'label' | 'input';
-
 // type InputType = 'password' | 'textarea' | 'email' | 'number';
 
-interface InputProp extends Omit<InputProps, 'className'> {
+interface InputProp extends InputProps {
   type?: 'email';
 }
-interface PasswordProp extends Omit<PasswordProps, 'className'> {
+interface PasswordProp extends PasswordProps {
   type: 'password';
 }
-interface TextAreaProp extends Omit<TextAreaProps, 'className'> {
-  type: 'textarea';
-}
+export type TextAreaProp = TextAreaProps;
 
-export type CustomInputProps = (InputProp | PasswordProp | TextAreaProp) & {
-  className?: string | Partial<Record<ClassName, string>>;
+export type CustomInputProps = (InputProp | PasswordProp) & {
   ref?: any;
 };

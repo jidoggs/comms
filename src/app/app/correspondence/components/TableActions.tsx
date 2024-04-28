@@ -15,10 +15,7 @@ function TableActions() {
       <CustomInput
         prefix={<Search className="text-custom-gray_400" />}
         placeholder="Search"
-        className={{
-          input:
-            'border-custom-gray_400 bg-custom-white_100 placeholder:text-custom-gray_400',
-        }}
+        className="border-custom-gray_400 bg-custom-white_100 placeholder:text-custom-gray_400"
       />
       <CustomButton
         type="primary"

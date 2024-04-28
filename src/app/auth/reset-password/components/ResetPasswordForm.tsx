@@ -2,17 +2,18 @@
 import React from 'react';
 import { Form } from 'antd';
 import { useSearchParams } from 'next/navigation';
+import { useAuth } from '../../hooks';
 import CustomButton from '@/common/components/CustomButton';
 import CustomInput from '@/common/components/CustomInput';
-import useAuth from '../../hooks/useAuth';
+import {
+  confirmPasswordValidator,
+  passwordStrengthValidator,
+} from '@/common/utils';
 
 type FieldType = {
   new_password: string;
   confirm_password: string;
 };
-
-const passwordReqexPattern =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*_])[A-Za-z\d!@#$%^&*_]{8,}$/;
 
 const ResetPasswordForm = () => {
   const { trigger, isMutating } = useAuth({
@@ -51,14 +52,7 @@ const ResetPasswordForm = () => {
         <Form.Item<FieldType>
           label="New Password"
           name="new_password"
-          rules={[
-            { required: true, message: 'Please input your Password!' },
-            {
-              pattern: passwordReqexPattern,
-              message:
-                'password must contain lower case, uppper case, number, symbols and a min. of 8 characters',
-            },
-          ]}
+          rules={[{ required: true, validator: passwordStrengthValidator }]}
         >
           <CustomInput
             placeholder="Enter Password"
@@ -72,21 +66,7 @@ const ResetPasswordForm = () => {
           name="confirm_password"
           label="Confirm Password"
           dependencies={['new_password']}
-          rules={[
-            {
-              required: true,
-            },
-            ({ getFieldValue }) => ({
-              validator(_, value) {
-                if (!value || getFieldValue('new_password') === value) {
-                  return Promise.resolve();
-                }
-                return Promise.reject(
-                  new Error('The new password that you entered do not match!')
-                );
-              },
-            }),
-          ]}
+          rules={[confirmPasswordValidator]}
         >
           <CustomInput
             placeholder="Password"

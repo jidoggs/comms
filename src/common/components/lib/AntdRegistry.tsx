@@ -193,7 +193,6 @@ const appTheme: ThemeConfig = {
       margin: 0,
       fontWeightStrong: 700,
       lineHeight: 1,
-      colorTextSecondary: 'red',
     },
     Layout: {
       headerBg: customThemeColor.white_100,

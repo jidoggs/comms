@@ -6,7 +6,8 @@ import { Send } from '@/common/components/icons';
 import CustomButton from '@/common/components/CustomButton';
 import Title from '@/common/components/Title';
 import CustomMention from './Mentions';
-import { User } from '@/app/auth/types/auth';
+import { User } from '../../../types';
+
 
 const ExpandedMinuteForm = () => {
   const [value, setValue] = useState('');

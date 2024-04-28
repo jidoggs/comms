@@ -1,7 +1,7 @@
 import React from 'react';
 import { Checkbox, CheckboxProps, Form } from 'antd';
 import CustomTimeRangePicker from '@/common/components/CustomTimeRangePicker';
-import CustomInput from '@/common/components/CustomInput';
+import CustomInput, { CustomTextArea } from '@/common/components/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
 import { Send } from '@/common/components/icons';
 import { createMeetingFormInputs } from './helper';
@@ -38,11 +38,7 @@ function NewMeetingForm({ onFinish }: Props) {
               {...item}
               className="flex flex-col"
             >
-              <CustomInput
-                name={item.name}
-                placeholder={item.placeholder}
-                type="textarea"
-              />
+              <CustomTextArea name={item.name} placeholder={item.placeholder} />
             </Form.Item>
           );
         }

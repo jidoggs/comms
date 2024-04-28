@@ -1,5 +1,5 @@
 type RequestType = 'create' | 'get_all' | 'get_id' | 'update' | 'delete';
-type QueryType = '_id';
+type QueryType = '_id' | 'query';
 type OfficeQueryType = QueryType | 'parastatal';
 
 export type OfficeServiceParams = Partial<Record<RequestType, boolean>> &
