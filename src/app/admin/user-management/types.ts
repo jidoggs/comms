@@ -7,10 +7,12 @@ import { EditableTableColumnTypes } from '../people/types';
 export * from '../../../types';
 
 export interface Role {
-  _id: any;
+  _id: string;
   name: string;
-  role: string;
-  permissions: never[];
+  active: boolean;
+  permissions: Permission[];
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface Permission {

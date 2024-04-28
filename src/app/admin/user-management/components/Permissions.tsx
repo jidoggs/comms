@@ -1,6 +1,4 @@
-import React, { useContext } from 'react';
-import { Skeleton } from 'antd';
-import { UserMgmtDataContext } from '../service-context/UserMgmtContextWrapper';
+import React from 'react';
 import PermissionSection from './PermissionSection';
 
 interface Permission {
@@ -9,7 +7,12 @@ interface Permission {
   code: string;
 }
 
-type PermissionType = 'parastatal' | 'office' | 'department';
+type PermissionType =
+  | 'parastatal'
+  | 'office'
+  | 'department'
+  | 'invite'
+  | 'role';
 
 export function categorizePermissions(
   permissions: Permission[],
@@ -19,20 +22,19 @@ export function categorizePermissions(
 
   switch (permissionType) {
     case 'parastatal':
-      validTypes.push(
-        'parastatal',
-        'parastatals',
-        'role',
-        'roles',
-        'invite',
-        'invites'
-      );
+      validTypes.push('parastatal', 'parastatals');
       break;
     case 'office':
       validTypes.push('office', 'offices');
       break;
     case 'department':
       validTypes.push('department', 'departments');
+      break;
+    case 'invite':
+      validTypes.push('invite', 'invites');
+      break;
+    case 'role':
+      validTypes.push('role', 'roles');
       break;
     default:
       break;
@@ -44,7 +46,7 @@ export function categorizePermissions(
         permission.name.toUpperCase().endsWith(type.toUpperCase())
       )
     )
-    .map((permission) => permission.name.replace(/_/g, ' ')); // Replace underscore with space
+    .map((permission) => permission.name);
 }
 
 interface PermissionProps {
@@ -53,7 +55,7 @@ interface PermissionProps {
   setAllRoles: React.Dispatch<any>;
   allPermissions: any;
   role: any;
-  options: any;
+  editRole: any;
 }
 
 const Permissions = ({
@@ -62,14 +64,8 @@ const Permissions = ({
   setAllRoles,
   allPermissions,
   role,
-  options,
+  editRole,
 }: PermissionProps) => {
-  const contextInfo = useContext(UserMgmtDataContext);
-  if (!contextInfo) {
-    // Handle the case where contextInfo is null
-    return <Skeleton active />;
-  }
-
   return (
     <div className="col-span-7 flex flex-col justify-between">
       {role.permissions && (
@@ -80,8 +76,8 @@ const Permissions = ({
           allPermissions={allPermissions}
           title="Parastatal"
           permissions={categorizePermissions(role.permissions, 'parastatal')}
-          options={options}
           selectedRole={role}
+          editRole={editRole}
         />
       )}
 
@@ -93,8 +89,9 @@ const Permissions = ({
           allPermissions={allPermissions}
           title="Offices"
           permissions={categorizePermissions(role.permissions, 'office')}
-          options={options}
+          // options={options}
           selectedRole={role}
+          editRole={editRole}
         />
       )}
 
@@ -106,8 +103,37 @@ const Permissions = ({
           allPermissions={allPermissions}
           title="Department"
           permissions={categorizePermissions(role.permissions, 'department')}
-          options={options}
+          // options={options}
           selectedRole={role}
+          editRole={editRole}
+        />
+      )}
+
+      {role.permissions && (
+        <PermissionSection
+          currentRole={currentRoleId}
+          allRoles={allRoles}
+          setAllRoles={setAllRoles}
+          allPermissions={allPermissions}
+          title="Invite"
+          permissions={categorizePermissions(role.permissions, 'invite')}
+          // options={options}
+          selectedRole={role}
+          editRole={editRole}
+        />
+      )}
+
+      {role.permissions && (
+        <PermissionSection
+          currentRole={currentRoleId}
+          allRoles={allRoles}
+          setAllRoles={setAllRoles}
+          allPermissions={allPermissions}
+          title="Role"
+          permissions={categorizePermissions(role.permissions, 'role')}
+          // options={options}
+          selectedRole={role}
+          editRole={editRole}
         />
       )}
     </div>

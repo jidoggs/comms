@@ -21,7 +21,7 @@ function IsDeletedModal({ handleCancel, isModalOpen }: Props) {
       className="!bg-none"
       centered
     >
-      <div className="flex flex-col items-center gap-2 text-base text-custom-gray_200">
+      <div className="flex w-full flex-col items-center gap-2 text-base text-custom-gray_200">
         <Thrash size={90} />
 
         <Title tag="h3" className="!babas text-center">
@@ -30,14 +30,13 @@ function IsDeletedModal({ handleCancel, isModalOpen }: Props) {
         <Title tag="h5" className="text-center">
           Administrator role has been deleted
         </Title>
-        <Divider className="!border-custom-gray_500" />
+        <Divider className="!w-[200px] !border-custom-gray_500" />
         <div className="-mt-3 flex w-full justify-center">
-          {/* <div className="flex w-full items-center justify-center"> */}
           <CustomButton
             type="default"
             size="small"
             className="w-full"
-            onClick={handleCancel}
+            onClick={() => handleCancel}
           >
             Done
           </CustomButton>

@@ -1,9 +1,8 @@
 import CustomButton from '@/common/components/CustomButton';
 import { ArrowDown, CloseCircle } from '@/common/components/icons';
 import Title from '@/common/components/Title';
-import { Dropdown, MenuProps, Skeleton } from 'antd';
-import React, { useContext } from 'react';
-import { UserMgmtDataContext } from '../service-context/UserMgmtContextWrapper';
+import { Dropdown, MenuProps } from 'antd';
+import React from 'react';
 
 interface PermissionSectionProps {
   currentRole: any;
@@ -12,7 +11,7 @@ interface PermissionSectionProps {
   allPermissions: any;
   title: string;
   permissions: string[];
-  options: { _id: string; name: string }[];
+  // options: { _id: string; name: string }[];
   selectedRole?: any;
   editRole?: any;
 }
@@ -28,22 +27,24 @@ const PermissionSection = ({
   allPermissions,
   title,
   permissions,
-  options,
+  // options,
   selectedRole,
+  editRole,
 }: PermissionSectionProps) => {
-  const contextInfo = useContext(UserMgmtDataContext); // Create a state to hold the updated role object
+  const options = allPermissions
+    ? allPermissions.map((permission: any) => permission)
+    : [];
+  // Filter options based on permissionType
+  const filteredOptions = options.filter(
+    (o: any) => typeof o === 'object' && !permissions.includes(o.name)
+  );
 
-  if (!contextInfo) {
-    // Handle the case where contextInfo is null
-    return <Skeleton active />;
-  }
   const items: MenuProps['items'] = [
-    ...options.map((option) => {
+    ...filteredOptions.map((option: any) => {
       return {
         key: option._id,
         label: option.name.replace(/_/g, ' '),
         onClick: () => {
-          // console.log('optioning', option);
           handleAddPermission(option);
         },
       };
@@ -104,9 +105,9 @@ const PermissionSection = ({
             key={permission}
             className="flex h-6 items-center rounded-md border border-custom-gray_400 p-1"
           >
-            <Title>{permission}</Title>
+            <Title>{permission.replace(/_/g, ' ')}</Title>
             <button onClick={() => handleCancelPermission(permission)}>
-              {(contextInfo.editRole && currentRole === selectedRole._id) ||
+              {(editRole && currentRole === selectedRole._id) ||
               selectedRole.name === '' ? (
                 <CloseCircle size="18" />
               ) : (
@@ -115,7 +116,7 @@ const PermissionSection = ({
             </button>
           </div>
         ))}
-        {(contextInfo.editRole && currentRole === selectedRole._id) ||
+        {(editRole && currentRole === selectedRole._id) ||
         selectedRole.name === '' ? (
           <Dropdown menu={{ items }}>
             <CustomButton

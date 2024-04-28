@@ -2,44 +2,50 @@
 import CustomButton from '@/common/components/CustomButton';
 import { ArrowUp, CloseCircled } from '@/common/components/icons';
 import Title from '@/common/components/Title';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import SectionMoreOptions from './actions/SectionMoreOptions';
 import CustomInput from '@/common/components/CustomInput';
 import Permissions from './Permissions';
 import Tick from '@/common/components/icons/Tick';
 // import { initialNewRole } from './PageContent';
-import { message, Skeleton } from 'antd';
-import { UserMgmtDataContext } from '../service-context/UserMgmtContextWrapper';
+import { message } from 'antd';
 import useRoles from '../../hooks/useRoles';
 
 interface RolesPermissionsProps {
   allRoles: any;
   setAllRoles: React.Dispatch<any>;
   allPermissions: any;
-  options: any;
+  // options: any;
   allOriginalRoles: any;
+  editRole: any;
+  setEditRole: React.Dispatch<any>;
+  editedRole: any;
+  setEditedRole: React.Dispatch<any>;
 }
 
 const RolesPermissions = ({
   allRoles,
   setAllRoles,
   allPermissions,
-  options,
+  // options,
   allOriginalRoles,
+  editRole,
+  setEditRole,
+  // editedRole,
+  setEditedRole,
 }: RolesPermissionsProps) => {
-  const contextInfo = useContext(UserMgmtDataContext);
   const [currentRoleId, setCurrentRoleId] = useState<any>();
 
   const { createRoleSwr } = useRoles({
-    create: true,
+    create_role: true,
+  });
+  const { updateRoleSwr } = useRoles({
+    update_role: true,
+    _id: currentRoleId,
   });
 
   const { trigger: createRoleTrigger } = createRoleSwr;
-
-  if (!contextInfo) {
-    // Handle the case where contextInfo is null
-    return <Skeleton active />;
-  }
+  const { trigger: updateRoleTrigger } = updateRoleSwr;
 
   const handleNameChange = ({ _id, name }: any) => {
     setAllRoles((prevRoles: any) =>
@@ -49,13 +55,39 @@ const RolesPermissions = ({
     );
   };
 
-  const updateExitingRole = (_id: any) => {
-    createRoleTrigger({
-      data: { name: _id },
-      type: 'post',
+  const updateExitingRole = (currentUpdatedRole: any) => {
+    const permissions = currentUpdatedRole.permissions.map(
+      (permission: any) => permission._id
+    );
+    const name = currentUpdatedRole.name;
+    updateRoleTrigger({
+      data: { name, permissions },
+      type: 'patch',
     }).then((res) => {
       message.success(res.message);
+      setEditRole && setEditRole(!editRole);
     });
+  };
+
+  const createNewRole = (name: string) => {
+    createRoleTrigger({
+      data: { name: name },
+      type: 'post',
+    });
+  };
+
+  const submitRoleHandler = ({ _id }: any) => {
+    if (_id === 1) {
+      const newRole = allRoles.find((role: any) => role._id === 1);
+      if (newRole.name !== '') {
+        createNewRole(newRole.name);
+      } else {
+        message.error('The new role has no name');
+      }
+    } else {
+      const currentUpdatedRole = allRoles.find((role: any) => role._id === _id);
+      updateExitingRole(currentUpdatedRole);
+    }
   };
 
   const handleCloseEditRole = (id: any) => {
@@ -66,7 +98,7 @@ const RolesPermissions = ({
     } else {
       setAllRoles(allOriginalRoles);
     }
-    contextInfo.setEditRole && contextInfo.setEditRole(false);
+    setEditRole && setEditRole(false);
   };
 
   return (
@@ -88,7 +120,7 @@ const RolesPermissions = ({
               key={role._id}
             >
               <div className="col-span-2 pr-4">
-                {(contextInfo.editRole && currentRoleId === role._id) ||
+                {(editRole && currentRoleId === role._id) ||
                 role.name === '' ? (
                   <CustomInput
                     className="w-1/2 !px-2"
@@ -107,19 +139,19 @@ const RolesPermissions = ({
                 allRoles={allRoles}
                 setAllRoles={setAllRoles}
                 allPermissions={allPermissions}
-                options={options}
+                // options={options}
                 currentRoleId={currentRoleId}
+                editRole={editRole}
               />
 
-              {(contextInfo.editRole && currentRoleId === role._id) ||
-              role.name === '' ? (
+              {(editRole && currentRoleId === role._id) || role.name === '' ? (
                 <div className="flex w-full flex-row justify-end gap-2">
                   <CustomButton
                     icon={<Tick size="18" />}
                     description="Save"
                     type="text"
                     size="small"
-                    onClick={() => updateExitingRole({ _id: role._id })}
+                    onClick={() => submitRoleHandler({ _id: role._id })}
                   />
                   <CustomButton
                     icon={<CloseCircled size="18" />}
@@ -132,12 +164,12 @@ const RolesPermissions = ({
               ) : (
                 <div className="flex w-full flex-row justify-end gap-2">
                   <SectionMoreOptions
-                    editRole={contextInfo.editRole}
-                    setEditRole={contextInfo.setEditRole}
+                    editRole={editRole}
+                    setEditRole={setEditRole}
                     role={role}
                     currentRoleId={currentRoleId}
                     setCurrentRoleId={setCurrentRoleId}
-                    setEditedRole={contextInfo.setEditedRole}
+                    setEditedRole={setEditedRole}
                   />
                   <CustomButton
                     icon={<ArrowUp />}

@@ -47,34 +47,23 @@ function SectionMoreOptions({
 
   const { deleteRoleSwr } = useRoles({
     delete_specific_role: true,
-    _id: currentRoleId,
+    _id: role._id,
   });
   const { trigger: deleteRoleTrigger, isMutating: deleteRoleIsMutating } =
     deleteRoleSwr;
-
-  // const handleCancelIsDeleted = () => {
-  //   setIsModalOpen({ ...initialModalState });
-  // };
-
-  // console.log('currentRole', currentRole);
-  // console.log('role', role);
-  // console.log('currentRoleId', currentRoleId);
 
   const handleRoleEdit = () => {
     setCurrentRoleId && setCurrentRoleId(role._id);
     setEditedRole({ _id: role._id });
     setEditRole && setEditRole(!editRole);
-    // setIsModalOpen({ ...initialModalState });
   };
 
   const deleteSpecificRole = () => {
-    // console.log('delete role called');
-
     deleteRoleTrigger({
       data: {},
       type: 'delete',
     }).then((res) => {
-      message.success(res.data);
+      message.success('Role deleted successfully');
       setIsModalOpen({ ...initialModalState, isDeleted: true, delete: false });
     });
   };
@@ -82,12 +71,6 @@ function SectionMoreOptions({
   const handleCancel = () => {
     setIsModalOpen({ ...initialModalState });
   };
-
-  // const deleteHandler = () => {
-  //   deleteSpecificRole();
-  //   setIsModalOpen({ ...initialModalState });
-  //   // console.log(value); //eslint-disable-line
-  // };
 
   const items: MenuProps['items'] = [
     {
@@ -114,26 +97,21 @@ function SectionMoreOptions({
           onClick={() =>
             setCurrentRoleId && setCurrentRoleId(role._id as string)
           }
-          onMouseEnter={() =>
-            setCurrentRoleId && setCurrentRoleId(role._id as string)
-          }
+          // onMouseEnter={() =>
+          //   setCurrentRoleId && setCurrentRoleId(role._id as string)
+          // }
         />
       </Dropdown>
-      {/* <Title>Edit this role</Title> */}
       <DeleteModal
         handleCancel={handleCancel}
         handleSubmit={deleteSpecificRole}
         isModalOpen={isModalOpen.delete}
+        deleteRoleIsMutating={deleteRoleIsMutating}
       />
       <IsDeletedModal
         handleCancel={handleCancel}
         isModalOpen={isModalOpen.isDeleted}
       />
-      {/* <InvitePersonModal
-        handleCancel={handleCancel}
-        handleSubmit={submitHandler}
-        isModalOpen={isModalOpen.invite}
-      /> */}
     </>
   );
 }

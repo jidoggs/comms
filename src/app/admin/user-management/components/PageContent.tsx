@@ -15,6 +15,8 @@ const CorrespondencePage = () => {
   const [allRoles, setAllRoles] = useState<any>();
   const [allOriginalRoles, setAllOriginalRoles] = useState<any>();
   const [allPermissions, setAllPermissions] = useState<any>();
+  const [editedRole, setEditedRole] = useState<any>();
+  const [editRole, setEditRole] = useState<boolean>(false);
   const contextInfo = useContext(UserMgmtDataContext);
 
   const roleProps = useRoles({
@@ -58,10 +60,6 @@ const CorrespondencePage = () => {
     name: '',
     permissions: [],
   };
-
-  const options = Array.isArray(allPermissions)
-    ? allPermissions.map((permission: any) => permission)
-    : [];
 
   const handleAddRole = () => {
     const element = document.getElementById('#RolesPermissions');
@@ -119,8 +117,12 @@ const CorrespondencePage = () => {
               allRoles={allRoles}
               setAllRoles={setAllRoles}
               allPermissions={allPermissions}
-              options={options}
+              // options={options}
               allOriginalRoles={allOriginalRoles}
+              editRole={editRole}
+              setEditRole={setEditRole}
+              editedRole={editedRole}
+              setEditedRole={setEditedRole}
             />
           ) : (
             <Skeleton active />

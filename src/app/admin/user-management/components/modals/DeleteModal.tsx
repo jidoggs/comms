@@ -11,13 +11,18 @@ type Props = {
   isModalOpen: boolean;
   handleCancel: VoidFunction; //eslint-disable-line
   handleSubmit: () => void; //eslint-disable-line
+  deleteRoleIsMutating: boolean;
 };
 
-function DeleteModal({ handleCancel, handleSubmit, isModalOpen }: Props) {
+function DeleteModal({
+  handleCancel,
+  handleSubmit,
+  isModalOpen,
+  deleteRoleIsMutating,
+}: Props) {
   return (
     <CustomModal
       width={375}
-      // title={<CustomModalTitle title="Add" hasLink />}
       open={isModalOpen}
       onCancel={handleCancel}
       destroyOnClose
@@ -33,12 +38,22 @@ function DeleteModal({ handleCancel, handleSubmit, isModalOpen }: Props) {
         <Divider className="!border-custom-gray_500" />
         <div className="-mt-3 flex w-full justify-between">
           <div className="!w-1/2">
-            <CustomButton type="text" className="w-full" onClick={handleCancel}>
+            <CustomButton
+              type="text"
+              className="w-full"
+              onClick={handleCancel}
+              loading={deleteRoleIsMutating}
+            >
               Cancel
             </CustomButton>
           </div>
           <div className="!w-1/2">
-            <CustomButton type="text" className="w-full" onClick={handleSubmit}>
+            <CustomButton
+              type="text"
+              className="w-full"
+              onClick={handleSubmit}
+              loading={deleteRoleIsMutating}
+            >
               Yes, Delete
             </CustomButton>
           </div>
