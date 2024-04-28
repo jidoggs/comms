@@ -151,3 +151,22 @@ body {
 .ant-cascader-menu-item-active {
   /* background-color: #dddef6 !important; */
 }
+
+.ant-form-item
+  .ant-form-item-label
+  > label.ant-form-item-required:not(
+    .ant-form-item-required-mark-optional
+  )::before {
+  display: none !important;
+  margin-inline-end: 4px !important;
+}
+.ant-form-item
+  .ant-form-item-label
+  > label.ant-form-item-required:not(
+    .ant-form-item-required-mark-optional
+  )::after {
+  display: inline-block !important;
+  margin-inline-start: 4px !important;
+  content: '*';
+  visibility: visible;
+}

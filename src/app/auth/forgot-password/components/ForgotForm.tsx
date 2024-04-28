@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import Form from 'antd/es/form';
+import Link from 'next/link';
 import useMessage from 'antd/es/message/useMessage';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../hooks';
@@ -54,14 +55,12 @@ const ForgotForm = () => {
           >
             Continue
           </CustomButton>
-          <CustomButton
+          <Link
+            className="rounded-10 font-bold bg-transparent py-4 text-center text-sm leading-none !text-custom-main transition-colors hover:bg-custom-gray_500"
             href="/auth/login"
-            disabled={isMutating}
-            type="text"
-            block
           >
             Login
-          </CustomButton>
+          </Link>
         </div>
       </Form>
     </>

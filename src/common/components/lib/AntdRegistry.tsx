@@ -27,6 +27,7 @@ const appTheme: ThemeConfig = {
       paddingContentVertical: 5,
       padding: 5,
       paddingContentHorizontal: 5,
+      labelRequiredMarkColor: customThemeColor.main,
     },
     Button: {
       fontSize: 14,
@@ -108,12 +109,19 @@ const appTheme: ThemeConfig = {
       controlHeight: 44,
       colorBgContainer: customThemeColor.gray_900,
       controlPaddingHorizontal: 15,
-      borderRadius: 10,
-      fontSize: 16,
-      colorText: customThemeColor.gray_400,
+      borderRadius: 8,
+      fontSize: 14,
+      colorText: customThemeColor.main,
       fontWeightStrong: 400,
-      colorBorderBg: customThemeColor.gray_100,
+      colorBorderBg: customThemeColor.gray_400,
       multipleItemBg: customThemeColor.gray_200,
+
+      colorTextPlaceholder: customThemeColor.gray_600,
+      colorBgContainerDisabled: customThemeColor.gray_900,
+      margin: 0,
+      controlHeightSM: 24,
+
+      optionSelectedBg: customThemeColor.gray_800,
     },
     Pagination: {
       itemActiveBg: customThemeColor.blue_100,
