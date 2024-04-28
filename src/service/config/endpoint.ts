@@ -37,7 +37,7 @@ export const ENDPOINTS = {
     // ADD_PERMISSION_TO_ROLE: '/roles/',
     // GET_SPECIFIC_ROLE: (query: string) => `/roles/${query}`,
     DELETE_SPECIFIC_ROLE: (query: string) => `/roles/${query}`,
-    UPDATE: (query: string) => `/roles/${query}`,
+    UPDATE: '/roles/',
   },
   PERMISSIONS: {
     CREATE: '/permissions',

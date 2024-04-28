@@ -36,7 +36,7 @@ function IsDeletedModal({ handleCancel, isModalOpen }: Props) {
             type="default"
             size="small"
             className="w-full"
-            onClick={() => handleCancel}
+            onClick={handleCancel}
           >
             Done
           </CustomButton>

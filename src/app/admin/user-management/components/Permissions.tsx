@@ -7,6 +7,12 @@ interface Permission {
   code: string;
 }
 
+interface Option {
+  _id: string;
+  name: string;
+  code: string;
+}
+
 type PermissionType =
   | 'parastatal'
   | 'office'
@@ -49,6 +55,47 @@ export function categorizePermissions(
     .map((permission) => permission.name);
 }
 
+export function categorizeOptions(
+  permissions: Permission[],
+  permissionType: PermissionType
+): Option[] {
+  const validTypes: string[] = [];
+
+  switch (permissionType) {
+    case 'parastatal':
+      validTypes.push('parastatal', 'parastatals');
+      break;
+    case 'office':
+      validTypes.push('office', 'offices');
+      break;
+    case 'department':
+      validTypes.push('department', 'departments');
+      break;
+    case 'invite':
+      validTypes.push('invite', 'invites');
+      break;
+    case 'role':
+      validTypes.push('role', 'roles');
+      break;
+    default:
+      break;
+  }
+
+  return permissions
+    .filter((permission) =>
+      validTypes.some((type) =>
+        permission.name.toUpperCase().endsWith(type.toUpperCase())
+      )
+    )
+    .map((permission) => {
+      return {
+        _id: permission._id,
+        name: permission.name,
+        code: permission.code,
+      };
+    });
+}
+
 interface PermissionProps {
   currentRoleId: any;
   allRoles: any;
@@ -76,6 +123,7 @@ const Permissions = ({
           allPermissions={allPermissions}
           title="Parastatal"
           permissions={categorizePermissions(role.permissions, 'parastatal')}
+          options={categorizeOptions(allPermissions, 'parastatal')}
           selectedRole={role}
           editRole={editRole}
         />
@@ -89,6 +137,7 @@ const Permissions = ({
           allPermissions={allPermissions}
           title="Offices"
           permissions={categorizePermissions(role.permissions, 'office')}
+          options={categorizeOptions(allPermissions, 'office')}
           // options={options}
           selectedRole={role}
           editRole={editRole}
@@ -103,6 +152,7 @@ const Permissions = ({
           allPermissions={allPermissions}
           title="Department"
           permissions={categorizePermissions(role.permissions, 'department')}
+          options={categorizeOptions(allPermissions, 'department')}
           // options={options}
           selectedRole={role}
           editRole={editRole}
@@ -117,6 +167,7 @@ const Permissions = ({
           allPermissions={allPermissions}
           title="Invite"
           permissions={categorizePermissions(role.permissions, 'invite')}
+          options={categorizeOptions(allPermissions, 'invite')}
           // options={options}
           selectedRole={role}
           editRole={editRole}
@@ -131,6 +182,7 @@ const Permissions = ({
           allPermissions={allPermissions}
           title="Role"
           permissions={categorizePermissions(role.permissions, 'role')}
+          options={categorizeOptions(allPermissions, 'role')}
           // options={options}
           selectedRole={role}
           editRole={editRole}

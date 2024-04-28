@@ -29,6 +29,8 @@ interface SectionMoreProps {
   currentRoleId: string;
   setCurrentRoleId?: React.Dispatch<React.SetStateAction<string>>;
   setEditedRole: any;
+  allRoles: any;
+  setAllRoles: any;
 }
 
 function SectionMoreOptions({
@@ -38,6 +40,8 @@ function SectionMoreOptions({
   currentRoleId,
   setCurrentRoleId,
   setEditedRole,
+  allRoles,
+  setAllRoles,
 }: SectionMoreProps) {
   const [isModalOpen, setIsModalOpen] = useState(initialModalState);
 
@@ -59,13 +63,24 @@ function SectionMoreOptions({
   };
 
   const deleteSpecificRole = () => {
-    deleteRoleTrigger({
-      data: {},
-      type: 'delete',
-    }).then((res) => {
-      message.success('Role deleted successfully');
+    if (role._id === 1) {
+      const newRoles = allRoles.filter((r: any) => r._id !== role._id);
+      setAllRoles(newRoles);
+      message.success('New Role deleted successfully');
       setIsModalOpen({ ...initialModalState, isDeleted: true, delete: false });
-    });
+    } else {
+      deleteRoleTrigger({
+        data: {},
+        type: 'delete',
+      }).then((res) => {
+        message.success('Role deleted successfully');
+        setIsModalOpen({
+          ...initialModalState,
+          isDeleted: true,
+          delete: false,
+        });
+      });
+    }
   };
 
   const handleCancel = () => {

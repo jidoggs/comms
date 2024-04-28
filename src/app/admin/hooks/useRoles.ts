@@ -60,7 +60,7 @@ function useRoles(props: Props) {
     }
   );
   const updateRoleSwr = useAuthRequest(
-    props?.update_role && isQuery ? UPDATE(query) : '',
+    props?.update_role ? UPDATE : '',
     {
       onSuccess: revalidateListHandler,
     }

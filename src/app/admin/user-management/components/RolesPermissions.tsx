@@ -41,7 +41,7 @@ const RolesPermissions = ({
   });
   const { updateRoleSwr } = useRoles({
     update_role: true,
-    _id: currentRoleId,
+    // _id: currentRoleId,
   });
 
   const { trigger: createRoleTrigger } = createRoleSwr;
@@ -61,7 +61,7 @@ const RolesPermissions = ({
     );
     const name = currentUpdatedRole.name;
     updateRoleTrigger({
-      data: { name, permissions },
+      data: { name, permissions, _id: currentRoleId },
       type: 'patch',
     }).then((res) => {
       message.success(res.message);
@@ -69,10 +69,16 @@ const RolesPermissions = ({
     });
   };
 
-  const createNewRole = (name: string) => {
+  const createNewRole = (newRole: any) => {
+    const permissions = newRole.permissions.map(
+      (permission: any) => permission._id
+    );
+    const name = newRole.name;
     createRoleTrigger({
-      data: { name: name },
+      data: { name: name, permissions: permissions },
       type: 'post',
+    }).then(() => {
+      message.success('Role created successfully');
     });
   };
 
@@ -80,7 +86,8 @@ const RolesPermissions = ({
     if (_id === 1) {
       const newRole = allRoles.find((role: any) => role._id === 1);
       if (newRole.name !== '') {
-        createNewRole(newRole.name);
+        // send the full data
+        createNewRole(newRole);
       } else {
         message.error('The new role has no name');
       }
@@ -170,6 +177,8 @@ const RolesPermissions = ({
                     currentRoleId={currentRoleId}
                     setCurrentRoleId={setCurrentRoleId}
                     setEditedRole={setEditedRole}
+                    allRoles={allRoles}
+                    setAllRoles={setAllRoles}
                   />
                   <CustomButton
                     icon={<ArrowUp />}

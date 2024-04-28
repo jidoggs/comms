@@ -11,7 +11,7 @@ interface PermissionSectionProps {
   allPermissions: any;
   title: string;
   permissions: string[];
-  // options: { _id: string; name: string }[];
+  options: { _id: string; name: string; code: string }[];
   selectedRole?: any;
   editRole?: any;
 }
@@ -27,24 +27,17 @@ const PermissionSection = ({
   allPermissions,
   title,
   permissions,
-  // options,
+  options,
   selectedRole,
   editRole,
 }: PermissionSectionProps) => {
-  const options = allPermissions
-    ? allPermissions.map((permission: any) => permission)
-    : [];
-  // Filter options based on permissionType
-  const filteredOptions = options.filter(
-    (o: any) => typeof o === 'object' && !permissions.includes(o.name)
-  );
-
   const items: MenuProps['items'] = [
-    ...filteredOptions.map((option: any) => {
+    ...options.map((option: any) => {
       return {
         key: option._id,
         label: option.name.replace(/_/g, ' '),
         onClick: () => {
+          // console.log('optioning', option);
           handleAddPermission(option);
         },
       };
