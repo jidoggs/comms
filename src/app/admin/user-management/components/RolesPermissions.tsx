@@ -2,7 +2,7 @@
 import CustomButton from '@/common/components/CustomButton';
 import { ArrowUp, CloseCircled } from '@/common/components/icons';
 import Title from '@/common/components/Title';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import SectionMoreOptions from './actions/SectionMoreOptions';
 import CustomInput from '@/common/components/CustomInput';
 import Permissions from './Permissions';
@@ -35,6 +35,8 @@ const RolesPermissions = ({
   setEditedRole,
 }: RolesPermissionsProps) => {
   const [currentRoleId, setCurrentRoleId] = useState<any>();
+  const rolesWrapperRef = useRef(null);
+  const firstRoleRef = useRef<HTMLDivElement>(null); // Reference to the first role with role._id === 1
 
   const { createRoleSwr } = useRoles({
     create_role: true,
@@ -108,6 +110,16 @@ const RolesPermissions = ({
     setEditRole && setEditRole(false);
   };
 
+  useEffect(() => {
+    // Scroll to the top if the first role's reference is available
+    if (firstRoleRef.current) {
+      firstRoleRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }
+  }, [firstRoleRef.current]);
+
   return (
     <div className="flex flex-col">
       <div className="grid grid-cols-10 border-b border-custom-black_200/10 p-4">
@@ -118,13 +130,17 @@ const RolesPermissions = ({
           Permissions
         </Title>
       </div>
-      <div className="h-full max-h-[calc(100vh_-_13.225rem)] overflow-y-scroll">
+      <div
+        className="h-full max-h-[calc(100vh_-_13.225rem)] overflow-y-scroll"
+        ref={rolesWrapperRef}
+      >
         {allRoles &&
           allRoles.length &&
-          allRoles.map((role: any) => (
+          allRoles.map((role: any, index: number) => (
             <div
               className="mt-2 grid grid-cols-10 items-start bg-custom-white_100 p-4"
               key={role._id}
+              ref={index === 0 && role._id === 1 ? firstRoleRef : null} // Set ref to the first role with role._id === 1
             >
               <div className="col-span-2 pr-4">
                 {(editRole && currentRoleId === role._id) ||

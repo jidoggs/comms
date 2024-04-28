@@ -1,20 +1,36 @@
 'use client';
-import React from 'react';
-import { Form } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Form, message } from 'antd';
 import CustomInput from '@/common/components/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
 import { ArrowRight } from '@/common/components/icons';
-import useOnboarding from '@/app/auth/hooks/useOnboarding';
 import { useRouter } from 'next/navigation';
+import useOnboarding from '@/app/admin/hooks/useOnboarding';
 
 type FieldType = {
   password?: string;
   // remember?: string;
 };
 
+type PasswordProps = {
+  confirm_password: string;
+  password: string;
+};
+
 type Validators = {
   form?: any;
   setPasswordIsMutating?: any;
+};
+
+type OnboardingProps = {
+  firstname: string;
+  lastname: string;
+  middlename: string;
+  email: string;
+  phoneNumber: string;
+  department: string;
+  password: string;
+  invite_code: string;
 };
 
 const PasswordValidator = ({ setPasswordIsMutating }: Validators) => {
@@ -24,7 +40,14 @@ const PasswordValidator = ({ setPasswordIsMutating }: Validators) => {
 
     if (!regex.test(value)) {
       return Promise.reject(
-        'Password must contain at least one lowercase letter, one uppercase letter, one number, one special character, and be at least 8 characters long'
+        <div>
+          Password must contain: <br />
+          At least one lowercase letter, <br />
+          One uppercase letter, <br />
+          One number, <br />
+          One special character, and <br />
+          Must be at least 8 characters long
+        </div>
       );
     }
 
@@ -53,13 +76,40 @@ const PasswordValidator = ({ setPasswordIsMutating }: Validators) => {
 const StepThreeForm = () => {
   const router = useRouter();
   const [form] = Form.useForm();
-  const { setPasswordTrigger, setPasswordIsMutating } = useOnboarding({
-    office_info: true,
+  const [onboardingData, setOnboardingdata] = useState<OnboardingProps>();
+
+  useEffect(() => {
+    const savedOnBoardingData = localStorage.getItem('onboardingData');
+    if (savedOnBoardingData) {
+      setOnboardingdata(JSON.parse(savedOnBoardingData));
+    }
+  }, []);
+
+  const { createUserSwr } = useOnboarding({
+    create_user: true,
   });
 
-  const onFinish = (values: string[]) => {
-    // router.push('/onboarding/success');
-    setPasswordTrigger({ data: values, type: 'post' }).then(() => {
+  const { trigger: createUserTrigger, isMutating: createUserIsMutating } =
+    createUserSwr;
+
+  const createNewUser = (values: PasswordProps) => {
+    // console.log('values', values);
+
+    createUserTrigger({
+      data: {
+        firstname: onboardingData && onboardingData.firstname,
+        surname: onboardingData && onboardingData.lastname,
+        middlename: onboardingData && onboardingData.middlename,
+        email: onboardingData && onboardingData.email,
+        phone: onboardingData && onboardingData.phoneNumber,
+        department: onboardingData && onboardingData.department,
+        password: values.password,
+        invite_code: onboardingData && onboardingData.invite_code,
+      },
+      type: 'post',
+    }).then(() => {
+      message.success('User updated successfully');
+      localStorage.removeItem('onboardingData');
       router.push('/onboarding/success');
     });
   };
@@ -67,14 +117,14 @@ const StepThreeForm = () => {
   return (
     <Form
       name="basic"
-      onFinish={onFinish}
+      onFinish={createNewUser}
       autoComplete="off"
       layout="vertical"
       className="!w-full"
     >
       <PasswordValidator
         form={form}
-        setPasswordIsMutating={setPasswordIsMutating}
+        setPasswordIsMutating={createUserIsMutating}
       />
       <Form.Item
         name="confirm_password"
@@ -101,13 +151,13 @@ const StepThreeForm = () => {
         <CustomInput
           placeholder="Enter Password"
           type="password"
-          disabled={setPasswordIsMutating}
+          disabled={createUserIsMutating}
         />
       </Form.Item>
 
       <Form.Item className="flex justify-end">
         <CustomButton
-          loading={setPasswordIsMutating}
+          loading={createUserIsMutating}
           block
           size="small"
           htmlType="submit"

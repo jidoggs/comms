@@ -1,6 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 'use client';
 import React from 'react';
 import { Form } from 'antd';
@@ -15,12 +12,19 @@ import { useSectionCascade } from '@/common/hooks';
 const StepTwoForm = () => {
   const router = useRouter();
   const { clickHandler, dataList } = useSectionCascade();
+  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
   const { officeInfoTrigger, officeInfoIsMutating } = useOnboarding({
     office_info: true,
   });
 
   const onFinish = () => {
-    // router.push('/onboarding/set-password');
+    const currentOnboardingData =
+      JSON.parse(localStorage.getItem('onboardingData') as string) || [];
+
+    const updatedData = { ...currentOnboardingData, invite_code: '123456' };
+    localStorage.setItem('onboardingData', JSON.stringify(updatedData));
+
+    router.push('/onboarding/set-password');
     // officeInfoTrigger({ data: department, type: 'post' }).then(() => {
     //   router.push('/onboarding/set-password');
     // });
@@ -54,7 +58,7 @@ const StepTwoForm = () => {
 
         <CustomButton
           loading={officeInfoIsMutating}
-          disabled={dataList.department.id === ''}
+          // disabled={dataList.department.id === ''}
           htmlType="submit"
           size="small"
         >

@@ -62,7 +62,7 @@ const CorrespondencePage = () => {
   };
 
   const handleAddRole = () => {
-    const element = document.getElementById('#RolesPermissions');
+    const element = document.getElementById('rolesPermissions');
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }

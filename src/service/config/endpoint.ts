@@ -11,6 +11,7 @@ export const ENDPOINTS = {
     PERSONAL_INFO: '/auth/personal-info',
     OFFICE_INFO: '/auth/office-info',
     SET_PASSWORD: '/user/set-password',
+    CREATE_USER: '/auth/onboard',
     // UPDATE_USER_PASSWORD: '/user/update/password',
     // REFRESH_TOKEN: '/refresh/token',
     // FORGOT_PASSWORD: '/auth/forgot_password',
