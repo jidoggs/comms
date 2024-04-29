@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Dropdown, MenuProps } from 'antd';
+
 import CustomButton from '@/common/components/CustomButton';
 import { Delete, Edit, MoreFile } from '@/common/components/icons';
 import { iHandleClick } from '../types';
-import ApproveModalContent from '../../../../common/components/ApproveModalContent';
 import UserDetails from './UserDetails';
+import DeleteModal from './modals/DeleteModal';
 
 type Props = {
   data: any;
@@ -31,8 +32,7 @@ function TableRowAction({ data }: Props) {
   };
 
   //eslint-disable-next-line
-  const submitHandler = (value: any) => {
-    console.log(value); //eslint-disable-line
+  const submitHandler = () => {
     handleCancel();
   };
 
@@ -80,8 +80,11 @@ function TableRowAction({ data }: Props) {
           staffData={data}
           onCancel={handleCancel}
         />
-        <ApproveModalContent
+        <DeleteModal
+          warningText="Are you sure you want to delete this account?"
           isModalOpen={isModalOpen.delete}
+          handleSubmit={submitHandler}
+          deleteRoleIsMutating={false}
           handleCancel={handleCancel}
         />
       </div>

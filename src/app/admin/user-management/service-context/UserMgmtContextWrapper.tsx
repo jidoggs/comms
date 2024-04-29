@@ -4,7 +4,7 @@
 // /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 import React, { createContext, useState } from 'react';
-import { TabsProps, message } from 'antd';
+import { TabsProps } from 'antd';
 import {
   ContextWapper,
   PermissionGroup,
@@ -15,8 +15,7 @@ import { useTabChange } from '@/common/hooks';
 import { dummyPersonsPending, dummyPersons } from '@/common/mockData';
 import TableRowAction from '../components/TableRowAction';
 import { mergeClassName } from '@/common/utils';
-import useRoles from '../../hooks/useRoles';
-import { EditableTableColumnTypes, User } from '../../people/types';
+import { User } from '../../people/types';
 import dayjs from 'dayjs';
 
 export const UserMgmtDataContext = createContext<UserMgmtDataContextType>(null);
@@ -130,6 +129,9 @@ const defaultColumns: {
     dataIndex: 'last_active',
     ellipsis: true,
     width: 150,
+    render: (_: any, record: any) => {
+      return <>{dayjs(record?.last_seen).format('DD-MMM-YYYY')}</>;
+    },
   },
   {
     title: 'Date added',

@@ -2,6 +2,7 @@ import { mergeClassName } from '@/common/utils';
 import TableRowAction from '../components/TableRowAction';
 import { TabsProps } from 'antd';
 import { EditableTableColumnTypes } from '../types';
+import dayjs from 'dayjs';
 
 export const defaultColumns: (EditableTableColumnTypes[number] & {
   dataIndex: string;
@@ -73,6 +74,9 @@ export const defaultColumns: (EditableTableColumnTypes[number] & {
     dataIndex: 'date_sent',
     ellipsis: true,
     width: 150,
+    render: (_: any, __: any, record: any) => {
+      return <>{dayjs(record?.created_at).format('DD-MMM-YYYY')}</>;
+    },
   },
   {
     title: 'Actions',
@@ -103,7 +107,7 @@ export const tabItemList: TabsProps['items'] = [
     label: 'Approved',
   },
   {
-    key: 'declined',
+    key: 'rejected',
     label: 'Declined',
   },
 ];

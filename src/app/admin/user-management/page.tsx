@@ -1,4 +1,5 @@
 import { Suspense, lazy } from 'react';
+
 import UserMgmtContextWrapper from './service-context/UserMgmtContextWrapper';
 
 const UserContent = lazy(() => import('./components/PageContent'));

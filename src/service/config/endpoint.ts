@@ -33,6 +33,10 @@ export const ENDPOINTS = {
     UPDATE: (query: string) => `/offices/${query}`,
     INVITE: '/invite/office',
   },
+  PEOPLE: {
+    GET_ALL_INVITE_BY_STATUS: (query: string) => `/invite?status=${query}`,
+    APPROVE_REQUEST: '/auth/approve',
+  },
   ROLES: {
     CREATE: '/roles',
     GET_ALL_ROLES: '/roles/all',
