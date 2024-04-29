@@ -43,8 +43,10 @@ const UserDetailsContent = ({ userData }: UserDetailsContentProps) => {
           />
           <div className="flex flex-col justify-end">
             <div className="flex items-center gap-1">
-              <div className="size-2 rounded bg-custom-green_100" />
-              <p>Active</p>
+              <div
+                className={`size-2 rounded ${userData?.active ? 'bg-custom-green_100' : 'bg-custom-red_100'}`}
+              />
+              <p>{userData?.active ? 'Active' : 'In-Active'}</p>
             </div>
             <div className="flex gap-2">
               <CustomButton
@@ -81,7 +83,7 @@ const UserDetailsContent = ({ userData }: UserDetailsContentProps) => {
         <hr />
         <FieldRow
           title="Name"
-          value={userData?.firstname as string}
+          value={`${userData?.firstname} ${userData?.othername}` as string}
           isEdit={isEdit}
         />
         <FieldRow
@@ -92,26 +94,26 @@ const UserDetailsContent = ({ userData }: UserDetailsContentProps) => {
         <hr />
         <FieldRow
           title="Phone Number"
-          value={userData?.phone as string}
+          value={userData?.phone as string || "N/A"}
           isEdit={isEdit}
         />
         <FieldRow
           title="Date Added"
-          value={dayjs(userData?.date_created).format('DD-MMM-YYYY')}
+          value={dayjs(userData?.created_at).format('DD-MMM-YYYY')}
         />
         <hr />
         <FieldRow
           title="Last Active"
-          value={dayjs(userData?.date_created).format('DD-MMM-YYYY')}
+          value={dayjs(userData?.last_seen).format('DD-MMM-YYYY')}
         />
         <div>
           <Title className="my-2 font-semibold text-custom-gray_600">
             Office
           </Title>
           <FieldRow title="Title" value={userData?.title} isEdit={isEdit} />
-          <FieldRow title="Department" value={userData?.department} />
+          <FieldRow title="Department" value={userData?.department || "N/A"} />
           <hr />
-          <FieldRow title="Parastatal" value={userData?.parastatal as string} />
+          <FieldRow title="Parastatal" value={userData?.parastatal as string || "N/A"} />
         </div>
       </div>
       <DeleteModal

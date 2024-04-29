@@ -3,8 +3,8 @@ import { Dropdown, MenuProps } from 'antd';
 import CustomButton from '@/common/components/CustomButton';
 import { Delete, Edit, MoreFile } from '@/common/components/icons';
 import { iHandleClick } from '../types';
-import RegistrationDetail from '../../people/components/RegistrationDetail';
 import ApproveModalContent from '../../../../common/components/ApproveModalContent';
+import UserDetails from './UserDetails';
 
 type Props = {
   data: any;
@@ -75,7 +75,7 @@ function TableRowAction({ data }: Props) {
             icon={<MoreFile />}
           />
         </Dropdown>
-        <RegistrationDetail
+        <UserDetails
           open={isModalOpen.edit}
           staffData={data}
           onCancel={handleCancel}

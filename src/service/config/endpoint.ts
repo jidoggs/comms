@@ -40,6 +40,12 @@ export const ENDPOINTS = {
     DELETE_SPECIFIC_ROLE: (query: string) => `/roles/${query}`,
     UPDATE: '/roles/',
   },
+  USERS: {
+    GET_ALL_USERS: '/user/all',
+    GET_SPECIFIC_USER: (query: string) => `/user/${query}`,
+    DELETE_USER: (query: string) => `/user/${query}`,
+    UPDATE_USER: (query: string) => `/user/${query}`,
+  },
   PERMISSIONS: {
     CREATE: '/permissions',
     VIEW_ALL_PERMISSIONS: '/permissions/all',

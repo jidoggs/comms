@@ -6,11 +6,20 @@ import { UserMgmtDataContext } from '../service-context/UserMgmtContextWrapper';
 import TableActions from './TableActions';
 import { User } from '../types';
 import UserDetails from './UserDetails';
+import useUsers from '../../hooks/useUsers';
 
 const Users = () => {
   const contextInfo = useContext(UserMgmtDataContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [staffData, setStaffData] = useState<User | null>(null);
+
+  const usersProps = useUsers({
+    get_all_users: true,
+  });
+
+  const { getAllUsersSwr } = usersProps;
+
+  const { data } = getAllUsersSwr;
 
   const rowClickHandler: CustomTableProps<any>['onRow'] = (record) => ({
     onClick: () => {
@@ -32,7 +41,7 @@ const Users = () => {
           table: 'cursor-pointer',
         }}
         columns={contextInfo?.columns}
-        dataSource={contextInfo?.dataSource}
+        dataSource={data?.data as User[]}
         size="large"
         rowClassName="group"
         onRow={rowClickHandler}
