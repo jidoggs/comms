@@ -118,6 +118,7 @@ const RolesPermissions = ({
         block: 'start',
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [firstRoleRef.current]);
 
   return (

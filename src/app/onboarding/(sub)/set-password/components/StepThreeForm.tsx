@@ -5,7 +5,7 @@ import CustomInput from '@/common/components/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
 import { ArrowRight } from '@/common/components/icons';
 import { useRouter } from 'next/navigation';
-import useOnboarding from '@/app/admin/hooks/useOnboarding';
+import useOnboarding from '@/common/hooks/useOnboarding';
 
 type FieldType = {
   password?: string;

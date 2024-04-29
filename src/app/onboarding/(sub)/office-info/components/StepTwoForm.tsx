@@ -2,9 +2,9 @@
 import React from 'react';
 import { Form } from 'antd';
 import CustomButton from '@/common/components/CustomButton';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
 import { ArrowRight, ArrowRightBreak } from '@/common/components/icons';
 import { useRouter } from 'next/navigation';
-import useOnboarding from '@/app/auth/hooks/useOnboarding';
 import Title from '@/common/components/Title';
 import SectionCascade from '@/common/components/SectionCascade';
 import { useSectionCascade } from '@/common/hooks';
@@ -12,10 +12,6 @@ import { useSectionCascade } from '@/common/hooks';
 const StepTwoForm = () => {
   const router = useRouter();
   const { clickHandler, dataList } = useSectionCascade();
-  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-  const { officeInfoTrigger, officeInfoIsMutating } = useOnboarding({
-    office_info: true,
-  });
 
   const onFinish = () => {
     const currentOnboardingData =
@@ -57,13 +53,13 @@ const StepTwoForm = () => {
         </CustomButton>
 
         <CustomButton
-          loading={officeInfoIsMutating}
-          // disabled={dataList.department.id === ''}
+          // loading={officeInfoIsMutating}
+          disabled={dataList.department.id === ''}
           htmlType="submit"
           size="small"
         >
           <span className="pr-1">Submit details</span>
-          {officeInfoIsMutating ? null : <ArrowRight />}
+          {/* {officeInfoIsMutating ? null : <ArrowRight />} */}
         </CustomButton>
       </div>
     </Form>
