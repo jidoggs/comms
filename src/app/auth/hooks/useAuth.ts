@@ -23,9 +23,9 @@ import { SessionResponse, UserSession, ResetResponse } from '../types/auth';
 import { User, UserPreDefinedRole } from '@/types';
 import { AuthParams } from './types';
 
-const { FORGOT_PASSWORD, UPDATE_USER_PASSWORD } = ENDPOINTS.AUTH;
-const { GET_USER, LOGIN, RESET_PASSWORD } = ENDPOINTS.AUTH;
-const { REFRESH_TOKEN } = ENDPOINTS.AUTH;
+const { FORGOT_PASSWORD, REFRESH_TOKEN } = ENDPOINTS.AUTH;
+const { LOGIN, RESET_PASSWORD } = ENDPOINTS.AUTH;
+const { GET_USER, UPDATE_USER_PASSWORD } = ENDPOINTS.USER;
 
 function useAuth(props?: AuthParams) {
   const { mutate } = useSWRConfig();

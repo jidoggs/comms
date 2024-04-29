@@ -1,9 +1,14 @@
 import { BaseDataModel } from '../api-response';
 import { UserRoles } from '../roles';
 
+type BasicTypeSet = {
+  name: string;
+  _id: string;
+};
+
 export interface UserRole extends BaseDataModel {
   name: UserRoles;
-  permissions: string[];
+  _id: string;
 }
 
 export interface User extends BaseDataModel {
@@ -13,9 +18,9 @@ export interface User extends BaseDataModel {
   email: string;
   title: string;
   phone: string;
-  office: string;
-  parastatal: string;
-  department: string;
+  office: BasicTypeSet[];
+  parastatal: BasicTypeSet[];
+  department: BasicTypeSet[];
   last_seen: string;
   date_created: string;
   img: string;

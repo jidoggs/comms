@@ -4,20 +4,26 @@ import SectionMoreOptions from '../blocks/SectionMoreOptions';
 import { useSession } from '@/common/hooks';
 import { useDepartment } from '@/app/admin/hooks';
 import { CascadeContext } from '..';
+import useMembers from '@/app/admin/hooks/useMembers';
+import { queryHandler } from '@/service/request';
 
 const Options = () => {
+  const id = useContext(CascadeContext)?.dataList?.department?.id;
   const { isBasicUser } = useSession();
-  const { createSwr } = useDepartment({
-    create: !isBasicUser,
-  });
+
+  const { inviteUserSwr: inviteDepartmentUserSwr, messageContext } =
+    useDepartment({
+      invite: !isBasicUser,
+    });
   return (
     <>
+      {messageContext}
       {isBasicUser ? null : (
         <SectionMoreOptions
-          addTrigger={createSwr.trigger}
-          addIsLoading={createSwr.isMutating}
-          // inviteIsLoading={createSwr.isMutating}
-          // inviteTrigger={createSwr.trigger}
+          inviteIsLoading={inviteDepartmentUserSwr.isMutating}
+          inviteTrigger={inviteDepartmentUserSwr.trigger}
+          otherInviteData={{ department: id }}
+          acceptedFeature={['invite', 'details']}
         />
       )}
     </>
@@ -26,27 +32,24 @@ const Options = () => {
 
 function Members() {
   const contextInfo = useContext(CascadeContext);
-  // const { isPrimaryAdmin, isBasicUser } = useSession();
+  const { isBasicUser } = useSession();
+  const query = queryHandler({
+    department: contextInfo?.dataList?.department?.id,
+  });
 
-  // const { getListSwr, getItemSwr } = useDepartment({
-  //   get_all: isPrimaryAdmin,
-  //   _id: '', // you should get this from user object
-  //   get_id: !isPrimaryAdmin,
-  // });
+  const { getListSwr } = useMembers({ query, get_all: !isBasicUser });
 
-  // const list = getListSwr.data?.data || [];
-  // const singleton = getItemSwr.data?.data?._id ? [getItemSwr.data?.data] : [];
-  // const data = isPrimaryAdmin ? list : singleton;
+  const list = getListSwr.data?.data || [];
 
   return (
     <SectionContainer
-      items={[]}
-      title={`${contextInfo?.dataList?.department?.title} (${0} members)`}
+      items={list}
+      title={`${contextInfo?.dataList?.department?.title} (${list.length} members)`}
       step="person"
       clickHandler={contextInfo?.clickHandler}
       activeIdentifier={contextInfo?.dataList?.department?.id}
       moreOptions={<Options />}
-      // loader={getListSwr.isLoading}
+      loader={getListSwr.isLoading}
     />
   );
 }

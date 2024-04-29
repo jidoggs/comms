@@ -49,6 +49,7 @@ function SideNav({ role }: { role: UserPreDefinedRole }) {
             size="18"
           />
         </button>
+        
       </div>
       <Menu
         mode="inline"

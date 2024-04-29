@@ -5,6 +5,7 @@ import Title from '@/common/components/Title';
 import { ArrowRight, SpinLoader, TickCircle } from '@/common/components/icons';
 import { iHandleClick } from '@/types';
 import { mergeClassName } from '@/common/utils';
+import CustomUser from '../../CustomUser';
 
 type Props = {
   items: any[];
@@ -39,41 +40,45 @@ function SectionContainer({
         {moreOptions}
       </header>
       <div className="flex h-full flex-1 flex-col overflow-y-scroll">
-        {items?.map((item) => {
-          return (
-            <SectionItem
-              key={item?._id}
-              className={
-                item?._id === activeIdentifier
-                  ? 'group-[.is-admin]:bg-custom-gray_500 group-[.is-onboard]:bg-custom-purple_500'
-                  : 'group-[.is-admin]:hover:bg-custom-gray_500 group-[.is-onboard]:hover:bg-custom-purple_500'
-              }
-              data-step={step}
-              data-value={item?.name}
-              data-id={item?._id}
-              onClick={clickHandler}
-              hasChild={
-                <span
-                  className={mergeClassName(
-                    'p-2',
-                    item?._id === activeIdentifier ? 'visible' : 'invisible'
-                  )}
+        {step === 'person'
+          ? items.map((item) => <CustomUser data={item} key={item?._id} />)
+          : items?.map((item) => {
+              return (
+                <SectionItem
+                  key={item?._id}
+                  className={
+                    item?._id === activeIdentifier
+                      ? 'group-[.is-admin]:bg-custom-gray_500 group-[.is-onboard]:bg-custom-purple_500'
+                      : 'group-[.is-admin]:hover:bg-custom-gray_500 group-[.is-onboard]:hover:bg-custom-purple_500'
+                  }
+                  data-step={step}
+                  data-value={item?.name}
+                  data-id={item?._id}
+                  onClick={clickHandler}
+                  hasChild={
+                    <span
+                      className={mergeClassName(
+                        'p-2',
+                        item?._id === activeIdentifier ? 'visible' : 'invisible'
+                      )}
+                    >
+                      {hasChild ? (
+                        <ArrowRight size={18} />
+                      ) : (
+                        <TickCircle
+                          size={18}
+                          className={mergeClassName(
+                            showTick ? '' : 'invisible'
+                          )}
+                        />
+                      )}
+                    </span>
+                  }
                 >
-                  {hasChild ? (
-                    <ArrowRight size={18} />
-                  ) : (
-                    <TickCircle
-                      size={18}
-                      className={mergeClassName(showTick ? '' : 'invisible')}
-                    />
-                  )}
-                </span>
-              }
-            >
-              {item?.name}
-            </SectionItem>
-          );
-        })}
+                  {item?.name}
+                </SectionItem>
+              );
+            })}
       </div>
     </section>
   );
