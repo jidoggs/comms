@@ -4,11 +4,13 @@ import { InfoCircle } from '@/common/components/icons';
 import { Divider } from 'antd';
 
 type ApproveModalContentProps = {
+  text?: string;
   isModalOpen: boolean;
   handleCancel: () => void;
 };
 
 const ApproveModalContent = ({
+  text,
   isModalOpen,
   handleCancel,
 }: ApproveModalContentProps) => {
@@ -18,7 +20,7 @@ const ApproveModalContent = ({
         <InfoCircle size={90} />
 
         <p className="text-center">
-          Are you sure you want to approve this registration?
+          {text || 'Are you sure you want to approve this registration?'}
         </p>
         <Divider className="!border-custom-gray_500" />
         <div className="-mt-3 flex w-full justify-between">
