@@ -5,14 +5,18 @@ import { Divider } from 'antd';
 
 type ApproveModalContentProps = {
   text?: string;
+  isLoading: boolean;
   isModalOpen: boolean;
   handleCancel: () => void;
+  handleSubmit: () => void;
 };
 
 const ApproveModalContent = ({
   text,
+  isLoading,
   isModalOpen,
   handleCancel,
+  handleSubmit,
 }: ApproveModalContentProps) => {
   return (
     <CustomModal width={320} open={isModalOpen} onCancel={handleCancel}>
@@ -25,12 +29,17 @@ const ApproveModalContent = ({
         <Divider className="!border-custom-gray_500" />
         <div className="-mt-3 flex w-full justify-between">
           <div className="!w-1/2">
-            <CustomButton type="text" className="w-full">
+            <CustomButton type="text" className="w-full" onClick={handleCancel}>
               Cancel
             </CustomButton>
           </div>
           <div className="!w-1/2">
-            <CustomButton type="text" className="w-full">
+            <CustomButton
+              type="text"
+              className="w-full"
+              loading={isLoading}
+              onClick={handleSubmit}
+            >
               Yes, Approve
             </CustomButton>
           </div>

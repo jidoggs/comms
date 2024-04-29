@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Dropdown, MenuProps } from 'antd';
+import { Dropdown, MenuProps, message } from 'antd';
 import CustomButton from '@/common/components/CustomButton';
 import { CloseCircled, MoreFile, TickCircle } from '@/common/components/icons';
 import { iHandleClick } from '../types';
 import DeclineRequestModalContent from './DeclineRequestModalContent';
 import SubmittedResponseModal from './SubmittedResponseModal';
 import ApproveModalContent from '../../../../common/components/ApproveModalContent';
+import usePeople from '../../hooks/usePeople';
 
 type Props = {
   data: any;
@@ -64,6 +65,22 @@ function TableRowAction({ data }: Props) {
     },
   ];
 
+  const { approveRequestSwr } = usePeople({
+    decline_or_aprove: true,
+  });
+
+  const { trigger: approveRequestSWRTrigger } = approveRequestSwr;
+
+  const handleApproveRequest = () => {
+    approveRequestSWRTrigger({
+      data: { user_id: data?._id, email: data?.email },
+      type: 'post',
+    }).then(() => {
+      message.success('Request approved successfully');
+      handleCancel();
+    });
+  };
+
   return (
     <TableRowActionContext.Provider value={{ data }}>
       {/* eslint-disable-next-line */}
@@ -87,8 +104,10 @@ function TableRowAction({ data }: Props) {
             isModalOpen={isModalOpen.success}
           />
           <ApproveModalContent
-            isModalOpen={isModalOpen.approve}
             handleCancel={handleCancel}
+            isModalOpen={isModalOpen.approve}
+            handleSubmit={handleApproveRequest}
+            isLoading={approveRequestSwr.isMutating}
           />
         </div>
       </div>
