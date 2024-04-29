@@ -7,6 +7,7 @@ import { PeopleDataContext } from '../service-context/PeopleListContextWrapper';
 import RegistrationDetail from './RegistrationDetail';
 import { User } from '../types';
 import usePeople from '../../hooks/usePeople';
+import { Skeleton } from 'antd';
 
 const CorrespondencePage = () => {
   const contextInfo = useContext(PeopleDataContext);
@@ -34,6 +35,10 @@ const CorrespondencePage = () => {
   const { getAllInvitesSwr } = peopleProps;
 
   const { data } = getAllInvitesSwr;
+
+  if (!contextInfo || getAllInvitesSwr?.isLoading) {
+    return <Skeleton active />;
+  }
 
   return (
     <div className="pt-4">
