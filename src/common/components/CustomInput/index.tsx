@@ -1,12 +1,11 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
 import { mergeClassName } from '../../utils';
-import { CustomInputProps, InputRef } from './types';
-// import Input from 'antd/es/input/Input';
+import { CustomInputProps, InputRef, TextAreaProp } from './types';
 
 const FallBackInput = () => {
   return (
-    <input className="h-11 w-full flex-1 rounded-lg border border-custom-gray_400 bg-custom-gray_900" />
+    <input className="!focus-within:border-transparent !focus:border-transparent !focus-within:outline-none !focus:outline-none h-11 w-full flex-1 rounded-lg border border-custom-gray_600 bg-custom-gray_900 p-2.5 text-custom-main placeholder:text-custom-main" />
   );
 };
 
@@ -19,43 +18,35 @@ const Password = dynamic(() => import('antd/es/input/Password'), {
 const TextArea = dynamic(() => import('antd/es/input/TextArea'), {
   loading: () => <FallBackInput />,
 });
-const Number = dynamic(() => import('antd/es/input-number/index'), {
-  loading: () => <FallBackInput />,
+
+const baseClass =
+  'w-full placeholder-custom-main p-2.5 bg-transparent text-custom-main border border-custom-gray_600 !focus-within:border-transparent !focus:border-transparent !focus-within:outline-none !focus:outline-none';
+
+export const CustomTextArea: React.FC<TextAreaProp> = React.forwardRef<
+  InputRef,
+  TextAreaProp
+>(({ className, ...rest }, ref) => {
+  const inputClassName: string = mergeClassName(baseClass, className);
+  return <TextArea {...rest} className={inputClassName} ref={ref} />;
 });
 
-const CustomInput: React.FC<CustomInputProps> = React.forwardRef<InputRef, any>(
-  ({ type, className, ...rest }, ref) => {
-    const isString = (className: any) => {
-      return typeof className === 'string';
-    };
-    const inputClassName: string = mergeClassName(
-      'w-full placeholder-custom-main p-2.5 bg-transparent text-custom-main border border-custom-gray_600 !focus-within:border-transparent !focus:border-transparent !focus-within:outline-none !focus:outline-none',
-      isString(className) ? className : className?.input
-    );
-    return (
-      <div
-        className={mergeClassName(
-          'w-full',
-          !isString(className) && className?.container
-        )}
-      >
-        {type === 'password' ? (
-          <Password {...rest} className={inputClassName} ref={ref} />
-        ) : null}
-        {type === 'textarea' ? (
-          <TextArea {...rest} className={inputClassName} ref={ref} />
-        ) : null}
-        {type === 'number' ? (
-          <Number {...rest} className={inputClassName} ref={ref} />
-        ) : null}
-        {!type || type === 'email' ? (
-          <Input {...rest} className={inputClassName} ref={ref} />
-        ) : null}
-      </div>
-    );
-  }
-);
+const CustomInput: React.FC<CustomInputProps> = React.forwardRef<
+  InputRef,
+  CustomInputProps
+>(({ type, className, ...rest }, ref) => {
+  const inputClassName: string = mergeClassName(baseClass, className);
+  return (
+    <>
+      {type === 'password' ? (
+        <Password {...rest} className={inputClassName} ref={ref} />
+      ) : (
+        <Input {...rest} className={inputClassName} ref={ref} />
+      )}
+    </>
+  );
+});
 
+CustomTextArea.displayName = 'CustomTextArea';
 CustomInput.displayName = 'CustomInput';
 
 export default CustomInput;

@@ -1,61 +1,26 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 'use client';
-import React, { useState } from 'react';
+import React from 'react';
 import { Form } from 'antd';
 import CustomButton from '@/common/components/CustomButton';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
 import { ArrowRight, ArrowRightBreak } from '@/common/components/icons';
 import { useRouter } from 'next/navigation';
-import useOnboarding from '@/app/auth/hooks/useOnboarding';
 import Title from '@/common/components/Title';
 import SectionCascade from '@/common/components/SectionCascade';
-import { iHandleClick } from '@/types';
-
-const initialDataList = { parastatal: '', office: '', department: '' };
+import { useSectionCascade } from '@/common/hooks';
 
 const StepTwoForm = () => {
   const router = useRouter();
-  const [dataList, setDataList] = useState(initialDataList);
-  const { officeInfoTrigger, officeInfoIsMutating } = useOnboarding({
-    office_info: true,
-  });
-
-  const clickHandler: iHandleClick = (e) => {
-    const dataset = e.currentTarget.dataset;
-    const value = dataset.value as string;
-
-    switch (dataset.step) {
-      case 'parastatals':
-        setDataList({
-          ...initialDataList,
-          parastatal: value,
-        });
-        break;
-      case 'office':
-        setDataList((prev) => ({
-          ...prev,
-          office: value,
-          department: '',
-        }));
-        break;
-      case 'department':
-        setDataList((prev) => ({
-          ...prev,
-          department: value,
-        }));
-        break;
-
-      default:
-        setDataList({
-          ...initialDataList,
-        });
-        break;
-    }
-  };
+  const { clickHandler, dataList } = useSectionCascade();
 
   const onFinish = () => {
-    // router.push('/onboarding/set-password');
+    const currentOnboardingData =
+      JSON.parse(localStorage.getItem('onboardingData') as string) || [];
+
+    const updatedData = { ...currentOnboardingData, invite_code: '123456' };
+    localStorage.setItem('onboardingData', JSON.stringify(updatedData));
+
+    router.push('/onboarding/set-password');
     // officeInfoTrigger({ data: department, type: 'post' }).then(() => {
     //   router.push('/onboarding/set-password');
     // });
@@ -72,9 +37,9 @@ const StepTwoForm = () => {
       {/* is-onboard and group are style identifies */}
       <div className="is-onboard group w-full max-w-screen-lg overflow-x-scroll py-2">
         <SectionCascade
+          className="overflow-hidden rounded-lg"
           clickHandler={clickHandler}
           dataList={dataList}
-          className="overflow-hidden rounded-lg"
         />
       </div>
       <div className="flex items-center justify-end gap-x-2">
@@ -88,13 +53,13 @@ const StepTwoForm = () => {
         </CustomButton>
 
         <CustomButton
-          loading={officeInfoIsMutating}
-          disabled={dataList.department === ''}
+          // loading={officeInfoIsMutating}
+          disabled={dataList.department.id === ''}
           htmlType="submit"
           size="small"
         >
           <span className="pr-1">Submit details</span>
-          {officeInfoIsMutating ? null : <ArrowRight />}
+          {/* {officeInfoIsMutating ? null : <ArrowRight />} */}
         </CustomButton>
       </div>
     </Form>

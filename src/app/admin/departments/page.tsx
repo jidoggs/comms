@@ -1,12 +1,13 @@
-import React, { lazy } from 'react';
+import React, { Suspense, lazy } from 'react';
+import FullPageLoader from '@/common/components/FullPageLoader';
 
 const PeopleContent = lazy(() => import('./components/PageContent'));
 
 function page() {
   return (
-    <div className="">
+    <Suspense fallback={<FullPageLoader />}>
       <PeopleContent />
-    </div>
+    </Suspense>
   );
 }
 

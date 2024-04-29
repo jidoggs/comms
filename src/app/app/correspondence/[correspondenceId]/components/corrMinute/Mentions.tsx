@@ -1,8 +1,7 @@
-import { User } from '@/app/auth/types/auth';
 import CustomAvatar from '@/common/components/Avatar/CustomAvatar';
 import { CloseCircle } from '@/common/components/icons';
 import React, { ChangeEvent, useState } from 'react';
-import { iHandleKeyboard } from '../../../types';
+import { User, iHandleKeyboard } from '../../../types';
 
 type CustomMentionProps = {
   data: Partial<User>[];

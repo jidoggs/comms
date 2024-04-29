@@ -1,51 +1,55 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import SectionContainer from '../blocks/SectionContainer';
 import SectionMoreOptions from '../blocks/SectionMoreOptions';
-import useSession from '@/common/hooks/useSession';
-import useDepartment from '@/app/admin/hooks/useDepartment';
-import { iHandleClick } from '@/types';
-
-interface Props {
-  dataList: Record<string, string>;
-  clickHandler: iHandleClick;
-}
+import { useSession } from '@/common/hooks';
+import { useDepartment } from '@/app/admin/hooks';
+import { CascadeContext } from '..';
+import useMembers from '@/app/admin/hooks/useMembers';
+import { queryHandler } from '@/service/request';
 
 const Options = () => {
+  const id = useContext(CascadeContext)?.dataList?.department?.id;
   const { isBasicUser } = useSession();
-  const { createSwr } = useDepartment({
-    create: !isBasicUser,
-  });
+
+  const { inviteUserSwr: inviteDepartmentUserSwr, messageContext } =
+    useDepartment({
+      invite: !isBasicUser,
+    });
   return (
-    <SectionMoreOptions
-      addTrigger={createSwr.trigger}
-      addIsLoading={createSwr.isMutating}
-      // inviteIsLoading={createSwr.isMutating}
-      // inviteTrigger={createSwr.trigger}
-    />
+    <>
+      {messageContext}
+      {isBasicUser ? null : (
+        <SectionMoreOptions
+          inviteIsLoading={inviteDepartmentUserSwr.isMutating}
+          inviteTrigger={inviteDepartmentUserSwr.trigger}
+          otherInviteData={{ department: id }}
+          acceptedFeature={['invite', 'details']}
+        />
+      )}
+    </>
   );
 };
 
-function Members({ clickHandler, dataList }: Props) {
-  const { isPrimaryAdmin, isBasicUser } = useSession();
-
-  const { getListSwr, getItemSwr } = useDepartment({
-    get_all: isPrimaryAdmin,
-    _id: '', // you should get this from user object
-    get_id: !isPrimaryAdmin,
+function Members() {
+  const contextInfo = useContext(CascadeContext);
+  const { isBasicUser } = useSession();
+  const query = queryHandler({
+    department: contextInfo?.dataList?.department?.id,
   });
 
+  const { getListSwr } = useMembers({ query, get_all: !isBasicUser });
+
   const list = getListSwr.data?.data || [];
-  const singleton = getItemSwr.data?.data?._id ? [getItemSwr.data?.data] : [];
-  const data = isPrimaryAdmin ? list : singleton;
 
   return (
     <SectionContainer
-      items={data}
-      title={`${dataList.office} (${data.length} members)`}
+      items={list}
+      title={`${contextInfo?.dataList?.department?.title} (${list.length} members)`}
       step="person"
-      clickHandler={clickHandler}
-      activeIdentifier={dataList.department}
-      moreOptions={isBasicUser ? null : <Options />}
+      clickHandler={contextInfo?.clickHandler}
+      activeIdentifier={contextInfo?.dataList?.department?.id}
+      moreOptions={<Options />}
+      loader={getListSwr.isLoading}
     />
   );
 }

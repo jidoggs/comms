@@ -1,6 +1,5 @@
-import { BaseDataModel } from '@/types';
+import { BaseDataModel, User } from '@/types';
 import { CreateParastatalRequestType } from './request';
-import { User } from '@/app/auth/types/auth';
 
 export type ParastatalType = BaseDataModel & CreateParastatalRequestType;
 export type AllParastatalType = ParastatalType[];

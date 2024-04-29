@@ -1,9 +1,9 @@
 import React from 'react';
 import type { Metadata } from 'next';
+import './globals.css';
 import AuthWrapper from '@/common/components/private/Protected/AuthWrapper';
 import StyledComponentsRegistry from '@/common/components/lib/AntdRegistry';
 import { circularStd } from '../common/font';
-import './globals.css';
 
 // const StyledComponentsRegistry = dynamic(
 //   () => import('@/common/components/lib/AntdRegistry'),

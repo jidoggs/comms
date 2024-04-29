@@ -1,18 +1,19 @@
 import { useState } from 'react';
-import { ENDPOINTS } from '@/service/config/endpoint';
+import useMessage from 'antd/es/message/useMessage';
 import { useAuthGetRequest, useAuthRequest } from '@/service/swrHooks';
-import useSession from '@/common/hooks/useSession';
-import { queryHandler } from '@/service/request';
+import { useSession } from '@/common/hooks';
+import { ENDPOINTS } from '@/service/config/endpoint';
 import { AllOfficeType, OfficeType } from '../types';
 import { ServiceParams } from './types';
 
-const { CREATE, GET_ALL, UPDATE } = ENDPOINTS.DEPARTMENT;
+const { CREATE, GET_ALL, UPDATE, INVITE } = ENDPOINTS.DEPARTMENT;
+
 
 function useDepartment(props: ServiceParams) {
   const [refreshList, setRefreshList] = useState(false); // stores state to trigger new list after CUD has been done
   const { isBasicUser } = useSession();
-  const isQuery = props._id;
-  const query = props._id ? queryHandler({ _id: props._id }) : '';
+  const departmentId = props._id;
+  const [message, messageContext] = useMessage();
 
   const revalidateListHandler = () => {
     setRefreshList(true);
@@ -33,7 +34,7 @@ function useDepartment(props: ServiceParams) {
   );
 
   const getListSwr = useAuthGetRequest<AllOfficeType>(
-    props?.get_all || refreshList ? GET_ALL : '',
+    props?.get_all || refreshList ? GET_ALL + props.query : '',
     {
       revalidateOnFocus: false,
       revalidateOnMount: true,
@@ -44,24 +45,41 @@ function useDepartment(props: ServiceParams) {
   );
 
   const getItemSwr = useAuthGetRequest<OfficeType>(
-    props?.get_id && isQuery ? UPDATE(query) : ''
+    props?.get_id && departmentId ? UPDATE(departmentId) : ''
   );
 
   const updateItemSwr = useAuthRequest<OfficeType>(
-    props?.update && isQuery && !isBasicUser ? UPDATE(query) : '',
+    props?.update && departmentId && !isBasicUser ? UPDATE(departmentId) : '',
     {
       onSuccess: revalidateListHandler,
     }
   );
 
   const deleteItemSwr = useAuthRequest<null>(
-    props?.delete && isQuery && !isBasicUser ? UPDATE(query) : '',
+    props?.delete && departmentId && !isBasicUser ? UPDATE(departmentId) : '',
     {
       onSuccess: revalidateListHandler,
     }
   );
 
-  return { createSwr, getListSwr, getItemSwr, updateItemSwr, deleteItemSwr };
+  const inviteUserSwr = useAuthRequest<null>(
+    props?.invite && !isBasicUser ? INVITE : '',
+    {
+      onSuccess: (res) => {
+        message.success(res.message);
+      },
+    }
+  );
+
+  return {
+    messageContext,
+    createSwr,
+    getListSwr,
+    getItemSwr,
+    updateItemSwr,
+    deleteItemSwr,
+    inviteUserSwr,
+  };
 }
 
 export default useDepartment;

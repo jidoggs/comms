@@ -1,21 +1,18 @@
 import { useState } from 'react';
-import { ENDPOINTS } from '@/service/config/endpoint';
+import useMessage from 'antd/es/message/useMessage';
 import { useAuthGetRequest, useAuthRequest } from '@/service/swrHooks';
-import useSession from '@/common/hooks/useSession';
-import { queryHandler } from '@/service/request';
+import { useSession } from '@/common/hooks';
+import { ENDPOINTS } from '@/service/config/endpoint';
 import { AllOfficeType, OfficeType } from '../types';
 import { OfficeServiceParams } from './types';
 
-const { CREATE, GET_ALL, UPDATE } = ENDPOINTS.OFFICE;
+const { CREATE, GET_ALL, UPDATE, INVITE } = ENDPOINTS.OFFICE;
 
 function useOffice(props: OfficeServiceParams) {
   const [refreshList, setRefreshList] = useState(false); // stores state to trigger new list after CUD has been done
   const { isBasicUser } = useSession();
-  const isQuery = props._id && props.parastatal;
-  const query =
-    props._id && props.parastatal
-      ? queryHandler({ _id: props._id, parastatal: props.parastatal })
-      : '';
+  const officeId = props._id;
+  const [message, messageContext] = useMessage();
 
   const revalidateListHandler = () => {
     setRefreshList(true);
@@ -36,7 +33,7 @@ function useOffice(props: OfficeServiceParams) {
   );
 
   const getListSwr = useAuthGetRequest<AllOfficeType>(
-    props?.get_all || refreshList ? GET_ALL : '',
+    props?.get_all || refreshList ? GET_ALL + props.query : '',
     {
       revalidateOnFocus: false,
       revalidateOnMount: true,
@@ -47,24 +44,41 @@ function useOffice(props: OfficeServiceParams) {
   );
 
   const getItemSwr = useAuthGetRequest<OfficeType>(
-    props?.get_id && isQuery ? UPDATE(query) : ''
+    props?.get_id && officeId ? UPDATE(officeId) : ''
   );
 
   const updateItemSwr = useAuthRequest<OfficeType>(
-    props?.update && isQuery && !isBasicUser ? UPDATE(query) : '',
+    props?.update && officeId && !isBasicUser ? UPDATE(officeId) : '',
     {
       onSuccess: revalidateListHandler,
     }
   );
 
   const deleteItemSwr = useAuthRequest<null>(
-    props?.delete && isQuery && !isBasicUser ? UPDATE(query) : '',
+    props?.delete && officeId && !isBasicUser ? UPDATE(officeId) : '',
     {
       onSuccess: revalidateListHandler,
     }
   );
 
-  return { createSwr, getListSwr, getItemSwr, updateItemSwr, deleteItemSwr };
+  const inviteUserSwr = useAuthRequest<null>(
+    props?.invite && !isBasicUser ? INVITE : '',
+    {
+      onSuccess: (res) => {
+        message.success(res.message);
+      },
+    }
+  );
+
+  return {
+    messageContext,
+    createSwr,
+    getListSwr,
+    getItemSwr,
+    updateItemSwr,
+    deleteItemSwr,
+    inviteUserSwr,
+  };
 }
 
 export default useOffice;

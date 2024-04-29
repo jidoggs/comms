@@ -7,10 +7,12 @@ import { EditableTableColumnTypes } from '../people/types';
 export * from '../../../types';
 
 export interface Role {
-  _id: any;
+  _id: string;
   name: string;
-  role: string;
-  permissions: never[];
+  active: boolean;
+  permissions: Permission[];
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface Permission {
@@ -21,13 +23,22 @@ export interface Permission {
 
 export type PermissionType = 'parastatal' | 'office' | 'department';
 
+export interface PermissionGroup {
+  requestType: string;
+  permissionType: string;
+  permissions: string[];
+}
+
+export const initialModalState = {
+  delete: false,
+};
+
 export type UserMgmtDataContextType = {
   handleAdd: VoidFunction;
   handleAddRole?: VoidFunction;
   handleTabChange: (state: string) => void;
   columns: EditableTableColumnTypes;
   dataSource: any[];
-  handleDelete: (id: string | number) => void;
   tabItem: string;
   tabItemList: TabsProps['items'];
   editRole: boolean;
@@ -47,21 +58,9 @@ export type UserMgmtDataContextType = {
       _id: number;
     }>
   >;
-  allRoles: any;
   editedRole?: any;
   setEditedRole?: React.Dispatch<any>;
   setEditRole: React.Dispatch<React.SetStateAction<boolean>>;
-  currentRole: number;
-  setCurrentRole: React.Dispatch<React.SetStateAction<number>>;
-  submitNewRole: () => null | undefined;
-  addRole: () => void;
-  updateExitingRole: () => void;
-  handleNameChange: ({ name, _id }: any) => void;
-  handleAddPermission: (permissionId: any) => void;
-  handleRemovePermission: (permissionId: any) => void;
-  handleCancelPermission: (
-    permission: string,
-    type: 'parastatals' | 'offices' | 'departments'
-  ) => void;
-  options: any;
+  // currentRole: string;
+  // setCurrentRole: React.Dispatch<React.SetStateAction<string>>;
 } | null;

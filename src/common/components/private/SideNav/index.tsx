@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { Layout, Menu, Grid } from 'antd';
 import { generateDefaultKey, menuItemRenderer } from './helper';
-import useSession from '@/common/hooks/useSession';
+import { useAuth } from '@/app/auth/hooks';
 import { Collapse, Logout } from '@/common/components/icons';
 import { mergeClassName } from '@/common/utils';
 import { UserPreDefinedRole } from '@/types';
@@ -17,7 +17,7 @@ function SideNav({ role }: { role: UserPreDefinedRole }) {
   const [collapsed, setCollapsed] = useState(false);
   const { lg } = useBreakpoint();
 
-  const { handleLogout, messageContext } = useSession();
+  const { handleLogout, messageContext } = useAuth();
 
   useEffect(() => {
     if (lg) {
@@ -49,6 +49,7 @@ function SideNav({ role }: { role: UserPreDefinedRole }) {
             size="18"
           />
         </button>
+        
       </div>
       <Menu
         mode="inline"

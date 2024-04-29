@@ -13,8 +13,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       return;
     }
 
-    if (token && !document.referrer) {
-      // clears token if user access login page
+    if (!document.referrer) {
+      // clears token if user with token access login page
       clearUserDetails();
     }
   }, [token]);

@@ -6,42 +6,38 @@ import Department from './sections/Department';
 import { mergeClassName } from '@/common/utils';
 import { iHandleClick } from '@/types';
 
-interface Props {
-  dataList: Record<string, string>;
+type InfoType = {
   clickHandler: iHandleClick;
+  dataList: Record<string, Record<string, string>>;
+};
+
+interface Props extends InfoType {
   className?: string;
   showMembers?: boolean;
 }
 
-function DepartmentOfficesCascade({
-  clickHandler,
-  dataList,
-  className,
-  showMembers,
-}: Props) {
+type ContextValue = InfoType | null;
+
+export const CascadeContext = React.createContext<ContextValue>(null);
+
+function SectionCascade({ className, showMembers, ...props }: Props) {
   return (
-    <div
-      className={mergeClassName(
-        'flex w-full border border-custom-gray_500 bg-custom-white_100',
-        className
-      )}
-    >
-      <Parastatal clickHandler={clickHandler} dataList={dataList} />
-      {dataList.parastatal ? (
-        <Office clickHandler={clickHandler} dataList={dataList} />
-      ) : null}
-      {dataList.office ? (
-        <Department
-          clickHandler={clickHandler}
-          dataList={dataList}
-          showMembers={showMembers}
-        />
-      ) : null}
-      {dataList.department && showMembers ? (
-        <Members clickHandler={clickHandler} dataList={dataList} />
-      ) : null}
-    </div>
+    <CascadeContext.Provider value={{ ...props }}>
+      <div
+        className={mergeClassName(
+          'w-max-[calc(100vw-220px)] flex h-full overflow-x-scroll border border-custom-gray_500 bg-custom-white_100',
+          className
+        )}
+      >
+        <Parastatal />
+        {props?.dataList?.parastatal?.id ? <Office /> : null}
+        {props?.dataList?.office?.id ? (
+          <Department showMembers={showMembers} />
+        ) : null}
+        {props?.dataList?.department?.id && showMembers ? <Members /> : null}
+      </div>
+    </CascadeContext.Provider>
   );
 }
 
-export default DepartmentOfficesCascade;
+export default SectionCascade;

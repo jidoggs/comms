@@ -1,17 +1,19 @@
 import { useState } from 'react';
+import useMessage from 'antd/es/message/useMessage';
 import { useAuthGetRequest, useAuthRequest } from '@/service/swrHooks';
-import useSession from '@/common/hooks/useSession';
+import { useSession } from '@/common/hooks';
 import { ENDPOINTS } from '@/service/config/endpoint';
 import { queryHandler } from '@/service/request';
 import { AllParastatalType, ParastatalType } from '../types';
 import { ServiceParams } from './types';
 
-const { CREATE, GET_ALL, UPDATE } = ENDPOINTS.PARASTATALS;
+const { CREATE, GET_ALL, UPDATE, INVITE } = ENDPOINTS.PARASTATALS;
 
 function useParastatals(props: ServiceParams) {
   const [refreshList, setRefreshList] = useState(false); // stores state to trigger new list after CUD has been done
   const { isPrimaryAdmin } = useSession();
   const query = props._id ? queryHandler({ _id: props._id }) : '';
+  const [message, messageContext] = useMessage();
 
   const revalidateListHandler = () => {
     setRefreshList(true);
@@ -59,8 +61,21 @@ function useParastatals(props: ServiceParams) {
       onSuccess: revalidateListHandler,
     }
   );
+  const inviteUserSwr = useAuthRequest<null>(props?.invite ? INVITE : '', {
+    onSuccess: (res) => {
+      message.success(res.message);
+    },
+  });
 
-  return { createSwr, getListSwr, getItemSwr, updateItemSwr, deleteItemSwr };
+  return {
+    messageContext,
+    createSwr,
+    getListSwr,
+    getItemSwr,
+    updateItemSwr,
+    deleteItemSwr,
+    inviteUserSwr,
+  };
 }
 
 export default useParastatals;

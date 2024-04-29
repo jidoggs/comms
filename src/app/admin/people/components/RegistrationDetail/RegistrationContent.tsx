@@ -6,7 +6,7 @@ import React from 'react';
 import FieldRow from '../../../components/FieldRow';
 import dayjs from 'dayjs';
 import Tick from '@/common/components/icons/Tick';
-import { User } from '@/app/auth/types/auth';
+import { User } from '../../types';
 
 type RegistrationContentProps = {
   registrationData: User | null;
@@ -77,10 +77,13 @@ const RegistrationContent = ({
             Office
           </Title>
           <FieldRow title="Title" value={registrationData?.title} />
-          <FieldRow title="Department" value={registrationData?.department} />
+          <FieldRow
+            title="Department"
+            value={registrationData?.department?.[0]?.name}
+          />
           <FieldRow
             title="Parastatal"
-            value={registrationData?.parastatal as string}
+            value={registrationData?.parastatal?.[0]?.name as string}
           />
         </div>
       </div>

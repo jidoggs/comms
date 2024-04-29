@@ -5,7 +5,7 @@ import CustomModalTitle from '@/common/components/CustomModalTitle';
 
 type Props = {
   isModalOpen: boolean;
-  isLoading: boolean;
+  isLoading?: boolean;
   handleCancel: VoidFunction; //eslint-disable-line
   handleSubmit: (val: any) => void; //eslint-disable-line
 };
@@ -14,7 +14,7 @@ function InvitePersonModal({
   handleCancel,
   handleSubmit,
   isModalOpen,
-  isLoading,
+  isLoading = false,
 }: Props) {
   return (
     <CustomModal

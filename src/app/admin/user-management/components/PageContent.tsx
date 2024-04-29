@@ -1,24 +1,79 @@
 'use client';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import CustomTab from '@/common/components/CustomTab';
 import Title from '@/common/components/Title';
-import Roles_Permissions from './Roles_Permissions';
+import RolesPermissions from './RolesPermissions';
 import Users from './Users';
 import CustomButton from '@/common/components/CustomButton';
 import { Add, File, Search } from '@/common/components/icons';
 import CustomInput from '@/common/components/CustomInput';
 import { Skeleton } from 'antd';
 import { UserMgmtDataContext } from '../service-context/UserMgmtContextWrapper';
-
-export const initialNewRole = { name: '', _id: 0 };
+import useRoles from '../../hooks/useRoles';
 
 const CorrespondencePage = () => {
+  const [allRoles, setAllRoles] = useState<any>();
+  const [allOriginalRoles, setAllOriginalRoles] = useState<any>();
+  const [allPermissions, setAllPermissions] = useState<any>();
+  const [editedRole, setEditedRole] = useState<any>();
+  const [editRole, setEditRole] = useState<boolean>(false);
   const contextInfo = useContext(UserMgmtDataContext);
+
+  const roleProps = useRoles({
+    get_all_roles: true,
+    get_all_permissions: true,
+  });
+
+  const { getAllRolesSwr, getAllPermissionsSwr } = roleProps;
+
+  const allFetchedRoles: any =
+    getAllRolesSwr && getAllRolesSwr.data && getAllRolesSwr.data.data;
+
+  const allFetchedPermissions: any =
+    getAllPermissionsSwr &&
+    getAllPermissionsSwr.data &&
+    getAllPermissionsSwr.data.data;
+
+  useEffect(() => {
+    if (allFetchedRoles) {
+      setAllRoles(allFetchedRoles);
+    }
+    if (allFetchedPermissions) {
+      setAllPermissions(allFetchedPermissions);
+    }
+  }, [allFetchedRoles, allFetchedPermissions]);
+
+  useEffect(() => {
+    if (allFetchedRoles) {
+      setAllOriginalRoles(allFetchedRoles);
+    }
+  }, [allFetchedRoles]);
 
   if (!contextInfo) {
     // Handle the case where contextInfo is null
     return <Skeleton active />;
   }
+
+  const sampleRole = {
+    active: true,
+    _id: 1,
+    name: '',
+    permissions: [],
+  };
+
+  const handleAddRole = () => {
+    const element = document.getElementById('rolesPermissions');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    const isRoleAlreadyAdded = allRoles.some(
+      (role: any) => role._id === sampleRole._id
+    );
+    if (!isRoleAlreadyAdded) {
+      setAllRoles((prevRoles: any) => [sampleRole, ...prevRoles]);
+    }
+  };
 
   return (
     <div className="pt-4">
@@ -43,7 +98,7 @@ const CorrespondencePage = () => {
                 type="default"
                 icon={<Add />}
                 size="small"
-                onClick={contextInfo.addRole}
+                onClick={handleAddRole}
               >
                 Add Role
               </CustomButton>
@@ -57,8 +112,18 @@ const CorrespondencePage = () => {
           ) : null}
         </div>
         {contextInfo?.tabItem === 'roles-permissions' ? (
-          contextInfo.allRoles && contextInfo.allRoles.length ? (
-            <Roles_Permissions />
+          allRoles && allRoles.length ? (
+            <RolesPermissions
+              allRoles={allRoles}
+              setAllRoles={setAllRoles}
+              allPermissions={allPermissions}
+              // options={options}
+              allOriginalRoles={allOriginalRoles}
+              editRole={editRole}
+              setEditRole={setEditRole}
+              editedRole={editedRole}
+              setEditedRole={setEditedRole}
+            />
           ) : (
             <Skeleton active />
           )

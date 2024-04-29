@@ -1,11 +1,14 @@
 import dynamic from 'next/dynamic';
 import { SpinLoader } from './icons';
+import { CSSProperties } from 'react';
 
-const Spin = dynamic(() => import('antd/es/spin'));
+const Spin = dynamic(() => import('antd/es/spin'), {
+  loading: () => <Loader />,
+});
 
 type FullPageLoaderProps = {
-  background?: string;
-  height?: string;
+  background?: CSSProperties['background'];
+  height?: CSSProperties['height'];
   fullscreen?: boolean;
 };
 
@@ -28,15 +31,13 @@ export default function FullPageLoader({
     <div
       style={{
         background: background || '#f6f4f9',
-        height: height ? height : '100vh',
-        width: '100%',
+        height: height,
       }}
-      className="flex w-full items-center justify-center"
+      className="flex h-screen w-full items-center justify-center"
     >
       <Spin fullscreen={fullscreen} size="large">
-        <div /* className="content" */ />
+        <div className="content" />
       </Spin>
-      <Loader />
     </div>
   );
 }

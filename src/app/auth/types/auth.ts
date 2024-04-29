@@ -1,29 +1,11 @@
-import { BaseDataModel, UserRoles } from '@/types';
+import { BaseDataModel, User } from '@/types';
 
 export interface SessionResponse {
   access_token: string;
   refresh_token: string;
 }
-
-export interface UserRole extends BaseDataModel {
-  name: UserRoles;
-  permissions: string[];
-}
-
-export interface User extends BaseDataModel {
-  firstname: string;
-  lastname: string;
-  othername: string;
-  email: string;
-  title: string;
-  phone: string;
-  office: string;
-  parastatal: string;
-  department: string;
-  last_seen: string;
-  date_created: string;
-  img: string;
-  role: UserRole;
+export interface ResetResponse {
+  message: string;
 }
 
 export interface PersonalInfo {

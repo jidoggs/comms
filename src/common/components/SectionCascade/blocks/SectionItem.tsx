@@ -6,9 +6,6 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
 }
 
 function SectionItem({ children, hasChild, className, ...props }: Props) {
-  // console.log('title', title);
-  // console.log('items', items);
-  // console.log('activeIdentifier', activeIdentifier);
   return (
     <button
       {...props}

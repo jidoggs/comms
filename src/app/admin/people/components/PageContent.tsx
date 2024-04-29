@@ -5,7 +5,7 @@ import CustomTab from '@/common/components/CustomTab';
 import TableActions from './TableActions';
 import { PeopleDataContext } from '../service-context/PeopleListContextWrapper';
 import RegistrationDetail from './RegistrationDetail';
-import { User } from '@/app/auth/types/auth';
+import { User } from '../types';
 
 const CorrespondencePage = () => {
   const contextInfo = useContext(PeopleDataContext);

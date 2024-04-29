@@ -3,9 +3,9 @@ import Form from 'antd/es/form';
 import dynamic from 'next/dynamic';
 import React, { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import CustomButton from '@/common/components/CustomButton';
-import useAuth from '../../hooks/useAuth';
+import { useAuth } from '../../hooks';
 import { useCounter } from '@/common/hooks';
+import CustomButton from '@/common/components/CustomButton';
 
 const OTPInput = dynamic(() => import('react-otp-input'));
 

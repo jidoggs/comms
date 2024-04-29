@@ -15,8 +15,8 @@ export type Request = (
   options: Readonly<{ arg: apiRequestorArgs }>
 ) => FetcherResponse<APIResponseSuccessModel<any>>;
 
-export type Mutate = TriggerWithArgs<
-  APIResponseSuccessModel<any>,
+export type Mutate<T = any> = TriggerWithArgs<
+  APIResponseSuccessModel<T>,
   APIResponseErrorModel,
   string,
   apiRequestorArgs

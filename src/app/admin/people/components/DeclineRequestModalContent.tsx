@@ -1,5 +1,5 @@
 import CustomButton from '@/common/components/CustomButton';
-import CustomInput from '@/common/components/CustomInput';
+import { CustomTextArea } from '@/common/components/CustomInput';
 import CustomModal from '@/common/components/CustomModal';
 import Title from '@/common/components/Title';
 import { iHandleClick } from '../types';
@@ -35,9 +35,8 @@ const DeclineRequestModalContent = ({
           What’s the reason for declining this registration?
         </p>
         <p className="mt-4">Reason for Declination</p>
-        <CustomInput
+        <CustomTextArea
           name="reason"
-          type="textarea"
           placeholder="Aa"
           value={formValues.reason}
           onChange={handleChange}

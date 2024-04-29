@@ -2,7 +2,7 @@
 import React, { Suspense, lazy, useLayoutEffect, useMemo } from 'react';
 import { SWRConfig } from 'swr';
 import { jwtDecode } from 'jwt-decode';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import FullPageLoader from '../../FullPageLoader';
 import useAuth from '@/app/auth/hooks/useAuth';
 import { isServer, requestRefreshToken } from '@/common/utils';
@@ -13,6 +13,7 @@ const AppLayout = lazy(() => import('../Layout'));
 
 function Protected({ children }: ContextWapper) {
   const token = fetchUserToken();
+  const router = useRouter();
 
   const refresh = useMemo(() => {
     const decodedToken = (token ? jwtDecode(token)?.exp : 0) as number;
@@ -22,12 +23,29 @@ function Protected({ children }: ContextWapper) {
   const { isLoading, data } = useAuth({ user: !!token, refresh }).userSwr;
   const role = data?.role?.name;
 
+  const unAuthorizedHandler = () => {
+    if (!token) {
+      router.replace(
+        `/auth/login?type=unauthorized&session=${new Date().toISOString()}`
+      );
+    }
+  };
+
   useLayoutEffect(() => {
     if (isServer || isLoading || token) return;
     if (!token && !document.referrer) {
-      redirect('/auth/login');
+      unAuthorizedHandler();
     }
-  }, [token, isLoading]);
+
+    let timer;
+    timer = setTimeout(() => {
+      unAuthorizedHandler();
+    }, 5000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [token, isLoading]); //eslint-disable-line
 
   return (
     <Suspense fallback={<FullPageLoader fullscreen />}>
