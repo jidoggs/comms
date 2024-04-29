@@ -8,6 +8,7 @@ import { Divider } from 'antd';
 import CustomButton from '@/common/components/CustomButton';
 
 type Props = {
+  warningText?: string;
   isModalOpen: boolean;
   handleCancel: VoidFunction; //eslint-disable-line
   handleSubmit: () => void; //eslint-disable-line
@@ -18,6 +19,7 @@ function DeleteModal({
   handleCancel,
   handleSubmit,
   isModalOpen,
+  warningText,
   deleteRoleIsMutating,
 }: Props) {
   return (
@@ -33,7 +35,7 @@ function DeleteModal({
         <InfoCircle size={90} />
 
         <p className="text-center">
-          Are you sure you want to delete this role?
+          {warningText || 'Are you sure you want to delete this role?'}
         </p>
         <Divider className="!border-custom-gray_500" />
         <div className="-mt-3 flex w-full justify-between">

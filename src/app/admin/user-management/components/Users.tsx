@@ -1,10 +1,11 @@
 'use client';
 import React, { useContext, useState } from 'react';
+
 import CustomTable, { CustomTableProps } from '@/common/components/CustomTable';
 import { UserMgmtDataContext } from '../service-context/UserMgmtContextWrapper';
 import TableActions from './TableActions';
-import RegistrationDetail from '../../people/components/RegistrationDetail';
 import { User } from '../types';
+import UserDetails from './UserDetails';
 
 const Users = () => {
   const contextInfo = useContext(UserMgmtDataContext);
@@ -36,7 +37,7 @@ const Users = () => {
         rowClassName="group"
         onRow={rowClickHandler}
       />
-      <RegistrationDetail
+      <UserDetails
         open={isModalOpen}
         staffData={staffData}
         onCancel={handleCancel}
