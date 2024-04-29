@@ -1,16 +1,19 @@
 import { useState } from 'react';
-import { ENDPOINTS } from '@/service/config/endpoint';
+import useMessage from 'antd/es/message/useMessage';
 import { useAuthGetRequest, useAuthRequest } from '@/service/swrHooks';
 import { useSession } from '@/common/hooks';
+import { ENDPOINTS } from '@/service/config/endpoint';
 import { AllOfficeType, OfficeType } from '../types';
 import { ServiceParams } from './types';
 
-const { CREATE, GET_ALL, UPDATE } = ENDPOINTS.DEPARTMENT;
+const { CREATE, GET_ALL, UPDATE, INVITE } = ENDPOINTS.DEPARTMENT;
+
 
 function useDepartment(props: ServiceParams) {
   const [refreshList, setRefreshList] = useState(false); // stores state to trigger new list after CUD has been done
   const { isBasicUser } = useSession();
   const departmentId = props._id;
+  const [message, messageContext] = useMessage();
 
   const revalidateListHandler = () => {
     setRefreshList(true);
@@ -59,7 +62,24 @@ function useDepartment(props: ServiceParams) {
     }
   );
 
-  return { createSwr, getListSwr, getItemSwr, updateItemSwr, deleteItemSwr };
+  const inviteUserSwr = useAuthRequest<null>(
+    props?.invite && !isBasicUser ? INVITE : '',
+    {
+      onSuccess: (res) => {
+        message.success(res.message);
+      },
+    }
+  );
+
+  return {
+    messageContext,
+    createSwr,
+    getListSwr,
+    getItemSwr,
+    updateItemSwr,
+    deleteItemSwr,
+    inviteUserSwr,
+  };
 }
 
 export default useDepartment;

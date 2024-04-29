@@ -1,4 +1,11 @@
-type RequestType = 'create' | 'get_all' | 'get_id' | 'update' | 'delete';
+type RequestType =
+  | 'create'
+  | 'get_all'
+  | 'get_id'
+  | 'update'
+  | 'delete'
+  | 'invite'
+  | 'all_users';
 type QueryType = '_id' | 'query';
 type OfficeQueryType = QueryType | 'parastatal';
 

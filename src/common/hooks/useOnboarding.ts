@@ -7,10 +7,10 @@ type QueryType = '_id' | 'role';
 type Props = Partial<Record<RequestType, boolean>> &
   Partial<Record<QueryType, string>>;
 
-const { CREATE_USER } = ENDPOINTS.ONBOARDING;
+const { ONBOARD } = ENDPOINTS.AUTH;
 
 function useOnboarding(props: Props) {
-  const createUserSwr = useAuthRequest(props?.create_user ? CREATE_USER : '');
+  const createUserSwr = useAuthRequest(props?.create_user ? ONBOARD : '');
 
   return {
     createUserSwr,

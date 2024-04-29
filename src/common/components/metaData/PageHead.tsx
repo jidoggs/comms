@@ -1,17 +1,17 @@
-import Head from "next/head";
-import React from "react";
+import Head from 'next/head';
+import React from 'react';
 
 type PageHeadProps = {
-  description: string;
-  title: string;
+  description?: string;
+  title?: string;
 };
 
 const PageHead = ({ description, title }: PageHeadProps) => {
   return (
     <Head>
-      <title>{title}</title>
+      <title>Correspondence{title ? ` | ${title}` : ''}</title>
       <meta name="description" content={description} />
-      <link rel="icon" href="/favicon.ico" />
+      <link rel="icon" href="/logo.svg" />
     </Head>
   );
 };

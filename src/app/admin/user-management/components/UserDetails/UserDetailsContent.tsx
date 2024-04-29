@@ -111,9 +111,15 @@ const UserDetailsContent = ({ userData }: UserDetailsContentProps) => {
             Office
           </Title>
           <FieldRow title="Title" value={userData?.title} isEdit={isEdit} />
-          <FieldRow title="Department" value={userData?.department || "N/A"} />
+          <FieldRow
+            title="Department"
+            value={userData?.department?.[0]?.name || "N/A"}
+          />
           <hr />
-          <FieldRow title="Parastatal" value={userData?.parastatal as string || "N/A"} />
+          <FieldRow
+            title="Parastatal"
+            value={userData?.parastatal?.[0]?.name as string || "N/A"}
+          />
         </div>
       </div>
       <DeleteModal

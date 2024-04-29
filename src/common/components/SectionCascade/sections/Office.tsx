@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import SectionContainer from '../blocks/SectionContainer';
 import SectionMoreOptions from '../blocks/SectionMoreOptions';
 import { useSession } from '@/common/hooks';
-import { useOffice } from '@/app/admin/hooks';
+import { useOffice, useParastatals } from '@/app/admin/hooks';
 import { queryHandler } from '@/service/request';
 import { CascadeContext } from '..';
 
@@ -17,15 +17,23 @@ const Options = ({ query }: OptionsType) => {
     create: !isBasicUser,
     query,
   });
+  const { inviteUserSwr: inviteParastalUserSwr, messageContext } =
+    useParastatals({
+      invite: !isBasicUser,
+    });
+  const otherData = { parastatal: id };
   return (
     <>
+      {messageContext}
       {isBasicUser ? null : (
         <SectionMoreOptions
           addTrigger={createSwr.trigger}
           addIsLoading={createSwr.isMutating}
-          otherAddData={{ parastatal: id }}
-          // inviteIsLoading={createSwr.isMutating}
-          // inviteTrigger={createSwr.trigger}
+          otherAddData={otherData}
+          otherInviteData={otherData}
+          inviteIsLoading={inviteParastalUserSwr.isMutating}
+          inviteTrigger={inviteParastalUserSwr.trigger}
+          acceptedFeature={['add', 'invite']}
         />
       )}
     </>
@@ -34,14 +42,14 @@ const Options = ({ query }: OptionsType) => {
 
 function Office() {
   const contextInfo = useContext(CascadeContext);
-  const { isPrimaryAdmin } = useSession();
+  const { isPrimaryAdmin, data: user } = useSession();
   const query = queryHandler({
     parastatal: contextInfo?.dataList?.parastatal?.id,
   });
 
   const { getListSwr, getItemSwr } = useOffice({
     get_all: isPrimaryAdmin,
-    _id: '', // you should get this from user object
+    _id: user?.office?.[0]?._id, // this is for users that do not have permisson to get list
     get_id: !isPrimaryAdmin,
     query,
   });

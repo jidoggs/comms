@@ -59,6 +59,8 @@ const navItems = {
       </span>,
       navClassName
     ),
+  },
+  other_user_menu: {
     ARCHIVES: getItem(
       <span>Archives</span>,
       '/app/archives',
@@ -135,10 +137,16 @@ const getUserNavItemsByRole = (role: UserRoles) => {
       routes = generateRoutes(navItems.admin);
       break;
     case UserPreDefinedRole.BASICUSER:
-      routes = generateRoutes(navItems.user);
+      routes = generateRoutes({
+        ...navItems.user,
+        ...navItems.other_user_menu,
+      });
       break;
     default:
-      routes = generateRoutes(navItems.user);
+      routes = generateRoutes({
+        ...navItems.user,
+        ...navItems.other_user_menu,
+      });
       break;
   }
   return routes;

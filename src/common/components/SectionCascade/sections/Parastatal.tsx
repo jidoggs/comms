@@ -14,18 +14,17 @@ const Options = () => {
     <SectionMoreOptions
       addTrigger={createParastatals.trigger}
       addIsLoading={createParastatals.isMutating}
-      // inviteIsLoading={createSwr.isMutating}
-      // inviteTrigger={createSwr.trigger}
+      acceptedFeature={['add']}
     />
   );
 };
 
 function Parastatal() {
   const contextInfo = useContext(CascadeContext);
-  const { isPrimaryAdmin } = useSession();
+  const { isPrimaryAdmin, data: user } = useSession();
   const { getListSwr, getItemSwr } = useParastatals({
     get_all: isPrimaryAdmin,
-    _id: '', // you should get this from user object
+    _id: user?.parastatal?.[0]?._id, // this is for users that do not have permisson to get list
     get_id: !isPrimaryAdmin,
   });
 

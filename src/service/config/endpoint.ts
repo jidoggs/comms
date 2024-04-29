@@ -1,36 +1,37 @@
 export const ENDPOINTS = {
   AUTH: {
     LOGIN: '/auth/login',
-    GET_USER: '/user/profile',
-    UPDATE_USER_PASSWORD: '/user/update/password',
     REFRESH_TOKEN: '/auth/refresh/token',
     FORGOT_PASSWORD: '/auth/forgot_password',
     RESET_PASSWORD: '/auth/reset_password',
+    ONBOARD: '/auth/onboard',
   },
-  ONBOARDING: {
-    PERSONAL_INFO: '/auth/personal-info',
-    OFFICE_INFO: '/auth/office-info',
-    SET_PASSWORD: '/user/set-password',
-    CREATE_USER: '/auth/onboard',
-    // UPDATE_USER_PASSWORD: '/user/update/password',
-    // REFRESH_TOKEN: '/refresh/token',
-    // FORGOT_PASSWORD: '/auth/forgot_password',
-    // RESET_PASSWORD: '/auth/reset_password',
+  USER: {
+    GET_USER: '/user/profile',
+    UPDATE_USER_PASSWORD: '/user/update/password',
+    ADD_USER_TO_ROLE: (UID: string, RID: string) =>
+      `/user/${UID}/add/role/${RID}`,
+    DELETE_USER_TO_ROLE: (UID: string, RID: string) =>
+      `/user/${UID}/revoke/role/${RID}`,
+    GET_ALL: '/user/all',
   },
   PARASTATALS: {
     CREATE: '/parastatals',
     GET_ALL: '/parastatals/all',
     UPDATE: (query: string) => `/parastatals/${query}`,
+    INVITE: '/invite/parastatal',
   },
   DEPARTMENT: {
     CREATE: '/departments',
     GET_ALL: '/departments/all',
     UPDATE: (query: string) => `/departments/${query}`,
+    INVITE: '/invite/department',
   },
   OFFICE: {
     CREATE: '/offices',
     GET_ALL: '/offices/all',
     UPDATE: (query: string) => `/offices/${query}`,
+    INVITE: '/invite/office',
   },
   ROLES: {
     CREATE: '/roles',

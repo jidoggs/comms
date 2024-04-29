@@ -18,15 +18,24 @@ const initialModalState = {
 };
 
 type Props = {
-  addTrigger: Mutate;
+  addTrigger?: Mutate;
   otherAddData?: Record<string, any>;
-  addIsLoading: boolean;
+  otherInviteData?: Record<string, any>;
+  addIsLoading?: boolean;
   inviteTrigger?: Mutate;
   inviteIsLoading?: boolean;
-  otherinviteData?: Record<string, any>;
+  acceptedFeature: ('add' | 'invite' | 'details')[];
 };
 
-function SectionMoreOptions({ addIsLoading, addTrigger, otherAddData }: Props) {
+function SectionMoreOptions({
+  addIsLoading,
+  addTrigger,
+  otherAddData,
+  otherInviteData,
+  inviteTrigger,
+  inviteIsLoading,
+  acceptedFeature,
+}: Props) {
   const [isModalOpen, setIsModalOpen] = useState(initialModalState);
 
   const showModal = (val: keyof typeof initialModalState) => {
@@ -39,13 +48,14 @@ function SectionMoreOptions({ addIsLoading, addTrigger, otherAddData }: Props) {
 
   const addSubmitHandler = (values: any) => {
     const data = { ...otherAddData, ...values };
+    if (!addTrigger) return;
     addTrigger({ data, type: 'post' }).finally(handleClose);
   };
 
-  //eslint-disable-next-line
   const inviteSubmitHandler = (values: any) => {
-    // const data = { ...otherinviteData, ...values };
-    // inviteTrigger(data).finally(handleClose);
+    const data = { ...otherInviteData, ...values };
+    if (!inviteTrigger) return;
+    inviteTrigger({ data, type: 'post' }).finally(handleClose);
   };
 
   const items: MenuProps['items'] = [
@@ -60,7 +70,7 @@ function SectionMoreOptions({ addIsLoading, addTrigger, otherAddData }: Props) {
       onClick: () => showModal('add'),
     },
     {
-      key: 'person',
+      key: 'invite',
       icon: (
         <span className="">
           <UserAdd size="18" />
@@ -79,7 +89,7 @@ function SectionMoreOptions({ addIsLoading, addTrigger, otherAddData }: Props) {
       label: 'View details',
       className: 'border-t !rounded-t-none',
     },
-  ];
+  ].filter((itm: any) => acceptedFeature.includes(itm.key));
 
   return (
     <>
@@ -91,18 +101,22 @@ function SectionMoreOptions({ addIsLoading, addTrigger, otherAddData }: Props) {
           icon={<MoreFile />}
         />
       </Dropdown>
-      <AddModal
-        handleCancel={handleClose}
-        handleSubmit={addSubmitHandler}
-        isModalOpen={isModalOpen.add}
-        isLoading={addIsLoading}
-      />
-      <InvitePersonModal
-        handleCancel={handleClose}
-        handleSubmit={inviteSubmitHandler}
-        isModalOpen={isModalOpen.invite}
-        isLoading={false}
-      />
+      {acceptedFeature.includes('add') ? (
+        <AddModal
+          handleCancel={handleClose}
+          handleSubmit={addSubmitHandler}
+          isModalOpen={isModalOpen.add}
+          isLoading={addIsLoading}
+        />
+      ) : null}
+      {acceptedFeature.includes('invite') ? (
+        <InvitePersonModal
+          handleCancel={handleClose}
+          handleSubmit={inviteSubmitHandler}
+          isModalOpen={isModalOpen.invite}
+          isLoading={inviteIsLoading}
+        />
+      ) : null}
     </>
   );
 }
