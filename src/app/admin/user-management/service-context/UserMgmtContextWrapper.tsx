@@ -67,7 +67,7 @@ const defaultColumns: {
       return (
         <>
           {value ? (
-            <p className="flex items-center gap-x-2.5">
+            <p className="flex items-center gap-x-2.5 capitalize">
               <span>{`${value?.firstname} ${value?.othername}`}</span>
             </p>
           ) : null}
@@ -82,11 +82,14 @@ const defaultColumns: {
     ellipsis: true,
     width: 200,
     render: (_: any, value: User) => {
+      const removeSpecialCharacter = value?.role?.name.split('_');
       return (
         <>
           {value ? (
-            <p className="flex items-center gap-x-2.5">
-              <span>{value?.role?.name}</span>
+            <p className="flex items-center gap-x-2.5 capitalize">
+              <span>
+                {removeSpecialCharacter[0]} {removeSpecialCharacter[1]}
+              </span>
             </p>
           ) : null}
         </>
