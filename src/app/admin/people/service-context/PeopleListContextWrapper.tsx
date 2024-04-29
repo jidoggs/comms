@@ -1,5 +1,7 @@
 'use client';
 import React, { createContext } from 'react';
+import dayjs from 'dayjs';
+
 import { TabsProps } from 'antd';
 import { mergeClassName } from '@/common/utils';
 import {
@@ -101,6 +103,9 @@ const defaultColumns: (EditableTableColumnTypes[number] & {
     dataIndex: 'date_sent',
     ellipsis: true,
     width: 150,
+    render: (_: any, __: any, record: any) => {
+      return <>{dayjs(record?.created_at).format('DD-MMM-YYYY')}</>;
+    },
   },
   {
     title: 'Actions',
@@ -142,7 +147,7 @@ function PeopleListContextWrapper({ children }: ContextWapper) {
       label: 'Approved',
     },
     {
-      key: 'declined',
+      key: 'rejected',
       label: 'Declined',
     },
   ];

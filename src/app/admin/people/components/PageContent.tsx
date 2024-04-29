@@ -6,6 +6,7 @@ import TableActions from './TableActions';
 import { PeopleDataContext } from '../service-context/PeopleListContextWrapper';
 import RegistrationDetail from './RegistrationDetail';
 import { User } from '../types';
+import usePeople from '../../hooks/usePeople';
 
 const CorrespondencePage = () => {
   const contextInfo = useContext(PeopleDataContext);
@@ -24,6 +25,16 @@ const CorrespondencePage = () => {
     setIsModalOpen(false);
     setStaffData(null);
   };
+
+  const peopleProps = usePeople({
+    get_invites: true,
+    status: contextInfo?.tabItem,
+  });
+
+  const { getAllInvitesSwr } = peopleProps;
+
+  const { data } = getAllInvitesSwr;
+
   return (
     <div className="pt-4">
       <CustomTable
@@ -40,7 +51,7 @@ const CorrespondencePage = () => {
           table: 'cursor-pointer',
         }}
         columns={contextInfo?.columns}
-        dataSource={contextInfo?.dataSource}
+        dataSource={data?.data as User[]}
         size="large"
         rowClassName="group"
         onRow={rowClickHandler}

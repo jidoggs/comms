@@ -24,5 +24,6 @@ export interface User extends BaseDataModel {
   last_seen: string;
   date_created: string;
   img: string;
+  status: string;
   role: UserRole;
 }

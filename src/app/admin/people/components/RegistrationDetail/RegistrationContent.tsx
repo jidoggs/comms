@@ -30,7 +30,7 @@ const RegistrationContent = ({
           <div className="flex flex-col justify-end">
             <div className="flex items-center gap-1">
               <div className="size-2 rounded bg-custom-green_100" />
-              <p>Active</p>
+              <p className="capitalize">{registrationData?.status}</p>
             </div>
             <div className="flex gap-2">
               <CustomButton
@@ -66,11 +66,11 @@ const RegistrationContent = ({
         />
         <FieldRow
           title="Date Added"
-          value={dayjs(registrationData?.date_created).format('DD-MMM-YYYY')}
+          value={dayjs(registrationData?.created_at).format('DD-MMM-YYYY')}
         />
         <FieldRow
           title="Last Active"
-          value={dayjs(registrationData?.date_created).format('DD-MMM-YYYY')}
+          value={dayjs(registrationData?.last_seen).format('DD-MMM-YYYY')}
         />
         <div>
           <Title className="my-2 font-semibold text-custom-gray_600">
