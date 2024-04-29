@@ -16,7 +16,8 @@ import { dummyPersonsPending, dummyPersons } from '@/common/mockData';
 import TableRowAction from '../components/TableRowAction';
 import { mergeClassName } from '@/common/utils';
 import useRoles from '../../hooks/useRoles';
-import { EditableTableColumnTypes } from '../../people/types';
+import { EditableTableColumnTypes, User } from '../../people/types';
+import dayjs from 'dayjs';
 
 export const UserMgmtDataContext = createContext<UserMgmtDataContextType>(null);
 
@@ -53,23 +54,22 @@ const personKeys = [
   '',
 ];
 
-const defaultColumns: (EditableTableColumnTypes[number] & {
+const defaultColumns: {
   dataIndex: string;
-})[] = [
+}[] = [
   {
     title: 'Person',
     className: '!pl-5',
-    dataIndex: 'full_name',
+    dataIndex: '',
     width: 180,
     ellipsis: true,
-    render: (value: any) => {
+    render: (_: any, value: any) => {
       return (
         <>
           {value ? (
-            <div className="flex items-center gap-x-2.5">
-              <div className="size-7 rounded-full bg-red-500" />
-              <span>{value}</span>
-            </div>
+            <p className="flex items-center gap-x-2.5">
+              <span>{`${value?.firstname} ${value?.othername}`}</span>
+            </p>
           ) : null}
         </>
       );
@@ -81,6 +81,17 @@ const defaultColumns: (EditableTableColumnTypes[number] & {
     dataIndex: 'role',
     ellipsis: true,
     width: 200,
+    render: (_: any, value: User) => {
+      return (
+        <>
+          {value ? (
+            <p className="flex items-center gap-x-2.5">
+              <span>{value?.role?.name}</span>
+            </p>
+          ) : null}
+        </>
+      );
+    },
   },
   {
     title: 'Email',
@@ -123,6 +134,9 @@ const defaultColumns: (EditableTableColumnTypes[number] & {
     dataIndex: 'date_created',
     ellipsis: true,
     width: 150,
+    render: (_: any, record: any) => {
+      return <>{dayjs(record?.created_at).format('DD-MMM-YYYY')}</>;
+    },
   },
   {
     title: 'Date sent',
