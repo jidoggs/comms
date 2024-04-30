@@ -1,10 +1,13 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 'use client';
 import React from 'react';
 import { Form } from 'antd';
 import CustomButton from '@/common/components/CustomButton';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
 import { ArrowRight, ArrowRightBreak } from '@/common/components/icons';
 import { useRouter } from 'next/navigation';
+// import useOnboarding from '@/app/auth/hooks/useOnboarding';
 import Title from '@/common/components/Title';
 import SectionCascade from '@/common/components/SectionCascade';
 import { useSectionCascade } from '@/common/hooks';
@@ -12,15 +15,12 @@ import { useSectionCascade } from '@/common/hooks';
 const StepTwoForm = () => {
   const router = useRouter();
   const { clickHandler, dataList } = useSectionCascade();
+  // const { officeInfoTrigger, officeInfoIsMutating } = useOnboarding({
+  //   office_info: true,
+  // });
 
   const onFinish = () => {
-    const currentOnboardingData =
-      JSON.parse(localStorage.getItem('onboardingData') as string) || [];
-
-    const updatedData = { ...currentOnboardingData, invite_code: '123456' };
-    localStorage.setItem('onboardingData', JSON.stringify(updatedData));
-
-    router.push('/onboarding/set-password');
+    // router.push('/onboarding/set-password');
     // officeInfoTrigger({ data: department, type: 'post' }).then(() => {
     //   router.push('/onboarding/set-password');
     // });
@@ -37,7 +37,7 @@ const StepTwoForm = () => {
       {/* is-onboard and group are style identifies */}
       <div className="is-onboard group w-full max-w-screen-lg overflow-x-scroll py-2">
         <SectionCascade
-          className="overflow-hidden rounded-lg"
+          className="overflow-x-auto rounded-lg"
           clickHandler={clickHandler}
           dataList={dataList}
         />

@@ -1,16 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-// /* eslint-disable no-console */
-/* eslint-disable no-unused-vars */
-// /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
-import React, { createContext, useState } from 'react';
+import React, { createContext } from 'react';
 import { TabsProps } from 'antd';
-import {
-  ContextWapper,
-  PermissionGroup,
-  Role,
-  UserMgmtDataContextType,
-} from '../types';
+import { ContextWapper, UserMgmtDataContextType } from '../types';
 import { useTabChange } from '@/common/hooks';
 import { dummyPersonsPending, dummyPersons } from '@/common/mockData';
 import TableRowAction from '../components/TableRowAction';
@@ -173,15 +164,6 @@ function UserMgmtContextWrapper({ children }: ContextWapper) {
   const dataSource =
     tabs.tabItem === 'pending' ? dummyPersonsPending : dummyPersons;
 
-  const [newRoles, setNewRoles] = useState<Role[]>([]);
-  const [updateRoleData, setUpdateRoleData] = useState({
-    name: '',
-    _id: 0,
-  });
-  const [updateNewRoleData, setUpdateNewRoleData] = useState(initialNewRole);
-  const [editedRole, setEditedRole] = useState<any>();
-  const [editRole, setEditRole] = useState<boolean>(false);
-
   const columns = defaultColumns
     .filter((itm) =>
       tabs.tabItem === 'pending'
@@ -218,56 +200,6 @@ function UserMgmtContextWrapper({ children }: ContextWapper) {
 
   const handleAdd = () => {};
 
-  function groupPermissions(allPermissions: any[]): PermissionGroup[] {
-    const groups: PermissionGroup[] = [];
-
-    // Ensure allPermissions is defined and not empty
-    if (!Array.isArray(allPermissions) || allPermissions.length === 0) {
-      return groups;
-    }
-
-    allPermissions.forEach((permission) => {
-      const requestTypeMatch = permission.name.match(
-        /(CREATE|EDIT|DELETE|GET|ADD|REMOVE|SEND|REVOKE)/
-      );
-      const permissionTypeMatch = permission.name.match(
-        /(PARASTATALS?|DEPARTMENTS?|OFFICES?|ROLES?|INVITES?)/
-      );
-
-      let requestType = 'USER';
-      let permissionType = 'USER';
-
-      if (requestTypeMatch) {
-        requestType = requestTypeMatch[0];
-      }
-
-      if (permissionTypeMatch) {
-        permissionType = permissionTypeMatch[0];
-      }
-
-      // Check if a group for this combination already exists
-      const existingGroupIndex = groups.findIndex(
-        (group) =>
-          group.requestType === requestType &&
-          group.permissionType === permissionType
-      );
-
-      if (existingGroupIndex !== -1) {
-        // Add the permission to the existing group
-        groups[existingGroupIndex].permissions.push(permission.name);
-      } else {
-        // Create a new group
-        groups.push({
-          requestType,
-          permissionType,
-          permissions: [permission.name],
-        });
-      }
-    });
-
-    return groups;
-  }
-
   return (
     <UserMgmtDataContext.Provider
       value={{
@@ -276,18 +208,7 @@ function UserMgmtContextWrapper({ children }: ContextWapper) {
         columns,
         dataSource,
         tabItemList,
-        newRoles,
-        setNewRoles,
-        updateRoleData,
-        setUpdateRoleData,
-        updateNewRoleData,
-        setUpdateNewRoleData,
-        editedRole,
-        setEditedRole,
-        editRole,
-        setEditRole,
-        // currentRole,
-        // setCurrentRole,
+        allRoles: [],
       }}
     >
       {children}

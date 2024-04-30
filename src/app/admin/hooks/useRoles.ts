@@ -1,24 +1,15 @@
 import { ENDPOINTS } from '@/service/config/endpoint';
 import { useAuthGetRequest, useAuthRequest } from '@/service/swrHooks';
-import { OfficeType } from '../types';
+import { AllPermissionType, AllRoleType, OfficeType, RoleType } from '../types';
 import { useState } from 'react';
-
-type RequestType =
-  | 'create_role'
-  | 'get_all_roles'
-  | 'get_all_permissions'
-  | 'delete_specific_role'
-  | 'update_role';
-type QueryType = '_id' | 'role';
-
-type Props = Partial<Record<RequestType, boolean>> &
-  Partial<Record<QueryType, string>>;
+import { RoleProps } from './types';
+// import { RoleProps } from './types';
 
 const { CREATE, GET_ALL_ROLES, DELETE_SPECIFIC_ROLE, UPDATE } = ENDPOINTS.ROLES;
 
 const { VIEW_ALL_PERMISSIONS } = ENDPOINTS.PERMISSIONS;
 
-function useRoles(props: Props) {
+function useRoles(props: RoleProps) {
   const isQuery = props._id;
   const query = props._id || '';
 
@@ -36,7 +27,7 @@ function useRoles(props: Props) {
     }
   };
 
-  const getAllRolesSwr = useAuthGetRequest(
+  const getAllRolesSwr = useAuthGetRequest<AllRoleType>(
     props?.get_all_roles || refreshList ? GET_ALL_ROLES : '',
     {
       revalidateOnFocus: false,
@@ -46,10 +37,13 @@ function useRoles(props: Props) {
       onSuccess: resetRefreshList,
     }
   );
-  const createRoleSwr = useAuthRequest(props?.create_role ? CREATE : '', {
-    onSuccess: revalidateListHandler,
-  });
-  const getAllPermissionsSwr = useAuthGetRequest(
+  const createRoleSwr = useAuthRequest<RoleType>(
+    props?.create_role ? CREATE : '',
+    {
+      onSuccess: revalidateListHandler,
+    }
+  );
+  const getAllPermissionsSwr = useAuthGetRequest<AllPermissionType>(
     props?.get_all_permissions ? VIEW_ALL_PERMISSIONS : '',
     {
       revalidateOnFocus: false,
@@ -59,13 +53,13 @@ function useRoles(props: Props) {
       onSuccess: resetRefreshList,
     }
   );
-  const updateRoleSwr = useAuthRequest(
+  const updateRoleSwr = useAuthRequest<RoleType>(
     props?.update_role ? UPDATE : '',
     {
       onSuccess: revalidateListHandler,
     }
   );
-  const deleteRoleSwr = useAuthRequest<null>(
+  const deleteRoleSwr = useAuthRequest<RoleType>(
     props?.delete_specific_role && isQuery ? DELETE_SPECIFIC_ROLE(query) : '',
     {
       onSuccess: revalidateListHandler,
