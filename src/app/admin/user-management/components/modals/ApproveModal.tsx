@@ -12,15 +12,15 @@ type Props = {
   isModalOpen: boolean;
   handleCancel: VoidFunction; //eslint-disable-line
   handleSubmit: () => void; //eslint-disable-line
-  deleteRoleIsMutating: boolean;
+  modalMutating: boolean;
 };
 
-function DeleteModal({
+function ApproveModal({
   handleCancel,
   handleSubmit,
   isModalOpen,
   warningText,
-  deleteRoleIsMutating,
+  modalMutating,
 }: Props) {
   return (
     <CustomModal
@@ -35,7 +35,7 @@ function DeleteModal({
         <InfoCircle size={90} />
 
         <p className="text-center">
-          {warningText || 'Are you sure you want to delete this role?'}
+          {warningText || 'Are you sure you want to sumbit this role?'}
         </p>
         <Divider className="!border-custom-gray_500" />
         <div className="-mt-3 flex w-full justify-between">
@@ -44,7 +44,7 @@ function DeleteModal({
               type="text"
               className="w-full"
               onClick={handleCancel}
-              disabled={deleteRoleIsMutating}
+              disabled={modalMutating}
             >
               Cancel
             </CustomButton>
@@ -54,9 +54,9 @@ function DeleteModal({
               type="text"
               className="w-full"
               onClick={handleSubmit}
-              loading={deleteRoleIsMutating}
+              loading={modalMutating}
             >
-              Yes, Delete
+              Yes, Submit
             </CustomButton>
           </div>
         </div>
@@ -66,4 +66,4 @@ function DeleteModal({
   );
 }
 
-export default DeleteModal;
+export default ApproveModal;

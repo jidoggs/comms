@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import SectionContainer from '../blocks/SectionContainer';
 import SectionMoreOptions from '../blocks/SectionMoreOptions';
-import { useSession } from '@/common/hooks';
+import { useCache, useSession } from '@/common/hooks';
 import { useDepartment, useOffice } from '@/app/admin/hooks';
 import { queryHandler } from '@/service/request';
 import { CascadeContext } from '..';
@@ -17,27 +17,47 @@ type OptionsType = {
 const Options = ({ query }: OptionsType) => {
   const contextInfo = useContext(CascadeContext);
   const parastatalId = contextInfo?.dataList?.parastatal?.id;
-  const officeId = contextInfo?.dataList?.office?.id;
+  const officeInfo = contextInfo?.dataList?.office;
+  const officeId = officeInfo?.id;
+  const cachedQuery = officeInfo?.key as string;
+  const { cachedData } = useCache(cachedQuery);
   const { isBasicUser } = useSession();
   const { createSwr } = useDepartment({
     create: !isBasicUser,
     query,
   });
-  const { inviteUserSwr: inviteOfficeUserSwr, messageContext } = useOffice({
+  const officeService = useOffice({
     invite: !isBasicUser,
+    delete: !isBasicUser,
+    update: !isBasicUser,
+    _id: officeId,
   });
+  const officeInformation = useMemo(
+    () => cachedData?.find((item: any) => item?._id === officeId),
+    [officeId] //eslint-disable-line
+  );
+
   return (
     <>
-      {messageContext}
+      {officeService.messageContext}
       {isBasicUser ? null : (
         <SectionMoreOptions
           addTrigger={createSwr.trigger}
           addIsLoading={createSwr.isMutating}
           otherAddData={{ office: officeId, parastatal: parastatalId }}
-          acceptedFeature={['add', 'invite']}
-          inviteIsLoading={inviteOfficeUserSwr.isMutating}
-          inviteTrigger={inviteOfficeUserSwr.trigger}
+          acceptedFeature={['add', 'invite', 'details']}
+          inviteIsLoading={officeService.inviteUserSwr.isMutating}
+          inviteTrigger={officeService.inviteUserSwr.trigger}
+          deleteIsLoading={officeService.deleteItemSwr.isMutating}
+          deleteTrigger={officeService.deleteItemSwr.trigger}
+          updateIsLoading={officeService.updateItemSwr.isMutating}
+          updateTrigger={officeService.updateItemSwr.trigger}
           otherInviteData={{ office: officeId }}
+          title={{
+            current: 'department',
+            parent: 'office',
+          }}
+          moreData={officeInformation}
         />
       )}
     </>
@@ -68,7 +88,7 @@ function Department({ showMembers }: Props) {
       items={data}
       title={`${contextInfo?.dataList?.office?.title} (${data.length} departments)`}
       step="department"
-      clickHandler={contextInfo?.clickHandler}
+      clickHandler={contextInfo?.clickCascadeItemHandler}
       activeIdentifier={contextInfo?.dataList?.department?.id}
       moreOptions={<Options query={query} />}
       hasChild={showMembers}

@@ -7,9 +7,10 @@ import { CloseCircled } from '@/common/components/icons';
 type Props = {
   onFinish: FormProps['onFinish'];
   isLoading?: boolean;
+  isParastatal: boolean;
 };
 
-function AddForm({ onFinish, isLoading }: Props) {
+function AddForm({ onFinish, isLoading, isParastatal }: Props) {
   return (
     <Form layout="vertical" onFinish={onFinish}>
       <Form.Item
@@ -19,21 +20,21 @@ function AddForm({ onFinish, isLoading }: Props) {
       >
         <CustomInput placeholder="Aa" disabled={isLoading} />
       </Form.Item>
-
-      <Form.Item
-        label={<span className="font-bold">Domain(s)</span>}
-        name="domains"
-        rules={[{ required: true, message: 'Please input the title!' }]}
-      >
-        <CustomSelect
-          disabled={isLoading}
-          mode="tags"
-          placeholder="|Add @domain.ng. Type ',' to add, ‘⌫’ to remove"
-          tokenSeparators={[',']}
-          removeIcon={<CloseCircled className="text-white" />}
-        />
-      </Form.Item>
-
+      {isParastatal ? (
+        <Form.Item
+          label={<span className="font-bold">Domain(s)</span>}
+          name="domains"
+          rules={[{ required: true, message: 'Please input the title!' }]}
+        >
+          <CustomSelect
+            disabled={isLoading}
+            mode="tags"
+            placeholder="|Add @domain.ng. Type ',' to add, ‘⌫’ to remove"
+            tokenSeparators={[',']}
+            removeIcon={<CloseCircled className="text-white" />}
+          />
+        </Form.Item>
+      ) : null}
       <div className="flex items-center justify-end  border-t border-custom-gray_500 py-2">
         <CustomButton loading={isLoading} size="small" htmlType="submit">
           Create

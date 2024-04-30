@@ -19,3 +19,22 @@ export type CreateDepartmentRequestType = {
 };
 
 export type UpdateDepartmentRequestType = Partial<CreateDepartmentRequestType>;
+
+export interface PermissionRequestType {
+  _id: string;
+  name: string;
+  code: string;
+}
+
+export type UpdatePermissionsRequestType = Partial<PermissionRequestType>;
+
+export interface RoleRequestType {
+  _id: string;
+  name: string;
+  active: boolean;
+  permissions: PermissionRequestType[];
+  created_at?: string;
+  updated_at?: string;
+}
+
+export type UpdateRoleRequestType = Partial<RoleRequestType>;

@@ -1,28 +1,26 @@
-import { useState } from 'react';
 import useMessage from 'antd/es/message/useMessage';
-import { useAuthGetRequest, useAuthRequest } from '@/service/swrHooks';
+import {
+  useAuthGetRequest,
+  useAuthRequest,
+  useServiceConfig,
+} from '@/service/swrHooks';
 import { useSession } from '@/common/hooks';
 import { ENDPOINTS } from '@/service/config/endpoint';
 import { AllOfficeType, OfficeType } from '../types';
 import { OfficeServiceParams } from './types';
+import { APIResponseSuccessModel } from '@/types';
 
 const { CREATE, GET_ALL, UPDATE, INVITE } = ENDPOINTS.OFFICE;
 
 function useOffice(props: OfficeServiceParams) {
-  const [refreshList, setRefreshList] = useState(false); // stores state to trigger new list after CUD has been done
   const { isBasicUser } = useSession();
+  const { mutate } = useServiceConfig();
   const officeId = props._id;
   const [message, messageContext] = useMessage();
 
-  const revalidateListHandler = () => {
-    setRefreshList(true);
-    getListSwr.revalidate();
-  };
-
-  const resetRefreshList = () => {
-    if (refreshList) {
-      setRefreshList(false);
-    }
+  const revalidateListHandler = (res: APIResponseSuccessModel) => {
+    message.success(res.message);
+    mutate(GET_ALL + props.query);
   };
 
   const createSwr = useAuthRequest<OfficeType>(
@@ -33,13 +31,12 @@ function useOffice(props: OfficeServiceParams) {
   );
 
   const getListSwr = useAuthGetRequest<AllOfficeType>(
-    props?.get_all || refreshList ? GET_ALL + props.query : '',
+    props?.get_all ? GET_ALL + props.query : '',
     {
       revalidateOnFocus: false,
       revalidateOnMount: true,
       revalidateIfStale: false,
       errorRetryCount: process.env.NODE_ENV === 'development' ? 1 : 3,
-      onSuccess: resetRefreshList,
     }
   );
 

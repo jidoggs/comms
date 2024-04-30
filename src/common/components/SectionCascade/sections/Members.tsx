@@ -1,29 +1,48 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import SectionContainer from '../blocks/SectionContainer';
 import SectionMoreOptions from '../blocks/SectionMoreOptions';
-import { useSession } from '@/common/hooks';
+import { useCache, useSession } from '@/common/hooks';
 import { useDepartment } from '@/app/admin/hooks';
 import { CascadeContext } from '..';
 import useMembers from '@/app/admin/hooks/useMembers';
 import { queryHandler } from '@/service/request';
 
 const Options = () => {
-  const id = useContext(CascadeContext)?.dataList?.department?.id;
+  const departmentInfo = useContext(CascadeContext)?.dataList?.department;
+  const departmentId = departmentInfo?.id;
+  const cachedQuery = departmentInfo?.key as string;
   const { isBasicUser } = useSession();
+  const { cachedData } = useCache(cachedQuery);
+  const departmentService = useDepartment({
+    invite: !isBasicUser,
+    delete: !isBasicUser,
+    update: !isBasicUser,
+    _id: departmentId,
+  });
 
-  const { inviteUserSwr: inviteDepartmentUserSwr, messageContext } =
-    useDepartment({
-      invite: !isBasicUser,
-    });
+  const departmentInformation = useMemo(
+    () => cachedData?.find((item: any) => item?._id === departmentId),
+    [departmentId] //eslint-disable-line
+  );
+
   return (
     <>
-      {messageContext}
+      {departmentService.messageContext}
       {isBasicUser ? null : (
         <SectionMoreOptions
-          inviteIsLoading={inviteDepartmentUserSwr.isMutating}
-          inviteTrigger={inviteDepartmentUserSwr.trigger}
-          otherInviteData={{ department: id }}
+          inviteIsLoading={departmentService.inviteUserSwr.isMutating}
+          inviteTrigger={departmentService.inviteUserSwr.trigger}
+          deleteIsLoading={departmentService.deleteItemSwr.isMutating}
+          deleteTrigger={departmentService.deleteItemSwr.trigger}
+          updateIsLoading={departmentService.updateItemSwr.isMutating}
+          updateTrigger={departmentService.updateItemSwr.trigger}
+          otherInviteData={{ department: departmentId }}
           acceptedFeature={['invite', 'details']}
+          title={{
+            current: 'member',
+            parent: 'department',
+          }}
+          moreData={departmentInformation}
         />
       )}
     </>
@@ -46,7 +65,7 @@ function Members() {
       items={list}
       title={`${contextInfo?.dataList?.department?.title} (${list.length} members)`}
       step="person"
-      clickHandler={contextInfo?.clickHandler}
+      clickHandler={contextInfo?.clickCascadeItemHandler}
       activeIdentifier={contextInfo?.dataList?.department?.id}
       moreOptions={<Options />}
       loader={getListSwr.isLoading}

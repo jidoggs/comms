@@ -10,11 +10,11 @@ interface LayoutProps {
 
 const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
   return (
-    <div className="flex min-w-[450px] items-center justify-center rounded-2xl bg-custom-gray_100">
+    <div className="flex w-[450px] items-center justify-center rounded-2xl bg-custom-gray_100">
       <div className="flex w-full flex-col items-center justify-center gap-y-3 p-5">
         <Title
           tag="h4"
-          className={`py-1 w-full text-left ${helveticaNeue.className}`}
+          className={`w-full py-1 text-left ${helveticaNeue.className}`}
         >
           Onboarding
         </Title>

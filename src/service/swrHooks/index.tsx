@@ -1,4 +1,4 @@
-import useSWR, { SWRConfiguration } from 'swr';
+import useSWR, { SWRConfiguration, useSWRConfig } from 'swr';
 import useSWRMutation from 'swr/mutation';
 import { message } from 'antd';
 import {
@@ -97,4 +97,9 @@ export const useNonAuthGetRequest = <T,>(
     revalidate: mutate,
     isValidating,
   };
+};
+
+export const useServiceConfig = () => {
+  const config = useSWRConfig();
+  return config;
 };

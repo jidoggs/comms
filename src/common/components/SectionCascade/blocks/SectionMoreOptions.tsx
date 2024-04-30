@@ -10,6 +10,7 @@ import {
   UserAdd,
 } from '@/common/components/icons';
 import { Mutate } from '@/types';
+import MoreInformationModal from '@/app/admin/departments/components/modals/MoreInformationModal';
 
 const initialModalState = {
   add: false,
@@ -25,6 +26,15 @@ type Props = {
   inviteTrigger?: Mutate;
   inviteIsLoading?: boolean;
   acceptedFeature: ('add' | 'invite' | 'details')[];
+  title?: {
+    parent?: 'parastatal' | 'office' | 'department';
+    current?: 'parastatal' | 'office' | 'department' | 'member';
+  };
+  moreData?: any;
+  updateTrigger?: Mutate;
+  updateIsLoading?: boolean;
+  deleteTrigger?: Mutate;
+  deleteIsLoading?: boolean;
 };
 
 function SectionMoreOptions({
@@ -35,6 +45,12 @@ function SectionMoreOptions({
   inviteTrigger,
   inviteIsLoading,
   acceptedFeature,
+  title,
+  moreData,
+  deleteIsLoading,
+  deleteTrigger,
+  updateIsLoading,
+  updateTrigger,
 }: Props) {
   const [isModalOpen, setIsModalOpen] = useState(initialModalState);
 
@@ -58,6 +74,13 @@ function SectionMoreOptions({
     inviteTrigger({ data, type: 'post' }).finally(handleClose);
   };
 
+  const labelHandler = (task: string, current?: string, parent?: string) => {
+    return (
+      task +
+      `${current && parent ? ` a new ${current} to ${parent}` : ` ${current}`}`
+    );
+  };
+
   const items: MenuProps['items'] = [
     {
       key: 'add',
@@ -66,7 +89,7 @@ function SectionMoreOptions({
           <Building size="18" />
         </span>
       ),
-      label: 'Add',
+      label: labelHandler('Add', title?.current, title?.parent),
       onClick: () => showModal('add'),
     },
     {
@@ -76,7 +99,7 @@ function SectionMoreOptions({
           <UserAdd size="18" />
         </span>
       ),
-      label: 'Add person(s)',
+      label: labelHandler('Add person(s) to', title?.parent),
       onClick: () => showModal('invite'),
     },
     {
@@ -86,8 +109,9 @@ function SectionMoreOptions({
           <InfoCircle size="18" />
         </span>
       ),
-      label: 'View details',
+      label: labelHandler('View details of', title?.parent),
       className: 'border-t !rounded-t-none',
+      onClick: () => showModal('details'),
     },
   ].filter((itm: any) => acceptedFeature.includes(itm.key));
 
@@ -107,6 +131,7 @@ function SectionMoreOptions({
           handleSubmit={addSubmitHandler}
           isModalOpen={isModalOpen.add}
           isLoading={addIsLoading}
+          isParastatal={title?.current === 'parastatal'}
         />
       ) : null}
       {acceptedFeature.includes('invite') ? (
@@ -115,6 +140,18 @@ function SectionMoreOptions({
           handleSubmit={inviteSubmitHandler}
           isModalOpen={isModalOpen.invite}
           isLoading={inviteIsLoading}
+        />
+      ) : null}
+      {acceptedFeature.includes('details') ? (
+        <MoreInformationModal
+          handleCancel={handleClose}
+          isModalOpen={isModalOpen.details}
+          data={moreData}
+          type={title?.parent || 'parastatal'}
+          handleDelete={deleteTrigger}
+          isDeleting={deleteIsLoading}
+          handleUpdate={updateTrigger}
+          isUpdating={updateIsLoading}
         />
       ) : null}
     </>

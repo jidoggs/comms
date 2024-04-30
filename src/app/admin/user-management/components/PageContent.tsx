@@ -1,9 +1,8 @@
 'use client';
 import React, { useContext, useEffect, useState } from 'react';
-
 import CustomTab from '@/common/components/CustomTab';
 import Title from '@/common/components/Title';
-import RolesPermissions from './RolesPermissions';
+import RolesPermissions from './permissions/RolesPermissions';
 import Users from './Users';
 import CustomButton from '@/common/components/CustomButton';
 import { Add, File, Search } from '@/common/components/icons';
@@ -11,13 +10,10 @@ import CustomInput from '@/common/components/CustomInput';
 import { Skeleton } from 'antd';
 import { UserMgmtDataContext } from '../service-context/UserMgmtContextWrapper';
 import useRoles from '../../hooks/useRoles';
+import { AllPermissionType, AllRoleType, RoleType } from '../../types';
+import { uniqueId } from '../types';
 
 const CorrespondencePage = () => {
-  const [allRoles, setAllRoles] = useState<any>();
-  const [allOriginalRoles, setAllOriginalRoles] = useState<any>();
-  const [allPermissions, setAllPermissions] = useState<any>();
-  const [editedRole, setEditedRole] = useState<any>();
-  const [editRole, setEditRole] = useState<boolean>(false);
   const contextInfo = useContext(UserMgmtDataContext);
 
   const roleProps = useRoles({
@@ -27,26 +23,16 @@ const CorrespondencePage = () => {
 
   const { getAllRolesSwr, getAllPermissionsSwr } = roleProps;
 
-  const allFetchedRoles: any =
-    getAllRolesSwr && getAllRolesSwr.data && getAllRolesSwr.data.data;
+  const allFetchedRoles: AllRoleType = getAllRolesSwr?.data?.data || [];
 
-  const allFetchedPermissions: any =
-    getAllPermissionsSwr &&
-    getAllPermissionsSwr.data &&
-    getAllPermissionsSwr.data.data;
+  const allFetchedPermissions: AllPermissionType =
+    getAllPermissionsSwr?.data?.data || [];
+
+  const [allRoles, setAllRoles] = useState<AllRoleType>([]);
 
   useEffect(() => {
-    if (allFetchedRoles) {
+    if (allFetchedRoles.length > 0) {
       setAllRoles(allFetchedRoles);
-    }
-    if (allFetchedPermissions) {
-      setAllPermissions(allFetchedPermissions);
-    }
-  }, [allFetchedRoles, allFetchedPermissions]);
-
-  useEffect(() => {
-    if (allFetchedRoles) {
-      setAllOriginalRoles(allFetchedRoles);
     }
   }, [allFetchedRoles]);
 
@@ -57,22 +43,20 @@ const CorrespondencePage = () => {
 
   const sampleRole = {
     active: true,
-    _id: 1,
+    _id: uniqueId,
     name: '',
     permissions: [],
+    created_at: '',
+    deleted_at: '',
+    updated_at: '',
   };
 
   const handleAddRole = () => {
-    const element = document.getElementById('rolesPermissions');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-
     const isRoleAlreadyAdded = allRoles.some(
-      (role: any) => role._id === sampleRole._id
+      (role: RoleType) => role._id === uniqueId
     );
     if (!isRoleAlreadyAdded) {
-      setAllRoles((prevRoles: any) => [sampleRole, ...prevRoles]);
+      setAllRoles((prevRoles: AllRoleType) => [sampleRole, ...prevRoles]);
     }
   };
 
@@ -113,17 +97,11 @@ const CorrespondencePage = () => {
           ) : null}
         </div>
         {contextInfo?.tabItem === 'roles-permissions' ? (
-          allRoles && allRoles.length ? (
+          allRoles ? (
             <RolesPermissions
               allRoles={allRoles}
               setAllRoles={setAllRoles}
-              allPermissions={allPermissions}
-              // options={options}
-              allOriginalRoles={allOriginalRoles}
-              editRole={editRole}
-              setEditRole={setEditRole}
-              editedRole={editedRole}
-              setEditedRole={setEditedRole}
+              allPermissions={allFetchedPermissions}
             />
           ) : (
             <Skeleton active />
