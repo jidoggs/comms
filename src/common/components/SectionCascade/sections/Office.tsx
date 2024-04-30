@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import SectionContainer from '../blocks/SectionContainer';
 import SectionMoreOptions from '../blocks/SectionMoreOptions';
-import { useSession } from '@/common/hooks';
+import { useCache, useSession } from '@/common/hooks';
 import { useOffice, useParastatals } from '@/app/admin/hooks';
 import { queryHandler } from '@/service/request';
 import { CascadeContext } from '..';
@@ -11,29 +11,47 @@ type OptionsType = {
 };
 
 const Options = ({ query }: OptionsType) => {
-  const id = useContext(CascadeContext)?.dataList?.parastatal?.id;
-  const { isBasicUser } = useSession();
+  const parastatalInfo = useContext(CascadeContext)?.dataList?.parastatal;
+  const parastatalId = parastatalInfo?.id;
+  const cachedQuery = parastatalInfo?.key as string;
+  const { cachedData } = useCache(cachedQuery);
+  const { isBasicUser, isPrimaryAdmin } = useSession();
   const { createSwr } = useOffice({
     create: !isBasicUser,
     query,
   });
-  const { inviteUserSwr: inviteParastalUserSwr, messageContext } =
-    useParastatals({
-      invite: !isBasicUser,
-    });
-  const otherData = { parastatal: id };
+  const parastatalService = useParastatals({
+    invite: !isBasicUser,
+    delete: isPrimaryAdmin,
+    update: isPrimaryAdmin,
+    _id: parastatalId,
+  });
+  const otherData = { parastatal: parastatalId };
+  const parastatalInformation = useMemo(
+    () => cachedData?.find((item: any) => item?._id === parastatalId),
+    [parastatalId] //eslint-disable-line
+  );
   return (
     <>
-      {messageContext}
+      {parastatalService.messageContext}
       {isBasicUser ? null : (
         <SectionMoreOptions
           addTrigger={createSwr.trigger}
           addIsLoading={createSwr.isMutating}
           otherAddData={otherData}
           otherInviteData={otherData}
-          inviteIsLoading={inviteParastalUserSwr.isMutating}
-          inviteTrigger={inviteParastalUserSwr.trigger}
-          acceptedFeature={['add', 'invite']}
+          inviteIsLoading={parastatalService.inviteUserSwr.isMutating}
+          inviteTrigger={parastatalService.inviteUserSwr.trigger}
+          deleteIsLoading={parastatalService.deleteItemSwr.isMutating}
+          deleteTrigger={parastatalService.deleteItemSwr.trigger}
+          updateIsLoading={parastatalService.updateItemSwr.isMutating}
+          updateTrigger={parastatalService.updateItemSwr.trigger}
+          acceptedFeature={['add', 'invite', 'details']}
+          title={{
+            current: 'office',
+            parent: 'parastatal',
+          }}
+          moreData={parastatalInformation}
         />
       )}
     </>
@@ -63,7 +81,7 @@ function Office() {
       items={data}
       title={`${contextInfo?.dataList?.parastatal?.title} (${data.length} offices)`}
       step="office"
-      clickHandler={contextInfo?.clickHandler}
+      clickHandler={contextInfo?.clickCascadeItemHandler}
       activeIdentifier={contextInfo?.dataList?.office?.id}
       moreOptions={<Options query={query} />}
       hasChild

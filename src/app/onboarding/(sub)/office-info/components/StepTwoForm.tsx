@@ -11,7 +11,7 @@ import { useSectionCascade } from '@/common/hooks';
 
 const StepTwoForm = () => {
   const router = useRouter();
-  const { clickHandler, dataList } = useSectionCascade();
+  const { clickCascadeItemHandler, dataList } = useSectionCascade();
 
   const onFinish = () => {
     const currentOnboardingData =
@@ -38,7 +38,7 @@ const StepTwoForm = () => {
       <div className="is-onboard group w-full max-w-screen-lg overflow-x-scroll py-2">
         <SectionCascade
           className="overflow-hidden rounded-lg"
-          clickHandler={clickHandler}
+          clickCascadeItemHandler={clickCascadeItemHandler}
           dataList={dataList}
         />
       </div>

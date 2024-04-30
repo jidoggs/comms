@@ -7,7 +7,7 @@ import CustomInput from '@/common/components/CustomInput';
 import { Search } from '@/common/components/icons';
 
 const PageContent = () => {
-  const { clickHandler, dataList } = useSectionCascade();
+  const hookValues = useSectionCascade();
   return (
     <>
       <header className="flex items-center justify-between px-5 py-3">
@@ -22,12 +22,7 @@ const PageContent = () => {
       </header>
       {/* is-admin and group are style identifies */}
       <section className="is-admin group h-[calc(100vh-120px)] bg-custom-white_100 px-2.5">
-        <SectionCascade
-          className="h-full"
-          showMembers
-          clickHandler={clickHandler}
-          dataList={dataList}
-        />
+        <SectionCascade className="h-full" showMembers {...hookValues} />
       </section>
     </>
   );

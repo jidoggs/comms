@@ -1,6 +1,6 @@
 import { useSWRConfig } from 'swr';
 
-function useCache() {
+function useCache(query: string) {
   const cache = useSWRConfig().cache;
   const cachedData = cache as any;
 
@@ -19,7 +19,7 @@ function useCache() {
   const data = extractData();
 
   return {
-    cachedData: data,
+    cachedData: data[query],
   };
 }
 export default useCache;

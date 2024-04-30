@@ -5,10 +5,11 @@ import { Divider } from 'antd';
 
 type ApproveModalContentProps = {
   text?: string;
-  isLoading: boolean;
+  isLoading?: boolean;
   isModalOpen: boolean;
   handleCancel: () => void;
   handleSubmit: () => void;
+  actionText?: string;
 };
 
 const ApproveModalContent = ({
@@ -16,10 +17,15 @@ const ApproveModalContent = ({
   isLoading,
   isModalOpen,
   handleCancel,
+  actionText,
   handleSubmit,
 }: ApproveModalContentProps) => {
+  const cancelHandler = () => {
+    if (isLoading) return;
+    handleCancel();
+  };
   return (
-    <CustomModal width={320} open={isModalOpen} onCancel={handleCancel}>
+    <CustomModal width={320} open={isModalOpen} onCancel={cancelHandler}>
       <div className="flex flex-col items-center gap-2 text-base text-custom-gray_200">
         <InfoCircle size={90} />
 
@@ -29,18 +35,23 @@ const ApproveModalContent = ({
         <Divider className="!border-custom-gray_500" />
         <div className="-mt-3 flex w-full justify-between">
           <div className="!w-1/2">
-            <CustomButton type="text" className="w-full" onClick={handleCancel}>
+            <CustomButton
+              onClick={cancelHandler}
+              type="text"
+              className="w-full"
+            >
               Cancel
             </CustomButton>
           </div>
           <div className="!w-1/2">
             <CustomButton
-              type="text"
-              className="w-full"
-              loading={isLoading}
               onClick={handleSubmit}
+              type="text"
+              className="w-full capitalize"
+              disabled={isLoading}
+              loading={isLoading}
             >
-              Yes, Approve
+              {`Yes, ${actionText || 'Approve'}`}
             </CustomButton>
           </div>
         </div>

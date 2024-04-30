@@ -15,6 +15,7 @@ const Options = () => {
       addTrigger={createParastatals.trigger}
       addIsLoading={createParastatals.isMutating}
       acceptedFeature={['add']}
+      title={{ current: 'parastatal' }}
     />
   );
 };
@@ -37,7 +38,7 @@ function Parastatal() {
       items={data}
       title="Parastatals"
       step="parastatals"
-      clickHandler={contextInfo?.clickHandler}
+      clickHandler={contextInfo?.clickCascadeItemHandler}
       activeIdentifier={contextInfo?.dataList?.parastatal?.id}
       moreOptions={isPrimaryAdmin ? <Options /> : null}
       hasChild

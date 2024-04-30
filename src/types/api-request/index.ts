@@ -6,7 +6,7 @@ import {
 import { TriggerWithArgs } from 'swr/mutation';
 
 export type apiRequestorArgs<T = object> = {
-  data: T;
+  data?: T;
   type?: 'post' | 'put' | 'patch' | 'delete';
 };
 
