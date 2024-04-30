@@ -6,9 +6,19 @@ import Department from './sections/Department';
 import { mergeClassName } from '@/common/utils';
 import { iHandleClick } from '@/types';
 
+type LevelType = 'parastatal' | 'office' | 'department';
+
+type UpdateItemType = {
+  level: LevelType;
+  id: string;
+  title: string;
+};
+
 type InfoType = {
-  clickHandler: iHandleClick;
+  clickCascadeItemHandler: iHandleClick;
   dataList: Record<string, Record<string, string>>;
+  updateCascadeItemHandler?: (values: UpdateItemType) => void;
+  deleteCascadeItemHandler?: (level: LevelType) => void;
 };
 
 interface Props extends InfoType {

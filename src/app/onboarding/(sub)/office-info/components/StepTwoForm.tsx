@@ -14,10 +14,7 @@ import { useSectionCascade } from '@/common/hooks';
 
 const StepTwoForm = () => {
   const router = useRouter();
-  const { clickHandler, dataList } = useSectionCascade();
-  // const { officeInfoTrigger, officeInfoIsMutating } = useOnboarding({
-  //   office_info: true,
-  // });
+  const { clickCascadeItemHandler, dataList } = useSectionCascade();
 
   const onFinish = () => {
     // router.push('/onboarding/set-password');
@@ -37,8 +34,8 @@ const StepTwoForm = () => {
       {/* is-onboard and group are style identifies */}
       <div className="is-onboard group w-full max-w-screen-lg overflow-x-scroll py-2">
         <SectionCascade
-          className="overflow-x-auto rounded-lg"
-          clickHandler={clickHandler}
+          className="overflow-hidden rounded-lg"
+          clickCascadeItemHandler={clickCascadeItemHandler}
           dataList={dataList}
         />
       </div>

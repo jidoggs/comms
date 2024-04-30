@@ -8,6 +8,7 @@ type Props = {
   isLoading?: boolean;
   handleCancel: VoidFunction; //eslint-disable-line
   handleSubmit: (val: any) => void; //eslint-disable-line
+  isParastatal: boolean;
 };
 
 function AddModal({
@@ -15,6 +16,7 @@ function AddModal({
   handleSubmit,
   isModalOpen,
   isLoading,
+  isParastatal,
 }: Props) {
   return (
     <CustomModal
@@ -24,7 +26,11 @@ function AddModal({
       onCancel={handleCancel}
       destroyOnClose
     >
-      <AddForm onFinish={handleSubmit} isLoading={isLoading} />
+      <AddForm
+        onFinish={handleSubmit}
+        isLoading={isLoading}
+        isParastatal={isParastatal}
+      />
     </CustomModal>
   );
 }
