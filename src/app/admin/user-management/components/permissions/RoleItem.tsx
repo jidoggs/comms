@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Permissions from './Permissions';
 import CustomInput from '@/common/components/CustomInput';
 import SectionMoreOptions from '../actions/SectionMoreOptions';
@@ -22,8 +22,6 @@ interface RoleItemProps {
   allRoles: AllRoleType;
   setAllRoles: React.Dispatch<React.SetStateAction<AllRoleType>>;
   allPermissions: AllPermissionType;
-  ref: React.RefObject<HTMLDivElement> | null;
-  firstRoleRef: React.RefObject<HTMLDivElement>;
 }
 
 const RoleItem = ({
@@ -31,15 +29,26 @@ const RoleItem = ({
   allRoles,
   setAllRoles,
   allPermissions,
-  firstRoleRef,
 }: RoleItemProps) => {
   const [editedRole, setEditedRole] = useState<RoleType>(role);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const firstRoleRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setEditedRole(role);
   }, [allRoles]);
+
+  useEffect(() => {
+    if (firstRoleRef.current) {
+      firstRoleRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    } else {
+      return;
+    }
+  }, [firstRoleRef.current]);
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditedRole({ ...editedRole, name: e.target.value });
@@ -153,7 +162,7 @@ const RoleItem = ({
   return (
     <div
       className="mt-2 grid grid-cols-10 items-start bg-custom-white_100 p-4"
-      ref={firstRoleRef}
+      ref={role._id === uniqueId ? firstRoleRef : null}
     >
       {isEditMode || editedRole._id === uniqueId ? (
         <div className="col-span-2 pr-4">
@@ -170,9 +179,7 @@ const RoleItem = ({
 
       <Permissions
         editedRole={editedRole}
-        // allRoles={allRoles}
         allPermissions={allPermissions}
-        // currentPermissions={editedRole.permissions}
         isEditMode={isEditMode}
         handleAddPermission={handleAddPermission}
         handleCancelPermission={handleCancelPermission}
