@@ -5,16 +5,16 @@ import { Profile } from '../icons';
 import { User } from '@/types';
 
 type Props = {
-  data: User;
+  data: User | string;
   avatarSize?: number;
 };
 
 function CustomUser({ data, avatarSize = 30 }: Props) {
   return (
-    <div className="flex cursor-pointer items-center gap-x-2.5 px-1.5 py-0.5 hover:bg-custom-gray_500">
+    <div className="flex cursor-pointer items-center gap-x-2.5 px-1.5 py-0.5">
       <CustomAvatar
         size={avatarSize}
-        src={data?.img}
+        src={typeof data !== 'string' && data?.img}
         icon={
           <span className="flex h-full flex-1 items-center justify-center">
             <Profile size="22" className="stroke-white" />
@@ -23,11 +23,15 @@ function CustomUser({ data, avatarSize = 30 }: Props) {
       />
       <div className="flex flex-col">
         <Title semibold>
-          {data?.firstname} {data?.lastname}
+          {typeof data === 'string'
+            ? data
+            : `${data?.firstname} ${data?.surname}`}
         </Title>
-        <Title small className="text-custom-gray_600">
-          {data?.title}
-        </Title>
+        {typeof data !== 'string' ? (
+          <Title small className="text-custom-gray_600">
+            {data?.title}
+          </Title>
+        ) : null}
       </div>
     </div>
   );

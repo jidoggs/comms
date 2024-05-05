@@ -4,11 +4,12 @@ import SectionMoreOptions from '../blocks/SectionMoreOptions';
 import { useSession } from '@/common/hooks';
 import { useParastatals } from '@/app/admin/hooks';
 import { CascadeContext } from '..';
+import useOnboarding from '@/app/onboarding/hooks/useOnboarding';
 
 const Options = () => {
   const { isPrimaryAdmin } = useSession();
   const { createSwr: createParastatals } = useParastatals({
-    create: isPrimaryAdmin,
+    can_create: isPrimaryAdmin,
   });
   return (
     <SectionMoreOptions
@@ -23,10 +24,11 @@ const Options = () => {
 function Parastatal() {
   const contextInfo = useContext(CascadeContext);
   const { isPrimaryAdmin, data: user } = useSession();
+  const { onBoardingParastatal } = useOnboarding();
   const { getListSwr, getItemSwr } = useParastatals({
-    get_all: isPrimaryAdmin,
-    _id: user?.parastatal?.[0]?._id, // this is for users that do not have permisson to get list
-    get_id: !isPrimaryAdmin,
+    can_get_all: isPrimaryAdmin,
+    can_get_by_id: !isPrimaryAdmin,
+    _id: user?.parastatal?._id || onBoardingParastatal, // this is for users that do not have permisson to get list
   });
 
   const list = getListSwr.data?.data || [];

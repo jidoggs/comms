@@ -13,6 +13,7 @@ function SectionItem({ children, hasChild, className, ...props }: Props) {
         'flex min-w-[284px] items-center gap-x-2.5 rounded-md px-4 py-1 text-left text-custom-main',
         className
       )}
+      type="button"
     >
       <span className="max-w-[296px] flex-1">{children}</span>
       {hasChild}

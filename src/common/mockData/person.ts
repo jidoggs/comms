@@ -15,7 +15,7 @@ const singleData = {
 export const dummyPersonsPending = new Array(20).fill('o').map((_, idx) => ({
   ...singleData,
   firstname: '',
-  lastname: '',
+  surname: '',
   title: '',
   office: '',
   full_name: '',

@@ -71,7 +71,7 @@ instance.interceptors.response.use(
     }
     if (error.response?.status !== undefined && error.response.status >= 500) {
       return Promise.reject({
-        message: 'Server Error',
+        message: 'Server Error, Contact Admin',
       });
     }
     if (

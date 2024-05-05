@@ -1,9 +1,9 @@
 'use client';
-import CustomButton from '@/common/components/CustomButton';
-import Title from '@/common/components/Title';
+import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import Title from '@/common/components/Title';
+import CustomButton from '@/common/components/CustomButton';
 
 const LoginPageContent: React.FunctionComponent = () => {
   const router = useRouter();
@@ -18,9 +18,9 @@ const LoginPageContent: React.FunctionComponent = () => {
         size="small"
         className="container rounded-md border !border-custom-main"
         type="text"
-        onClick={() => router.push('/app/home')}
+        onClick={() => router.replace('/auth/login')}
       >
-        Go to Dashboard
+        Login
       </CustomButton>
     </div>
   );

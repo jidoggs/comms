@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import dayjs from 'dayjs';
-
 import CustomButton from '@/common/components/CustomButton';
 import Title from '@/common/components/Title';
-import { Close, Delete, Edit2 } from '@/common/components/icons';
-import Tick from '@/common/components/icons/Tick';
 import FieldRow from '../../../components/FieldRow';
-import { User } from '../../types';
 import DeleteModal from '../modals/DeleteModal';
+import { Close, Delete, Edit2, Tick } from '@/common/components/icons';
+import { User } from '../../types';
 
 type UserDetailsContentProps = {
   userData: User | null;
@@ -30,7 +28,7 @@ const UserDetailsContent = ({ userData }: UserDetailsContentProps) => {
   const handleSubmit = () => null;
 
   return (
-    <div className="flex w-full justify-center pb-8">
+    <div className="flex h-[calc(100vh-40px)] w-full justify-center pb-8">
       <div className="w-2/4">
         <Title className="font-semibold text-custom-gray_600">Personal</Title>
         <div className="flex gap-2 py-2">
@@ -83,7 +81,7 @@ const UserDetailsContent = ({ userData }: UserDetailsContentProps) => {
         <hr />
         <FieldRow
           title="Name"
-          value={`${userData?.firstname} ${userData?.othername}` as string}
+          value={`${userData?.firstname || ''} ${userData?.surname || ''}`}
           isEdit={isEdit}
         />
         <FieldRow
@@ -94,7 +92,7 @@ const UserDetailsContent = ({ userData }: UserDetailsContentProps) => {
         <hr />
         <FieldRow
           title="Phone Number"
-          value={userData?.phone as string || "N/A"}
+          value={(userData?.phone as string) || 'N/A'}
           isEdit={isEdit}
         />
         <FieldRow
@@ -113,12 +111,12 @@ const UserDetailsContent = ({ userData }: UserDetailsContentProps) => {
           <FieldRow title="Title" value={userData?.title} isEdit={isEdit} />
           <FieldRow
             title="Department"
-            value={userData?.department?.[0]?.name || "N/A"}
+            value={userData?.department?.[0]?.name || 'N/A'}
           />
           <hr />
           <FieldRow
             title="Parastatal"
-            value={userData?.parastatal?.[0]?.name as string || "N/A"}
+            value={(userData?.parastatal?.name as string) || 'N/A'}
           />
         </div>
       </div>

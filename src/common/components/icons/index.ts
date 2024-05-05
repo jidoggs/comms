@@ -59,6 +59,7 @@ export { default as SpinLoader } from './SpinLoader';
 export { default as Stamp } from './Stamp';
 export { default as StickyNote } from './StickyNote';
 export { default as Thrash } from './Thrash';
+export { default as Tick } from './Tick';
 export { default as TickSquare } from './TickSquare';
 export { default as TickCircle } from './TickCircle';
 export { default as TimelineDot } from './TimelineDot';

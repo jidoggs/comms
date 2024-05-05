@@ -5,6 +5,7 @@ import { useCache, useSession } from '@/common/hooks';
 import { useOffice, useParastatals } from '@/app/admin/hooks';
 import { queryHandler } from '@/service/request';
 import { CascadeContext } from '..';
+import useOnboarding from '@/app/onboarding/hooks/useOnboarding';
 
 type OptionsType = {
   query: string;
@@ -17,13 +18,13 @@ const Options = ({ query }: OptionsType) => {
   const { cachedData } = useCache(cachedQuery);
   const { isBasicUser, isPrimaryAdmin } = useSession();
   const { createSwr } = useOffice({
-    create: !isBasicUser,
+    can_create: !isBasicUser,
     query,
   });
   const parastatalService = useParastatals({
-    invite: !isBasicUser,
-    delete: isPrimaryAdmin,
-    update: isPrimaryAdmin,
+    can_invite: !isBasicUser,
+    can_delete_by_id: isPrimaryAdmin,
+    can_update_by_id: isPrimaryAdmin,
     _id: parastatalId,
   });
   const otherData = { parastatal: parastatalId };
@@ -31,9 +32,9 @@ const Options = ({ query }: OptionsType) => {
     () => cachedData?.find((item: any) => item?._id === parastatalId),
     [parastatalId] //eslint-disable-line
   );
+
   return (
     <>
-      {parastatalService.messageContext}
       {isBasicUser ? null : (
         <SectionMoreOptions
           addTrigger={createSwr.trigger}
@@ -47,6 +48,7 @@ const Options = ({ query }: OptionsType) => {
           updateIsLoading={parastatalService.updateItemSwr.isMutating}
           updateTrigger={parastatalService.updateItemSwr.trigger}
           acceptedFeature={['add', 'invite', 'details']}
+          inviteLink={query}
           title={{
             current: 'office',
             parent: 'parastatal',
@@ -60,15 +62,21 @@ const Options = ({ query }: OptionsType) => {
 
 function Office() {
   const contextInfo = useContext(CascadeContext);
-  const { isPrimaryAdmin, data: user } = useSession();
+  const {
+    isPrimaryAdmin,
+    isSecondaryAdmin,
+    data: user,
+    isBasicUser,
+  } = useSession();
+  const { onBoardingOffice } = useOnboarding();
   const query = queryHandler({
     parastatal: contextInfo?.dataList?.parastatal?.id,
   });
 
   const { getListSwr, getItemSwr } = useOffice({
-    get_all: isPrimaryAdmin,
-    _id: user?.office?.[0]?._id, // this is for users that do not have permisson to get list
-    get_id: !isPrimaryAdmin,
+    can_get_all: isPrimaryAdmin || isSecondaryAdmin,
+    can_get_by_id: !isPrimaryAdmin,
+    _id: user?.office?.[0]?._id || onBoardingOffice, // this is for users that do not have permisson to get list
     query,
   });
 
@@ -77,16 +85,22 @@ function Office() {
   const data = isPrimaryAdmin ? list : singleton;
 
   return (
-    <SectionContainer
-      items={data}
-      title={`${contextInfo?.dataList?.parastatal?.title} (${data.length} offices)`}
-      step="office"
-      clickHandler={contextInfo?.clickCascadeItemHandler}
-      activeIdentifier={contextInfo?.dataList?.office?.id}
-      moreOptions={<Options query={query} />}
-      hasChild
-      loader={getListSwr.isLoading}
-    />
+    <>
+      {isPrimaryAdmin ||
+      isSecondaryAdmin ||
+      (isBasicUser && onBoardingOffice) ? (
+        <SectionContainer
+          items={data}
+          title={`${contextInfo?.dataList?.parastatal?.title} (${data.length} offices)`}
+          step="office"
+          clickHandler={contextInfo?.clickCascadeItemHandler}
+          activeIdentifier={contextInfo?.dataList?.office?.id}
+          moreOptions={<Options query={query} />}
+          hasChild
+          loader={getListSwr.isLoading}
+        />
+      ) : null}
+    </>
   );
 }
 

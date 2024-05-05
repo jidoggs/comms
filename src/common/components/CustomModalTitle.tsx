@@ -12,7 +12,7 @@ type Props = {
 function CustomModalTitle({ title, hasLink, linkRef }: Props) {
   const clickHandler = () => {
     if (!linkRef) return;
-    copyTextToClipboard(linkRef);
+    copyTextToClipboard('/onboarding/personal-info' + linkRef);
   };
 
   return (

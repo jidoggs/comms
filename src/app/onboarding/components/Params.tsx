@@ -1,13 +1,11 @@
 'use client';
+import React from 'react';
+import { usePathname } from 'next/navigation';
 import Title from '@/common/components/Title';
 import { mergeClassName } from '@/common/utils';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import React from 'react';
 
 const Params = () => {
   const pathname = usePathname();
-  const currentRoute = pathname?.split('/').pop(); // Extract the last segment
 
   const routes = [
     {
@@ -33,19 +31,16 @@ const Params = () => {
         <li
           key={id}
           className={mergeClassName(
-            currentRoute === route.param
+            pathname.includes(route.param)
               ? 'text-custom-main '
               : 'text-custom-gray_600 hover:text-custom-main'
           )}
         >
-          <Link
-            href={route.link}
-            className="-ml-2 text-inherit hover:text-inherit"
-          >
+          <button className="-ml-2 text-inherit hover:text-inherit">
             <Title tag="span" className="text-inherit">
               {route.title}
             </Title>
-          </Link>
+          </button>
         </li>
       ))}
     </ul>

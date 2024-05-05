@@ -1,32 +1,47 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useLayoutEffect, useRef } from 'react';
+import { CustomTableProps } from '../components/CustomTable';
 
 type Props = {
   defaultKey: string;
+  resetFields?: () => void;
 };
-function useTabChange({ defaultKey }: Props) {
+
+function useTabChange({ defaultKey, resetFields }: Props) {
   const router = useRouter();
-  const tabItem = useSearchParams().get('tab') as string;
+  const currentTab = useSearchParams().get('tab') as string;
   const pageRef = useRef<HTMLElement | null>(null);
+
+  const components: CustomTableProps<any>['components'] = {
+    body: {
+      wrapper: (props: any) => <tbody {...props} ref={pageRef} />,
+    },
+  };
 
   const base = defaultKey.split('=')?.[0].split('/');
   const query = base[base.length - 1];
 
   useLayoutEffect(() => {
-    if (!tabItem) {
+    if (!currentTab) {
       router.replace(defaultKey);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tabItem]);
+  }, [currentTab]);
 
   const handleTabChange = (state: string) => {
     router.push(`${query}=${state}`);
-    pageRef.current?.scrollTo({ top: 0 });
+    if (resetFields) {
+      resetFields();
+    }
+    pageRef.current?.firstElementChild?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'end',
+    });
   };
   return {
     handleTabChange,
-    tabItem,
-    pageRef,
+    currentTab,
+    components,
   };
 }
 

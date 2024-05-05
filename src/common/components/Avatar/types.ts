@@ -5,7 +5,7 @@ export interface CustomAvatarProps extends AvatarProps {
   backgroundColor?: string;
 }
 export interface GroupAvatarProps {
-  lastName?: string;
+  surname?: string;
   firstName?: string;
   src?: string;
 }

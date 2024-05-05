@@ -1,13 +1,13 @@
 'use client';
-import Title from '@/common/components/Title';
 import React from 'react';
+import Title from '@/common/components/Title';
 import RoleItem from './RoleItem';
-import { AllPermissionType, AllRoleType, RoleType } from '@/app/admin/types';
+import { Permission, Role } from '../../types';
 
 interface RolesPermissionsProps {
-  allRoles: AllRoleType;
-  setAllRoles: React.Dispatch<React.SetStateAction<AllRoleType>>;
-  allPermissions: AllPermissionType;
+  allRoles: Role[];
+  setAllRoles: React.Dispatch<React.SetStateAction<Role[]>>;
+  allPermissions: Permission[];
 }
 
 const RolesPermissions = ({
@@ -25,8 +25,11 @@ const RolesPermissions = ({
           Permissions
         </Title>
       </div>
-      <div className="h-full max-h-[calc(100vh_-_13.225rem)] overflow-y-scroll">
-        {allRoles.map((role: RoleType) => (
+      <div
+        className="h-full max-h-[calc(100vh_-_13.225rem)] overflow-y-scroll"
+        // ref={rolesWrapperRef}
+      >
+        {allRoles.map((role) => (
           <RoleItem
             role={role}
             key={role._id}

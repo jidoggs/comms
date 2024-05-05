@@ -38,6 +38,9 @@ export const emailValidator = (_: any, value: string) => {
   return Promise.resolve();
 };
 export const phoneNumberValidator = (_: any, value: string) => {
+  if (!value) {
+    return Promise.reject('Please input your phone number');
+  }
   const validated = value.match(validationRules.number);
   const hasPrefix = value.startsWith('234');
   const invalidLength =
@@ -45,16 +48,16 @@ export const phoneNumberValidator = (_: any, value: string) => {
     (value.length === 13 && hasPrefix === false) ||
     value.length < 3;
   if (!validated || invalidLength) {
-    return Promise.reject('Phone Number is not valid');
+    return Promise.reject('Phone number is not valid');
   }
   if (hasPrefix && value.length < 13) {
-    return Promise.reject('Phone Number should not be less than 14 character');
+    return Promise.reject('Phone number should not be less than 14 character');
   }
   if (value.length < 11) {
-    return Promise.reject('Phone Number should not be less than 11 character');
+    return Promise.reject('Phone number should not be less than 11 character');
   }
   if (value.length > 13 || (hasPrefix && value.length < 13)) {
-    return Promise.reject('Phone Number should not be more than 14 character');
+    return Promise.reject('Phone number should not be more than 14 character');
   }
   return Promise.resolve();
 };

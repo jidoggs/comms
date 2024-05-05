@@ -5,18 +5,16 @@ import Members from './sections/Members';
 import Department from './sections/Department';
 import { mergeClassName } from '@/common/utils';
 import { iHandleClick } from '@/types';
+import {
+  UpdateItemType,
+  initialDataList,
+} from '@/common/hooks/useSectionCascade';
 
-type LevelType = 'parastatal' | 'office' | 'department';
-
-type UpdateItemType = {
-  level: LevelType;
-  id: string;
-  title: string;
-};
+type LevelType = keyof typeof initialDataList;
 
 type InfoType = {
   clickCascadeItemHandler: iHandleClick;
-  dataList: Record<string, Record<string, string>>;
+  dataList: typeof initialDataList;
   updateCascadeItemHandler?: (values: UpdateItemType) => void;
   deleteCascadeItemHandler?: (level: LevelType) => void;
 };

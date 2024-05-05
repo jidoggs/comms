@@ -9,10 +9,14 @@ interface Props extends CustomModalProps {
 
 function UserDetails({ staffData, ...props }: Props) {
   return (
-    <CustomModal {...props} width="100%" className="rounded-none">
-      <div className="h-screen w-screen rounded-none">
-        <UserDetailsContent userData={staffData} />
-      </div>
+    <CustomModal
+      {...props}
+      width="100%"
+      className="rounded-none"
+      destroyOnClose
+      style={{ top: 0, bottom: 0, padding: 0 }}
+    >
+      <UserDetailsContent userData={staffData} />
     </CustomModal>
   );
 }

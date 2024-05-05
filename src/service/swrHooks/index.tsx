@@ -1,4 +1,4 @@
-import useSWR, { SWRConfiguration, useSWRConfig } from 'swr';
+import useSWR, { useSWRConfig } from 'swr';
 import useSWRMutation from 'swr/mutation';
 import { message } from 'antd';
 import {
@@ -80,7 +80,7 @@ export const useNonAuthRequest = <T,>(
 
 export const useNonAuthGetRequest = <T,>(
   url: string,
-  options?: SWRConfiguration
+  options?: SWRFetcher<T>
 ) => {
   const { data, error, mutate, isValidating, isLoading } = useSWR<
     APIResponseSuccessModel<T>,
@@ -100,6 +100,31 @@ export const useNonAuthGetRequest = <T,>(
 };
 
 export const useServiceConfig = () => {
-  const config = useSWRConfig();
-  return config;
+  const { mutate } = useSWRConfig();
+
+  const actionSuccessHandler = (success: string) => {
+    message.success(success);
+  };
+
+  const revalidateRequest = (key: string, success_message?: string) => {
+    if (success_message) {
+      actionSuccessHandler(success_message);
+    }
+    mutate(key);
+  };
+
+  return { revalidateRequest, actionSuccessHandler };
+};
+
+type PickTypes =
+  | 'revalidateOnFocus'
+  | 'revalidateOnMount'
+  | 'revalidateIfStale'
+  | 'errorRetryCount';
+
+export const fetchOptions: Pick<SWRFetcher<any>, PickTypes> = {
+  revalidateOnFocus: false,
+  revalidateOnMount: true,
+  revalidateIfStale: false,
+  errorRetryCount: process.env.NODE_ENV === 'development' ? 1 : 3,
 };

@@ -1,29 +1,21 @@
 'use client';
 import React from 'react';
-import { Form } from 'antd';
+import { useSearchParams } from 'next/navigation';
+import Form, { FormProps } from 'antd/es/form/Form';
+import FormItem from 'antd/es/form/FormItem';
 import CustomInput from '@/common/components/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
-import { useRouter } from 'next/navigation';
-import { formatPhoneNumber, phoneNumberValidator } from '@/common/utils';
+import { ArrowRight } from '@/common/components/icons';
+import { phoneNumberValidator } from '@/common/utils';
 
-const StepOneForm = () => {
-  const [form] = Form.useForm();
-  const router = useRouter();
+type Props = {
+  onFinish: FormProps['onFinish'];
+  isMutating: boolean;
+};
 
-  const onFinish = (values: any) => {
-    const allValues = {
-      firstname: values.firstName,
-      lastname: values.surname,
-      othername: values.middleName && values.middleName,
-      email: values.email,
-      phoneNumber: formatPhoneNumber(values.phoneNumber),
-    };
-
-    // console.log(allValues);
-    // create a localstorage object named onboardingData, then add allValues to the object
-    localStorage.setItem('onboardingData', JSON.stringify(allValues));
-    router.push('/onboarding/office-info');
-  };
+const StepOneForm = ({ onFinish, isMutating }: Props) => {
+  const searchParams = useSearchParams();
+  const email = searchParams.get('email') || '';
 
   return (
     <Form
@@ -32,67 +24,51 @@ const StepOneForm = () => {
       autoComplete="off"
       layout="vertical"
       className="!w-full"
-      style={{ width: '100%' }}
-      form={form}
     >
-      <Form.Item
+      <FormItem
         label="First Name"
-        name="firstName"
+        name="firstname"
         rules={[{ required: true, message: 'Please input your first name' }]}
       >
-        <CustomInput
-          placeholder="Aa"
-          // disabled={personalInfoIsMutating}
-        />
-      </Form.Item>
-      <Form.Item
+        <CustomInput placeholder="Aa" disabled={isMutating} />
+      </FormItem>
+      <FormItem
         label="Surname"
         name="surname"
         rules={[{ required: true, message: 'Please input your surname' }]}
       >
-        <CustomInput
-          placeholder="Aa"
-          // disabled={personalInfoIsMutating}
-        />
-      </Form.Item>
-      <Form.Item label="Middle name" name="middleName">
+        <CustomInput placeholder="Aa" disabled={isMutating} />
+      </FormItem>
+      <FormItem label="Middle name" name="middlename">
         <CustomInput placeholder="Aa" />
-      </Form.Item>
-      <Form.Item
+      </FormItem>
+      <FormItem
         label="Email"
         name="email"
         rules={[
-          { required: true, message: 'Please input your email' },
-          { type: 'email' },
+          { required: true, message: 'Please input your email', type: 'email' },
         ]}
+        initialValue={email}
       >
         <CustomInput
           placeholder="name@email.ng"
-          // disabled={personalInfoIsMutating}
+          disabled={email.includes('@') || isMutating}
         />
-      </Form.Item>
-      <Form.Item
+      </FormItem>
+      <FormItem
         label="Phone Number"
-        name="phoneNumber"
+        name="phone"
         rules={[{ required: true, validator: phoneNumberValidator }]}
       >
-        <CustomInput
-          placeholder="Aa"
-          // disabled={personalInfoIsMutating}
-        />
-      </Form.Item>
+        <CustomInput placeholder="Aa" disabled={isMutating} />
+      </FormItem>
 
-      <Form.Item className="flex justify-end">
-        <CustomButton
-          // loading={personalInfoIsMutating}
-          htmlType="submit"
-          block
-          size="small"
-        >
+      <FormItem className="flex justify-end">
+        <CustomButton loading={isMutating} htmlType="submit" block size="small">
           <span className="pr-1">Continue</span>
-          {/* {personalInfoIsMutating ? null : <ArrowRight />} */}
+          {isMutating ? null : <ArrowRight />}
         </CustomButton>
-      </Form.Item>
+      </FormItem>
     </Form>
   );
 };

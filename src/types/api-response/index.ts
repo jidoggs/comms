@@ -17,12 +17,15 @@ export type Promolve<ResT = void, RejT = Error> = {
   reject: (value: RejT) => void;
 };
 
-export type BaseDataModel = {
-  created_at: string;
-  deleted_at: string;
-  active: boolean;
+type StringData = 'created_at' | 'deleted_at' | '_id' | 'updated_at';
+type BooleanData = 'active' | 'is_deleted';
+
+export type BaseDataModel = Record<StringData, string> &
+  Record<BooleanData, boolean>;
+
+export type BasicTypeSet = {
+  name: string;
   _id: string;
-  updated_at: string;
 };
 
 export type PaginatedData<T> = {

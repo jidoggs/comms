@@ -1,5 +1,5 @@
-import useMessage from 'antd/es/message/useMessage';
 import {
+  fetchOptions,
   useAuthGetRequest,
   useAuthRequest,
   useServiceConfig,
@@ -7,7 +7,7 @@ import {
 import { useSession } from '@/common/hooks';
 import { ENDPOINTS } from '@/service/config/endpoint';
 import { queryHandler } from '@/service/request';
-import { AllParastatalType, ParastatalType } from '../types';
+import { ParastatalType } from '../types';
 import { ServiceParams } from './types';
 import { APIResponseSuccessModel } from '@/types';
 
@@ -15,57 +15,56 @@ const { CREATE, GET_ALL, UPDATE, INVITE } = ENDPOINTS.PARASTATALS;
 
 function useParastatals(props: ServiceParams) {
   const { isPrimaryAdmin } = useSession();
-  const { mutate } = useServiceConfig();
+  const { revalidateRequest, actionSuccessHandler } = useServiceConfig();
   const query = props._id ? queryHandler({ _id: props._id }) : '';
-  const [message, messageContext] = useMessage();
 
   const revalidateListHandler = (res: APIResponseSuccessModel) => {
-    message.success(res.message);
-    mutate(GET_ALL);
+    revalidateRequest(GET_ALL, res.message);
+  };
+
+  const messageOnlyHandler = (res: APIResponseSuccessModel) => {
+    actionSuccessHandler(res.message);
   };
 
   const createSwr = useAuthRequest<ParastatalType>(
-    props?.create && isPrimaryAdmin ? CREATE : '',
+    props?.can_create && isPrimaryAdmin ? CREATE : '',
     {
       onSuccess: revalidateListHandler,
     }
   );
 
-  const getListSwr = useAuthGetRequest<AllParastatalType>(
-    props?.get_all && isPrimaryAdmin ? GET_ALL : '',
-    {
-      revalidateOnFocus: false,
-      revalidateOnMount: true,
-      revalidateIfStale: true,
-      errorRetryCount: process.env.NODE_ENV === 'development' ? 1 : 3,
-    }
+  const getListSwr = useAuthGetRequest<ParastatalType[]>(
+    props?.can_get_all && isPrimaryAdmin ? GET_ALL : '',
+    fetchOptions
   );
 
   const getItemSwr = useAuthGetRequest<ParastatalType>(
-    props?.get_id && props?._id && isPrimaryAdmin ? UPDATE(query) : ''
+    props?.can_get_by_id && props?._id ? UPDATE(query) : '',
+    fetchOptions
   );
 
   const updateItemSwr = useAuthRequest<ParastatalType>(
-    props?.update && props?._id && isPrimaryAdmin ? UPDATE(props._id) : '',
+    props?.can_update_by_id && props?._id && isPrimaryAdmin
+      ? UPDATE(props._id)
+      : '',
     {
       onSuccess: revalidateListHandler,
     }
   );
 
   const deleteItemSwr = useAuthRequest<null>(
-    props?.delete && props?._id && isPrimaryAdmin ? UPDATE(props._id) : '',
+    props?.can_delete_by_id && props?._id && isPrimaryAdmin
+      ? UPDATE(props._id)
+      : '',
     {
       onSuccess: revalidateListHandler,
     }
   );
-  const inviteUserSwr = useAuthRequest<null>(props?.invite ? INVITE : '', {
-    onSuccess: (res) => {
-      message.success(res.message);
-    },
+  const inviteUserSwr = useAuthRequest<null>(props?.can_invite ? INVITE : '', {
+    onSuccess: messageOnlyHandler,
   });
 
   return {
-    messageContext,
     createSwr,
     getListSwr,
     getItemSwr,

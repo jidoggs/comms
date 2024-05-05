@@ -40,7 +40,7 @@ const AvatarGroup = ({
           size={size}
           backgroundColor={!data.src ? memorizedColor : undefined}
         >
-          {generateInitials(data?.firstName || '', data.lastName)}
+          {generateInitials(data?.firstName || '', data.surname)}
         </CustomAvatar>
       ))}
     </Avatar.Group>

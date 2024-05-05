@@ -17,7 +17,7 @@ const { Header } = Layout;
 const BreadCrumb = lazy(() => import('./BreadCrumb'));
 
 const AppHeader: React.FunctionComponent = () => {
-  const { handleLogout, messageContext } = useAuth();
+  const { handleLogout } = useAuth();
   const { data } = useSession();
 
   const isMutating = false;
@@ -47,7 +47,6 @@ const AppHeader: React.FunctionComponent = () => {
   ];
   return (
     <Header className="flex w-full items-center justify-between !px-5 !py-0.5">
-      {messageContext}
       <Suspense fallback={<div />}>
         <BreadCrumb />
       </Suspense>
@@ -73,7 +72,7 @@ const AppHeader: React.FunctionComponent = () => {
               />
               <div className="flex flex-col">
                 <Title semibold>
-                  {data?.firstname} {data?.lastname}
+                  {data?.firstname} {data?.surname || ''}
                 </Title>
                 <Title small className="text-custom-gray_600">
                   {data?.title}

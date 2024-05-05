@@ -1,14 +1,14 @@
+import React, { useContext, useState } from 'react';
 import ApproveModalContent from '@/common/components/ApproveModalContent';
 import CustomButton from '@/common/components/CustomButton';
-import { Delete } from '@/common/components/icons';
-import React, { useContext, useState } from 'react';
 import { MoreInfoContext } from '../modals/MoreInformationModal';
+import { useServiceConfig } from '@/service/swrHooks';
 import { CascadeContext } from '@/common/components/SectionCascade';
-import { useSWRConfig } from 'swr';
+import { Delete } from '@/common/components/icons';
 
 function DeleteInformation() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { mutate } = useSWRConfig();
+  const { revalidateRequest } = useServiceConfig();
 
   const information = useContext(MoreInfoContext);
   const cascadeContextInfo = useContext(CascadeContext);
@@ -21,8 +21,8 @@ function DeleteInformation() {
       ?.handleDelete({ type: 'delete' })
       .then(() => {
         if (!type || !cascadeContextInfo?.deleteCascadeItemHandler) return;
-        mutate(cascadeContextInfo.dataList?.[type]?.key); // revalidate key
-        cascadeContextInfo?.deleteCascadeItemHandler(type); //update state stored info
+        revalidateRequest(cascadeContextInfo.dataList[type].key); // revalidate key
+        cascadeContextInfo.deleteCascadeItemHandler(type); //update state stored info
       })
       .finally(information.handleCancel);
   };

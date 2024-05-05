@@ -1,66 +1,39 @@
 import { ENDPOINTS } from '@/service/config/endpoint';
-import { useAuthGetRequest, useAuthRequest } from '@/service/swrHooks';
-import { AllPermissionType, AllRoleType, OfficeType, RoleType } from '../types';
-import { useState } from 'react';
-import { RoleProps } from './types';
-// import { RoleProps } from './types';
+import {
+  fetchOptions,
+  useAuthGetRequest,
+  useAuthRequest,
+  useServiceConfig,
+} from '@/service/swrHooks';
+import { RoleServiceArgs } from './types';
+import { APIResponseSuccessModel, Role } from '../user-management/types';
 
 const { CREATE, GET_ALL_ROLES, DELETE_SPECIFIC_ROLE, UPDATE } = ENDPOINTS.ROLES;
 
-const { VIEW_ALL_PERMISSIONS } = ENDPOINTS.PERMISSIONS;
-
-function useRoles(props: RoleProps) {
-  const isQuery = props._id;
+function useRoles(props: RoleServiceArgs) {
   const query = props._id || '';
+  const { revalidateRequest } = useServiceConfig();
 
-  const [refreshList, setRefreshList] = useState(false);
-
-  const revalidateListHandler = () => {
-    setRefreshList(true);
-    getAllRolesSwr.revalidate();
-    getAllPermissionsSwr.revalidate();
+  const revalidateListHandler = (res: APIResponseSuccessModel) => {
+    revalidateRequest(GET_ALL_ROLES, res.message);
   };
 
-  const resetRefreshList = () => {
-    if (refreshList) {
-      setRefreshList(false);
-    }
-  };
-
-  const getAllRolesSwr = useAuthGetRequest<AllRoleType>(
-    props?.get_all_roles || refreshList ? GET_ALL_ROLES : '',
-    {
-      revalidateOnFocus: false,
-      revalidateOnMount: true,
-      revalidateIfStale: false,
-      errorRetryCount: process.env.NODE_ENV === 'development' ? 1 : 3,
-      onSuccess: resetRefreshList,
-    }
+  const getAllRolesSwr = useAuthGetRequest<Role[]>(
+    props?.can_get_all ? GET_ALL_ROLES : '',
+    fetchOptions
   );
-  const createRoleSwr = useAuthRequest<RoleType>(
-    props?.create_role ? CREATE : '',
+  const createRoleSwr = useAuthRequest<Role>(props?.can_create ? CREATE : '', {
+    onSuccess: revalidateListHandler,
+  });
+
+  const updateRoleSwr = useAuthRequest<Role>(
+    props?.can_update_by_id ? UPDATE : '',
     {
       onSuccess: revalidateListHandler,
     }
   );
-  const getAllPermissionsSwr = useAuthGetRequest<AllPermissionType>(
-    props?.get_all_permissions ? VIEW_ALL_PERMISSIONS : '',
-    {
-      revalidateOnFocus: false,
-      revalidateOnMount: true,
-      revalidateIfStale: false,
-      errorRetryCount: process.env.NODE_ENV === 'development' ? 1 : 3,
-      onSuccess: resetRefreshList,
-    }
-  );
-  const updateRoleSwr = useAuthRequest<RoleType>(
-    props?.update_role ? UPDATE : '',
-    {
-      onSuccess: revalidateListHandler,
-    }
-  );
-  const deleteRoleSwr = useAuthRequest<RoleType>(
-    props?.delete_specific_role && isQuery ? DELETE_SPECIFIC_ROLE(query) : '',
+  const deleteRoleSwr = useAuthRequest<null>(
+    props?.can_delete_by_id && query ? DELETE_SPECIFIC_ROLE(query) : '',
     {
       onSuccess: revalidateListHandler,
     }
@@ -68,8 +41,11 @@ function useRoles(props: RoleProps) {
 
   return {
     createRoleSwr,
-    getAllRolesSwr,
-    getAllPermissionsSwr,
+    getAllRolesSwr: {
+      ...getAllRolesSwr,
+      data: getAllRolesSwr.data?.data || [],
+      loading: getAllRolesSwr.isLoading || getAllRolesSwr.isValidating,
+    },
     updateRoleSwr,
     deleteRoleSwr,
   };

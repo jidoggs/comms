@@ -3,16 +3,15 @@ import { ArrowDown, CloseCircle } from '@/common/components/icons';
 import Title from '@/common/components/Title';
 import { Dropdown, MenuProps } from 'antd';
 import React from 'react';
-import { uniqueId } from '../../types';
-import { PermissionType, RoleType } from '@/app/admin/types';
+import { Role, uniqueId, Permission } from '../../types';
 
 interface PermissionSectionProps {
-  editedRole: RoleType;
+  editedRole: Role;
   title: string;
   permissions: string[];
   options: { _id: string; name: string; code: string }[];
   isEditMode: boolean;
-  handleAddPermission: (permission: PermissionType) => void;
+  handleAddPermission: (permission: Permission) => void;
   handleCancelPermission: (permission: any) => void;
 }
 

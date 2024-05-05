@@ -1,9 +1,12 @@
 import React from 'react';
 import { Tabs, TabsProps } from 'antd';
+import { mergeClassName } from '@/common/utils';
 
 interface CustomTabProps extends TabsProps {
   defaultKey?: string;
 }
+
+export type ItemProps = TabsProps['items'];
 
 const CustomTab: React.FunctionComponent<CustomTabProps> = ({
   defaultKey,
@@ -21,8 +24,10 @@ const CustomTab: React.FunctionComponent<CustomTabProps> = ({
       tabBarGutter={tabBarGutter}
       defaultActiveKey={defaultKey}
       activeKey={defaultKey}
-      className="border-custom-gray_500 border-b"
-
+      className={mergeClassName(
+        'border-b border-custom-gray_500',
+        props.className
+      )}
     />
   );
 };

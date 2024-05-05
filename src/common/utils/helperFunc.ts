@@ -61,3 +61,7 @@ export async function copyTextToClipboard(text: string) {
     return document.execCommand('copy', true, text);
   }
 }
+
+export const replaceUnderscorceWithSpace = (value: string) => {
+  return value?.split('_')?.join(' ');
+};

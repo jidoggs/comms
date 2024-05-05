@@ -170,7 +170,7 @@ function CorrespondeceListContextWrapper({ children }: ContextWapper) {
   };
 
   const columns: any = defaultColumns.map((col) => {
-    if (!col.editable || tabs.tabItem === 'sent') {
+    if (!col.editable || tabs.currentTab === 'sent') {
       return col;
     }
     return {
