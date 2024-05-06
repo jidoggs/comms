@@ -1,15 +1,16 @@
-import { Form } from 'antd';
-import dayjs from 'dayjs';
 import React, { useContext } from 'react';
+import dayjs from 'dayjs';
+import { useSWRConfig } from 'swr';
+import Form from 'antd/es/form/Form';
+import FormItem from 'antd/es/form/FormItem';
+import { CascadeContext } from '@/common/components/SectionCascade';
 import CustomButton from '@/common/components/CustomButton';
 import CustomInput from '@/common/components/CustomInput';
 import { CustomInputProps } from '@/common/components/CustomInput/types';
 import Title from '@/common/components/Title';
-import { Building, Close, TickCircle as Tick } from '@/common/components/icons';
 import { MoreInfoContext } from '../../modals/MoreInformationModal';
 import DeleteInformation from '../../actions/DeleteInformation';
-import { CascadeContext } from '@/common/components/SectionCascade';
-import { useSWRConfig } from 'swr';
+import { Building, Close, TickCircle as Tick } from '@/common/components/icons';
 
 type FieldRowProps = {
   label: string;
@@ -18,7 +19,7 @@ type FieldRowProps = {
 
 const FieldRow = ({ label, name, ...props }: FieldRowProps) => {
   return (
-    <Form.Item
+    <FormItem
       label={label}
       name={name}
       className="!mb-0 border-b [&_.ant-form-item-row]:flex [&_.ant-form-item-row]:items-center"
@@ -28,7 +29,7 @@ const FieldRow = ({ label, name, ...props }: FieldRowProps) => {
         name={name}
         {...props}
       />
-    </Form.Item>
+    </FormItem>
   );
 };
 
@@ -42,7 +43,7 @@ function MoreInformationForm() {
   const submitHandler = (values: any) => {
     if (!information?.handleUpdate) return;
     information
-      ?.handleUpdate({ data: values, type: 'patch' })
+      ?.handleUpdate({ data: values, type: 'put' })
       .then(() => {
         if (!cascadeContextInfo?.updateCascadeItemHandler || !type) return;
         mutate(cascadeContextInfo.dataList?.[type]?.key); // revalidate key

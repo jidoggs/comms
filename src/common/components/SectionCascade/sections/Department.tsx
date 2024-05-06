@@ -1,11 +1,11 @@
 import React, { useContext, useMemo } from 'react';
+import { CascadeContext } from '..';
 import SectionContainer from '../blocks/SectionContainer';
 import SectionMoreOptions from '../blocks/SectionMoreOptions';
-import { useCache, useSession } from '@/common/hooks';
 import { useDepartment, useOffice } from '@/app/admin/hooks';
-import { queryHandler } from '@/service/request';
-import { CascadeContext } from '..';
 import useOnboarding from '@/app/onboarding/hooks/useOnboarding';
+import { useCache, useSession } from '@/common/hooks';
+import { queryHandler } from '@/service/request';
 
 interface Props {
   showMembers?: boolean;
@@ -22,15 +22,15 @@ const Options = ({ query }: OptionsType) => {
   const officeId = officeInfo?.id;
   const cachedQuery = officeInfo?.key as string;
   const { cachedData } = useCache(cachedQuery);
-  const { isBasicUser } = useSession();
+  const { isPrimaryAdmin, isSecondaryAdmin } = useSession();
   const { createSwr } = useDepartment({
-    can_create: !isBasicUser,
+    can_create: isPrimaryAdmin || isSecondaryAdmin,
     query,
   });
   const officeService = useOffice({
-    can_invite: !isBasicUser,
-    can_delete_by_id: !isBasicUser,
-    can_update_by_id: !isBasicUser,
+    can_invite: isPrimaryAdmin || isSecondaryAdmin,
+    can_delete_by_id: isPrimaryAdmin || isSecondaryAdmin,
+    can_update_by_id: isPrimaryAdmin || isSecondaryAdmin,
     _id: officeId,
   });
   const officeInformation = useMemo(
@@ -40,7 +40,7 @@ const Options = ({ query }: OptionsType) => {
 
   return (
     <>
-      {isBasicUser ? null : (
+      {isPrimaryAdmin || isSecondaryAdmin ? (
         <SectionMoreOptions
           addTrigger={createSwr.trigger}
           addIsLoading={createSwr.isMutating}
@@ -60,20 +60,15 @@ const Options = ({ query }: OptionsType) => {
           }}
           moreData={officeInformation}
         />
-      )}
+      ) : null}
     </>
   );
 };
 
 function Department({ showMembers }: Props) {
   const contextInfo = useContext(CascadeContext);
-  const {
-    isPrimaryAdmin,
-    data: user,
-    isBasicUser,
-    isSecondaryAdmin,
-  } = useSession();
-  const { onBoardingDepartment } = useOnboarding();
+  const { isPrimaryAdmin, data: user } = useSession();
+  const { onBoardingDepartment, finalOfficeOnboardingStep } = useOnboarding();
   const query = queryHandler({
     parastatal: contextInfo?.dataList?.parastatal?.id,
     office: contextInfo?.dataList?.office?.id,
@@ -92,21 +87,21 @@ function Department({ showMembers }: Props) {
 
   return (
     <>
-      {isPrimaryAdmin ||
-      isSecondaryAdmin ||
-      (isBasicUser && onBoardingDepartment) ? (
-        <SectionContainer
-          items={data}
-          title={`${contextInfo?.dataList?.office?.title} (${data.length} departments)`}
-          step="department"
-          clickHandler={contextInfo?.clickCascadeItemHandler}
-          activeIdentifier={contextInfo?.dataList?.department?.id}
-          moreOptions={<Options query={query} />}
-          hasChild={showMembers}
-          showTick={!showMembers}
-          loader={getListSwr.isLoading}
-        />
-      ) : null}
+      <SectionContainer
+        items={data}
+        title={`${contextInfo?.dataList?.office?.title} (${data.length} departments)`}
+        step="department"
+        clickHandler={contextInfo?.clickCascadeItemHandler}
+        activeIdentifier={contextInfo?.dataList?.department?.id}
+        moreOptions={<Options query={query} />}
+        hasChild={
+          finalOfficeOnboardingStep === 'department'
+            ? false
+            : true || showMembers
+        }
+        showTick={finalOfficeOnboardingStep === 'department' || !showMembers}
+        loader={getListSwr.isLoading}
+      />
     </>
   );
 }

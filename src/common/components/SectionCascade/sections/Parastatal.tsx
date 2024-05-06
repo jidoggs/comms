@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
+import { CascadeContext } from '..';
+import { useParastatals } from '@/app/admin/hooks';
+import { useOnboarding } from '@/app/onboarding/hooks';
+import { useSession } from '@/common/hooks';
 import SectionContainer from '../blocks/SectionContainer';
 import SectionMoreOptions from '../blocks/SectionMoreOptions';
-import { useSession } from '@/common/hooks';
-import { useParastatals } from '@/app/admin/hooks';
-import { CascadeContext } from '..';
-import useOnboarding from '@/app/onboarding/hooks/useOnboarding';
 
 const Options = () => {
   const { isPrimaryAdmin } = useSession();
@@ -24,7 +24,7 @@ const Options = () => {
 function Parastatal() {
   const contextInfo = useContext(CascadeContext);
   const { isPrimaryAdmin, data: user } = useSession();
-  const { onBoardingParastatal } = useOnboarding();
+  const { onBoardingParastatal, finalOfficeOnboardingStep } = useOnboarding();
   const { getListSwr, getItemSwr } = useParastatals({
     can_get_all: isPrimaryAdmin,
     can_get_by_id: !isPrimaryAdmin,
@@ -43,7 +43,8 @@ function Parastatal() {
       clickHandler={contextInfo?.clickCascadeItemHandler}
       activeIdentifier={contextInfo?.dataList?.parastatal?.id}
       moreOptions={isPrimaryAdmin ? <Options /> : null}
-      hasChild
+      hasChild={finalOfficeOnboardingStep === 'parastatal' ? false : true}
+      showTick={finalOfficeOnboardingStep === 'parastatal'}
       loader={getListSwr.isLoading}
     />
   );

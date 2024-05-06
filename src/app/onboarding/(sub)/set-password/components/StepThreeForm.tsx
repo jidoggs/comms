@@ -2,14 +2,15 @@
 import React from 'react';
 import Form from 'antd/es/form/Form';
 import FormItem from 'antd/es/form/FormItem';
+import { useOnboarding } from '@/app/onboarding/hooks';
+import { fetchOnboardUid } from '@/service/storage';
 import CustomInput from '@/common/components/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
-import { ArrowRight } from '@/common/components/icons';
-import useOnboarding from '@/app/onboarding/hooks/useOnboarding';
 import {
   confirmPasswordValidator,
   passwordStrengthValidator,
 } from '@/common/utils';
+import { ArrowRight } from '@/common/components/icons';
 
 type FieldType = {
   new_password: string;
@@ -20,8 +21,9 @@ const StepThreeForm = () => {
   const { authSwr } = useOnboarding({ step: 3 });
 
   const onFinish = (values: FieldType) => {
-    const data = { password: values.new_password };
-    authSwr.trigger({ data, type: 'patch' });
+    const _id = fetchOnboardUid();
+    const data = { password: values.new_password, _id };
+    authSwr.trigger({ data, type: 'put' });
   };
 
   return (
@@ -29,7 +31,7 @@ const StepThreeForm = () => {
       onFinish={onFinish}
       autoComplete="off"
       layout="vertical"
-      className="!w-full"
+      className="w-100"
     >
       <FormItem<FieldType>
         label="New Password"

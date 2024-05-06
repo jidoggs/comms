@@ -1,5 +1,5 @@
-import { redirect, useRouter, useSearchParams } from 'next/navigation';
 import { useLayoutEffect } from 'react';
+import { redirect, useRouter, useSearchParams } from 'next/navigation';
 import {
   fetchOptions,
   useNonAuthRequest,
@@ -31,9 +31,9 @@ function useOnboarding(props?: Props) {
 
   const query = queryHandler({ parastatal, office, department });
 
-  const token = store.fetchUserToken();
+  const token = store.fetchOnboardToken();
 
-  const getFinalOfficeStep = (): keyof typeof initialDataList => {
+  const getfinalOfficeOnboardingStep = (): keyof typeof initialDataList => {
     if (department) {
       return 'department';
     }
@@ -43,7 +43,7 @@ function useOnboarding(props?: Props) {
     return 'parastatal';
   };
 
-  const finalOfficeStep = getFinalOfficeStep();
+  const finalOfficeOnboardingStep = getfinalOfficeOnboardingStep();
 
   useLayoutEffect(() => {
     // if onboarding user is not in step one and there is no token kick the user to login
@@ -58,13 +58,13 @@ function useOnboarding(props?: Props) {
     {
       ...fetchOptions,
       onSuccess(res) {
-        if (res.data.step !== 'personal') {
-          store.storeUserToken(res.data.access_token);
+        if (res.data.invite.step !== 'personal') {
+          store.storeOnboardToken(res.data.token);
         }
-        if (res.data.step === 'office') {
+        if (res.data.invite.step === 'office') {
           router.replace(`/onboarding/office-info${query}`);
         }
-        if (res.data.step === 'password') {
+        if (res.data.invite.step === 'password') {
           router.replace(`/onboarding/set-password`);
         }
       },
@@ -75,9 +75,8 @@ function useOnboarding(props?: Props) {
     props?.step === 1 ? ONBOARD : '',
     {
       onSuccess(res) {
-        store.storeUserToken(res.data.access_token);
-        store.storeRefreshToken(res.data.refresh_token);
-        store.setItem('uid', res.data._id);
+        store.storeOnboardToken(res.data.access_token);
+        store.storeOnboardUid(res.data._id);
         router.replace(`/onboarding/office-info${query}`);
       },
     }
@@ -92,7 +91,7 @@ function useOnboarding(props?: Props) {
           router.replace(`/onboarding/set-password`);
         }
         if (props.step === 3) {
-          store.clearData();
+          store.clearOnboardDetails();
           router.replace(`/onboarding/success`);
         }
       },
@@ -105,7 +104,7 @@ function useOnboarding(props?: Props) {
     onBoardingParastatal: parastatal,
     onBoardingOffice: office,
     onBoardingDepartment: department,
-    finalOfficeStep,
+    finalOfficeOnboardingStep,
   };
 }
 

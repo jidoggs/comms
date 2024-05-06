@@ -1,11 +1,11 @@
 import React, { useContext, useMemo } from 'react';
+import { CascadeContext } from '..';
+import { useOnboarding } from '@/app/onboarding/hooks';
+import { useOffice, useParastatals } from '@/app/admin/hooks';
+import { useCache, useSession } from '@/common/hooks';
 import SectionContainer from '../blocks/SectionContainer';
 import SectionMoreOptions from '../blocks/SectionMoreOptions';
-import { useCache, useSession } from '@/common/hooks';
-import { useOffice, useParastatals } from '@/app/admin/hooks';
 import { queryHandler } from '@/service/request';
-import { CascadeContext } from '..';
-import useOnboarding from '@/app/onboarding/hooks/useOnboarding';
 
 type OptionsType = {
   query: string;
@@ -16,13 +16,13 @@ const Options = ({ query }: OptionsType) => {
   const parastatalId = parastatalInfo?.id;
   const cachedQuery = parastatalInfo?.key as string;
   const { cachedData } = useCache(cachedQuery);
-  const { isBasicUser, isPrimaryAdmin } = useSession();
+  const { isPrimaryAdmin, isSecondaryAdmin } = useSession();
   const { createSwr } = useOffice({
-    can_create: !isBasicUser,
+    can_create: isPrimaryAdmin || isSecondaryAdmin,
     query,
   });
   const parastatalService = useParastatals({
-    can_invite: !isBasicUser,
+    can_invite: isPrimaryAdmin || isSecondaryAdmin,
     can_delete_by_id: isPrimaryAdmin,
     can_update_by_id: isPrimaryAdmin,
     _id: parastatalId,
@@ -35,7 +35,7 @@ const Options = ({ query }: OptionsType) => {
 
   return (
     <>
-      {isBasicUser ? null : (
+      {isPrimaryAdmin || isSecondaryAdmin ? (
         <SectionMoreOptions
           addTrigger={createSwr.trigger}
           addIsLoading={createSwr.isMutating}
@@ -55,20 +55,15 @@ const Options = ({ query }: OptionsType) => {
           }}
           moreData={parastatalInformation}
         />
-      )}
+      ) : null}
     </>
   );
 };
 
 function Office() {
   const contextInfo = useContext(CascadeContext);
-  const {
-    isPrimaryAdmin,
-    isSecondaryAdmin,
-    data: user,
-    isBasicUser,
-  } = useSession();
-  const { onBoardingOffice } = useOnboarding();
+  const { isPrimaryAdmin, isSecondaryAdmin, data: user } = useSession();
+  const { onBoardingOffice, finalOfficeOnboardingStep } = useOnboarding();
   const query = queryHandler({
     parastatal: contextInfo?.dataList?.parastatal?.id,
   });
@@ -86,20 +81,17 @@ function Office() {
 
   return (
     <>
-      {isPrimaryAdmin ||
-      isSecondaryAdmin ||
-      (isBasicUser && onBoardingOffice) ? (
-        <SectionContainer
-          items={data}
-          title={`${contextInfo?.dataList?.parastatal?.title} (${data.length} offices)`}
-          step="office"
-          clickHandler={contextInfo?.clickCascadeItemHandler}
-          activeIdentifier={contextInfo?.dataList?.office?.id}
-          moreOptions={<Options query={query} />}
-          hasChild
-          loader={getListSwr.isLoading}
-        />
-      ) : null}
+      <SectionContainer
+        items={data}
+        title={`${contextInfo?.dataList?.parastatal?.title} (${data.length} offices)`}
+        step="office"
+        clickHandler={contextInfo?.clickCascadeItemHandler}
+        activeIdentifier={contextInfo?.dataList?.office?.id}
+        moreOptions={<Options query={query} />}
+        hasChild={finalOfficeOnboardingStep === 'office' ? false : true}
+        showTick={finalOfficeOnboardingStep === 'office'}
+        loader={getListSwr.isLoading}
+      />
     </>
   );
 }

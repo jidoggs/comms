@@ -4,26 +4,32 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import Title from '@/common/components/Title';
 import CustomButton from '@/common/components/CustomButton';
+import { helveticaNeue } from '@/common/font';
 
-const LoginPageContent: React.FunctionComponent = () => {
+const SuccessPageContent: React.FunctionComponent = () => {
   const router = useRouter();
+  const clickHandler = () => router.replace('/auth/login');
   return (
-    <div className="flex w-full flex-col items-center gap-y-3">
+    <div className="flex w-full flex-col items-center gap-y-3.5 py-5">
       <Image src="/success.gif" alt="success-svg" width={100} height={100} />
-      <Title tag="h4">Password Set</Title>
-      <Title className="py-3 text-center text-custom-gray_600">
+      <Title
+        tag="h1"
+        className={`text-center text-xl capitalize leading-6 ${helveticaNeue.className}`}
+      >
+        Password Set
+      </Title>
+      <Title className="text-center text-custom-gray_200">
         Your password has been set successfully. Awaiting approval
       </Title>
       <CustomButton
-        size="small"
-        className="container rounded-md border !border-custom-main"
-        type="text"
-        onClick={() => router.replace('/auth/login')}
+        className="rounded-md !border-2 !border-custom-main !bg-custom-gray_900 !px-10 !py-4 !text-base leading-none"
+        type="primary"
+        onClick={clickHandler}
       >
-        Login
+        Go to Login
       </CustomButton>
     </div>
   );
 };
 
-export default LoginPageContent;
+export default SuccessPageContent;

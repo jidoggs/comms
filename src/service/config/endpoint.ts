@@ -37,7 +37,7 @@ export const ENDPOINTS = {
     INVITE: '/invite/office',
   },
   PEOPLE: {
-    GET_ALL_INVITE_BY_STATUS: (query: string) => `/invite${query}`,
+    GET_ALL_INVITE_BY_STATUS: (query: string) => `/invite/all${query}`,
     APPROVE_REQUEST: '/auth/approve',
   },
   ROLES: {

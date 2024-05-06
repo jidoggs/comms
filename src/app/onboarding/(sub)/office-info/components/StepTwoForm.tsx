@@ -1,17 +1,17 @@
 'use client';
 import React, { useState } from 'react';
-import CustomButton from '@/common/components/CustomButton';
-import { ArrowRight } from '@/common/components/icons';
-import Title from '@/common/components/Title';
-import SectionCascade from '@/common/components/SectionCascade';
+import { useOnboarding } from '@/app/onboarding/hooks';
 import { useSectionCascade } from '@/common/hooks';
-import useOnboarding from '@/app/onboarding/hooks/useOnboarding';
+import { fetchOnboardUid } from '@/service/storage';
+import SectionCascade from '@/common/components/SectionCascade';
+import Title from '@/common/components/Title';
+import CustomButton from '@/common/components/CustomButton';
 import ApproveModalContent from '@/common/components/ApproveModalContent';
-import { getItem } from '@/service/storage';
+import { ArrowRight } from '@/common/components/icons';
 
 const StepTwoForm = () => {
   const { clickCascadeItemHandler, dataList } = useSectionCascade();
-  const { authSwr, finalOfficeStep } = useOnboarding({ step: 2 });
+  const { authSwr, finalOfficeOnboardingStep } = useOnboarding({ step: 2 });
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const data_keys = Object.keys(dataList) as Array<keyof typeof dataList>;
@@ -25,7 +25,7 @@ const StepTwoForm = () => {
   };
 
   const submitHandler = () => {
-    const _id = getItem('uid');
+    const _id = fetchOnboardUid();
     let data: Record<string, string> = { _id };
 
     data_keys.forEach((key) => {
@@ -34,7 +34,7 @@ const StepTwoForm = () => {
       }
     });
 
-    authSwr.trigger({ data, type: 'patch' }).finally(closeModal);
+    authSwr.trigger({ data, type: 'put' }).finally(closeModal);
   };
 
   return (
@@ -46,11 +46,14 @@ const StepTwoForm = () => {
           className="overflow-hidden rounded-lg"
           clickCascadeItemHandler={clickCascadeItemHandler}
           dataList={dataList}
+          mode="onboarding"
         />
       </div>
       <div className="flex items-center justify-end gap-x-2">
         <CustomButton
-          disabled={dataList[finalOfficeStep].id === '' || authSwr.isMutating}
+          disabled={
+            dataList[finalOfficeOnboardingStep].id === '' || authSwr.isMutating
+          }
           htmlType="submit"
           size="small"
           onClick={clickHandler}
