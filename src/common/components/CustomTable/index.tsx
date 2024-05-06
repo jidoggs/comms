@@ -101,7 +101,7 @@ const CustomTable = forwardRef<any, CustomTableProps<any>>((props, ref) => {
             dataSource={dataSource}
             ref={ref}
             rowClassName={mergeClassName('bg-transparent', rowClassName)}
-            rowKey={'id'}
+            rowKey={otherTableProps.rowKey || '_id'}
             className={mergeClassName(
               '!bg-transparent',
               stringClassName ? className : className?.table

@@ -1,13 +1,13 @@
 import React from 'react';
 import PermissionSection from './PermissionSection';
 import { categorizeOptions, categorizePermissions } from '../utils/utilFunc';
-import { AllPermissionType, PermissionType, RoleType } from '@/app/admin/types';
+import { Role, Permission } from '../../types';
 
 export interface PermissionProps {
-  allPermissions: AllPermissionType;
-  editedRole: RoleType;
+  allPermissions: Permission[];
+  editedRole: Role;
   isEditMode: boolean;
-  handleAddPermission: (permission: PermissionType) => void;
+  handleAddPermission: (permission: Permission) => void;
   handleCancelPermission: (permission: any) => void;
 }
 

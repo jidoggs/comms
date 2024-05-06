@@ -13,7 +13,7 @@ type FieldType = {
 };
 
 const LoginForm = () => {
-  const { loginSwr, messageContext, messageLoading } = useAuth({ login: true });
+  const { loginSwr, messageLoading } = useAuth({ login: true });
   const { trigger, isMutating } = loginSwr;
 
   const onFinish = (data: FieldType) => {
@@ -22,52 +22,49 @@ const LoginForm = () => {
   };
 
   return (
-    <>
-      {messageContext}
-      <Form<FieldType>
-        onFinish={onFinish}
-        autoComplete="off"
-        requiredMark={false}
-        layout="vertical"
+    <Form<FieldType>
+      onFinish={onFinish}
+      autoComplete="off"
+      requiredMark={false}
+      layout="vertical"
+    >
+      <Form.Item<FieldType>
+        label="Email"
+        name="email"
+        rules={[{ required: true, validator: emailValidator }]}
       >
-        <Form.Item<FieldType>
-          label="Email"
+        <CustomInput
+          type="email"
           name="email"
-          rules={[{ required: true, validator: emailValidator }]}
-        >
-          <CustomInput
-            type="email"
-            name="email"
-            placeholder="user@email.com"
-            disabled={isMutating}
-          />
-        </Form.Item>
-        <Form.Item<FieldType>
-          label="Password"
+          placeholder="user@email.com"
+          disabled={isMutating}
+        />
+      </Form.Item>
+      <Form.Item<FieldType>
+        label="Password"
+        name="password"
+        rules={[{ required: true, message: 'Password is required' }]}
+      >
+        <CustomInput
+          placeholder="Enter Password"
+          type="password"
           name="password"
-          rules={[{ required: true, message: 'Password is required' }]}
+          disabled={isMutating}
+        />
+      </Form.Item>
+      <div className="flex flex-col gap-y-5">
+        <Link
+          href="/auth/forgot-password"
+          className="px-2.5 py-1 !text-center !text-[14px] !font-bold !leading-[17.71px] !text-custom-black_200"
         >
-          <CustomInput
-            placeholder="Enter Password"
-            type="password"
-            name="password"
-            disabled={isMutating}
-          />
-        </Form.Item>
-        <div className="flex flex-col gap-y-5">
-          <Link
-            href="/auth/forgot-password"
-            className="px-2.5 py-1 !text-center !text-[14px] !font-bold !leading-[17.71px] !text-custom-black_200"
-          >
-            Forgot Password?
-          </Link>
+          Forgot Password?
+        </Link>
 
-          <CustomButton loading={isMutating} htmlType="submit" block>
-            Login
-          </CustomButton>
-        </div>
-      </Form>
-    </>
+        <CustomButton loading={isMutating} htmlType="submit" block>
+          Login
+        </CustomButton>
+      </div>
+    </Form>
   );
 };
 

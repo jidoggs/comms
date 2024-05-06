@@ -14,9 +14,9 @@ const Options = () => {
   const { isBasicUser } = useSession();
   const { cachedData } = useCache(cachedQuery);
   const departmentService = useDepartment({
-    invite: !isBasicUser,
-    delete: !isBasicUser,
-    update: !isBasicUser,
+    can_invite: !isBasicUser,
+    can_delete_by_id: !isBasicUser,
+    can_update_by_id: !isBasicUser,
     _id: departmentId,
   });
 
@@ -25,9 +25,10 @@ const Options = () => {
     [departmentId] //eslint-disable-line
   );
 
+  const inviteQuery = queryHandler({ department: departmentId });
+
   return (
     <>
-      {departmentService.messageContext}
       {isBasicUser ? null : (
         <SectionMoreOptions
           inviteIsLoading={departmentService.inviteUserSwr.isMutating}
@@ -38,6 +39,7 @@ const Options = () => {
           updateTrigger={departmentService.updateItemSwr.trigger}
           otherInviteData={{ department: departmentId }}
           acceptedFeature={['invite', 'details']}
+          inviteLink={inviteQuery}
           title={{
             current: 'member',
             parent: 'department',
@@ -56,7 +58,7 @@ function Members() {
     department: contextInfo?.dataList?.department?.id,
   });
 
-  const { getListSwr } = useMembers({ query, get_all: !isBasicUser });
+  const { getListSwr } = useMembers({ query, can_get_all: !isBasicUser });
 
   const list = getListSwr.data?.data || [];
 

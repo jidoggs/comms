@@ -1,10 +1,15 @@
-import { useState } from 'react';
-
 import { ENDPOINTS } from '@/service/config/endpoint';
-import { useAuthGetRequest, useAuthRequest } from '@/service/swrHooks';
+import {
+  useAuthGetRequest,
+  useAuthRequest,
+  useServiceConfig,
+  fetchOptions,
+} from '@/service/swrHooks';
+import { APIResponseSuccessModel, User } from '@/types';
+import { queryHandler } from '@/service/request';
 
-type RequestType = 'get_invites' | 'decline_or_aprove';
-type QueryType = 'status';
+type RequestType = 'can_get_all_invites' | 'can_approve';
+type QueryType = 'status' | 'search';
 
 type Props = Partial<Record<RequestType, boolean>> &
   Partial<Record<QueryType, string>>;
@@ -12,44 +17,28 @@ type Props = Partial<Record<RequestType, boolean>> &
 const { GET_ALL_INVITE_BY_STATUS, APPROVE_REQUEST } = ENDPOINTS.PEOPLE;
 
 function usePeople(props: Props) {
-  const isQuery = props.status;
-  const query = props.status || '';
+  const query = queryHandler({ search: props.search, status: props.status });
 
-  const [refreshList, setRefreshList] = useState(false);
+  const { revalidateRequest } = useServiceConfig();
 
-  const revalidateListHandler = () => {
-    setRefreshList(true);
-    getAllInvitesSwr.revalidate();
+  const revalidateListHandler = (res: APIResponseSuccessModel) => {
+    revalidateRequest(GET_ALL_INVITE_BY_STATUS(query), res.message);
   };
 
-  const resetRefreshList = () => {
-    if (refreshList) {
-      setRefreshList(false);
-    }
-  };
-
-  const getAllInvitesSwr = useAuthGetRequest(
-    (props?.get_invites && isQuery) || refreshList
-      ? GET_ALL_INVITE_BY_STATUS(query)
-      : '',
-    {
-      revalidateOnFocus: false,
-      revalidateOnMount: true,
-      revalidateIfStale: false,
-      errorRetryCount: process.env.NODE_ENV === 'development' ? 1 : 3,
-      onSuccess: resetRefreshList,
-    }
+  const getAllSwr = useAuthGetRequest<User[]>(
+    props?.can_get_all_invites && query ? GET_ALL_INVITE_BY_STATUS(query) : '',
+    fetchOptions
   );
 
   const approveRequestSwr = useAuthRequest<null>(
-    props?.decline_or_aprove ? APPROVE_REQUEST : '',
+    props?.can_approve ? APPROVE_REQUEST : '',
     {
       onSuccess: revalidateListHandler,
     }
   );
 
   return {
-    getAllInvitesSwr,
+    getAllSwr,
     approveRequestSwr,
   };
 }

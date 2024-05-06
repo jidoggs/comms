@@ -1,10 +1,10 @@
+import Form from 'antd/es/form/Form';
+import FormItem from 'antd/es/form/FormItem';
 import CustomButton from '@/common/components/CustomButton';
 import { CustomTextArea } from '@/common/components/CustomInput';
 import CustomModal from '@/common/components/CustomModal';
 import Title from '@/common/components/Title';
-import { iHandleClick } from '../types';
-import useHandleChange from '@/common/hooks/useHandleChange';
-import { useState } from 'react';
+import { iHandleClick } from '@/types';
 
 type DeclineRequestModalContentProps = {
   isModalOpen: boolean;
@@ -17,14 +17,10 @@ const DeclineRequestModalContent = ({
   handleCancel,
   setIsSuccessModalOpen,
 }: DeclineRequestModalContentProps) => {
-  const [formValues, setFormValues] = useState({
-    reason: '',
-  });
-  const { handleChange } = useHandleChange(setFormValues);
-  const handleSubmit: iHandleClick = (e) => {
-    handleCancel(e);
+  const onFinishHandler = () => {
     setIsSuccessModalOpen('success');
   };
+
   return (
     <CustomModal width={360} open={isModalOpen} onCancel={handleCancel}>
       <div className="text-base">
@@ -35,19 +31,14 @@ const DeclineRequestModalContent = ({
           What’s the reason for declining this registration?
         </p>
         <p className="mt-4">Reason for Declination</p>
-        <CustomTextArea
-          name="reason"
-          placeholder="Aa"
-          value={formValues.reason}
-          onChange={handleChange}
-        />
-        <CustomButton
-          className="mt-6 w-full bg-custom-main text-custom-gray_100"
-          disabled={!formValues.reason}
-          onClick={handleSubmit}
-        >
-          Submit
-        </CustomButton>
+        <Form onFinish={onFinishHandler} requiredMark="optional">
+          <FormItem name="reason" rules={[{ required: true }]}>
+            <CustomTextArea name="reason" placeholder="Aa" />
+          </FormItem>
+          <CustomButton className="mt-6 w-full bg-custom-main text-custom-gray_100">
+            Submit
+          </CustomButton>
+        </Form>
       </div>
     </CustomModal>
   );

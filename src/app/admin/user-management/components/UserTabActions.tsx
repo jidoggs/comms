@@ -4,7 +4,7 @@ import CustomInput from '@/common/components/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
 import { Document, Search } from '@/common/components/icons';
 
-function TableActions() {
+function UserTabActions() {
   return (
     <div className="flex items-center gap-x-2.5">
       <CustomInput
@@ -22,4 +22,4 @@ function TableActions() {
   );
 }
 
-export default TableActions;
+export default UserTabActions;

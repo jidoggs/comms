@@ -2,9 +2,16 @@ import React, { useState } from 'react';
 import InvitePersonModal from './Modal';
 import CustomButton from '@/common/components/CustomButton';
 import { Add } from '@/common/components/icons';
+import { useParastatals } from '@/app/admin/hooks';
+import { useSession } from '@/common/hooks';
+import { queryHandler } from '@/service/request';
 
 function InvitePerson() {
   const [isOpen, setIsOpen] = useState(false);
+  const parastatal = useSession().data?.parastatal._id;
+  const { inviteUserSwr } = useParastatals({ can_invite: true });
+
+  const inviteQuery = queryHandler({ parastatal });
 
   const openModalHandler = () => {
     setIsOpen(true);
@@ -14,9 +21,9 @@ function InvitePerson() {
     setIsOpen(false);
   };
 
-  const onFinishHandler = (value: any) => {
-    console.log(value); //eslint-disable-line
-    closeModalHandler();
+  const onFinishHandler = (values: any) => {
+    const data = { parastatal, ...values };
+    inviteUserSwr.trigger({ data }).finally(closeModalHandler);
   };
 
   return (
@@ -34,7 +41,8 @@ function InvitePerson() {
         handleCancel={closeModalHandler}
         handleSubmit={onFinishHandler}
         isModalOpen={isOpen}
-        isLoading={false}
+        isLoading={inviteUserSwr.isMutating}
+        inviteLink={`/onboarding/personal-info?${inviteQuery}`}
       />
     </>
   );

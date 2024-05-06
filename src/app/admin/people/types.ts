@@ -3,7 +3,9 @@
 import { Table, TabsProps } from 'antd';
 import { AnimationControls } from 'framer-motion';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
-import { MutableRefObject } from 'react';
+import { User } from './types';
+import { CustomTableProps } from '@/common/components/CustomTable';
+import { iHandleChange } from './types';
 export * from '../../../types';
 export interface CorrespondenceData {
   sent_by: string;
@@ -29,14 +31,15 @@ export type CorrespondenceContextNewType = {
 } | null;
 
 export type PeopleDataContextType = {
-  handleAdd: VoidFunction;
   handleTabChange: (state: string) => void;
   columns: EditableTableColumnTypes;
-  dataSource: any[];
-  handleDelete: (id: string | number) => void;
-  tabItem: string;
+  dataSource: User[];
+  isLoading: boolean;
+  currentTab: string;
   tabItemList: TabsProps['items'];
-  pageRef?: MutableRefObject<HTMLElement | null>;
+  components: CustomTableProps<any>['components'];
+  searchHandler: iHandleChange;
+  search: string;
 } | null;
 
 export type DetailContextType = {

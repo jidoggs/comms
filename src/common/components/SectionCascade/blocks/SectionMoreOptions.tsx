@@ -35,6 +35,7 @@ type Props = {
   updateIsLoading?: boolean;
   deleteTrigger?: Mutate;
   deleteIsLoading?: boolean;
+  inviteLink?: string;
 };
 
 function SectionMoreOptions({
@@ -51,6 +52,7 @@ function SectionMoreOptions({
   deleteTrigger,
   updateIsLoading,
   updateTrigger,
+  inviteLink,
 }: Props) {
   const [isModalOpen, setIsModalOpen] = useState(initialModalState);
 
@@ -140,6 +142,7 @@ function SectionMoreOptions({
           handleSubmit={inviteSubmitHandler}
           isModalOpen={isModalOpen.invite}
           isLoading={inviteIsLoading}
+          inviteLink={inviteLink || ''}
         />
       ) : null}
       {acceptedFeature.includes('details') ? (

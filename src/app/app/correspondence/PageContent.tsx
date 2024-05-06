@@ -25,7 +25,7 @@ const CorrespondencePage = () => {
         tabs={
           <CustomTab
             onChange={contextInfo?.handleTabChange}
-            defaultKey={contextInfo?.tabItem}
+            defaultKey={contextInfo?.currentTab}
             items={contextInfo?.tabItemList}
           />
         }
@@ -41,7 +41,7 @@ const CorrespondencePage = () => {
         rowClassName="group"
         rowSelection={{ columnWidth: 56 }}
         footer={() => {
-          if (contextInfo?.tabItem === 'sent') return;
+          if (contextInfo?.currentTab === 'sent') return;
           return <AddCorrespondence handleClick={contextInfo?.handleAdd} />;
         }}
       />

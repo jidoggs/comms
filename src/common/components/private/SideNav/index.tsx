@@ -17,7 +17,7 @@ function SideNav({ role }: { role: UserPreDefinedRole }) {
   const [collapsed, setCollapsed] = useState(false);
   const { lg } = useBreakpoint();
 
-  const { handleLogout, messageContext } = useAuth();
+  const { handleLogout } = useAuth();
 
   useEffect(() => {
     if (lg) {
@@ -31,7 +31,6 @@ function SideNav({ role }: { role: UserPreDefinedRole }) {
 
   return (
     <Sider collapsed={collapsed} width={200} collapsedWidth={118}>
-      {messageContext}
       <div
         className="flex items-end justify-between"
         style={{ paddingRight: 16 }}
@@ -49,7 +48,6 @@ function SideNav({ role }: { role: UserPreDefinedRole }) {
             size="18"
           />
         </button>
-        
       </div>
       <Menu
         mode="inline"

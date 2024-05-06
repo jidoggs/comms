@@ -6,39 +6,21 @@ import TableActions from './TableActions';
 import { PeopleDataContext } from '../service-context/PeopleListContextWrapper';
 import RegistrationDetail from './RegistrationDetail';
 import { User } from '../types';
-import usePeople from '../../hooks/usePeople';
-import { Skeleton } from 'antd';
 
 const CorrespondencePage = () => {
   const contextInfo = useContext(PeopleDataContext);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [staffData, setStaffData] = useState<User | null>(null);
 
   const rowClickHandler: CustomTableProps<any>['onRow'] = (record) => ({
     onClick: () => {
       setStaffData(record);
-      setIsModalOpen(true);
     },
     style: { cursor: 'pointer' },
   });
 
   const handleCancel = () => {
-    setIsModalOpen(false);
     setStaffData(null);
   };
-
-  const peopleProps = usePeople({
-    get_invites: true,
-    status: contextInfo?.tabItem,
-  });
-
-  const { getAllInvitesSwr } = peopleProps;
-
-  const { data } = getAllInvitesSwr;
-
-  if (!contextInfo || getAllInvitesSwr?.isLoading) {
-    return <Skeleton active />;
-  }
 
   return (
     <div className="pt-4">
@@ -47,7 +29,7 @@ const CorrespondencePage = () => {
         tabs={
           <CustomTab
             onChange={contextInfo?.handleTabChange}
-            defaultKey={contextInfo?.tabItem}
+            defaultKey={contextInfo?.currentTab}
             items={contextInfo?.tabItemList}
           />
         }
@@ -56,13 +38,15 @@ const CorrespondencePage = () => {
           table: 'cursor-pointer',
         }}
         columns={contextInfo?.columns}
-        dataSource={data?.data as User[]}
+        dataSource={contextInfo?.dataSource}
+        loading={contextInfo?.isLoading}
         size="large"
         rowClassName="group"
         onRow={rowClickHandler}
+        components={contextInfo?.components}
       />
       <RegistrationDetail
-        open={isModalOpen}
+        open={!!staffData?._id}
         staffData={staffData}
         onCancel={handleCancel}
       />

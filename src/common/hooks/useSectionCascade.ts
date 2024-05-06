@@ -1,18 +1,24 @@
 import { useState } from 'react';
 import { iHandleClick } from '@/types';
 
-const initialDataList = {
-  parastatal: { title: '', id: '', key: '' },
-  office: { title: '', id: '', key: '' },
-  department: { title: '', id: '', key: '' },
+export const initialDataList = {
+  parastatal: { title: '', id: '', key: '', disabled: false },
+  office: { title: '', id: '', key: '', disabled: false },
+  department: { title: '', id: '', key: '', disabled: false },
 };
-type UpdateItemType = {
+export type UpdateItemType = {
   level: keyof typeof initialDataList;
   id: string;
   title: string;
 };
 
-function useSectionCascade() {
+type Props = Partial<{
+  parastatal: '';
+  office: '';
+  department: '';
+}>;
+
+function useSectionCascade(props?: Props) {
   const [dataList, setDataList] = useState(initialDataList);
 
   const clickCascadeItemHandler: iHandleClick = (e) => {
@@ -27,6 +33,7 @@ function useSectionCascade() {
         setDataList({
           ...initialDataList,
           parastatal: {
+            ...initialDataList.parastatal,
             ...value,
             key: '/parastatals/all',
           },
@@ -36,6 +43,7 @@ function useSectionCascade() {
         setDataList((prev) => ({
           ...prev,
           office: {
+            ...initialDataList.office,
             ...value,
             key: `/offices/all?parastatal=${prev.parastatal.id}`,
           },
@@ -46,6 +54,7 @@ function useSectionCascade() {
         setDataList((prev) => ({
           ...prev,
           department: {
+            ...initialDataList.department,
             ...value,
             key: `/departments/all?parastatal=${prev.parastatal.id}&office=${prev.office.id}`,
           },

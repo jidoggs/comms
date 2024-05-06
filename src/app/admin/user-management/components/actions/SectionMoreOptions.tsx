@@ -15,8 +15,8 @@ import CustomButton from '@/common/components/CustomButton';
 import DeleteModal from '../modals/DeleteModal';
 import IsDeletedModal from '../modals/IsDeletedModal';
 import useRoles from '@/app/admin/hooks/useRoles';
-import { uniqueId } from '../../types';
-import { AllRoleType, RoleType } from '@/app/admin/types';
+import { Role, uniqueId } from '../../types';
+
 // import Title from '@/common/components/Title';
 
 const initialModalState = {
@@ -25,9 +25,9 @@ const initialModalState = {
 };
 
 interface SectionMoreProps {
-  editedRole: RoleType;
-  allRoles: AllRoleType;
-  setAllRoles: React.Dispatch<React.SetStateAction<AllRoleType>>;
+  editedRole: Role;
+  allRoles: Role[];
+  setAllRoles: React.Dispatch<React.SetStateAction<Role[]>>;
   toggleEditMode: () => void;
 }
 
@@ -44,7 +44,7 @@ function SectionMoreOptions({
   };
 
   const { deleteRoleSwr } = useRoles({
-    delete_specific_role: true,
+    can_delete_by_id: true,
     _id: editedRole._id,
   });
   const { trigger: deleteRoleTrigger, isMutating: deleteRoleIsMutating } =
@@ -52,9 +52,7 @@ function SectionMoreOptions({
 
   const deleteSpecificRole = () => {
     if (editedRole._id === uniqueId) {
-      const newRoles = allRoles.filter(
-        (r: RoleType) => r._id !== editedRole._id
-      );
+      const newRoles = allRoles.filter((r) => r._id !== editedRole._id);
       setAllRoles(newRoles);
       // message.success('New Role deleted successfully');
       setIsModalOpen({ ...initialModalState, isDeleted: true, delete: false });

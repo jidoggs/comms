@@ -1,35 +1,44 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 'use client';
-import React from 'react';
-import { Form } from 'antd';
+import React, { useState } from 'react';
 import CustomButton from '@/common/components/CustomButton';
-import { ArrowRight, ArrowRightBreak } from '@/common/components/icons';
-import { useRouter } from 'next/navigation';
-// import useOnboarding from '@/app/auth/hooks/useOnboarding';
+import { ArrowRight } from '@/common/components/icons';
 import Title from '@/common/components/Title';
 import SectionCascade from '@/common/components/SectionCascade';
 import { useSectionCascade } from '@/common/hooks';
+import useOnboarding from '@/app/onboarding/hooks/useOnboarding';
+import ApproveModalContent from '@/common/components/ApproveModalContent';
+import { getItem } from '@/service/storage';
 
 const StepTwoForm = () => {
-  const router = useRouter();
   const { clickCascadeItemHandler, dataList } = useSectionCascade();
+  const { authSwr, finalOfficeStep } = useOnboarding({ step: 2 });
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const onFinish = () => {
-    // router.push('/onboarding/set-password');
-    // officeInfoTrigger({ data: department, type: 'post' }).then(() => {
-    //   router.push('/onboarding/set-password');
-    // });
+  const data_keys = Object.keys(dataList) as Array<keyof typeof dataList>;
+
+  const clickHandler = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const submitHandler = () => {
+    const _id = getItem('uid');
+    let data: Record<string, string> = { _id };
+
+    data_keys.forEach((key) => {
+      if (dataList[key].id) {
+        data[key] = dataList[key].id;
+      }
+    });
+
+    authSwr.trigger({ data, type: 'patch' }).finally(closeModal);
   };
 
   return (
-    <Form
-      onFinish={onFinish}
-      autoComplete="off"
-      layout="vertical"
-      className="!w-full"
-    >
+    <div className="!w-full">
       <Title>Click to select Parastatal, office and department</Title>
       {/* is-onboard and group are style identifies */}
       <div className="is-onboard group w-full max-w-screen-lg overflow-x-scroll py-2">
@@ -41,25 +50,24 @@ const StepTwoForm = () => {
       </div>
       <div className="flex items-center justify-end gap-x-2">
         <CustomButton
-          size="small"
-          type="primary"
-          onClick={() => router.push('/onboarding/set-password')}
-        >
-          <span className="pr-1">Skip step and add</span>
-          <ArrowRightBreak />
-        </CustomButton>
-
-        <CustomButton
-          // loading={officeInfoIsMutating}
-          disabled={dataList.department.id === ''}
+          disabled={dataList[finalOfficeStep].id === '' || authSwr.isMutating}
           htmlType="submit"
           size="small"
+          onClick={clickHandler}
         >
           <span className="pr-1">Submit details</span>
-          {/* {officeInfoIsMutating ? null : <ArrowRight />} */}
+          {authSwr.isMutating ? null : <ArrowRight />}
         </CustomButton>
       </div>
-    </Form>
+      <ApproveModalContent
+        isModalOpen={isModalOpen}
+        isLoading={authSwr.isMutating}
+        handleSubmit={submitHandler}
+        actionText="continue"
+        handleCancel={closeModal}
+        text="Are you sure of the information you want to submit"
+      />
+    </div>
   );
 };
 

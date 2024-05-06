@@ -10,8 +10,8 @@ export interface ResetResponse {
 
 export interface PersonalInfo {
   firstname?: string;
-  lastname?: string;
-  othername?: string;
+  surname?: string;
+  middlename?: string;
   email?: string;
   phonenumber: string;
 }

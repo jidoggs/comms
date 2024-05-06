@@ -5,6 +5,7 @@ export const ENDPOINTS = {
     FORGOT_PASSWORD: '/auth/forgot_password',
     RESET_PASSWORD: '/auth/reset_password',
     ONBOARD: '/auth/onboard',
+    ONBOARD_STATUS: (email: string) => `/invite?email=${email}`,
   },
   USER: {
     GET_USER: '/user/profile',
@@ -14,6 +15,8 @@ export const ENDPOINTS = {
     DELETE_USER_TO_ROLE: (UID: string, RID: string) =>
       `/user/${UID}/revoke/role/${RID}`,
     GET_ALL: '/user/all',
+    UPDATE: '/user/update',
+    SPECIFIC_USER: (UID: string) => `/user/${UID}`,
   },
   PARASTATALS: {
     CREATE: '/parastatals',
@@ -34,7 +37,7 @@ export const ENDPOINTS = {
     INVITE: '/invite/office',
   },
   PEOPLE: {
-    GET_ALL_INVITE_BY_STATUS: (query: string) => `/invite?status=${query}`,
+    GET_ALL_INVITE_BY_STATUS: (query: string) => `/invite${query}`,
     APPROVE_REQUEST: '/auth/approve',
   },
   ROLES: {
@@ -44,12 +47,6 @@ export const ENDPOINTS = {
     // GET_SPECIFIC_ROLE: (query: string) => `/roles/${query}`,
     DELETE_SPECIFIC_ROLE: (query: string) => `/roles/${query}`,
     UPDATE: '/roles/',
-  },
-  USERS: {
-    GET_ALL_USERS: '/user/all',
-    GET_SPECIFIC_USER: (query: string) => `/user/${query}`,
-    DELETE_USER: (query: string) => `/user/${query}`,
-    UPDATE_USER: (query: string) => `/user/${query}`,
   },
   PERMISSIONS: {
     CREATE: '/permissions',

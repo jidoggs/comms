@@ -3,6 +3,7 @@
 import { Table, TabsProps } from 'antd';
 import { AnimationControls } from 'framer-motion';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
+import { CustomTableProps } from '@/common/components/CustomTable';
 export * from '../../../types';
 export interface CorrespondenceData {
   sent_by: string;
@@ -33,8 +34,9 @@ export type CorrespondenceListContextType = {
   columns: EditableTableColumnTypes;
   dataSource: any[];
   handleDelete: (id: string | number) => void;
-  tabItem: string;
+  currentTab: string;
   tabItemList: TabsProps['items'];
+  components: CustomTableProps<any>['components'];
 } | null;
 
 export type DetailContextType = {

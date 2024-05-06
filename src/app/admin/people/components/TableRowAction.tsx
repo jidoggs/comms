@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Dropdown, MenuProps, message } from 'antd';
+import { Dropdown, MenuProps } from 'antd';
 import CustomButton from '@/common/components/CustomButton';
 import { CloseCircled, MoreFile, TickCircle } from '@/common/components/icons';
 import { iHandleClick } from '../types';
@@ -7,6 +7,7 @@ import DeclineRequestModalContent from './DeclineRequestModalContent';
 import SubmittedResponseModal from './SubmittedResponseModal';
 import ApproveModalContent from '../../../../common/components/ApproveModalContent';
 import usePeople from '../../hooks/usePeople';
+import { useSession } from '@/common/hooks';
 
 type Props = {
   data: any;
@@ -21,8 +22,8 @@ const initialModalState = {
 };
 
 function TableRowAction({ data }: Props) {
-  //eslint-disable-next-line
   const [isModalOpen, setIsModalOpen] = useState(initialModalState);
+  const { isBasicUser } = useSession();
 
   const showModal = (val: keyof typeof initialModalState) => {
     setIsModalOpen({ ...initialModalState, [val]: true });
@@ -30,12 +31,6 @@ function TableRowAction({ data }: Props) {
 
   const handleCancel = () => {
     setIsModalOpen({ ...initialModalState });
-  };
-
-  //eslint-disable-next-line
-  const submitHandler = (value: any) => {
-    console.log(value); //eslint-disable-line
-    handleCancel();
   };
 
   const clickHandler: iHandleClick = (e) => {
@@ -66,7 +61,7 @@ function TableRowAction({ data }: Props) {
   ];
 
   const { approveRequestSwr } = usePeople({
-    decline_or_aprove: true,
+    can_approve: !isBasicUser,
   });
 
   const { trigger: approveRequestSWRTrigger } = approveRequestSwr;
@@ -75,10 +70,7 @@ function TableRowAction({ data }: Props) {
     approveRequestSWRTrigger({
       data: { user_id: data?._id, email: data?.email },
       type: 'post',
-    }).then(() => {
-      message.success('Request approved successfully');
-      handleCancel();
-    });
+    }).finally(handleCancel);
   };
 
   return (

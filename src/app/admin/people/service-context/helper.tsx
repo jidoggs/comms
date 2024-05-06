@@ -1,8 +1,8 @@
+import dayjs from 'dayjs';
 import { mergeClassName } from '@/common/utils';
 import TableRowAction from '../components/TableRowAction';
-import { TabsProps } from 'antd';
 import { EditableTableColumnTypes } from '../types';
-import dayjs from 'dayjs';
+import { ItemProps } from '@/common/components/CustomTab';
 
 export const defaultColumns: (EditableTableColumnTypes[number] & {
   dataIndex: string;
@@ -46,6 +46,9 @@ export const defaultColumns: (EditableTableColumnTypes[number] & {
     dataIndex: 'office',
     ellipsis: true,
     width: 150,
+    render: (record: any) => {
+      return <>{record?.name}</>;
+    },
   },
   {
     title: 'Parastatal',
@@ -53,34 +56,43 @@ export const defaultColumns: (EditableTableColumnTypes[number] & {
     dataIndex: 'parastatal',
     ellipsis: true,
     width: 150,
+    render: (record: any) => {
+      return <>{record?.name}</>;
+    },
   },
   {
     title: 'Last active',
     className: '',
-    dataIndex: 'last_active',
+    dataIndex: 'last_seen',
     ellipsis: true,
     width: 150,
+    render: (record: any) => {
+      return <>{dayjs(record).format('DD-MMM-YYYY')}</>;
+    },
   },
   {
     title: 'Date added',
     className: '',
-    dataIndex: 'date_created',
+    dataIndex: 'created_at',
     ellipsis: true,
     width: 150,
+    render: (record: any) => {
+      return <>{dayjs(record).format('DD-MMM-YYYY')}</>;
+    },
   },
   {
     title: 'Date sent',
     className: '',
-    dataIndex: 'date_sent',
+    dataIndex: 'updated_at',
     ellipsis: true,
     width: 150,
-    render: (_: any, __: any, record: any) => {
-      return <>{dayjs(record?.created_at).format('DD-MMM-YYYY')}</>;
+    render: (record: any) => {
+      return <>{dayjs(record).format('DD-MMM-YYYY')}</>;
     },
   },
   {
     title: 'Actions',
-    className: '!pr-3',
+    className: '!pr-3 !text-center',
     dataIndex: '',
     ellipsis: true,
     width: 150,
@@ -93,7 +105,7 @@ export const defaultColumns: (EditableTableColumnTypes[number] & {
   className: mergeClassName('!py-4 text-sm font-medium', itm.className),
 }));
 
-export const tabItemList: TabsProps['items'] = [
+export const tabItemList: ItemProps = [
   {
     key: 'pending',
     label: 'Pending onboarding',
@@ -126,7 +138,7 @@ export const personKeys = [
   'title',
   'office',
   'parastatal',
-  'last_active',
+  'last_seen',
   'date_created',
   '',
 ];

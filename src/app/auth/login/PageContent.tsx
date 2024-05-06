@@ -11,7 +11,7 @@ const LoginForm = dynamic(() => import('./components/LoginForm'), {
 });
 
 const LoginPageContent: React.FunctionComponent = () => {
-  const { loggoutSuccessHandler, messageContext } = useAuth();
+  const { loggoutSuccessHandler } = useAuth();
   const searchParams = useSearchParams();
   const session_end = searchParams.get('session') as string;
   const type = searchParams.get('type') as string;
@@ -25,7 +25,6 @@ const LoginPageContent: React.FunctionComponent = () => {
 
   return (
     <>
-      {messageContext}
       <PageTitle title="Welcome Back!" description="Please enter your details.">
         <LoginForm />
       </PageTitle>

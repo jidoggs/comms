@@ -1,59 +1,63 @@
 import { useState } from 'react';
 
 import { ENDPOINTS } from '@/service/config/endpoint';
-import { useAuthGetRequest, useAuthRequest } from '@/service/swrHooks';
+import {
+  fetchOptions,
+  useAuthGetRequest,
+  useAuthRequest,
+  useServiceConfig,
+} from '@/service/swrHooks';
+import { User } from '@/types';
+import { CustomTableProps } from '@/common/components/CustomTable';
+import { UserServiceArgs } from './types';
 
-type RequestType = 'get_all_users' | 'get_user' | 'delete_user' | 'update_user';
-type QueryType = '_id' | 'user';
+const { GET_ALL, SPECIFIC_USER } = ENDPOINTS.USER;
 
-type Props = Partial<Record<RequestType, boolean>> &
-  Partial<Record<QueryType, string>>;
-
-const { GET_ALL_USERS, GET_SPECIFIC_USER, DELETE_USER, UPDATE_USER } =
-  ENDPOINTS.USERS;
-
-function useUsers(props: Props) {
-  const isQuery = props._id;
-  const query = props._id || '';
-
-  const [refreshList, setRefreshList] = useState(false);
+function useUsers(props?: UserServiceArgs) {
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const user_id = props?._id || '';
+  const { revalidateRequest } = useServiceConfig();
 
   const revalidateListHandler = () => {
-    setRefreshList(true);
-    getAllUsersSwr.revalidate();
+    revalidateRequest(GET_ALL);
   };
 
-  const resetRefreshList = () => {
-    if (refreshList) {
-      setRefreshList(false);
-    }
-  };
-
-  const getAllUsersSwr = useAuthGetRequest(
-    props?.get_all_users || refreshList ? GET_ALL_USERS : '',
-    {
-      revalidateOnFocus: false,
-      revalidateOnMount: true,
-      revalidateIfStale: false,
-      errorRetryCount: process.env.NODE_ENV === 'development' ? 1 : 3,
-      onSuccess: resetRefreshList,
-    }
+  const getAllUsersSwr = useAuthGetRequest<User[]>(
+    props?.can_get_all ? GET_ALL : '',
+    fetchOptions
   );
 
   // const updateRoleSwr = useAuthRequest(props?.update_user ? UPDATE_USER : '', {
   //   onSuccess: revalidateListHandler,
   // });
   const deleteRoleSwr = useAuthRequest<null>(
-    props?.delete_user && isQuery ? DELETE_USER(query) : '',
+    props?.can_delete_by_id && user_id ? SPECIFIC_USER(user_id) : '',
     {
       onSuccess: revalidateListHandler,
     }
   );
 
+  const rowClickHandler: CustomTableProps<any>['onRow'] = (record) => ({
+    onClick: () => {
+      setSelectedUser(record);
+    },
+    style: { cursor: 'pointer' },
+  });
+
+  const handleCancel = () => {
+    setSelectedUser(null);
+  };
+
   return {
-    getAllUsersSwr,
-    // updateUserSwr,
+    getAllUsersSwr: {
+      ...getAllUsersSwr,
+      data: getAllUsersSwr.data?.data || [],
+      loading: getAllUsersSwr.isLoading || getAllUsersSwr.isValidating,
+    },
     deleteRoleSwr,
+    selectedUser,
+    rowClickHandler,
+    handleCancel,
   };
 }
 

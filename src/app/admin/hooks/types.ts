@@ -1,26 +1,34 @@
-type RequestType =
-  | 'create'
-  | 'get_all'
-  | 'get_id'
-  | 'update'
-  | 'delete'
-  | 'invite'
-  | 'all_users';
+type GetUpdateDelete =
+  | 'can_get_all'
+  | 'can_get_by_id'
+  | 'can_delete_by_id'
+  | 'can_update_by_id';
+
+type Invite = 'can_invite';
+type Create = 'can_create';
+
+type RequestType = Create | GetUpdateDelete | Invite;
+
 type QueryType = '_id' | 'query';
 type OfficeQueryType = QueryType | 'parastatal';
 
-export type OfficeServiceParams = Partial<Record<RequestType, boolean>> &
-  Partial<Record<OfficeQueryType, string>>;
+type GenericServiceParam<A extends string, Q extends string> = Partial<
+  Record<A, boolean>
+> &
+  Partial<Record<Q, string>>;
 
-export type ServiceParams = Partial<Record<RequestType, boolean>> &
-  Partial<Record<QueryType, string>>;
+export type OfficeServiceParams = GenericServiceParam<
+  RequestType,
+  OfficeQueryType
+>;
 
-type RolesRequestType =
-  | 'create_role'
-  | 'get_all_roles'
-  | 'get_all_permissions'
-  | 'delete_specific_role'
-  | 'update_role';
+export type ServiceParams = GenericServiceParam<RequestType, QueryType>;
 
-export type RoleProps = Partial<Record<RolesRequestType, boolean>> &
-  Partial<Record<QueryType, string>>;
+export type RoleServiceArgs = GenericServiceParam<
+  Create | GetUpdateDelete,
+  QueryType
+>;
+
+export type UserServiceArgs = GenericServiceParam<GetUpdateDelete, QueryType>;
+
+export type PermissionServiceArgs = GenericServiceParam<RequestType, QueryType>;

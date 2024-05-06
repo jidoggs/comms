@@ -8,6 +8,7 @@ type Props = {
   isLoading?: boolean;
   handleCancel: VoidFunction; //eslint-disable-line
   handleSubmit: (val: any) => void; //eslint-disable-line
+  inviteLink: string;
 };
 
 function InvitePersonModal({
@@ -15,11 +16,12 @@ function InvitePersonModal({
   handleSubmit,
   isModalOpen,
   isLoading = false,
+  inviteLink,
 }: Props) {
   return (
     <CustomModal
       width={600}
-      title={<CustomModalTitle title="Invite" hasLink />}
+      title={<CustomModalTitle title="Invite" hasLink linkRef={inviteLink} />}
       open={isModalOpen}
       onCancel={handleCancel}
       destroyOnClose

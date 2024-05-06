@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Permissions from './Permissions';
 import CustomInput from '@/common/components/CustomInput';
 import SectionMoreOptions from '../actions/SectionMoreOptions';
@@ -6,24 +6,18 @@ import CustomButton from '@/common/components/CustomButton';
 import { ArrowUp, CloseCircled } from '@/common/components/icons';
 import Title from '@/common/components/Title';
 import Tick from '@/common/components/icons/Tick';
-import {
-  AllPermissionType,
-  AllRoleType,
-  PermissionType,
-  RoleType,
-} from '@/app/admin/types';
 import { useRoles } from '@/app/admin/hooks';
 import { message } from 'antd';
-import { uniqueId } from '../../types';
+import { Role, uniqueId, Permission } from '../../types';
 import ApproveModal from '../modals/ApproveModal';
 
 interface RoleItemProps {
-  role: RoleType;
-  allRoles: AllRoleType;
-  setAllRoles: React.Dispatch<React.SetStateAction<AllRoleType>>;
-  allPermissions: AllPermissionType;
-  ref: React.RefObject<HTMLDivElement> | null;
-  firstRoleRef: React.RefObject<HTMLDivElement>;
+  role: Role;
+  allRoles: Role[];
+  setAllRoles: React.Dispatch<React.SetStateAction<Role[]>>;
+  allPermissions: Permission[];
+  // ref: React.RefObject<HTMLDivElement> | null;
+  // firstRoleRef: React.RefObject<HTMLDivElement>;
 }
 
 const RoleItem = ({
@@ -31,15 +25,26 @@ const RoleItem = ({
   allRoles,
   setAllRoles,
   allPermissions,
-  firstRoleRef,
 }: RoleItemProps) => {
-  const [editedRole, setEditedRole] = useState<RoleType>(role);
+  const [editedRole, setEditedRole] = useState<Role>(role);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const firstRoleRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setEditedRole(role);
-  }, [allRoles]);
+  }, [allRoles.length, setEditedRole]); //eslint-disable-line
+
+  useEffect(() => {
+    if (firstRoleRef.current) {
+      firstRoleRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    } else {
+      return;
+    }
+  }, [firstRoleRef.current]); //eslint-disable-line
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditedRole({ ...editedRole, name: e.target.value });
@@ -48,69 +53,51 @@ const RoleItem = ({
   const toggleEditMode = () => {
     if (editedRole._id === uniqueId) {
       setIsEditMode(false);
-      setAllRoles((prevRoles: AllRoleType) =>
-        prevRoles.filter((role: RoleType) => role._id !== uniqueId)
+      setAllRoles((prevRoles) =>
+        prevRoles.filter((role) => role._id !== uniqueId)
       );
     } else {
       setEditedRole(role);
       setIsEditMode(!isEditMode);
       if (!isEditMode) {
         setEditedRole(role);
-        setAllRoles((prevRoles: AllRoleType) =>
-          prevRoles.map((prevRole: RoleType) =>
+        setAllRoles((prevRoles) =>
+          prevRoles.map((prevRole) =>
             prevRole._id === role._id ? editedRole : prevRole
           )
         );
       }
     }
     if (role._id === uniqueId && !isEditMode) {
-      const newAllRoles = allRoles.filter(
-        (role: RoleType) => role._id !== uniqueId
-      );
+      const newAllRoles = allRoles.filter((role) => role._id !== uniqueId);
       allRoles = newAllRoles;
     }
   };
 
-  const { createRoleSwr } = useRoles({
-    create_role: true,
-  });
-  const { updateRoleSwr } = useRoles({
-    update_role: true,
+  const { createRoleSwr, updateRoleSwr } = useRoles({
+    can_create: true,
+    can_update_by_id: true,
   });
 
-  const { trigger: createRoleTrigger, isMutating: createRoleIsMutating } =
-    createRoleSwr;
-  const { trigger: updateRoleTrigger, isMutating: updateRoleIsMutating } =
-    updateRoleSwr;
-
-  const updateExitingRole = (currentUpdatedRole: RoleType) => {
-    const permissions = currentUpdatedRole.permissions.map(
-      (permission: PermissionType) => permission._id
-    );
-    const name = currentUpdatedRole.name;
-    updateRoleTrigger({
-      data: { name, permissions, _id: editedRole._id },
-      type: 'patch',
-    }).then((res) => {
-      message.success(res.message);
-      setIsModalOpen(false);
-      toggleEditMode();
-    });
+  const onFinishedRequest = () => {
+    setIsModalOpen(false);
+    toggleEditMode();
   };
 
-  const createNewRole = (newRole: RoleType) => {
-    const permissions = newRole.permissions.map(
-      (permission: PermissionType) => permission._id
+  const updateExitingRole = (updatingRole: Role) => {
+    const permissions = updatingRole.permissions.map(
+      (permission: Permission) => permission._id
     );
-    const name = newRole.name;
-    createRoleTrigger({
-      data: { name: name, permissions: permissions },
-      type: 'post',
-    }).then(() => {
-      message.success('Role created successfully');
-      setIsModalOpen(false);
-      toggleEditMode();
-    });
+    const data = { name: updatingRole.name, permissions, _id: editedRole._id };
+
+    updateRoleSwr.trigger({ data, type: 'patch' }).finally(onFinishedRequest);
+  };
+
+  const createNewRole = (newRole: Role) => {
+    const permissions = newRole.permissions.map((permission) => permission._id);
+    const data = { name: newRole.name, permissions: permissions };
+
+    createRoleSwr.trigger({ data, type: 'post' }).finally(onFinishedRequest);
   };
 
   const submitRoleHandler = ({ _id }: any) => {
@@ -125,9 +112,9 @@ const RoleItem = ({
     }
   };
 
-  const handleAddPermission = (permission: PermissionType) => {
+  const handleAddPermission = (permission: Permission) => {
     const permissionExists = editedRole.permissions.some(
-      (perm: PermissionType) => perm._id === permission._id
+      (perm) => perm._id === permission._id
     );
     if (!permissionExists) {
       const newPermissions = [...editedRole.permissions, permission];
@@ -153,7 +140,7 @@ const RoleItem = ({
   return (
     <div
       className="mt-2 grid grid-cols-10 items-start bg-custom-white_100 p-4"
-      ref={firstRoleRef}
+      ref={role._id === uniqueId ? firstRoleRef : null}
     >
       {isEditMode || editedRole._id === uniqueId ? (
         <div className="col-span-2 pr-4">
@@ -170,9 +157,7 @@ const RoleItem = ({
 
       <Permissions
         editedRole={editedRole}
-        // allRoles={allRoles}
         allPermissions={allPermissions}
-        // currentPermissions={editedRole.permissions}
         isEditMode={isEditMode}
         handleAddPermission={handleAddPermission}
         handleCancelPermission={handleCancelPermission}
@@ -197,7 +182,7 @@ const RoleItem = ({
           />
           <ApproveModal
             handleCancel={handleCancel}
-            modalMutating={createRoleIsMutating || updateRoleIsMutating}
+            modalMutating={createRoleSwr.isMutating || updateRoleSwr.isMutating}
             handleSubmit={() => submitRoleHandler({ _id: editedRole._id })}
             isModalOpen={isModalOpen}
           />

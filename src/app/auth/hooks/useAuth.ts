@@ -1,11 +1,12 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import useMessage from 'antd/es/message/useMessage';
+import message from 'antd/es/message';
 import { useSWRConfig } from 'swr';
 import { useRef } from 'react';
 import dayjs from 'dayjs';
 import useSession from '../../../common/hooks/useSession';
 import {
+  fetchOptions,
   useAuthGetRequest,
   useAuthRequest,
   useNonAuthRequest,
@@ -31,14 +32,13 @@ function useAuth(props?: AuthParams) {
   const { mutate } = useSWRConfig();
   const router = useRouter();
   const { data, storeUserHandler } = useSession();
-  const [messageApi, messageContext] = useMessage();
   const logoutRef = useRef(false);
   const messageLoading = useRef(false);
 
   const handleLogout = async () => {
     //eslint-disable-next-line
     mutate((_) => true, undefined, { revalidate: false }).then(() => {
-      messageApi.loading('Logging User out...').then(() => {
+      message.loading('Logging User out...').then(() => {
         router.replace(
           `/auth/login?type=logout&session=${new Date().toISOString()}`
         );
@@ -56,9 +56,9 @@ function useAuth(props?: AuthParams) {
     if (diffTime <= 4 && logoutRef.current === false) {
       logoutRef.current = true;
       if (type === 'logout') {
-        messageApi.success('Logout Successful');
+        message.success('Logout Successful');
       } else {
-        messageApi.error('Unauthorized/Session Expired');
+        message.error('Unauthorized/Session Expired');
       }
     }
   };
@@ -66,10 +66,7 @@ function useAuth(props?: AuthParams) {
   const userSwr = useAuthGetRequest<User>(
     props?.user && !data?._id ? GET_USER : '',
     {
-      revalidateOnFocus: false,
-      revalidateOnMount: true,
-      revalidateIfStale: false,
-      errorRetryCount: process.env.NODE_ENV === 'development' ? 1 : 3,
+      ...fetchOptions,
       onSuccess(res) {
         storeUserHandler(res.data);
       },
@@ -92,7 +89,7 @@ function useAuth(props?: AuthParams) {
         storeRefreshToken(res.data.refresh_token);
         storeUserHandler(res.data);
         messageLoading.current = true;
-        messageApi.success(res.message).then(() => {
+        message.success(res.message).then(() => {
           if (res?.data?.role?.name === UserPreDefinedRole.SECONDARYADMIN) {
             router.push('/admin/people');
           } else {
@@ -121,7 +118,6 @@ function useAuth(props?: AuthParams) {
   );
 
   return {
-    messageContext,
     loginSwr,
     userSwr: {
       ...userSwr,
