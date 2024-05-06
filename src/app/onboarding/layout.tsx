@@ -1,16 +1,19 @@
 'use client';
-// import { MainLayout } from "@/components/layout";
-// import Title from '@/common/components/Title';
+import React, { useLayoutEffect } from 'react';
 import { Content } from 'antd/lib/layout/layout';
-// import Image from 'next/image';
-import React from 'react';
-// import Params from './components/Params';
+import { clearUserDetails, fetchUserToken } from '@/service/storage';
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
 const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
+  const token = fetchUserToken();
+  useLayoutEffect(() => {
+    if (token) {
+      clearUserDetails();
+    }
+  }, []);
   return (
     <Content
       className="flex h-screen w-screen items-center justify-center bg-cover bg-center"

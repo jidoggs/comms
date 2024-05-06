@@ -1,15 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Permissions from './Permissions';
-import CustomInput from '@/common/components/CustomInput';
-import SectionMoreOptions from '../actions/SectionMoreOptions';
-import CustomButton from '@/common/components/CustomButton';
-import { ArrowUp, CloseCircled } from '@/common/components/icons';
-import Title from '@/common/components/Title';
-import Tick from '@/common/components/icons/Tick';
+import message from 'antd/es/message';
 import { useRoles } from '@/app/admin/hooks';
-import { message } from 'antd';
-import { Role, uniqueId, Permission } from '../../types';
+import Permissions from './Permissions';
+import SectionMoreOptions from '../actions/SectionMoreOptions';
 import ApproveModal from '../modals/ApproveModal';
+import Title from '@/common/components/Title';
+import CustomInput from '@/common/components/CustomInput';
+import CustomButton from '@/common/components/CustomButton';
+import { ArrowUp, CloseCircled, Tick } from '@/common/components/icons';
+import { Role, uniqueId, Permission } from '../../types';
 
 interface RoleItemProps {
   role: Role;
@@ -90,7 +89,7 @@ const RoleItem = ({
     );
     const data = { name: updatingRole.name, permissions, _id: editedRole._id };
 
-    updateRoleSwr.trigger({ data, type: 'patch' }).finally(onFinishedRequest);
+    updateRoleSwr.trigger({ data, type: 'put' }).finally(onFinishedRequest);
   };
 
   const createNewRole = (newRole: Role) => {

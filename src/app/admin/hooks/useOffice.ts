@@ -6,8 +6,9 @@ import {
 } from '@/service/swrHooks';
 import { useSession } from '@/common/hooks';
 import { ENDPOINTS } from '@/service/config/endpoint';
-import { OfficeType } from '../types';
+import { queryHandler } from '@/service/request';
 import { OfficeServiceParams } from './types';
+import { OfficeType } from '../types';
 import { APIResponseSuccessModel } from '@/types';
 
 const { CREATE, GET_ALL, UPDATE, INVITE } = ENDPOINTS.OFFICE;
@@ -16,6 +17,7 @@ function useOffice(props: OfficeServiceParams) {
   const { isBasicUser } = useSession();
   const { revalidateRequest, actionSuccessHandler } = useServiceConfig();
   const officeId = props._id;
+  const getById = queryHandler({ _id: props._id });
 
   const revalidateListHandler = (res: APIResponseSuccessModel) => {
     revalidateRequest(GET_ALL + props.query, res.message);
@@ -38,7 +40,7 @@ function useOffice(props: OfficeServiceParams) {
   );
 
   const getItemSwr = useAuthGetRequest<OfficeType>(
-    props?.can_get_by_id && officeId ? UPDATE(officeId) : '',
+    props?.can_get_by_id && officeId ? UPDATE(getById) : '',
     fetchOptions
   );
 

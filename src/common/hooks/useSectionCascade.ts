@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { iHandleClick } from '@/types';
 
 export const initialDataList = {
-  parastatal: { title: '', id: '', key: '', disabled: false },
-  office: { title: '', id: '', key: '', disabled: false },
-  department: { title: '', id: '', key: '', disabled: false },
+  parastatal: { title: '', id: '', key: '' },
+  office: { title: '', id: '', key: '' },
+  department: { title: '', id: '', key: '' },
 };
 export type UpdateItemType = {
   level: keyof typeof initialDataList;
@@ -26,14 +26,13 @@ function useSectionCascade(props?: Props) {
     const title = dataset.value as string;
     const id = dataset.id as string;
 
-    const value = { id, title, key: '' };
+    const value = { id, title };
 
     switch (dataset.step) {
       case 'parastatals':
         setDataList({
           ...initialDataList,
           parastatal: {
-            ...initialDataList.parastatal,
             ...value,
             key: '/parastatals/all',
           },
@@ -43,7 +42,6 @@ function useSectionCascade(props?: Props) {
         setDataList((prev) => ({
           ...prev,
           office: {
-            ...initialDataList.office,
             ...value,
             key: `/offices/all?parastatal=${prev.parastatal.id}`,
           },
@@ -54,7 +52,6 @@ function useSectionCascade(props?: Props) {
         setDataList((prev) => ({
           ...prev,
           department: {
-            ...initialDataList.department,
             ...value,
             key: `/departments/all?parastatal=${prev.parastatal.id}&office=${prev.office.id}`,
           },

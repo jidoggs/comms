@@ -1,22 +1,21 @@
 import React, { useContext, useMemo } from 'react';
+import { CascadeContext } from '..';
+import { useDepartment, useMembers } from '@/app/admin/hooks';
+import { useCache, useSession } from '@/common/hooks';
 import SectionContainer from '../blocks/SectionContainer';
 import SectionMoreOptions from '../blocks/SectionMoreOptions';
-import { useCache, useSession } from '@/common/hooks';
-import { useDepartment } from '@/app/admin/hooks';
-import { CascadeContext } from '..';
-import useMembers from '@/app/admin/hooks/useMembers';
 import { queryHandler } from '@/service/request';
 
 const Options = () => {
   const departmentInfo = useContext(CascadeContext)?.dataList?.department;
   const departmentId = departmentInfo?.id;
   const cachedQuery = departmentInfo?.key as string;
-  const { isBasicUser } = useSession();
+  const { isPrimaryAdmin, isSecondaryAdmin } = useSession();
   const { cachedData } = useCache(cachedQuery);
   const departmentService = useDepartment({
-    can_invite: !isBasicUser,
-    can_delete_by_id: !isBasicUser,
-    can_update_by_id: !isBasicUser,
+    can_invite: isPrimaryAdmin || isSecondaryAdmin,
+    can_delete_by_id: isPrimaryAdmin || isSecondaryAdmin,
+    can_update_by_id: isPrimaryAdmin || isSecondaryAdmin,
     _id: departmentId,
   });
 
@@ -29,7 +28,7 @@ const Options = () => {
 
   return (
     <>
-      {isBasicUser ? null : (
+      {isPrimaryAdmin || isSecondaryAdmin ? (
         <SectionMoreOptions
           inviteIsLoading={departmentService.inviteUserSwr.isMutating}
           inviteTrigger={departmentService.inviteUserSwr.trigger}
@@ -46,7 +45,7 @@ const Options = () => {
           }}
           moreData={departmentInformation}
         />
-      )}
+      ) : null}
     </>
   );
 };

@@ -10,7 +10,7 @@ interface LayoutProps {
 
 const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
   return (
-    <div className="flex w-[450px] items-center justify-center rounded-2xl bg-custom-gray_100">
+    <div className="flex w-full min-w-[450px] max-w-5xl items-center justify-center rounded-2xl bg-custom-gray_100">
       <div className="flex w-full flex-col items-center justify-center gap-y-3 p-5">
         <Title
           tag="h4"
