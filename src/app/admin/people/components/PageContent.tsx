@@ -1,12 +1,12 @@
 'use client';
+import dynamic from 'next/dynamic';
 import React, { useContext, useState } from 'react';
 import CustomTable, { CustomTableProps } from '@/common/components/CustomTable';
 import CustomTab from '@/common/components/CustomTab';
-import TableActions from './TableActions';
 import { PeopleDataContext } from '../service-context/PeopleListContextWrapper';
 import { User } from '../types';
-import dynamic from 'next/dynamic';
 
+const TableActions = dynamic(() => import('./TableActions'));
 const RegistrationDetail = dynamic(() => import('./RegistrationDetail'));
 
 const CorrespondencePage = () => {

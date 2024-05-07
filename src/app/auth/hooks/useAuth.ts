@@ -1,6 +1,5 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import message from 'antd/es/message';
 import { useSWRConfig } from 'swr';
 import { useRef } from 'react';
 import dayjs from 'dayjs';
@@ -23,6 +22,7 @@ import {
 import { SessionResponse, UserSession, ResetResponse } from '../types/auth';
 import { User, UserPreDefinedRole } from '@/types';
 import { AuthParams } from './types';
+import { messageHandler } from '@/common/utils/notification';
 
 const { FORGOT_PASSWORD, REFRESH_TOKEN } = ENDPOINTS.AUTH;
 const { LOGIN, RESET_PASSWORD } = ENDPOINTS.AUTH;
@@ -37,8 +37,9 @@ function useAuth(props?: AuthParams) {
 
   const handleLogout = async () => {
     //eslint-disable-next-line
+
     mutate((_) => true, undefined, { revalidate: false }).then(() => {
-      message.loading('Logging User out...').then(() => {
+      messageHandler('loading', 'Logging User out...').then(() => {
         router.replace(
           `/auth/login?type=logout&session=${new Date().toISOString()}`
         );
@@ -48,7 +49,7 @@ function useAuth(props?: AuthParams) {
     });
   };
 
-  const loggoutSuccessHandler = (session_end: string, type: string) => {
+  const loggoutSuccessHandler = async (session_end: string, type: string) => {
     const now = dayjs();
     const logouttime = dayjs(session_end);
     const diffTime = now.diff(logouttime, 'second');
@@ -56,9 +57,9 @@ function useAuth(props?: AuthParams) {
     if (diffTime <= 4 && logoutRef.current === false) {
       logoutRef.current = true;
       if (type === 'logout') {
-        message.success('Logout Successful');
+        messageHandler('success', 'Logout Successful');
       } else {
-        message.error('Unauthorized/Session Expired');
+        messageHandler('error', 'Unauthorized/Session Expired');
       }
     }
   };
@@ -89,7 +90,7 @@ function useAuth(props?: AuthParams) {
         storeRefreshToken(res.data.refresh_token);
         storeUserHandler(res.data);
         messageLoading.current = true;
-        message.success(res.message).then(() => {
+        messageHandler('success', res.message).then(() => {
           if (res?.data?.role?.name === UserPreDefinedRole.SECONDARYADMIN) {
             router.push('/admin/people');
           } else {

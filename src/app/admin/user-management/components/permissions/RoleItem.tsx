@@ -1,9 +1,6 @@
+import dynamic from 'next/dynamic';
 import React, { useEffect, useRef, useState } from 'react';
-import message from 'antd/es/message';
 import { useRoles } from '@/app/admin/hooks';
-import Permissions from './Permissions';
-import SectionMoreOptions from '../actions/SectionMoreOptions';
-import ApproveModal from '../modals/ApproveModal';
 import Title from '@/common/components/Title';
 import CustomInput from '@/common/components/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
@@ -11,6 +8,13 @@ import Tick from '@/common/components/icons/Tick';
 import CloseCircled from '@/common/components/icons/CloseCircled';
 import ArrowUp from '@/common/components/icons/ArrowUp';
 import { Role, uniqueId, Permission } from '../../types';
+import { messageHandler } from '@/common/utils/notification';
+
+const Permissions = dynamic(() => import('./Permissions'));
+const SectionMoreOptions = dynamic(
+  () => import('../actions/SectionMoreOptions')
+);
+const ApproveModal = dynamic(() => import('../modals/ApproveModal'));
 
 interface RoleItemProps {
   role: Role;
@@ -101,12 +105,12 @@ const RoleItem = ({
     createRoleSwr.trigger({ data, type: 'post' }).finally(onFinishedRequest);
   };
 
-  const submitRoleHandler = ({ _id }: any) => {
+  const submitRoleHandler = async ({ _id }: any) => {
     if (_id === uniqueId) {
       if (editedRole.name !== '') {
         createNewRole(editedRole);
       } else {
-        message.error('The new role has no name');
+        messageHandler('error', 'The new role has no name');
       }
     } else {
       updateExitingRole(editedRole);

@@ -42,7 +42,7 @@ function InvitePerson() {
         handleSubmit={onFinishHandler}
         isModalOpen={isOpen}
         isLoading={inviteUserSwr.isMutating}
-        inviteLink={`/onboarding/personal-info?${inviteQuery}`}
+        inviteLink={inviteQuery}
       />
     </>
   );

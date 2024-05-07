@@ -1,13 +1,15 @@
+import dynamic from 'next/dynamic';
 import React, { useState } from 'react';
-import Dropdown from 'antd/es/dropdown/dropdown';
 import { MenuProps } from 'antd/es/menu';
-import message from 'antd/es/message';
 import useRoles from '@/app/admin/hooks/useRoles';
-import DeleteModal from '../modals/DeleteModal';
-import IsDeletedModal from '../modals/IsDeletedModal';
 import CustomButton from '@/common/components/CustomButton';
 import MoreFile from '@/common/components/icons/MoreFile';
 import { Role, uniqueId } from '../../types';
+import { messageHandler } from '@/common/utils/notification';
+
+const Dropdown = dynamic(() => import('antd/es/dropdown/dropdown'));
+const DeleteModal = dynamic(() => import('../modals/DeleteModal'));
+const IsDeletedModal = dynamic(() => import('../modals/IsDeletedModal'));
 
 const initialModalState = {
   delete: false,
@@ -40,7 +42,7 @@ function SectionMoreOptions({
   const { trigger: deleteRoleTrigger, isMutating: deleteRoleIsMutating } =
     deleteRoleSwr;
 
-  const deleteSpecificRole = () => {
+  const deleteSpecificRole = async () => {
     if (editedRole._id === uniqueId) {
       const newRoles = allRoles.filter((r) => r._id !== editedRole._id);
       setAllRoles(newRoles);
@@ -52,7 +54,7 @@ function SectionMoreOptions({
         data: {},
         type: 'delete',
       }).then(() => {
-        message.success('Role deleted successfully');
+        messageHandler('success', 'Role deleted successfully');
         setIsModalOpen({
           ...initialModalState,
           isDeleted: true,

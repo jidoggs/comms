@@ -2,6 +2,7 @@ import React from 'react';
 import Title from './Title';
 import { copyTextToClipboard } from '../utils';
 import Link from './icons/Link';
+import { messageHandler } from '../utils/notification';
 
 type Props = {
   title: string;
@@ -12,7 +13,11 @@ type Props = {
 function CustomModalTitle({ title, hasLink, linkRef }: Props) {
   const clickHandler = () => {
     if (!linkRef) return;
-    copyTextToClipboard('/onboarding/personal-info' + linkRef);
+    copyTextToClipboard(
+      window.location.origin + '/onboarding/personal-info' + linkRef
+    ).then(() => {
+      messageHandler('success', 'Link Copied Successfully');
+    });
   };
 
   return (

@@ -27,13 +27,13 @@ const StepThreeForm = () => {
   };
 
   return (
-    <Form
+    <Form<FieldType>
       onFinish={onFinish}
       autoComplete="off"
       layout="vertical"
       className="w-100"
     >
-      <FormItem<FieldType>
+      <FormItem
         label="New Password"
         name="new_password"
         rules={[{ required: true, validator: passwordStrengthValidator }]}

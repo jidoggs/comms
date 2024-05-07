@@ -3,12 +3,12 @@ import React, { useState } from 'react';
 import Form from 'antd/es/form/Form';
 import FormItem from 'antd/es/form/FormItem';
 import Link from 'next/link';
-import useMessage from 'antd/es/message/useMessage';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../hooks';
 import CustomInput from '@/common/components/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
 import { emailValidator } from '@/common/utils';
+import { messageHandler } from '@/common/utils/notification';
 
 type FieldType = {
   email: string;
@@ -19,13 +19,13 @@ const ForgotForm = () => {
     forgot_password: true,
   });
   const { trigger, isMutating } = forgotPasswordSwr;
-  const [messageApi, messageContext] = useMessage();
+
   const router = useRouter();
   const [messageLoading, setMessageLoading] = useState(false);
-  const onFinish = (data: FieldType) => {
+  const onFinish = async (data: FieldType) => {
     if (messageLoading) return;
     trigger({ data, type: 'post' }).then((res) => {
-      messageApi.success(res.data.message).then(() => {
+      messageHandler('success', res.data.message).then(() => {
         setMessageLoading(true);
         router.push(`/auth/verify?email=${data.email}`);
       });
@@ -34,9 +34,8 @@ const ForgotForm = () => {
 
   return (
     <>
-      {messageContext}
-      <Form<FieldType> onFinish={onFinish} layout="vertical">
-        <FormItem<FieldType>
+      <Form onFinish={onFinish} layout="vertical">
+        <FormItem
           label="Email"
           name="email"
           rules={[{ required: true, validator: emailValidator }]}

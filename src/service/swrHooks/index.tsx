@@ -1,6 +1,5 @@
 import useSWR, { useSWRConfig } from 'swr';
 import useSWRMutation from 'swr/mutation';
-import message from 'antd/es/message';
 import {
   makeAuthRequest,
   makeAuthFetch,
@@ -14,9 +13,10 @@ import {
   apiRequestorArgs,
 } from '@/types';
 import { SWRFetcher, SWRMutation } from './types';
+import { messageHandler } from '@/common/utils/notification';
 
 const errorMessageHandler = (error: APIResponseErrorModel) => {
-  message.error(apiErrorHandler(error));
+  messageHandler('error', apiErrorHandler(error));
 };
 
 export const useAuthRequest = <T,>(url: string, options?: SWRMutation<T>) => {
@@ -103,7 +103,7 @@ export const useServiceConfig = () => {
   const { mutate } = useSWRConfig();
 
   const actionSuccessHandler = (success: string) => {
-    message.success(success);
+    messageHandler('success', success);
   };
 
   const revalidateRequest = (key: string, success_message?: string) => {
