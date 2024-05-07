@@ -1,10 +1,10 @@
 import React from 'react';
-import { Timeline } from 'antd';
+import Timeline from 'antd/es/timeline/Timeline';
 import { correspondenceTimeline } from '@/common/mockData/corrTimeline';
 import dayjs, { Dayjs } from 'dayjs';
 import TimelineComponent from '@/common/components/TimelineComponent/TimelineComponent';
 import Title from '@/common/components/Title';
-import { TimelineDot } from '@/common/components/icons';
+import TimelineDot from '@/common/components/icons/TimelineDot';
 
 export const FormattedDate = ({ date }: { date: Dayjs }) => {
   return (

@@ -3,7 +3,9 @@
 
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import type { GetRef } from 'antd';
-import { Form } from 'antd';
+import Form from 'antd/es/form/Form';
+import useForm from 'antd/es/form/hooks/useForm';
+import FormItem from 'antd/es/form/FormItem';
 import { singleDummyCorrespondenceData } from '@/common/mockData';
 import { mergeClassName } from '@/common/utils';
 import EditableCellData from './EditableCell';
@@ -31,7 +33,7 @@ export const EditableRow: React.FC<EditableRowProps> = ({
   ...props
 }) => {
   const [currentEnter, setcurrentEnter] = useState('');
-  const [form] = Form.useForm();
+  const [form] = useForm();
   const properties = props as any;
 
   const onMouseEnterHandler = () => {
@@ -118,7 +120,7 @@ export const EditableCell: React.FC<EditableCellProps> = ({
 
   if (editable) {
     childNode = editing ? (
-      <Form.Item
+      <FormItem
         style={{ margin: 0 }}
         name={dataIndex}
         rules={[
@@ -134,7 +136,7 @@ export const EditableCell: React.FC<EditableCellProps> = ({
           save={save}
           name={dataIndex}
         />
-      </Form.Item>
+      </FormItem>
     ) : (
       <div
         className={mergeClassName(

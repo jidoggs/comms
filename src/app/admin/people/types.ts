@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
-import { Table, TabsProps } from 'antd';
+import Table from 'antd/es/table/Table';
+import { TabsProps } from 'antd/es/tabs';
 import { AnimationControls } from 'framer-motion';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { User } from './types';

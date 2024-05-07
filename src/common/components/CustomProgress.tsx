@@ -1,6 +1,8 @@
 'use client';
 
-import { Progress } from 'antd';
+import dynamic from 'next/dynamic';
+
+const Progress = dynamic(() => import('antd/es/progress/progress'));
 
 type CustomProgressProps = {
   percent: number;

@@ -5,7 +5,9 @@ import { DetailContext } from '../service-context/DetailContextWrapper';
 import CustomButton from '@/common/components/CustomButton';
 import Title from '@/common/components/Title';
 import TimelineComponent from '@/common/components/TimelineComponent/TimelineComponent';
-import { BackwardArrow, Dot, InfoCircle } from '@/common/components/icons';
+import BackwardArrow from '@/common/components/icons/BackwardArrow';
+import Dot from '@/common/components/icons/Dot';
+import InfoCircle from '@/common/components/icons/InfoCircle';
 
 const CorrespondenceHeader = () => {
   const router = useRouter();

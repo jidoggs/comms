@@ -13,7 +13,7 @@ const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
     if (token) {
       clearUserDetails();
     }
-  }, []);
+  }, []); //eslint-disable-line
   return (
     <Content
       className="flex h-screen w-screen items-center justify-center bg-cover bg-center"

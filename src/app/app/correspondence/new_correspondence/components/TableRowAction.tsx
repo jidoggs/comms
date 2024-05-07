@@ -1,8 +1,9 @@
-import CustomButton from '@/common/components/CustomButton';
-import { Send, Thrash } from '@/common/components/icons';
 import React, { useContext } from 'react';
+import CustomButton from '@/common/components/CustomButton';
 import ExpandButton from '../../components/ExpandData/ExpandButton';
 import { CorrespondenceContextNew } from '../service-context/NewCorrespondenceContext';
+import Thrash from '@/common/components/icons/Thrash';
+import Send from '@/common/components/icons/Send';
 
 type Props = {
   data: any;

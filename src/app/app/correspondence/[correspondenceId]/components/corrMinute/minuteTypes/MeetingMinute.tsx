@@ -3,7 +3,11 @@ import React from 'react';
 import ActivityInformation from '@/app/app/home/components/Activities/ActivityInformation';
 import Title from '@/common/components/Title';
 import CustomButton from '@/common/components/CustomButton';
-import { Copy, Delete, Edit2, Users } from '@/common/components/icons';
+import Edit2 from '@/common/components/icons/Edit2';
+import Delete from '@/common/components/icons/Delete';
+import Copy from '@/common/components/icons/Copy';
+import Users from '@/common/components/icons/Users';
+
 
 interface MinuteUserDetails {
   userDetails: {

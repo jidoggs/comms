@@ -1,10 +1,14 @@
 'use client';
 import CustomModal from '@/common/components/CustomModal';
 import Title from '@/common/components/Title';
-import { Copy, Edit2, Folder, Thrash, Users } from '@/common/components/icons';
 import React, { useState } from 'react';
 import ActivityInformation from './ActivityInformation';
 import CustomButton from '@/common/components/CustomButton';
+import Edit2 from '@/common/components/icons/Edit2';
+import Thrash from '@/common/components/icons/Thrash';
+import Copy from '@/common/components/icons/Copy';
+import Folder from '@/common/components/icons/Folder';
+import Users from '@/common/components/icons/Users';
 
 type ActivitiesCardProps = {
   title: string;

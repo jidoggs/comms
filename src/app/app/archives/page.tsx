@@ -1,12 +1,12 @@
 'use client';
+import React, { useState } from 'react';
+import { TabsProps } from 'antd/es/tabs';
+import { ColumnsType } from 'antd/es/table';
+import Action from './components/Action';
 import CustomTab from '@/common/components/CustomTab';
 import CustomTable from '@/common/components/CustomTable';
-import { dummyPeople } from '@/common/mockData';
 import { mergeClassName } from '@/common/utils';
-import { TabsProps } from 'antd';
-import { ColumnsType } from 'antd/es/table';
-import React, { useState } from 'react';
-import Action from './components/Action';
+import { dummyPeople } from '@/common/mockData';
 
 const columns: ColumnsType<any> = [
   {

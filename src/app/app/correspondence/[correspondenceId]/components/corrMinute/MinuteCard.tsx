@@ -1,19 +1,19 @@
 'use client';
 import React, { useContext } from 'react';
+import Checkbox from 'antd/es/checkbox/Checkbox';
+import { AnimatePresence } from 'framer-motion';
+import Title from '@/common/components/Title';
+import CustomButton from '@/common/components/CustomButton';
 import MinuteType from './MinuteType';
 import SideMenu from '../SideMenu';
 import Note from '../notes';
 import { NoteContext } from '../../service-context/NotesContextWapper';
 import { DetailContext } from '../../service-context/DetailContextWrapper';
-import Title from '@/common/components/Title';
-import { MoreFile } from '@/common/components/icons';
 import CustomAvatar from '@/common/components/Avatar/CustomAvatar';
 import AvatarGroup from '@/common/components/Avatar/AvatarGroup';
-import CustomButton from '@/common/components/CustomButton';
-import { dummyAvatarData } from '@/common/mockData';
+import MoreFile from '@/common/components/icons/MoreFile';
 import { generateInitials, mergeClassName } from '@/common/utils';
-import { AnimatePresence } from 'framer-motion';
-import { Checkbox } from 'antd';
+import { dummyAvatarData } from '@/common/mockData';
 
 type Props = {
   minuteId: number;

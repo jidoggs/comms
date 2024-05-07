@@ -3,8 +3,8 @@ import { NoteContext } from '../service-context/NotesContextWapper';
 import CreateProject from '@/app/app/components/actions/CreateProject';
 import CreateMeeting from '@/app/app/components/actions/CreateMeeting';
 import CustomButton from '@/common/components/CustomButton';
-import { Document } from '@/common/components/icons';
 import { mergeClassName } from '@/common/utils';
+import Document from '@/common/components/icons/Document';
 
 type Props = {
   className?: string;

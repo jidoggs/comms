@@ -7,7 +7,9 @@ import ApproveModal from '../modals/ApproveModal';
 import Title from '@/common/components/Title';
 import CustomInput from '@/common/components/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
-import { ArrowUp, CloseCircled, Tick } from '@/common/components/icons';
+import Tick from '@/common/components/icons/Tick';
+import CloseCircled from '@/common/components/icons/CloseCircled';
+import ArrowUp from '@/common/components/icons/ArrowUp';
 import { Role, uniqueId, Permission } from '../../types';
 
 interface RoleItemProps {

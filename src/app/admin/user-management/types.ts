@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
-import { Table, TabsProps } from 'antd';
+import { TabsProps } from 'antd/es/tabs';
 import { BaseDataModel, EditableTableColumnTypes, User } from '../people/types';
 import { CustomTableProps } from '@/common/components/CustomTable';
 export * from '../../../types';

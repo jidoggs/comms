@@ -1,13 +1,14 @@
-// import { PageHeader } from "@/components/common";
-import React, { lazy } from "react";
+import React, { Suspense, lazy } from 'react';
+import PageLoader from '../../components/PageLoader';
 
-const PageContent = lazy(() => import("./PageContent"));
+const PageContent = lazy(() => import('./PageContent'));
 
 const LoginPage = () => {
   return (
     <div className="!w-full">
-      {/* <PageHeader title="Login" description="Admin Login" /> */}
-      <PageContent />
+      <Suspense fallback={<PageLoader />}>
+        <PageContent />
+      </Suspense>
     </div>
   );
 };

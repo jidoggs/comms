@@ -1,10 +1,11 @@
-import CustomButton from '@/common/components/CustomButton';
-import Title from '@/common/components/Title';
-import { Close, Delete } from '@/common/components/icons';
+import dayjs from 'dayjs';
 import Image from 'next/image';
 import React from 'react';
+import Title from '@/common/components/Title';
+import CustomButton from '@/common/components/CustomButton';
 import FieldRow from '../../../components/FieldRow';
-import dayjs from 'dayjs';
+import Close from '@/common/components/icons/Close';
+import Delete from '@/common/components/icons/Delete';
 import Tick from '@/common/components/icons/Tick';
 import { User } from '../../types';
 

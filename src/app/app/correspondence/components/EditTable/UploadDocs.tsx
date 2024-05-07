@@ -1,15 +1,13 @@
+import React, { forwardRef, useState } from 'react';
+import { GetRef } from 'antd';
+import Upload, { UploadProps, UploadFile } from 'antd/es/upload';
+import Input from 'antd/es/input/Input';
 import CustomInput from '@/common/components/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
-import { Link, PaperClip } from '@/common/components/icons';
-import {
-  /* GetProp, */ GetRef,
-  Input,
-  Upload,
-  UploadFile,
-  UploadProps,
-} from 'antd';
-import React, { forwardRef, useState } from 'react';
+
 import { EditCellProps } from './type';
+import PaperClip from '@/common/components/icons/PaperClip';
+import Link from '@/common/components/icons/Link';
 
 // type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 type inputRef = GetRef<typeof Input> | any;

@@ -1,5 +1,5 @@
 import React, { createContext, useState } from 'react';
-import { RadioGroupProps } from 'antd';
+import { RadioGroupProps } from 'antd/es/radio';
 import { customThemeColor } from '@/common/utils';
 import {
   CreateNoteFormType,

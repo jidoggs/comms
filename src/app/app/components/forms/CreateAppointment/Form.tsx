@@ -1,11 +1,12 @@
 import React from 'react';
-import { Form } from 'antd';
+import Form from 'antd/es/form/Form';
+import FormItem from 'antd/es/form/FormItem';
 import CustomInput from '@/common/components/CustomInput';
 import DatePickerAndTimeRange from '@/app/app/home/components/DateAndTimePicker';
 import CustomButton from '@/common/components/CustomButton';
-import { Send } from '@/common/components/icons';
 import { correspondenceCreateMeeting } from './helper';
 import { createAppointment } from './type';
+import Send from '@/common/components/icons/Send';
 
 type FieldType = createAppointment;
 
@@ -16,15 +17,15 @@ type Props = {
 const CreateAppointmentForm = ({ handleSubmit }: Props) => {
   return (
     <Form layout="vertical" onFinish={handleSubmit}>
-      <Form.Item<FieldType> label="Name of Appointment">
+      <FormItem<FieldType> label="Name of Appointment">
         <CustomInput name="Name of appointment" placeholder="Aa" />
-      </Form.Item>
+      </FormItem>
       <div className="my-6">
         <DatePickerAndTimeRange />
       </div>
 
       {correspondenceCreateMeeting.map((item) => (
-        <Form.Item<FieldType>
+        <FormItem<FieldType>
           key={item.name}
           label={item.label}
           name={item.name}
@@ -32,7 +33,7 @@ const CreateAppointmentForm = ({ handleSubmit }: Props) => {
           <div className="flex flex-col gap-1">
             <CustomInput name={item.name} placeholder={item.placeholder} />
           </div>
-        </Form.Item>
+        </FormItem>
       ))}
       <hr />
       <div className="flex items-center justify-between">

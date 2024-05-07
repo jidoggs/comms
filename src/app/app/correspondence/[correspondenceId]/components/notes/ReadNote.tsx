@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import { NoteContext } from '../../service-context/NotesContextWapper';
 import Title from '@/common/components/Title';
 import CustomButton from '@/common/components/CustomButton';
-import { EyeSlash, Thrash } from '@/common/components/icons';
+import EyeSlash from '@/common/components/icons/EyeSlash';
+import Thrash from '@/common/components/icons/Thrash';
 import Colors from './Colors';
 
 function ReadNote() {

@@ -1,16 +1,29 @@
-import React, { useState } from 'react';
-import { Dropdown, MenuProps } from 'antd';
-import CustomButton from '@/common/components/CustomButton';
-import { CloseCircled, MoreFile, TickCircle } from '@/common/components/icons';
-import { iHandleClick } from '../types';
-import DeclineRequestModalContent from './DeclineRequestModalContent';
-import SubmittedResponseModal from './SubmittedResponseModal';
-import ApproveModalContent from '../../../../common/components/ApproveModalContent';
+import dynamic from 'next/dynamic';
+import React, { useContext, useState } from 'react';
+import { MenuProps } from 'antd/es/menu';
 import usePeople from '../../hooks/usePeople';
 import { useSession } from '@/common/hooks';
+import { PeopleDataContext } from '../service-context/PeopleListContextWrapper';
+import CustomButton from '@/common/components/CustomButton';
+import CloseCircled from '@/common/components/icons/CloseCircled';
+import MoreFile from '@/common/components/icons/MoreFile';
+import TickCircle from '@/common/components/icons/TickCircle';
+import { User, iHandleClick } from '../types';
+
+const Dropdown = dynamic(() => import('antd/es/dropdown/dropdown'));
+
+const DeclineRequestModalContent = dynamic(
+  () => import('./DeclineRequestModalContent')
+);
+const SubmittedResponseModal = dynamic(
+  () => import('./SubmittedResponseModal')
+);
+const ApproveModalContent = dynamic(
+  () => import('../../../../common/components/ApproveModalContent')
+);
 
 type Props = {
-  data: any;
+  data: User;
 };
 
 export const TableRowActionContext = React.createContext<Props | null>(null);
@@ -24,6 +37,7 @@ const initialModalState = {
 function TableRowAction({ data }: Props) {
   const [isModalOpen, setIsModalOpen] = useState(initialModalState);
   const { isBasicUser } = useSession();
+  const contextInfo = useContext(PeopleDataContext);
 
   const showModal = (val: keyof typeof initialModalState) => {
     setIsModalOpen({ ...initialModalState, [val]: true });
@@ -62,15 +76,16 @@ function TableRowAction({ data }: Props) {
 
   const { approveRequestSwr } = usePeople({
     can_approve: !isBasicUser,
+    status: contextInfo?.currentTab,
   });
 
-  const { trigger: approveRequestSWRTrigger } = approveRequestSwr;
-
   const handleApproveRequest = () => {
-    approveRequestSWRTrigger({
-      data: { user_id: data?._id, email: data?.email },
-      type: 'post',
-    }).finally(handleCancel);
+    approveRequestSwr
+      .trigger({
+        data: { user_id: data._id, email: data.email },
+        type: 'post',
+      })
+      .finally(handleCancel);
   };
 
   return (

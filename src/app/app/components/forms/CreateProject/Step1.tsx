@@ -1,11 +1,14 @@
 import React, { useRef, useState } from 'react';
-import { Form } from 'antd';
+import Form from 'antd/es/form/Form';
+import FormItem from 'antd/es/form/FormItem';
 import CustomInput, { CustomTextArea } from '@/common/components/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
-import { ArrowRight, Link, PaperClip } from '@/common/components/icons';
 import { createProjectFormInputs } from './helper';
 import { ProjectData } from './types';
 import UploadCard from '../../../home/components/UploadCard';
+import Link from '@/common/components/icons/Link';
+import PaperClip from '@/common/components/icons/PaperClip';
+import ArrowRight from '@/common/components/icons/ArrowRight';
 
 type FieldType = ProjectData;
 
@@ -24,7 +27,7 @@ function NewProjectForm({ onFinish }: Props) {
       {createProjectFormInputs.map((item) => {
         if (item.name === 'file') {
           return (
-            <Form.Item<FieldType>
+            <FormItem<FieldType>
               key={item.name}
               {...item}
               className="flex flex-col"
@@ -55,28 +58,28 @@ function NewProjectForm({ onFinish }: Props) {
                   ref={inputRef}
                 />
               </div>
-            </Form.Item>
+            </FormItem>
           );
         }
         if (item.name === 'details') {
           return (
-            <Form.Item<FieldType>
+            <FormItem<FieldType>
               key={item.name}
               {...item}
               className="flex flex-col"
             >
               <CustomTextArea name={item.name} placeholder={item.placeholder} />
-            </Form.Item>
+            </FormItem>
           );
         }
         return (
-          <Form.Item<FieldType>
+          <FormItem<FieldType>
             key={item.name}
             {...item}
             className="flex flex-col"
           >
             <CustomInput name={item.name} placeholder={item.placeholder} />
-          </Form.Item>
+          </FormItem>
         );
       })}
       <div className="flex items-center justify-end border-t border-custom-gray_400 pl-2 pt-4">

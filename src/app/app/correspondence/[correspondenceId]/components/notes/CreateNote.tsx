@@ -1,15 +1,19 @@
 import React, { useContext } from 'react';
-import { Checkbox, Form } from 'antd';
+import Checkbox from 'antd/es/checkbox/Checkbox';
+import Form from 'antd/es/form/Form';
+import FormItem from 'antd/es/form/FormItem';
+import useForm from 'antd/es/form/hooks/useForm';
 import CustomInput from '@/common/components/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
 import { NoteContext } from '../../service-context/NotesContextWapper';
-import { CloseCircled, StickyNote } from '@/common/components/icons';
 import { CreateNoteFormType } from './type';
 import Colors from './Colors';
+import StickyNote from '@/common/components/icons/StickyNote';
+import CloseCircled from '@/common/components/icons/CloseCircled';
 
 function CreateNote() {
   const noteContextInfo = useContext(NoteContext);
-  const [form] = Form.useForm();
+  const [form] = useForm();
 
   const clearInputHandler = () => {
     const value = form.getFieldValue('note');
@@ -22,7 +26,7 @@ function CreateNote() {
 
   return (
     <Form form={form} onFinish={noteContextInfo?.createNoteHandler}>
-      <Form.Item<CreateNoteFormType>
+      <FormItem<CreateNoteFormType>
         name="note"
         rules={[{ required: true, message: 'This Field is required' }]}
       >
@@ -39,14 +43,14 @@ function CreateNote() {
             />
           }
         />
-      </Form.Item>
+      </FormItem>
       <div className="flex items-center justify-between">
-        <Form.Item<CreateNoteFormType> name="isPrivate">
+        <FormItem<CreateNoteFormType> name="isPrivate">
           <Checkbox>Make private</Checkbox>
-        </Form.Item>
-        <Form.Item<CreateNoteFormType> name="color">
+        </FormItem>
+        <FormItem<CreateNoteFormType> name="color">
           <Colors defaultValue={noteContextInfo?.color} />
-        </Form.Item>
+        </FormItem>
         <CustomButton htmlType="submit" size="small">
           Post
         </CustomButton>

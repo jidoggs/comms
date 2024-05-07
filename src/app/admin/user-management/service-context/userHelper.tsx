@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { TabsProps } from 'antd';
+import { TabsProps } from 'antd/es/tabs';
 import TableRowAction from '../components/TableRowAction';
 import { mergeClassName } from '@/common/utils';
 import { User, BasicTypeSet } from '../types';
@@ -85,7 +85,7 @@ export const defaultColumns: {
     ellipsis: true,
     width: 150,
     render: (value: BasicTypeSet) => {
-      return <>{value.name}</>;
+      return <>{value?.name}</>;
     },
   },
   {

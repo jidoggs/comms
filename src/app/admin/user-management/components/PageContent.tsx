@@ -1,14 +1,19 @@
 'use client';
+import dynamic from 'next/dynamic';
 import React, { useContext, useEffect, useState } from 'react';
-import { Skeleton } from 'antd';
-import RolesPermissions from './permissions/RolesPermissions';
-import Users from './Users';
-import RolesSearchAction from './RolesSearchAction';
-import UserTabActions from './UserTabActions';
 import CustomTab from '@/common/components/CustomTab';
 import Title from '@/common/components/Title';
 import { UserMgmtDataContext } from '../service-context/UserMgmtContextWrapper';
 import { Role, uniqueId } from '../types';
+
+const Skeleton = dynamic(() => import('antd/es/skeleton/Skeleton'));
+
+const RolesSearchAction = dynamic(() => import('./RolesSearchAction'));
+const UserTabActions = dynamic(() => import('./UserTabActions'));
+const Users = dynamic(() => import('./Users'));
+const RolesPermissions = dynamic(
+  () => import('./permissions/RolesPermissions')
+);
 
 const CorrespondencePage = () => {
   const contextInfo = useContext(UserMgmtDataContext);

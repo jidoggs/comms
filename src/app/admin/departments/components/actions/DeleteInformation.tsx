@@ -4,7 +4,7 @@ import CustomButton from '@/common/components/CustomButton';
 import { MoreInfoContext } from '../modals/MoreInformationModal';
 import { useServiceConfig } from '@/service/swrHooks';
 import { CascadeContext } from '@/common/components/SectionCascade';
-import { Delete } from '@/common/components/icons';
+import Delete from '@/common/components/icons/Delete';
 
 function DeleteInformation() {
   const [isModalOpen, setIsModalOpen] = useState(false);

@@ -3,13 +3,11 @@ import ExpandedMinuteForm from './ExpandedMinuteForm';
 import CustomModal from '@/common/components/CustomModal';
 import { CustomTextArea } from '@/common/components/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
-import {
-  Briefcase,
-  CloseCircled,
-  Maximize,
-  Send,
-  Users,
-} from '@/common/components/icons';
+import Users from '@/common/components/icons/Users';
+import Briefcase from '@/common/components/icons/Briefcase';
+import Maximize from '@/common/components/icons/Maximize';
+import CloseCircled from '@/common/components/icons/CloseCircled';
+import Send from '@/common/components/icons/Send';
 
 const MinuteAction = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

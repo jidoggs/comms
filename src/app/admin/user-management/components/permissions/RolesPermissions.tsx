@@ -1,7 +1,7 @@
 'use client';
+import dynamic from 'next/dynamic';
 import React from 'react';
 import Title from '@/common/components/Title';
-import RoleItem from './RoleItem';
 import { Permission, Role } from '../../types';
 
 interface RolesPermissionsProps {
@@ -9,6 +9,8 @@ interface RolesPermissionsProps {
   setAllRoles: React.Dispatch<React.SetStateAction<Role[]>>;
   allPermissions: Permission[];
 }
+
+const RoleItem = dynamic(() => import('./RoleItem'));
 
 const RolesPermissions = ({
   allRoles,

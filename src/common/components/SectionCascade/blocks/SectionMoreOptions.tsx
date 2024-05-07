@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import { Dropdown, MenuProps } from 'antd';
-import AddModal from '../../../../app/admin/departments/components/modals/AddModal';
-import InvitePersonModal from '@/app/admin/people/components/InvitePerson/Modal';
+import Dropdown from 'antd/es/dropdown/dropdown';
+import { MenuProps } from 'antd/es/menu';
 import CustomButton from '@/common/components/CustomButton';
-import {
-  Building,
-  InfoCircle,
-  MoreFile,
-  UserAdd,
-} from '@/common/components/icons';
-import { Mutate } from '@/types';
+import AddModal from '@/app/admin/departments/components/modals/AddModal';
+import InvitePersonModal from '@/app/admin/people/components/InvitePerson/Modal';
 import MoreInformationModal from '@/app/admin/departments/components/modals/MoreInformationModal';
+
+import { Mutate } from '@/types';
+import Building from '../../icons/Building';
+import UserAdd from '../../icons/UserAdd';
+import InfoCircle from '../../icons/InfoCircle';
+import MoreFile from '../../icons/MoreFile';
 
 const initialModalState = {
   add: false,

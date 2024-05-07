@@ -33,14 +33,18 @@ function useOnboarding(props?: Props) {
 
   const token = store.fetchOnboardToken();
 
-  const getfinalOfficeOnboardingStep = (): keyof typeof initialDataList => {
+  const getfinalOfficeOnboardingStep = ():
+    | keyof typeof initialDataList
+    | undefined => {
     if (department) {
       return 'department';
     }
     if (office) {
       return 'office';
     }
-    return 'parastatal';
+    if (parastatal) {
+      return 'parastatal';
+    }
   };
 
   const finalOfficeOnboardingStep = getfinalOfficeOnboardingStep();
@@ -48,7 +52,7 @@ function useOnboarding(props?: Props) {
   useLayoutEffect(() => {
     // if onboarding user is not in step one and there is no token kick the user to login
     if (props?.step === 1 || isServer) return;
-    if (!token) {
+    if (!token && (parastatal || office || department)) {
       redirect('/auth/login');
     }
   }, [token]); //eslint-disable-line

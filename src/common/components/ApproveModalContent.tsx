@@ -1,7 +1,7 @@
+import Divider from 'antd/es/divider';
 import CustomButton from '@/common/components/CustomButton';
 import CustomModal from '@/common/components/CustomModal';
-import { InfoCircle } from '@/common/components/icons';
-import { Divider } from 'antd';
+import InfoCircle from './icons/InfoCircle';
 
 type ApproveModalContentProps = {
   text?: string;

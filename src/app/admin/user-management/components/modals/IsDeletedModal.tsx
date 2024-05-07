@@ -1,9 +1,9 @@
 import React from 'react';
-import CustomModal from '@/common/components/CustomModal';
-import { Thrash } from '@/common/components/icons';
-import { Divider } from 'antd';
-import CustomButton from '@/common/components/CustomButton';
+import Divider from 'antd/es/divider';
 import Title from '@/common/components/Title';
+import CustomButton from '@/common/components/CustomButton';
+import CustomModal from '@/common/components/CustomModal';
+import Thrash from '@/common/components/icons/Thrash';
 
 type Props = {
   isModalOpen: boolean;

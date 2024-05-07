@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Dropdown, MenuProps } from 'antd';
-
-import CustomButton from '@/common/components/CustomButton';
-import { Delete, Edit, MoreFile } from '@/common/components/icons';
-import { iHandleClick } from '../types';
+import Dropdown from 'antd/es/dropdown/dropdown';
+import { MenuProps } from 'antd/es/menu';
 import UserDetails from './UserDetails';
 import DeleteModal from './modals/DeleteModal';
+import CustomButton from '@/common/components/CustomButton';
+import MoreFile from '@/common/components/icons/MoreFile';
+import Edit from '@/common/components/icons/Edit';
+import Delete from '@/common/components/icons/Delete';
+import { iHandleClick } from '../types';
 
 type Props = {
   data: any;

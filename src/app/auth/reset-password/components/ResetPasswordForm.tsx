@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
-import { Form } from 'antd';
+import Form from 'antd/es/form/Form';
+import FormItem from 'antd/es/form/FormItem';
 import { useSearchParams } from 'next/navigation';
 import { useAuth } from '../../hooks';
 import CustomButton from '@/common/components/CustomButton';
@@ -49,7 +50,7 @@ const ResetPasswordForm = () => {
         onFinish={onFinish}
         requiredMark={false}
       >
-        <Form.Item<FieldType>
+        <FormItem<FieldType>
           label="New Password"
           name="new_password"
           rules={[{ required: true, validator: passwordStrengthValidator }]}
@@ -60,9 +61,9 @@ const ResetPasswordForm = () => {
             name="new_password"
             disabled={isMutating}
           />
-        </Form.Item>
+        </FormItem>
 
-        <Form.Item
+        <FormItem
           name="confirm_password"
           label="Confirm Password"
           dependencies={['new_password']}
@@ -74,7 +75,7 @@ const ResetPasswordForm = () => {
             name="confirm_password"
             disabled={isMutating}
           />
-        </Form.Item>
+        </FormItem>
 
         <CustomButton
           htmlType="submit"

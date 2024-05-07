@@ -1,8 +1,5 @@
 import React from 'react';
-import Parastatal from './sections/Parastatal';
-import Office from './sections/Office';
-import Members from './sections/Members';
-import Department from './sections/Department';
+import dynamic from 'next/dynamic';
 import Conditional from '../Conditional';
 import useOnboarding from '@/app/onboarding/hooks/useOnboarding';
 import {
@@ -11,6 +8,11 @@ import {
 } from '@/common/hooks/useSectionCascade';
 import { mergeClassName } from '@/common/utils';
 import { iHandleClick } from '@/types';
+
+const Parastatal = dynamic(() => import('./sections/Parastatal'));
+const Office = dynamic(() => import('./sections/Office'));
+const Members = dynamic(() => import('./sections/Members'));
+const Department = dynamic(() => import('./sections/Department'));
 
 type LevelType = keyof typeof initialDataList;
 

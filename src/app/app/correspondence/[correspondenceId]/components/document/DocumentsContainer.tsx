@@ -1,6 +1,6 @@
 import React from 'react';
 import DocumentItem from './DocumentItem';
-import { ArrowRight } from '@/common/components/icons';
+import ArrowRight from '@/common/components/icons/ArrowRight';
 
 type Props = {
   items: any[];

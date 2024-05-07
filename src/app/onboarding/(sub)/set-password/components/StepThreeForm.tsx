@@ -10,7 +10,7 @@ import {
   confirmPasswordValidator,
   passwordStrengthValidator,
 } from '@/common/utils';
-import { ArrowRight } from '@/common/components/icons';
+import ArrowRight from '@/common/components/icons/ArrowRight';
 
 type FieldType = {
   new_password: string;

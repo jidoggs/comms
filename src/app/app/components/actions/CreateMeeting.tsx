@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import CustomButton from '@/common/components/CustomButton';
 import CustomModal from '@/common/components/CustomModal';
 import NewMeetingForm from '../forms/CreateMeeting/Form';
-import { Users } from '@/common/components/icons';
+import Users from '@/common/components/icons/Users';
 import { MeetingData } from '../forms/CreateMeeting/types';
 import { CustomButtonProps } from '@/common/components/CustomButton/types';
 

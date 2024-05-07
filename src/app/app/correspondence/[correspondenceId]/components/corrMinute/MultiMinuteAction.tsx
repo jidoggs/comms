@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { DetailContext } from '../../service-context/DetailContextWrapper';
 import Title from '@/common/components/Title';
 import CustomButton from '@/common/components/CustomButton';
-import { Send } from '@/common/components/icons';
+import Send from '@/common/components/icons/Send';
 
 function MultiMinuteAction() {
   const detailContextInfo = useContext(DetailContext);

@@ -2,10 +2,12 @@
 import React, { ReactNode } from 'react';
 import SectionItem from './SectionItem';
 import Title from '@/common/components/Title';
-import { ArrowRight, SpinLoader, TickCircle } from '@/common/components/icons';
 import { iHandleClick } from '@/types';
 import { mergeClassName } from '@/common/utils';
 import CustomUser from '../../CustomUser';
+import SpinLoader from '../../icons/SpinLoader';
+import ArrowRight from '../../icons/ArrowRight';
+import TickCircle from '../../icons/TickCircle';
 
 type Props = {
   items: any[];

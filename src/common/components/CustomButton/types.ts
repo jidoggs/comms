@@ -1,4 +1,5 @@
-import { ButtonProps, TooltipProps } from 'antd';
+import { ButtonProps } from 'antd/es/button';
+import { TooltipProps } from 'antd/es/tooltip';
 
 type ClassName = 'container' | 'button' | 'icon';
 type ExtraBorder = 'borderLeft' | 'borderRight' | 'borderTop' | 'borderBottom';

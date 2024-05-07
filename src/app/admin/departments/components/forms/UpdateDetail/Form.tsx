@@ -10,7 +10,9 @@ import { CustomInputProps } from '@/common/components/CustomInput/types';
 import Title from '@/common/components/Title';
 import { MoreInfoContext } from '../../modals/MoreInformationModal';
 import DeleteInformation from '../../actions/DeleteInformation';
-import { Building, Close, TickCircle as Tick } from '@/common/components/icons';
+import TickCircle from '@/common/components/icons/TickCircle';
+import Close from '@/common/components/icons/Close';
+import Building from '@/common/components/icons/Building';
 
 type FieldRowProps = {
   label: string;
@@ -75,7 +77,7 @@ function MoreInformationForm() {
               <CustomButton
                 type="default"
                 className="!border-custom-green_100 !bg-custom-gray_100 !px-6"
-                icon={<Tick size={18} color="green" />}
+                icon={<TickCircle size={18} color="green" />}
                 size="small"
                 title="Update"
                 htmlType="submit"

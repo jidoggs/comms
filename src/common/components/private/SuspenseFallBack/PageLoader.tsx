@@ -1,9 +1,9 @@
-import React from "react";
-import { SpinLoader } from "@/common/components/icons";
+import React from 'react';
+import SpinLoader from '../../icons/SpinLoader';
 
 function PageLoader() {
   return (
-    <div className="flex items-center justify-center h-screen text-green-minst">
+    <div className="text-green-minst flex h-screen items-center justify-center">
       <SpinLoader size="56" />
     </div>
   );

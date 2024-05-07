@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import CustomButton from '@/common/components/CustomButton';
 import CustomModal from '@/common/components/CustomModal';
-import { ArrowRight, Briefcase } from '@/common/components/icons';
 import Step1 from '../forms/CreateProject/Step1';
 import Step2 from '../forms/CreateProject/Step2';
 import { ProjectData } from '../forms/CreateProject/types';
 import { CustomButtonProps } from '@/common/components/CustomButton/types';
+import ArrowRight from '@/common/components/icons/ArrowRight';
+import Briefcase from '@/common/components/icons/Briefcase';
 
 function CreateProject({ descriptionPlacement, className }: CustomButtonProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);

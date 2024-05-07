@@ -1,8 +1,9 @@
 import React from 'react';
-
-import { Pagination } from 'antd';
+import dynamic from 'next/dynamic';
 import Title from '../Title';
 import { mergeClassName } from '@/common/utils';
+
+const Pagination = dynamic(() => import('antd/es/pagination/Pagination'));
 
 type ClassName = 'container' | 'title' | 'divider' | 'pagination';
 

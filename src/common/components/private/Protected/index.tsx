@@ -3,11 +3,12 @@ import React, { Suspense, lazy, useLayoutEffect, useMemo } from 'react';
 import { SWRConfig } from 'swr';
 import { jwtDecode } from 'jwt-decode';
 import { useRouter } from 'next/navigation';
+import Conditional from '../../Conditional';
 import FullPageLoader from '../../FullPageLoader';
 import useAuth from '@/app/auth/hooks/useAuth';
 import { isServer, requestRefreshToken } from '@/common/utils';
 import { fetchUserToken } from '@/service/storage';
-import { ContextWapper } from '@/types';
+import { ContextWapper, User } from '@/types';
 
 const AppLayout = lazy(() => import('../Layout'));
 
@@ -49,13 +50,15 @@ function Protected({ children }: ContextWapper) {
 
   return (
     <Suspense fallback={<FullPageLoader fullscreen />}>
-      {!role || isServer ? (
-        <FullPageLoader fullscreen />
-      ) : (
-        <SWRConfig value={{ provider: () => new Map() }}>
-          <AppLayout user={data}>{children}</AppLayout>
-        </SWRConfig>
-      )}
+      <Conditional
+        condition={!role || isServer}
+        trueArg={<FullPageLoader fullscreen />}
+        falseArg={
+          <SWRConfig value={{ provider: () => new Map() }}>
+            <AppLayout user={data as User}>{children}</AppLayout>
+          </SWRConfig>
+        }
+      />
     </Suspense>
   );
 }

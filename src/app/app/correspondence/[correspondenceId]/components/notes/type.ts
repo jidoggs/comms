@@ -1,4 +1,4 @@
-import { RadioGroupProps } from 'antd';
+import { RadioGroupProps } from 'antd/es/radio';
 
 export type CreateNoteFormType = {
   note: string;

@@ -1,6 +1,5 @@
 import React, { createContext, useState } from 'react';
 import TableRowAction from '../components/TableRowAction';
-import { Document } from '@/common/components/icons';
 import { mergeClassName } from '@/common/utils';
 import {
   ContextWapper,
@@ -8,6 +7,7 @@ import {
   EditableTableColumnTypes,
 } from '../../types';
 import { singleDummyCorrespondenceData } from '@/common/mockData';
+import Document from '@/common/components/icons/Document';
 
 export const CorrespondenceContextNew =
   createContext<CorrespondenceContextNewType>(null);

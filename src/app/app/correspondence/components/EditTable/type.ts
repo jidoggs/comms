@@ -1,6 +1,7 @@
-import { singleDummyCorrespondenceData } from '@/common/mockData';
-import { Form, GetRef } from 'antd';
+import { GetRef } from 'antd';
+import Form from 'antd/es/form/Form';
 import React from 'react';
+import { singleDummyCorrespondenceData } from '@/common/mockData';
 
 export type EditCellProps = {
   name: keyof Item;

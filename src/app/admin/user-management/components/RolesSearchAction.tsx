@@ -1,6 +1,8 @@
 import CustomButton from '@/common/components/CustomButton';
 import CustomInput from '@/common/components/CustomInput';
-import { Add, File, Search } from '@/common/components/icons';
+import Add from '@/common/components/icons/Add';
+import File from '@/common/components/icons/File';
+import Search from '@/common/components/icons/Search';
 import React from 'react';
 
 type Props = {

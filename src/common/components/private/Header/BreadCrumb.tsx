@@ -1,5 +1,5 @@
 import React from 'react';
-import { Breadcrumb } from 'antd';
+import Breadcrumb from 'antd/es/breadcrumb/Breadcrumb';
 import { useBreadCrumbs } from '@/common/hooks';
 
 function BreadCrumb() {

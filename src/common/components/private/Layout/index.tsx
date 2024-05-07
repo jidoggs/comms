@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { Layout as AntLayout } from 'antd';
+import AntLayout from 'antd/es/layout';
 import AppHeader from '../Header';
 import SideNav from '../SideNav';
 import { User, UserPreDefinedRole } from '@/types';

@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
-import { Checkbox, DatePicker, TimePicker } from 'antd';
+import Checkbox from 'antd/es/checkbox/Checkbox';
+import DatePicker from 'antd/es/date-picker';
+import TimePicker from 'antd/es/time-picker';
 import CustomButton from '@/common/components/CustomButton';
-
-import { Add } from '@/common/components/icons';
 import { DateTimeEntry } from './types';
 import { generateNewDateTimeEntry } from './helper';
+import Add from '@/common/components/icons/Add';
 
 const DateTimePicker: React.FC = () => {
   const [dateTimes, setDateTimes] = useState<DateTimeEntry[]>([]);
   const [selectedDateId, setSelectedDateId] = useState<number | null>(null);
 
   const handleAddDateTime = () => {
-    const newDateTime: DateTimeEntry = generateNewDateTimeEntry(dateTimes.length + 1);
+    const newDateTime: DateTimeEntry = generateNewDateTimeEntry(
+      dateTimes.length + 1
+    );
     setDateTimes([...dateTimes, newDateTime]);
   };
 

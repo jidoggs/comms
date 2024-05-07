@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
-import Form from 'antd/es/form';
+import Form from 'antd/es/form/Form';
+import FormItem from 'antd/es/form/FormItem';
 import Link from 'next/link';
 import useMessage from 'antd/es/message/useMessage';
 import { useRouter } from 'next/navigation';
@@ -35,7 +36,7 @@ const ForgotForm = () => {
     <>
       {messageContext}
       <Form<FieldType> onFinish={onFinish} layout="vertical">
-        <Form.Item<FieldType>
+        <FormItem<FieldType>
           label="Email"
           name="email"
           rules={[{ required: true, validator: emailValidator }]}
@@ -45,7 +46,7 @@ const ForgotForm = () => {
             placeholder="user@email.com"
             disabled={isMutating}
           />
-        </Form.Item>
+        </FormItem>
         <div className="flex flex-col gap-y-5">
           <CustomButton
             htmlType="submit"
@@ -56,7 +57,7 @@ const ForgotForm = () => {
             Continue
           </CustomButton>
           <Link
-            className="rounded-10 font-bold bg-transparent py-4 text-center text-sm leading-none !text-custom-main transition-colors hover:bg-custom-gray_500"
+            className="rounded-10 bg-transparent py-4 text-center text-sm font-bold leading-none !text-custom-main transition-colors hover:bg-custom-gray_500"
             href="/auth/login"
           >
             Login

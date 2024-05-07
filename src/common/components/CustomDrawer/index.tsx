@@ -1,9 +1,10 @@
 import React from 'react';
-import { Drawer, theme } from 'antd';
-import { Close } from '../icons';
+import dynamic from 'next/dynamic';
+import useToken from 'antd/es/theme/useToken';
 import Title from '../Title';
+import Close from '../icons/Close';
 
-const { useToken } = theme;
+const Drawer = dynamic(() => import('antd/es/drawer'));
 
 type Props = {
   onClose?: (
@@ -28,7 +29,7 @@ function CustomDrawer({
   titleIcon,
   destroyOnClose,
 }: Props) {
-  const { token } = useToken();
+  const [_, token] = useToken(); //eslint-disable-line
   return (
     <Drawer
       closeIcon={

@@ -1,10 +1,12 @@
+import dynamic from 'next/dynamic';
 import React, { forwardRef } from 'react';
-import { Table } from 'antd';
 import Title from '../Title';
 import CustomPaginationHeader from '../CustomPaginationHeader';
 import { CustomTableProps } from './type';
 import { mergeClassName } from '@/common/utils';
 export * from './type';
+
+const Table = dynamic(() => import('antd/es/table/Table'));
 
 const CustomTable = forwardRef<any, CustomTableProps<any>>((props, ref) => {
   const {

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Form } from 'antd';
+import Form from 'antd/es/form/Form';
+import FormItem from 'antd/es/form/FormItem';
 import CustomDragger from '@/common/components/CustomDragger';
 import CustomInput from '@/common/components/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
@@ -19,13 +20,13 @@ function NewCorrespondenceForm({ handleSubmit }: Props) {
         <CustomDragger />
         <div className="flex-1 ">
           {correspondenceFormInputs.map((item) => (
-            <Form.Item<FieldType>
+            <FormItem<FieldType>
               key={item.name}
               {...item}
               className="flex flex-col"
             >
               <CustomInput name={item.name} />
-            </Form.Item>
+            </FormItem>
           ))}
         </div>
       </div>

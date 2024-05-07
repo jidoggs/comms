@@ -1,17 +1,14 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-unused-vars */
 import React from 'react';
+import Divider from 'antd/es/divider';
 import CustomModal from '@/common/components/CustomModal';
-import CustomModalTitle from '@/common/components/CustomModalTitle';
-import { InfoCircle } from '@/common/components/icons';
-import { Divider } from 'antd';
 import CustomButton from '@/common/components/CustomButton';
+import InfoCircle from '@/common/components/icons/InfoCircle';
 
 type Props = {
   warningText?: string;
   isModalOpen: boolean;
-  handleCancel: VoidFunction; //eslint-disable-line
-  handleSubmit: () => void; //eslint-disable-line
+  handleCancel: () => void;
+  handleSubmit: () => void;
   modalMutating: boolean;
 };
 
@@ -61,7 +58,6 @@ function ApproveModal({
           </div>
         </div>
       </div>
-      {/* <AddForm onFinish={handleSubmit} /> */}
     </CustomModal>
   );
 }

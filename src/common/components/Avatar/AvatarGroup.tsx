@@ -1,4 +1,5 @@
-import { Avatar } from 'antd';
+import { useMemo } from 'react';
+import dynamic from 'next/dynamic';
 import CustomAvatar from './CustomAvatar';
 import {
   customThemeColor,
@@ -6,7 +7,8 @@ import {
   generateRandomColor,
 } from '@/common/utils';
 import { AvatarGroupProps } from './types';
-import { useMemo } from 'react';
+
+const Avatar = dynamic(() => import('antd/es/avatar/group'));
 
 const AvatarGroup = ({
   avatarData,
@@ -16,7 +18,7 @@ const AvatarGroup = ({
 }: AvatarGroupProps) => {
   const memorizedColor = useMemo(() => generateRandomColor(), []);
   return (
-    <Avatar.Group
+    <Avatar
       {...props}
       maxPopoverTrigger="click"
       size={size ? size : 'small'}
@@ -43,7 +45,7 @@ const AvatarGroup = ({
           {generateInitials(data?.firstName || '', data.surname)}
         </CustomAvatar>
       ))}
-    </Avatar.Group>
+    </Avatar>
   );
 };
 

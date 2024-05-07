@@ -1,8 +1,8 @@
 import React from 'react';
 import CustomAvatar from '../Avatar/CustomAvatar';
 import Title from '../Title';
-import { Profile } from '../icons';
 import { User } from '@/types';
+import Profile from '../icons/Profile';
 
 type Props = {
   data: User | string;

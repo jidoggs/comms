@@ -1,6 +1,6 @@
-import CustomButton from '@/common/components/CustomButton';
-import { Plus } from '@/common/components/icons';
 import React from 'react';
+import CustomButton from '@/common/components/CustomButton';
+import Plus from '@/common/components/icons/Plus';
 
 const ProjectCardFooter = () => {
   return (

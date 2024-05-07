@@ -1,8 +1,9 @@
-import { Form, FormProps } from 'antd';
+import Form, { FormProps } from 'antd/es/form/Form';
+import FormItem from 'antd/es/form/FormItem';
 import React from 'react';
 import CustomSelect from '@/common/components/CustomSelect';
 import CustomButton from '@/common/components/CustomButton';
-import { CloseCircled } from '@/common/components/icons';
+import CloseCircled from '@/common/components/icons/CloseCircled';
 
 type Props = {
   onFinish: FormProps['onFinish'];
@@ -16,7 +17,7 @@ function InviteForm({ onFinish, isLoading }: Props) {
       layout="vertical"
       className="flex items-start gap-x-2.5 !pb-44"
     >
-      <Form.Item
+      <FormItem
         name="emails"
         rules={[{ required: true, message: 'Please input the emails!' }]}
         className="flex-1"
@@ -28,7 +29,7 @@ function InviteForm({ onFinish, isLoading }: Props) {
           tokenSeparators={[',']}
           removeIcon={<CloseCircled className="text-white" />}
         />
-      </Form.Item>
+      </FormItem>
       <CustomButton
         className={{
           button: '!m-0 !py-4 px-2',

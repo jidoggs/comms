@@ -2,7 +2,8 @@ import React from 'react';
 
 import CustomInput from '@/common/components/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
-import { Document, Search } from '@/common/components/icons';
+import Search from '@/common/components/icons/Search';
+import Document from '@/common/components/icons/Document';
 
 function UserTabActions() {
   return (

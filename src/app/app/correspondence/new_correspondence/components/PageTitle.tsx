@@ -1,7 +1,7 @@
-import CustomButton from '@/common/components/CustomButton';
-import { BackwardArrow } from '@/common/components/icons';
-import { useRouter } from 'next/navigation';
 import React from 'react';
+import { useRouter } from 'next/navigation';
+import CustomButton from '@/common/components/CustomButton';
+import BackwardArrow from '@/common/components/icons/BackwardArrow';
 
 function PageTitle() {
   const router = useRouter();

@@ -1,7 +1,7 @@
 import React from 'react';
 import Title from './Title';
-import { Link } from './icons';
 import { copyTextToClipboard } from '../utils';
+import Link from './icons/Link';
 
 type Props = {
   title: string;

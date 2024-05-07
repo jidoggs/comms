@@ -1,8 +1,8 @@
-import { Folder } from '@/common/components/icons';
+import React, { ReactNode } from 'react';
 import TimelineComponent from '@/common/components/TimelineComponent/TimelineComponent';
 import Title from '@/common/components/Title';
 import { TimelineProps } from '@/common/mockData/corrTimeline';
-import React, { ReactNode } from 'react';
+import Folder from '@/common/components/icons/Folder';
 
 type ItemProps = {
   title: string;

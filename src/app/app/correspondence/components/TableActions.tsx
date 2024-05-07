@@ -2,7 +2,8 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import CustomInput from '@/common/components/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
-import { Add, Search } from '@/common/components/icons';
+import Search from '@/common/components/icons/Search';
+import Add from '@/common/components/icons/Add';
 
 function TableActions() {
   const router = useRouter();

@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
-import { Form } from 'antd';
+import Form from 'antd/es/form/Form';
+import FormItem from 'antd/es/form/FormItem';
 import Link from 'next/link';
 import { useAuth } from '../../hooks';
 import CustomInput from '@/common/components/CustomInput';
@@ -28,7 +29,7 @@ const LoginForm = () => {
       requiredMark={false}
       layout="vertical"
     >
-      <Form.Item<FieldType>
+      <FormItem<FieldType>
         label="Email"
         name="email"
         rules={[{ required: true, validator: emailValidator }]}
@@ -39,8 +40,8 @@ const LoginForm = () => {
           placeholder="user@email.com"
           disabled={isMutating}
         />
-      </Form.Item>
-      <Form.Item<FieldType>
+      </FormItem>
+      <FormItem<FieldType>
         label="Password"
         name="password"
         rules={[{ required: true, message: 'Password is required' }]}
@@ -51,7 +52,7 @@ const LoginForm = () => {
           name="password"
           disabled={isMutating}
         />
-      </Form.Item>
+      </FormItem>
       <div className="flex flex-col gap-y-5">
         <Link
           href="/auth/forgot-password"

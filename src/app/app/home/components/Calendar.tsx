@@ -4,10 +4,13 @@ import React from 'react';
 import dayjs, { Dayjs } from 'dayjs';
 import 'dayjs/locale/zh-cn';
 import dayLocaleData from 'dayjs/plugin/localeData';
-import { Calendar, CalendarProps, Col, Row, Select } from 'antd';
+import Calendar, { CalendarProps } from 'antd/es/calendar';
+import Col from 'antd/es/col';
+import Row from 'antd/es/row';
+import Select from 'antd/es/select';
 import CustomButton from '@/common/components/CustomButton';
-import { Plus } from '@/common/components/icons';
 import Title from '@/common/components/Title';
+import Plus from '@/common/components/icons/Plus';
 
 dayjs.extend(dayLocaleData);
 

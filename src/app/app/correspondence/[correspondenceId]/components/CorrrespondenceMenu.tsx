@@ -6,13 +6,12 @@ import CustomButton from '@/common/components/CustomButton';
 import CreateProject from '@/app/app/components/actions/CreateProject';
 import CreateMeeting from '@/app/app/components/actions/CreateMeeting';
 import Title from '@/common/components/Title';
-import {
-  CloseCircle,
-  CloseCircled,
-  Search,
-  Send,
-} from '@/common/components/icons';
+
 import { mergeClassName } from '@/common/utils';
+import Search from '@/common/components/icons/Search';
+import CloseCircled from '@/common/components/icons/CloseCircled';
+import Send from '@/common/components/icons/Send';
+import CloseCircle from '@/common/components/icons/CloseCircle';
 
 const CorrrespondenceMenu = () => {
   const detailsData = useContext(DetailContext);
@@ -27,7 +26,9 @@ const CorrrespondenceMenu = () => {
         className="flex w-full items-end justify-between pl-5"
       >
         {detailsData?.multiSelect.isMultiSelectMode ? (
-          <Title semibold className='self-center'>Push items</Title>
+          <Title semibold className="self-center">
+            Push items
+          </Title>
         ) : (
           <CorrepondenceTabs />
         )}

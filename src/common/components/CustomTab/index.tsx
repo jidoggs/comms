@@ -1,6 +1,9 @@
 import React from 'react';
-import { Tabs, TabsProps } from 'antd';
+import dynamic from 'next/dynamic';
+import { TabsProps } from 'antd/es/tabs';
 import { mergeClassName } from '@/common/utils';
+
+const Tabs = dynamic(() => import('antd/es/tabs'));
 
 interface CustomTabProps extends TabsProps {
   defaultKey?: string;

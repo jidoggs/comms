@@ -1,4 +1,4 @@
-import { File } from '@/common/components/icons';
+import File from '@/common/components/icons/File';
 import Image from 'next/image';
 import React from 'react';
 

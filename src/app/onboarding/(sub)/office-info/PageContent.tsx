@@ -1,5 +1,7 @@
 import React from 'react';
-import StepTwoForm from './components/StepTwoForm';
+import dynamic from 'next/dynamic';
+
+const StepTwoForm = dynamic(() => import('./components/StepTwoForm'));
 
 const LoginPageContent: React.FunctionComponent = () => {
   return <StepTwoForm />;

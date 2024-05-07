@@ -1,6 +1,8 @@
 import React from 'react';
-import { Avatar } from 'antd';
+import dynamic from 'next/dynamic';
 import { CustomAvatarProps } from './types';
+
+const Avatar = dynamic(() => import('antd/es/avatar/avatar'));
 
 const CustomAvatar = ({
   backgroundColor,

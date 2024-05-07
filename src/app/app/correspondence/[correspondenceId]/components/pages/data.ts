@@ -1,9 +1,8 @@
-import {
-  Archive,
-  Briefcase,
-  Document,
-  Sound,
-} from '../../../../../../common/components/icons';
+import Archive from '@/common/components/icons/Archive';
+import Briefcase from '@/common/components/icons/Briefcase';
+import Document from '@/common/components/icons/Document';
+import Sound from '@/common/components/icons/Sound';
+
 export const documents = [
   {
     icon: Archive,

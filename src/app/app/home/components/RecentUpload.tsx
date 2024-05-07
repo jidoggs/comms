@@ -1,6 +1,8 @@
 import CustomButton from '@/common/components/CustomButton';
 import Title from '@/common/components/Title';
-import { ArrowRight, DocumentUpload, Folder } from '@/common/components/icons';
+import ArrowRight from '@/common/components/icons/ArrowRight';
+import DocumentUpload from '@/common/components/icons/DocumentUpload';
+import Folder from '@/common/components/icons/Folder';
 import React from 'react';
 
 const RandomDocument = () => {

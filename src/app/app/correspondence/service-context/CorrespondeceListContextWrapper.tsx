@@ -1,19 +1,19 @@
 'use client';
 import React, { createContext, useState } from 'react';
-import { TabsProps } from 'antd';
-import TableRowAction from '../components/TableRowAction';
-import { Document } from '@/common/components/icons';
-import {
-  dummyCorrespondence,
-  singleDummyCorrespondenceData,
-} from '@/common/mockData';
+import { TabsProps } from 'antd/es/tabs';
 import { useTabChange } from '@/common/hooks';
+import TableRowAction from '../components/TableRowAction';
 import { mergeClassName } from '@/common/utils';
 import {
   ContextWapper,
   CorrespondenceListContextType,
   EditableTableColumnTypes,
 } from '../types';
+import {
+  dummyCorrespondence,
+  singleDummyCorrespondenceData,
+} from '@/common/mockData';
+import Document from '@/common/components/icons/Document';
 
 export const CorrespondeceListContext =
   createContext<CorrespondenceListContextType>(null);

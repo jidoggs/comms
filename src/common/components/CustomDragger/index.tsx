@@ -1,6 +1,9 @@
-import Dragger, { DraggerProps } from 'antd/lib/upload/Dragger';
 import React from 'react';
-import { Document } from '../icons';
+import dynamic from 'next/dynamic';
+import { DraggerProps } from 'antd/lib/upload/Dragger';
+import Document from '../icons/Document';
+
+const Dragger = dynamic(() => import('antd/lib/upload/Dragger'));
 
 interface CustomDraggerProps extends DraggerProps {}
 

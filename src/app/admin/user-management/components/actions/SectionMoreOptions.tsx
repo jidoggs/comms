@@ -1,23 +1,13 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
-import { Dropdown, MenuProps, message } from 'antd';
-// import AddModal from '../modals/AddModal';
-// import InvitePersonModal from '@/app/admin/people/components/InvitePerson/Modal';
-// import CustomButton from '@/common/components/CustomButton';
-import {
-  // Building,
-  // InfoCircle,
-  MoreFile,
-  // UserAdd,
-} from '@/common/components/icons';
-import CustomButton from '@/common/components/CustomButton';
+import Dropdown from 'antd/es/dropdown/dropdown';
+import { MenuProps } from 'antd/es/menu';
+import message from 'antd/es/message';
+import useRoles from '@/app/admin/hooks/useRoles';
 import DeleteModal from '../modals/DeleteModal';
 import IsDeletedModal from '../modals/IsDeletedModal';
-import useRoles from '@/app/admin/hooks/useRoles';
+import CustomButton from '@/common/components/CustomButton';
+import MoreFile from '@/common/components/icons/MoreFile';
 import { Role, uniqueId } from '../../types';
-
-// import Title from '@/common/components/Title';
 
 const initialModalState = {
   delete: false,
@@ -61,7 +51,7 @@ function SectionMoreOptions({
       deleteRoleTrigger({
         data: {},
         type: 'delete',
-      }).then((res) => {
+      }).then(() => {
         message.success('Role deleted successfully');
         setIsModalOpen({
           ...initialModalState,

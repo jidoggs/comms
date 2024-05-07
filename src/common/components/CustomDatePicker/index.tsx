@@ -1,5 +1,6 @@
-import { DatePicker, TimeRangePickerProps } from 'antd';
 import React from 'react';
+import DatePicker from 'antd/es/date-picker';
+import { TimeRangePickerProps } from 'antd/es/time-picker';
 
 const { RangePicker } = DatePicker;
 

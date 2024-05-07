@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-unused-vars */
 'use client';
-import CustomButton from '@/common/components/CustomButton';
-import CustomModal from '@/common/components/CustomModal';
-import { Link } from '@/common/components/icons';
-import Title from '@/common/components/Title';
 import React, { useState } from 'react';
+import CustomButton from '@/common/components/CustomButton';
+import Title from '@/common/components/Title';
+import CustomModal from '@/common/components/CustomModal';
+import Link from '@/common/components/icons/Link';
 
 const Delete = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

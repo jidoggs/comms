@@ -5,7 +5,8 @@ import {
   BreadcrumbSeparatorType,
 } from 'antd/es/breadcrumb/Breadcrumb';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
-import { ArrowRight } from '../components/icons';
+import ArrowRight from '../components/icons/ArrowRight';
+
 
 const generateBreadCrumbs = (
   path: string,

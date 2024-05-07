@@ -1,4 +1,4 @@
-import { MoreFile } from '@/common/components/icons';
+import MoreFile from '@/common/components/icons/MoreFile';
 // import { customThemeColor } from '@/common/utils';
 import React from 'react';
 

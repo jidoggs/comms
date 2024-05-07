@@ -5,7 +5,10 @@ import CustomButton from '@/common/components/CustomButton';
 import Title from '@/common/components/Title';
 import FieldRow from '../../../components/FieldRow';
 import DeleteModal from '../modals/DeleteModal';
-import { Close, Delete, Edit2, Tick } from '@/common/components/icons';
+import Tick from '@/common/components/icons/Tick';
+import Edit2 from '@/common/components/icons/Edit2';
+import Delete from '@/common/components/icons/Delete';
+import Close from '@/common/components/icons/Close';
 import { User } from '../../types';
 
 type UserDetailsContentProps = {

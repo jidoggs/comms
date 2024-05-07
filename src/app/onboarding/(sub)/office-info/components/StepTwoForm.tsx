@@ -1,13 +1,22 @@
 'use client';
+import dynamic from 'next/dynamic';
 import React, { useState } from 'react';
 import { useOnboarding } from '@/app/onboarding/hooks';
 import { useSectionCascade } from '@/common/hooks';
 import { fetchOnboardUid } from '@/service/storage';
-import SectionCascade from '@/common/components/SectionCascade';
 import Title from '@/common/components/Title';
 import CustomButton from '@/common/components/CustomButton';
-import ApproveModalContent from '@/common/components/ApproveModalContent';
-import { ArrowRight } from '@/common/components/icons';
+import ArrowRight from '@/common/components/icons/ArrowRight';
+import { initialDataList } from '@/common/hooks/useSectionCascade';
+
+const SectionCascade = dynamic(
+  () => import('../../../../../common/components/SectionCascade')
+);
+const ApproveModalContent = dynamic(
+  () => import('../../../../../common/components/ApproveModalContent')
+);
+
+type level = keyof typeof initialDataList;
 
 const StepTwoForm = () => {
   const { clickCascadeItemHandler, dataList } = useSectionCascade();
@@ -52,7 +61,8 @@ const StepTwoForm = () => {
       <div className="flex items-center justify-end gap-x-2">
         <CustomButton
           disabled={
-            dataList[finalOfficeOnboardingStep].id === '' || authSwr.isMutating
+            dataList?.[finalOfficeOnboardingStep as level]?.id === '' ||
+            authSwr.isMutating
           }
           htmlType="submit"
           size="small"

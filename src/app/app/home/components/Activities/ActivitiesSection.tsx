@@ -3,8 +3,9 @@ import dayjs from 'dayjs';
 import ActivitiesCard from './ActivitiesCard';
 import Title from '@/common/components/Title';
 // import { activitiesMockData } from '@/common/mockData';
-import { ArrowRight, Plus } from '@/common/components/icons';
 import CustomButton from '@/common/components/CustomButton';
+import ArrowRight from '@/common/components/icons/ArrowRight';
+import Plus from '@/common/components/icons/Plus';
 
 const activitiesMockData: any[] = [];
 
@@ -33,7 +34,7 @@ const ActivitiesSection = () => {
       <div className="no-scrollbar size-full max-h-[calc(100vh_-_626px)]  overflow-y-scroll">
         {activitiesMockData.length === 0 ? (
           <div className="flex h-[calc(100vh_-_626px)] items-center justify-center">
-            <Title className='text-custom-gray_850' >No activities yet</Title>
+            <Title className="text-custom-gray_850">No activities yet</Title>
           </div>
         ) : (
           activitiesMockData?.map((activity, i, data) => {

@@ -1,5 +1,6 @@
 'use client';
 import Form from 'antd/es/form';
+import FormItem from 'antd/es/form/FormItem';
 import dynamic from 'next/dynamic';
 import React, { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -66,7 +67,7 @@ const VerifyForm = () => {
           onFinish={onFinish}
           requiredMark={false}
         >
-          <Form.Item<FieldType>
+          <FormItem<FieldType>
             name="verification_code"
             rules={[
               {
@@ -85,7 +86,7 @@ const VerifyForm = () => {
               containerStyle="justify-between w-full flex"
               inputType="number"
             />
-          </Form.Item>
+          </FormItem>
           <div className="flex flex-col gap-y-5">
             <CustomButton
               htmlType="submit"

@@ -1,7 +1,8 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import CustomButton from '@/common/components/CustomButton';
-import { Archive, Send } from '@/common/components/icons';
+import Archive from '@/common/components/icons/Archive';
+import Send from '@/common/components/icons/Send';
 
 function TableActions() {
   const router = useRouter();

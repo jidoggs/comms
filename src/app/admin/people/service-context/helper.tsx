@@ -3,6 +3,10 @@ import { mergeClassName } from '@/common/utils';
 import TableRowAction from '../components/TableRowAction';
 import { EditableTableColumnTypes } from '../types';
 import { ItemProps } from '@/common/components/CustomTab';
+import CustomAvatar from '@/common/components/Avatar/CustomAvatar';
+import Profile from '@/common/components/icons/Profile';
+
+
 
 export const defaultColumns: (EditableTableColumnTypes[number] & {
   dataIndex: string;
@@ -10,15 +14,24 @@ export const defaultColumns: (EditableTableColumnTypes[number] & {
   {
     title: 'Person',
     className: '!pl-5',
-    dataIndex: 'full_name',
+    dataIndex: 'fullname',
     width: 180,
     ellipsis: true,
-    render: (value: any) => {
+    render: (value: any, record: any) => {
       return (
         <>
           {value ? (
             <div className="flex items-center gap-x-2.5">
-              <div className="size-7 rounded-full bg-red-500" />
+              <CustomAvatar
+                src={record?.img}
+                size={28}
+                icon={
+                  <span className="flex h-full flex-1 items-center justify-center">
+                    <Profile size="22" className="stroke-white" />
+                  </span>
+                }
+              />
+              {/* <div className="size-7 rounded-full bg-red-500" /> */}
               <span>{value}</span>
             </div>
           ) : null}
@@ -96,7 +109,7 @@ export const defaultColumns: (EditableTableColumnTypes[number] & {
     dataIndex: '',
     ellipsis: true,
     width: 150,
-    render: (_: any, __: any, record: any) => {
+    render: (_: any, record: any) => {
       return <TableRowAction data={record} />;
     },
   },
@@ -126,14 +139,14 @@ export const tabItemList: ItemProps = [
 
 export const onboardingKeys = [
   'email',
-  'full_name',
+  'fullname',
   'title',
   'parastatal',
   'date_sent',
   '',
 ];
 export const personKeys = [
-  'full_name',
+  'fullname',
   'email',
   'title',
   'office',

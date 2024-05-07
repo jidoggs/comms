@@ -1,8 +1,8 @@
 'use client';
 
 import React from 'react';
-import { Collapse, Space } from 'antd';
-
+import Space from 'antd/es/space';
+import Collapse from 'antd/es/collapse/Collapse';
 import ProjectAccordionLabel from './ProjectAccordionLabel';
 import ProjectTaskList from './ProjectTaskList';
 import { dummyProjectData } from '@/common/mockData';
@@ -28,7 +28,12 @@ const Accordion: React.FC = () => (
                 assignees={project?.assignees}
               />
             ),
-            children: <ProjectTaskList tasks={project?.tasks} assignees={project.assignees} />,
+            children: (
+              <ProjectTaskList
+                tasks={project?.tasks}
+                assignees={project.assignees}
+              />
+            ),
             showArrow: false,
           },
         ]}

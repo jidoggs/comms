@@ -4,7 +4,9 @@ import { mergeClassName } from '@/common/utils';
 import { CustomButtonProps } from './types';
 export * from './types';
 
-const Button = dynamic(() => import('antd/es/button'));
+const Button = dynamic(() => import('antd/es/button'), {
+  loading: (props: any) => <button {...props} />,
+});
 const Tooltip = dynamic(() => import('antd/es/tooltip'));
 
 function CustomButton({

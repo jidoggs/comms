@@ -1,16 +1,16 @@
 'use client';
 import React, { lazy, Suspense } from 'react';
-import { Dropdown, MenuProps, Layout } from 'antd';
+import Layout from 'antd/es/layout';
+import Dropdown from 'antd/es/dropdown/dropdown';
+import { MenuProps } from 'antd/es/menu';
 import { useAuth } from '@/app/auth/hooks';
 import { useSession } from '@/common/hooks';
 import Title from '@/common/components/Title';
-import {
-  Logout,
-  NotificationBell,
-  Profile,
-  SpinLoader,
-} from '@/common/components/icons';
 import CustomAvatar from '../../Avatar/CustomAvatar';
+import Profile from '../../icons/Profile';
+import Logout from '../../icons/Logout';
+import NotificationBell from '../../icons/NotificationBell';
+import SpinLoader from '../../icons/SpinLoader';
 
 const { Header } = Layout;
 

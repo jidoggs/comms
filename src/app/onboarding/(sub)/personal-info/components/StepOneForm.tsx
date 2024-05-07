@@ -5,8 +5,8 @@ import Form, { FormProps } from 'antd/es/form/Form';
 import FormItem from 'antd/es/form/FormItem';
 import CustomInput from '@/common/components/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
-import { ArrowRight } from '@/common/components/icons';
 import { phoneNumberValidator } from '@/common/utils';
+import ArrowRight from '@/common/components/icons/ArrowRight';
 
 type Props = {
   onFinish: FormProps['onFinish'];

@@ -1,7 +1,8 @@
-import CustomButton from '@/common/components/CustomButton';
-import { MoreFile, Send } from '@/common/components/icons';
 import React from 'react';
+import CustomButton from '@/common/components/CustomButton';
 import ExpandButton from './ExpandData/ExpandButton';
+import Send from '@/common/components/icons/Send';
+import MoreFile from '@/common/components/icons/MoreFile';
 
 type Props = {
   data: any;

@@ -1,9 +1,11 @@
 'use client';
+import dynamic from 'next/dynamic';
 import React, { useContext } from 'react';
 import CustomTable from '@/common/components/CustomTable';
 import { UserMgmtDataContext } from '../service-context/UserMgmtContextWrapper';
-import UserDetails from './UserDetails';
 import useUsers from '../../hooks/useUsers';
+
+const UserDetails = dynamic(() => import('./UserDetails'));
 
 const Users = () => {
   const contextInfo = useContext(UserMgmtDataContext);

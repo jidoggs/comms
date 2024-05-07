@@ -1,11 +1,14 @@
 import React from 'react';
-import { Checkbox, CheckboxProps, Form } from 'antd';
+import Checkbox, { CheckboxProps } from 'antd/es/checkbox';
+import Form from 'antd/es/form/Form';
+import FormItem from 'antd/es/form/FormItem';
 import CustomTimeRangePicker from '@/common/components/CustomTimeRangePicker';
 import CustomInput, { CustomTextArea } from '@/common/components/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
-import { Send } from '@/common/components/icons';
+
 import { createMeetingFormInputs } from './helper';
 import { MeetingData } from './types';
+import Send from '@/common/components/icons/Send';
 
 type FieldType = MeetingData;
 
@@ -22,42 +25,42 @@ function NewMeetingForm({ onFinish }: Props) {
       {createMeetingFormInputs.map((item) => {
         if (item.name === 'date_time') {
           return (
-            <Form.Item<FieldType>
+            <FormItem<FieldType>
               key={item.name}
               {...item}
               className="flex flex-col"
             >
               <CustomTimeRangePicker />
-            </Form.Item>
+            </FormItem>
           );
         }
         if (item.name === 'note') {
           return (
-            <Form.Item<FieldType>
+            <FormItem<FieldType>
               key={item.name}
               {...item}
               className="flex flex-col"
             >
               <CustomTextArea name={item.name} placeholder={item.placeholder} />
-            </Form.Item>
+            </FormItem>
           );
         }
         return (
-          <Form.Item<FieldType>
+          <FormItem<FieldType>
             key={item.name}
             {...item}
             className="flex flex-col"
           >
             <CustomInput name={item.name} placeholder={item.placeholder} />
-          </Form.Item>
+          </FormItem>
         );
       })}
       <div className="flex items-center justify-between border-t border-custom-gray_400 pl-2 pt-4">
-        <Form.Item<FieldType>>
+        <FormItem<FieldType>>
           <Checkbox name="is_tentative" onChange={onChange}>
             Mark as tentative
           </Checkbox>
-        </Form.Item>
+        </FormItem>
         <CustomButton htmlType="submit" icon={<Send />} size="small">
           Push
         </CustomButton>

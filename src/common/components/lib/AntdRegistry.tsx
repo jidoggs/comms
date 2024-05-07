@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { ConfigProvider, ThemeConfig } from 'antd';
+import ConfigProvider, { ThemeConfig } from 'antd/es/config-provider';
 import AntdRegistry from '@ant-design/nextjs-registry/es/AntdRegistry';
 import { customThemeColor } from '@/common/utils';
 

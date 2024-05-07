@@ -1,5 +1,8 @@
-import { DatePicker, Location, Users } from '@/common/components/icons';
+
+import DatePicker from '@/common/components/icons/DatePicker';
 import { FormItems, MeetingData } from './types';
+import Location from '@/common/components/icons/Location';
+import Users from '@/common/components/icons/Users';
 
 export const createMeetingFormInputs: FormItems<MeetingData>[] = [
   {

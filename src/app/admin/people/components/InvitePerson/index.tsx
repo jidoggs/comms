@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import InvitePersonModal from './Modal';
 import CustomButton from '@/common/components/CustomButton';
-import { Add } from '@/common/components/icons';
 import { useParastatals } from '@/app/admin/hooks';
 import { useSession } from '@/common/hooks';
 import { queryHandler } from '@/service/request';
+import Add from '@/common/components/icons/Add';
 
 function InvitePerson() {
   const [isOpen, setIsOpen] = useState(false);

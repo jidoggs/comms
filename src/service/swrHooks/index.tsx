@@ -1,6 +1,6 @@
 import useSWR, { useSWRConfig } from 'swr';
 import useSWRMutation from 'swr/mutation';
-import { message } from 'antd';
+import message from 'antd/es/message';
 import {
   makeAuthRequest,
   makeAuthFetch,

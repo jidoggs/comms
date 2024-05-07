@@ -1,14 +1,12 @@
+import React, { ReactNode } from 'react';
 import AvatarGroup from '@/common/components/Avatar/AvatarGroup';
 import CustomAvatar from '@/common/components/Avatar/CustomAvatar';
 import Title from '@/common/components/Title';
-import {
-  Location,
-  NotificationBell,
-  StickyNote,
-} from '@/common/components/icons';
+import Location from '@/common/components/icons/Location';
+import NotificationBell from '@/common/components/icons/NotificationBell';
+import StickyNote from '@/common/components/icons/StickyNote';
 import { dummyAvatarData } from '@/common/mockData';
 import { generateInitials } from '@/common/utils';
-import React, { ReactNode } from 'react';
 
 type ItemProps = {
   icon?: ReactNode;

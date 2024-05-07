@@ -1,14 +1,16 @@
 import CustomButton from '@/common/components/CustomButton';
 import Title from '@/common/components/Title';
-import { ThreeDots, Plus, Search } from '@/common/components/icons';
+import Plus from '@/common/components/icons/Plus';
+import Search from '@/common/components/icons/Search';
+import ThreeDots from '@/common/components/icons/ThreeDots';
 
 type SectionHeaderCardProps = {
   title: string;
   count: number;
   newData?: boolean;
-  searchHandler?: VoidFunction; //eslint-disable-line
-  createHandler?: VoidFunction; //eslint-disable-line
-  moreHandler?: VoidFunction; //eslint-disable-line
+  searchHandler?: () => void;
+  createHandler?: () => void;
+  moreHandler?: () => void;
 };
 
 const SectionHeaderCard = ({

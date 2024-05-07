@@ -1,10 +1,10 @@
-import { Skeleton } from 'antd'
-import React from 'react'
+import React from 'react';
+import dynamic from 'next/dynamic';
+
+const Skeleton = dynamic(() => import('antd/es/skeleton/Skeleton'));
 
 const PageLoader: React.FunctionComponent = () => {
-  return (
-    <Skeleton />
-  )
-}
+  return <Skeleton />;
+};
 
-export default PageLoader
+export default PageLoader;

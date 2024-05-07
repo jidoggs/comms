@@ -2,11 +2,11 @@
 
 import React, { SetStateAction, useState } from 'react';
 import RichTextEditor, { EditorValue } from 'react-rte';
-import { Send } from '@/common/components/icons';
 import CustomButton from '@/common/components/CustomButton';
 import Title from '@/common/components/Title';
 import CustomMention from './Mentions';
 import { User } from '../../../types';
+import Send from '@/common/components/icons/Send';
 
 
 const ExpandedMinuteForm = () => {

@@ -2,9 +2,10 @@
 import React from 'react';
 import Accordion from './components/Accordion';
 import ProjectTitle from './components/ProjectTitle';
-import { BackwardArrow, Plus } from '@/common/components/icons';
 import Title from '@/common/components/Title';
 import CustomButton from '@/common/components/CustomButton';
+import BackwardArrow from '@/common/components/icons/BackwardArrow';
+import Plus from '@/common/components/icons/Plus';
 
 const Projects = () => {
   return (

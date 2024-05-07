@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Icon } from "./type";
 
-const Mores: Icon = ({ size = "30", ...props }) => (
+const MoreFile: Icon = ({ size = "30", ...props }) => (
     <svg
         {...props}
         width={size}
@@ -21,4 +21,4 @@ const Mores: Icon = ({ size = "30", ...props }) => (
 
 );
 
-export default Mores;
+export default MoreFile;

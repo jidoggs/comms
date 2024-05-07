@@ -2,7 +2,7 @@ import React from 'react';
 import CustomModal from '@/common/components/CustomModal';
 import CustomButton from '@/common/components/CustomButton';
 import Title from '@/common/components/Title';
-import { Send } from '@/common/components/icons';
+import Send from '@/common/components/icons/Send';
 
 type Props = {
   viewCorrespondence: () => void;

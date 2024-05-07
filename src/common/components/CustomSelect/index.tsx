@@ -1,5 +1,5 @@
 import React from 'react';
-import { Select, SelectProps } from 'antd';
+import Select, { SelectProps } from 'antd/es/select';
 import { mergeClassName } from '@/common/utils';
 
 export type CustomSelectProps = SelectProps;

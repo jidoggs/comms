@@ -1,9 +1,13 @@
 'use client';
+import dynamic from 'next/dynamic';
 import React, { useState } from 'react';
-import StepOneForm from './components/StepOneForm';
 import useOnboarding from '../../hooks/useOnboarding';
 import { formatPhoneNumber } from '@/common/utils';
-import ApproveModalContent from '@/common/components/ApproveModalContent';
+
+const StepOneForm = dynamic(() => import('./components/StepOneForm'));
+const ApproveModalContent = dynamic(
+  () => import('../../../../common/components/ApproveModalContent')
+);
 
 const LoginPageContent: React.FunctionComponent = () => {
   const { nonAuthSwr } = useOnboarding({ step: 1 });

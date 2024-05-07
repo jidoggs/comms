@@ -2,8 +2,8 @@ import React from 'react';
 import dayjs from 'dayjs';
 
 import AvatarGroup from '@/common/components/Avatar/AvatarGroup';
-import { Hierachy } from '@/common/components/icons';
 import { Assignee } from '@/types/projects';
+import Hierachy from '@/common/components/icons/Hierachy';
 
 type TaskCardProps = {
   taskTitle: string;

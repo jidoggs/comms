@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic';
-import { SpinLoader } from './icons';
 import { CSSProperties } from 'react';
+import SpinLoader from './icons/SpinLoader';
 
 const Spin = dynamic(() => import('antd/es/spin'), {
   loading: () => <Loader />,

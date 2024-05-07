@@ -1,10 +1,14 @@
 'use client';
 import React from 'react';
+import dynamic from 'next/dynamic';
 import { useSectionCascade } from '@/common/hooks';
 import Title from '@/common/components/Title';
 import CustomInput from '@/common/components/CustomInput';
-import SectionCascade from '@/common/components/SectionCascade';
-import { Search } from '@/common/components/icons';
+import Search from '@/common/components/icons/Search';
+
+const SectionCascade = dynamic(
+  () => import('../../../../common/components/SectionCascade')
+);
 
 const PageContent = () => {
   const hookValues = useSectionCascade();

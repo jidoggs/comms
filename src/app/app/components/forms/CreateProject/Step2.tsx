@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
-import { Form, Radio, Space } from 'antd';
+import Form from 'antd/es/form/Form';
+import FormItem from 'antd/es/form/FormItem';
+import Space from 'antd/es/space';
+import Radio from 'antd/es/radio/radio';
+import RadioGroup from 'antd/es/radio/group';
 import CustomButton from '@/common/components/CustomButton';
 import { projectStatus } from './helper';
 import { ProjectData } from './types';
-import { Plus } from '@/common/components/icons';
+import Plus from '@/common/components/icons/Plus';
 
 type FieldType = ProjectData;
 
@@ -18,12 +22,12 @@ function NewProjectStatusForm({ onFinish }: Props) {
     <Form layout="vertical" className="" onFinish={onFinish}>
       {projectStatus.map((item) => {
         return (
-          <Form.Item<FieldType>
+          <FormItem<FieldType>
             key={item.name}
             {...item}
             className="flex flex-col"
           >
-            <Radio.Group className="">
+            <RadioGroup className="">
               <Space direction="vertical" className="pt-2.5">
                 {radioItems.map((itm) => (
                   <Radio key={itm} value={itm}>
@@ -31,8 +35,8 @@ function NewProjectStatusForm({ onFinish }: Props) {
                   </Radio>
                 ))}
               </Space>
-            </Radio.Group>
-          </Form.Item>
+            </RadioGroup>
+          </FormItem>
         );
       })}
       <CustomButton

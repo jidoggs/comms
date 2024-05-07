@@ -1,8 +1,14 @@
 import React from 'react';
-import type { MenuProps } from 'antd';
-import { Message, Users, Building, Settings } from '@/common/components/icons';
-import { Home, More, Schedule, FolderOpen } from '@/common/components/icons';
+import { MenuProps } from 'antd/es/menu';
 import { UserPreDefinedRole, UserRoles } from '@/types';
+import Message from '../../icons/Message';
+import Users from '../../icons/Users';
+import Building from '../../icons/Building';
+import Settings from '../../icons/Settings';
+import Schedule from '../../icons/Schedule';
+import FolderOpen from '../../icons/FolderOpen';
+import More from '../../icons/More';
+import Home from '../../icons/Home';
 
 type MenuItem = Required<MenuProps>['items'][number];
 

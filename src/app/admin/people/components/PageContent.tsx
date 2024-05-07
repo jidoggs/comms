@@ -4,8 +4,10 @@ import CustomTable, { CustomTableProps } from '@/common/components/CustomTable';
 import CustomTab from '@/common/components/CustomTab';
 import TableActions from './TableActions';
 import { PeopleDataContext } from '../service-context/PeopleListContextWrapper';
-import RegistrationDetail from './RegistrationDetail';
 import { User } from '../types';
+import dynamic from 'next/dynamic';
+
+const RegistrationDetail = dynamic(() => import('./RegistrationDetail'));
 
 const CorrespondencePage = () => {
   const contextInfo = useContext(PeopleDataContext);
