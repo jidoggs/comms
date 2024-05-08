@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Title from './Title';
 import { copyTextToClipboard } from '../utils';
 import Link from './icons/Link';
-import { messageHandler } from '../utils/notification';
+import Tick from './icons/Tick';
 
 type Props = {
   title: string;
@@ -11,12 +11,16 @@ type Props = {
 };
 
 function CustomModalTitle({ title, hasLink, linkRef }: Props) {
+  const [isLinkCopied, setIsLinkCopied] = useState(false);
   const clickHandler = () => {
     if (!linkRef) return;
+    setIsLinkCopied(true);
     copyTextToClipboard(
       window.location.origin + '/onboarding/personal-info' + linkRef
     ).then(() => {
-      messageHandler('success', 'Link Copied Successfully');
+      setTimeout(() => {
+        setIsLinkCopied(false);
+      }, 3000);
     });
   };
 
@@ -25,12 +29,25 @@ function CustomModalTitle({ title, hasLink, linkRef }: Props) {
       <Title tag="h2" className="text-xl leading-6">
         {title}
       </Title>
-      {hasLink ? (
-        <button className="flex items-center gap-x-2" onClick={clickHandler}>
-          <span className="text-custom-purple_100">
+      {isLinkCopied ? (
+        <div className="flex items-center gap-x-2 text-custom-green_100">
+          <Title tag="span" className="text-inherit">
+            link copied!!
+          </Title>
+          <span>
+            <Tick size={18} className="animate-ping" />
+          </span>
+        </div>
+      ) : null}
+      {hasLink && !isLinkCopied ? (
+        <button
+          className="flex items-center gap-x-2 text-custom-purple_100"
+          onClick={clickHandler}
+        >
+          <span className="text-inherit">
             <Link size={20} />
           </span>
-          <Title tag="span" className="text-custom-purple_100">
+          <Title tag="span" className="text-inherit">
             copy link
           </Title>
         </button>

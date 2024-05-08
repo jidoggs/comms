@@ -4,7 +4,7 @@ import { useRoles } from '@/app/admin/hooks';
 import Title from '@/common/components/Title';
 import CustomInput from '@/common/components/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
-import Tick from '@/common/components/icons/Tick';
+import TickCircle from '@/common/components/icons/TickCircle';
 import CloseCircled from '@/common/components/icons/CloseCircled';
 import ArrowUp from '@/common/components/icons/ArrowUp';
 import { Role, uniqueId, Permission } from '../../types';
@@ -166,7 +166,7 @@ const RoleItem = ({ role }: RoleItemProps) => {
       {isEditMode || editedRole._id === uniqueId ? (
         <div className="flex w-full flex-row justify-end gap-2">
           <CustomButton
-            icon={<Tick size="18" />}
+            icon={<TickCircle size="18" />}
             description="Save"
             type="text"
             size="middle"

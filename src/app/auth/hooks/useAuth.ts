@@ -90,13 +90,17 @@ function useAuth(props?: AuthParams) {
         storeRefreshToken(res.data.refresh_token);
         storeUserHandler(res.data);
         messageLoading.current = true;
-        messageHandler('success', res.message).then(() => {
-          if (res?.data?.role?.name === UserPreDefinedRole.SECONDARYADMIN) {
-            router.push('/admin/people');
-          } else {
-            router.push('/app/home');
-          }
-        });
+        messageHandler('success', res.message)
+          .then(() => {
+            if (res?.data?.role?.name === UserPreDefinedRole.SECONDARYADMIN) {
+              router.push('/admin/people');
+            } else {
+              router.push('/app/home');
+            }
+          })
+          .finally(() => {
+            messageLoading.current = false;
+          });
       },
     }
   );
@@ -106,14 +110,22 @@ function useAuth(props?: AuthParams) {
   );
 
   const forgotPasswordSwr = useNonAuthRequest<ResetResponse>(
-    props?.forgot_password ? FORGOT_PASSWORD : ''
+    props?.forgot_password && !messageLoading.current ? FORGOT_PASSWORD : '',
+    {
+      onSuccess: (res) => {
+        messageLoading.current = true;
+        messageHandler('success', res.data.message).then(() => {
+          router.replace('/auth/login');
+        });
+      },
+    }
   );
 
   const resetPasswordSwr = useNonAuthRequest<User>(
     props?.reset_password ? RESET_PASSWORD : '',
     {
       onSuccess: () => {
-        router.push(`/auth/success`);
+        router.replace(`/auth/success`);
       },
     }
   );

@@ -6,7 +6,7 @@ import CustomButton from '@/common/components/CustomButton';
 import FieldRow from '../../../components/FieldRow';
 import Close from '@/common/components/icons/Close';
 import Delete from '@/common/components/icons/Delete';
-import Tick from '@/common/components/icons/Tick';
+import TickCircle from '@/common/components/icons/TickCircle';
 import { User } from '../../types';
 
 type RegistrationContentProps = {
@@ -44,7 +44,7 @@ const RegistrationContent = ({
               <CustomButton
                 type="default"
                 className="!border-custom-green_100 !bg-custom-gray_100 !px-6"
-                icon={<Tick size={18} color="green" />}
+                icon={<TickCircle size={18} color="green" />}
                 size="small"
                 title="Delete Profile"
               />

@@ -69,6 +69,7 @@ function SectionContainer({
                       ) : (
                         <TickCircle
                           size={18}
+                          fill="#00A96E"
                           className={mergeClassName(
                             showTick ? '' : 'invisible'
                           )}

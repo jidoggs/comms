@@ -38,7 +38,7 @@ const LoginForm = () => {
           type="email"
           name="email"
           placeholder="user@email.com"
-          disabled={isMutating}
+          disabled={isMutating || messageLoading}
         />
       </FormItem>
       <FormItem<FieldType>
@@ -50,7 +50,7 @@ const LoginForm = () => {
           placeholder="Enter Password"
           type="password"
           name="password"
-          disabled={isMutating}
+          disabled={isMutating || messageLoading}
         />
       </FormItem>
       <div className="flex flex-col gap-y-5">
@@ -61,7 +61,12 @@ const LoginForm = () => {
           Forgot Password?
         </Link>
 
-        <CustomButton loading={isMutating} htmlType="submit" block>
+        <CustomButton
+          loading={isMutating || messageLoading}
+          disabled={isMutating || messageLoading}
+          htmlType="submit"
+          block
+        >
           Login
         </CustomButton>
       </div>

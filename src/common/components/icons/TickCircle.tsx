@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Icon } from './type';
 
-const TickCircle: Icon = ({ size = '30', fill = '#00A96E', ...props }) => (
+const TickCircle: Icon = ({ size = '30', fill, ...props }) => (
   <svg
     {...props}
     width={size}

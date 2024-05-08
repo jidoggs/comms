@@ -5,7 +5,7 @@ import CustomButton from '@/common/components/CustomButton';
 import Title from '@/common/components/Title';
 import FieldRow from '../../../components/FieldRow';
 import DeleteModal from '../modals/DeleteModal';
-import Tick from '@/common/components/icons/Tick';
+import TickCircle from '@/common/components/icons/TickCircle';
 import Edit2 from '@/common/components/icons/Edit2';
 import Delete from '@/common/components/icons/Delete';
 import Close from '@/common/components/icons/Close';
@@ -55,7 +55,7 @@ const UserDetailsContent = ({ userData }: UserDetailsContentProps) => {
                 className="!border-custom-green_100 !bg-custom-gray_100 !px-6"
                 icon={
                   isEdit ? (
-                    <Tick size={18} color="green" />
+                    <TickCircle size={18} color="green" />
                   ) : (
                     <Edit2 size={18} color="green" />
                   )

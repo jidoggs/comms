@@ -28,13 +28,13 @@ function Protected({ children }: ContextWapper) {
     if (!token) {
       router.replace(
         `/auth/login?type=unauthorized&session=${new Date().toISOString()}`
-      );
+      )
     }
   };
 
   useLayoutEffect(() => {
     if (isServer || isLoading || token) return;
-    if (!token && !document.referrer) {
+    if (!token && !document?.referrer) {
       unAuthorizedHandler();
     }
 
