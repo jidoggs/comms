@@ -30,9 +30,8 @@ function ApproveModal({
     >
       <div className="flex flex-col items-center gap-2 text-base text-custom-gray_200">
         <InfoCircle size={90} />
-
         <p className="text-center">
-          {warningText || 'Are you sure you want to sumbit this role?'}
+          {warningText || 'Are you sure you want to submit this role?'}
         </p>
         <Divider className="!border-custom-gray_500" />
         <div className="-mt-3 flex w-full justify-between">

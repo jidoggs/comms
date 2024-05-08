@@ -51,7 +51,7 @@ export const defaultColumns: {
     ellipsis: true,
     width: 200,
     render: (value: any) => {
-      return <>{value.name.replace(/_/g, ' ')}</>;
+      return <>{value?.name.replace(/_/g, ' ')}</>;
     },
   },
   {
@@ -75,7 +75,7 @@ export const defaultColumns: {
     ellipsis: true,
     width: 150,
     render: (value: BasicTypeSet) => {
-      return <>{value.name}</>;
+      return <>{value?.name}</>;
     },
   },
   {

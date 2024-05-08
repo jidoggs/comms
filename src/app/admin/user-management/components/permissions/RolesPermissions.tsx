@@ -1,22 +1,16 @@
 'use client';
 import dynamic from 'next/dynamic';
-import React from 'react';
+import React, { useContext } from 'react';
 import Title from '@/common/components/Title';
-import { Permission, Role } from '../../types';
-
-interface RolesPermissionsProps {
-  allRoles: Role[];
-  setAllRoles: React.Dispatch<React.SetStateAction<Role[]>>;
-  allPermissions: Permission[];
-}
+// import { Permission, Role } from '../../types';
+import PageLoader from './PageLoader';
+import { UserMgmtDataContext } from '../../service-context/UserMgmtContextWrapper';
 
 const RoleItem = dynamic(() => import('./RoleItem'));
 
-const RolesPermissions = ({
-  allRoles,
-  setAllRoles,
-  allPermissions,
-}: RolesPermissionsProps) => {
+const RolesPermissions = () => {
+  const contextInfo = useContext(UserMgmtDataContext);
+
   return (
     <div className="flex flex-col">
       <div className="grid grid-cols-10 border-b border-custom-black_200/10 p-4">
@@ -31,15 +25,18 @@ const RolesPermissions = ({
         className="h-full max-h-[calc(100vh_-_13.225rem)] overflow-y-scroll"
         // ref={rolesWrapperRef}
       >
-        {allRoles.map((role) => (
-          <RoleItem
-            role={role}
-            key={role._id}
-            allRoles={allRoles}
-            setAllRoles={setAllRoles}
-            allPermissions={allPermissions}
-          />
-        ))}
+        {contextInfo && contextInfo.rolesData.length < 1 ? (
+          <>
+            <PageLoader />
+            <PageLoader />
+            <PageLoader />
+          </>
+        ) : (
+          contextInfo &&
+          contextInfo.rolesData.map((role) => (
+            <RoleItem role={role} key={role._id} />
+          ))
+        )}
       </div>
     </div>
   );

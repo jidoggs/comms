@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PermissionSection from './PermissionSection';
 import { categorizeOptions, categorizePermissions } from '../utils/utilFunc';
 import { Role, Permission } from '../../types';
+import { UserMgmtDataContext } from '../../service-context/UserMgmtContextWrapper';
 
 export interface PermissionProps {
-  allPermissions: Permission[];
+  // allPermissions: Permission[];
   editedRole: Role;
   isEditMode: boolean;
   handleAddPermission: (permission: Permission) => void;
@@ -12,79 +13,82 @@ export interface PermissionProps {
 }
 
 const Permissions = ({
-  allPermissions,
+  // allPermissions,
   editedRole,
   isEditMode,
   handleAddPermission,
   handleCancelPermission,
 }: PermissionProps) => {
+  const contextInfo = useContext(UserMgmtDataContext);
   return (
     <div className="col-span-7 flex flex-col justify-between">
-      {editedRole.permissions && (
-        <PermissionSection
-          title="Parastatal"
-          permissions={categorizePermissions(
-            editedRole.permissions,
-            'parastatal'
-          )}
-          options={categorizeOptions(allPermissions, 'parastatal')}
-          editedRole={editedRole}
-          isEditMode={isEditMode}
-          handleAddPermission={handleAddPermission}
-          handleCancelPermission={handleCancelPermission}
-        />
-      )}
+      <PermissionSection
+        title="Parastatal"
+        permissions={categorizePermissions(
+          editedRole.permissions,
+          'parastatal'
+        )}
+        options={categorizeOptions(
+          contextInfo?.permissionsData || [],
+          'parastatal'
+        )}
+        editedRole={editedRole}
+        isEditMode={isEditMode}
+        handleAddPermission={handleAddPermission}
+        handleCancelPermission={handleCancelPermission}
+      />
 
-      {editedRole.permissions && (
-        <PermissionSection
-          title="Offices"
-          permissions={categorizePermissions(editedRole.permissions, 'office')}
-          options={categorizeOptions(allPermissions, 'office')}
-          editedRole={editedRole}
-          isEditMode={isEditMode}
-          handleAddPermission={handleAddPermission}
-          handleCancelPermission={handleCancelPermission}
-        />
-      )}
+      <PermissionSection
+        title="Offices"
+        permissions={categorizePermissions(editedRole?.permissions, 'office')}
+        options={categorizeOptions(
+          contextInfo?.permissionsData || [],
+          'office'
+        )}
+        editedRole={editedRole}
+        isEditMode={isEditMode}
+        handleAddPermission={handleAddPermission}
+        handleCancelPermission={handleCancelPermission}
+      />
 
-      {editedRole.permissions && (
-        <PermissionSection
-          title="Department"
-          permissions={categorizePermissions(
-            editedRole.permissions,
-            'department'
-          )}
-          options={categorizeOptions(allPermissions, 'department')}
-          editedRole={editedRole}
-          isEditMode={isEditMode}
-          handleAddPermission={handleAddPermission}
-          handleCancelPermission={handleCancelPermission}
-        />
-      )}
+      <PermissionSection
+        title="Department"
+        permissions={categorizePermissions(
+          editedRole.permissions,
+          'department'
+        )}
+        options={categorizeOptions(
+          contextInfo?.permissionsData || [],
+          'department'
+        )}
+        editedRole={editedRole}
+        isEditMode={isEditMode}
+        handleAddPermission={handleAddPermission}
+        handleCancelPermission={handleCancelPermission}
+      />
 
-      {editedRole.permissions && (
-        <PermissionSection
-          title="Invite"
-          permissions={categorizePermissions(editedRole.permissions, 'invite')}
-          options={categorizeOptions(allPermissions, 'invite')}
-          editedRole={editedRole}
-          isEditMode={isEditMode}
-          handleAddPermission={handleAddPermission}
-          handleCancelPermission={handleCancelPermission}
-        />
-      )}
+      <PermissionSection
+        title="Invite"
+        permissions={categorizePermissions(editedRole?.permissions, 'invite')}
+        options={categorizeOptions(
+          contextInfo?.permissionsData || [],
+          'invite'
+        )}
+        editedRole={editedRole}
+        isEditMode={isEditMode}
+        handleAddPermission={handleAddPermission}
+        handleCancelPermission={handleCancelPermission}
+      />
 
-      {editedRole.permissions && (
-        <PermissionSection
-          title="Role"
-          permissions={categorizePermissions(editedRole.permissions, 'role')}
-          options={categorizeOptions(allPermissions, 'role')}
-          editedRole={editedRole}
-          isEditMode={isEditMode}
-          handleAddPermission={handleAddPermission}
-          handleCancelPermission={handleCancelPermission}
-        />
-      )}
+      <PermissionSection
+        title="Role"
+        permissions={categorizePermissions(editedRole.permissions, 'role')}
+        options={categorizeOptions(contextInfo?.permissionsData || [], 'role')}
+        editedRole={editedRole}
+        isEditMode={isEditMode}
+        handleAddPermission={handleAddPermission}
+        handleCancelPermission={handleCancelPermission}
+      />
     </div>
   );
 };

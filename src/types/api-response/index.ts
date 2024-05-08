@@ -20,6 +20,8 @@ export type Promolve<ResT = void, RejT = Error> = {
 type StringData = 'created_at' | 'deleted_at' | '_id' | 'updated_at';
 type BooleanData = 'active' | 'is_deleted';
 
+export type BaseDataType = StringData | BooleanData;
+
 export type BaseDataModel = Record<StringData, string> &
   Record<BooleanData, boolean>;
 

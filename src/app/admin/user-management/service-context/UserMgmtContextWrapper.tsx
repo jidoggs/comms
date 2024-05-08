@@ -1,6 +1,10 @@
 'use client';
-import React, { createContext } from 'react';
-import { ContextWapper, UserMgmtDataContextType } from '../types';
+import React, { createContext, useState } from 'react';
+import {
+  ContextWapper,
+  iHandleChange,
+  UserMgmtDataContextType,
+} from '../types';
 import { useTabChange } from '@/common/hooks';
 import { defaultColumns, personKeys, tabItemList } from './userHelper';
 import { useRoles } from '../../hooks';
@@ -13,8 +17,23 @@ function UserMgmtContextWrapper({ children }: ContextWapper) {
   const tabs = useTabChange({
     defaultKey: '/admin/user-management?tab=roles-permissions',
   });
+  const [search, setSearch] = useState('');
 
-  const { getAllRolesSwr } = useRoles({
+  const resetHandler = () => {
+    setSearch('');
+  };
+
+  const searchHandler: iHandleChange = (e) => {
+    const value = e.target.value;
+    setSearch(value);
+  };
+
+  const {
+    getAllRolesSwr,
+    updateAllRolesHandler,
+    addNewRoleHandler,
+    deleteSpecificRole,
+  } = useRoles({
     can_get_all: tabs.currentTab === 'roles-permissions',
   });
 
@@ -70,6 +89,12 @@ function UserMgmtContextWrapper({ children }: ContextWapper) {
         rolesLoading: getAllRolesSwr.loading,
         usersData: getAllUsersSwr.data,
         usersLoading: getAllUsersSwr.loading,
+        search,
+        resetHandler,
+        searchHandler,
+        updateAllRolesHandler,
+        addNewRoleHandler,
+        deleteSpecificRole,
       }}
     >
       {children}

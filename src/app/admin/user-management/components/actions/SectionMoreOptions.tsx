@@ -4,8 +4,7 @@ import { MenuProps } from 'antd/es/menu';
 import useRoles from '@/app/admin/hooks/useRoles';
 import CustomButton from '@/common/components/CustomButton';
 import MoreFile from '@/common/components/icons/MoreFile';
-import { Role, uniqueId } from '../../types';
-import { messageHandler } from '@/common/utils/notification';
+import { Role } from '../../types';
 
 const Dropdown = dynamic(() => import('antd/es/dropdown/dropdown'));
 const DeleteModal = dynamic(() => import('../modals/DeleteModal'));
@@ -18,17 +17,10 @@ const initialModalState = {
 
 interface SectionMoreProps {
   editedRole: Role;
-  allRoles: Role[];
-  setAllRoles: React.Dispatch<React.SetStateAction<Role[]>>;
-  toggleEditMode: () => void;
+  openEditMode: () => void;
 }
 
-function SectionMoreOptions({
-  editedRole,
-  allRoles,
-  setAllRoles,
-  toggleEditMode,
-}: SectionMoreProps) {
+function SectionMoreOptions({ editedRole, openEditMode }: SectionMoreProps) {
   const [isModalOpen, setIsModalOpen] = useState(initialModalState);
 
   const showModal = (val: keyof typeof initialModalState) => {
@@ -43,25 +35,16 @@ function SectionMoreOptions({
     deleteRoleSwr;
 
   const deleteSpecificRole = async () => {
-    if (editedRole._id === uniqueId) {
-      const newRoles = allRoles.filter((r) => r._id !== editedRole._id);
-      setAllRoles(newRoles);
-      // message.success('New Role deleted successfully');
-      setIsModalOpen({ ...initialModalState, isDeleted: true, delete: false });
-      return;
-    } else {
-      deleteRoleTrigger({
-        data: {},
-        type: 'delete',
-      }).then(() => {
-        messageHandler('success', 'Role deleted successfully');
-        setIsModalOpen({
-          ...initialModalState,
-          isDeleted: true,
-          delete: false,
-        });
+    deleteRoleTrigger({
+      data: {},
+      type: 'delete',
+    }).then(() => {
+      setIsModalOpen({
+        ...initialModalState,
+        isDeleted: true,
+        delete: false,
       });
-    }
+    });
   };
 
   const handleCancel = () => {
@@ -72,7 +55,7 @@ function SectionMoreOptions({
     {
       key: '1',
       label: 'Edit this role',
-      onClick: toggleEditMode,
+      onClick: openEditMode,
     },
     {
       key: '2',

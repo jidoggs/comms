@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useRoles } from '@/app/admin/hooks';
 import Title from '@/common/components/Title';
 import CustomInput from '@/common/components/CustomInput';
@@ -9,6 +9,7 @@ import CloseCircled from '@/common/components/icons/CloseCircled';
 import ArrowUp from '@/common/components/icons/ArrowUp';
 import { Role, uniqueId, Permission } from '../../types';
 import { messageHandler } from '@/common/utils/notification';
+import { UserMgmtDataContext } from '../../service-context/UserMgmtContextWrapper';
 
 const Permissions = dynamic(() => import('./Permissions'));
 const SectionMoreOptions = dynamic(
@@ -18,19 +19,10 @@ const ApproveModal = dynamic(() => import('../modals/ApproveModal'));
 
 interface RoleItemProps {
   role: Role;
-  allRoles: Role[];
-  setAllRoles: React.Dispatch<React.SetStateAction<Role[]>>;
-  allPermissions: Permission[];
-  // ref: React.RefObject<HTMLDivElement> | null;
-  // firstRoleRef: React.RefObject<HTMLDivElement>;
 }
 
-const RoleItem = ({
-  role,
-  allRoles,
-  setAllRoles,
-  allPermissions,
-}: RoleItemProps) => {
+const RoleItem = ({ role }: RoleItemProps) => {
+  const contextInfo = useContext(UserMgmtDataContext);
   const [editedRole, setEditedRole] = useState<Role>(role);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -38,7 +30,7 @@ const RoleItem = ({
 
   useEffect(() => {
     setEditedRole(role);
-  }, [allRoles.length, setEditedRole]); //eslint-disable-line
+  }, [role]); //eslint-disable-line
 
   useEffect(() => {
     if (firstRoleRef.current) {
@@ -55,27 +47,31 @@ const RoleItem = ({
     setEditedRole({ ...editedRole, name: e.target.value });
   };
 
-  const toggleEditMode = () => {
+  const closeEditMode = () => {
     if (editedRole._id === uniqueId) {
       setIsEditMode(false);
-      setAllRoles((prevRoles) =>
-        prevRoles.filter((role) => role._id !== uniqueId)
-      );
+      if (contextInfo) {
+        contextInfo.deleteSpecificRole(uniqueId);
+      }
     } else {
       setEditedRole(role);
       setIsEditMode(!isEditMode);
       if (!isEditMode) {
         setEditedRole(role);
-        setAllRoles((prevRoles) =>
-          prevRoles.map((prevRole) =>
-            prevRole._id === role._id ? editedRole : prevRole
-          )
-        );
+        contextInfo?.updateAllRolesHandler(uniqueId, editedRole);
       }
     }
-    if (role._id === uniqueId && !isEditMode) {
-      const newAllRoles = allRoles.filter((role) => role._id !== uniqueId);
-      allRoles = newAllRoles;
+  };
+
+  const openEditMode = () => {
+    if (editedRole._id === uniqueId) {
+      setIsEditMode(false);
+    } else {
+      setEditedRole(role);
+      setIsEditMode(!isEditMode);
+      if (!isEditMode) {
+        setEditedRole(role);
+      }
     }
   };
 
@@ -86,7 +82,7 @@ const RoleItem = ({
 
   const onFinishedRequest = () => {
     setIsModalOpen(false);
-    toggleEditMode();
+    closeEditMode();
   };
 
   const updateExitingRole = (updatingRole: Role) => {
@@ -162,7 +158,7 @@ const RoleItem = ({
 
       <Permissions
         editedRole={editedRole}
-        allPermissions={allPermissions}
+        // allPermissions={contextInfo.permissionsData}
         isEditMode={isEditMode}
         handleAddPermission={handleAddPermission}
         handleCancelPermission={handleCancelPermission}
@@ -183,7 +179,7 @@ const RoleItem = ({
             type="text"
             size="middle"
             className="!border-2 !border-custom-gray_400 !text-custom-red_100"
-            onClick={toggleEditMode}
+            onClick={closeEditMode}
           />
           <ApproveModal
             handleCancel={handleCancel}
@@ -196,9 +192,9 @@ const RoleItem = ({
         <div className="flex w-full flex-row justify-end gap-2">
           <SectionMoreOptions
             editedRole={editedRole}
-            allRoles={allRoles}
-            setAllRoles={setAllRoles}
-            toggleEditMode={toggleEditMode}
+            // allRoles={contextInfo?.rolesData}
+            // setAllRoles={setAllRoles}
+            openEditMode={openEditMode}
           />
           <CustomButton
             icon={<ArrowUp />}

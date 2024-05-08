@@ -9,7 +9,7 @@ type Create = 'can_create';
 
 type RequestType = Create | GetUpdateDelete | Invite;
 
-type QueryType = '_id' | 'query';
+type QueryType = '_id' | 'query' | 'search';
 type OfficeQueryType = QueryType | 'parastatal';
 
 type GenericServiceParam<A extends string, Q extends string> = Partial<

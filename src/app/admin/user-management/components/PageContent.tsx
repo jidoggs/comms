@@ -1,12 +1,13 @@
 'use client';
 import dynamic from 'next/dynamic';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import CustomTab from '@/common/components/CustomTab';
 import Title from '@/common/components/Title';
 import { UserMgmtDataContext } from '../service-context/UserMgmtContextWrapper';
 import { Role, uniqueId } from '../types';
+// import PageLoader from './permissions/PageLoader';
 
-const Skeleton = dynamic(() => import('antd/es/skeleton/Skeleton'));
+const PageLoader = dynamic(() => import('./permissions/PageLoader'));
 
 const RolesSearchAction = dynamic(() => import('./RolesSearchAction'));
 const UserTabActions = dynamic(() => import('./UserTabActions'));
@@ -17,14 +18,6 @@ const RolesPermissions = dynamic(
 
 const CorrespondencePage = () => {
   const contextInfo = useContext(UserMgmtDataContext);
-  const [allRoles, setAllRoles] = useState<Role[]>([]);
-
-  useEffect(() => {
-    if (!contextInfo) return;
-    if (contextInfo.rolesData.length > 0) {
-      setAllRoles(contextInfo.rolesData);
-    }
-  }, [contextInfo?.rolesData?.length]); //eslint-disable-line
 
   const sampleRole: Role = {
     active: true,
@@ -38,9 +31,11 @@ const CorrespondencePage = () => {
   };
 
   const handleAddRole = () => {
-    const isRoleAlreadyAdded = allRoles.some((role) => role._id === uniqueId);
+    const isRoleAlreadyAdded = contextInfo?.rolesData.some(
+      (role) => role._id === uniqueId
+    );
     if (!isRoleAlreadyAdded) {
-      setAllRoles((prevRoles) => [sampleRole, ...prevRoles]);
+      contextInfo?.addNewRoleHandler(sampleRole);
     }
   };
 
@@ -65,14 +60,10 @@ const CorrespondencePage = () => {
           }
         />
         {contextInfo?.currentTab === 'roles-permissions' ? (
-          allRoles ? (
-            <RolesPermissions
-              allRoles={allRoles}
-              setAllRoles={setAllRoles}
-              allPermissions={contextInfo.permissionsData}
-            />
+          contextInfo.rolesData ? (
+            <RolesPermissions />
           ) : (
-            <Skeleton active />
+            <PageLoader />
           )
         ) : null}
         {contextInfo?.currentTab === 'users' ? <Users /> : null}
