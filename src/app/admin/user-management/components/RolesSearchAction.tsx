@@ -3,8 +3,8 @@ import { UserMgmtDataContext } from '../service-context/UserMgmtContextWrapper';
 import CustomButton from '@/common/components/CustomButton';
 import CustomInput from '@/common/components/CustomInput';
 import Add from '@/common/components/icons/Add';
-import File from '@/common/components/icons/File';
 import Search from '@/common/components/icons/Search';
+import DocumentDownload from '@/common/components/icons/DocumentDownload';
 
 type Props = {
   handleAddRole: () => void;
@@ -35,7 +35,7 @@ function RolesSearchAction({ handleAddRole }: Props) {
       <CustomButton
         type="text"
         className="!bg-custom-white_100"
-        icon={<File />}
+        icon={<DocumentDownload />}
         size="small"
       />
     </div>

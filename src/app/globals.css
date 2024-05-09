@@ -170,3 +170,25 @@ body {
   content: '*';
   visibility: visible;
 }
+
+/* ... other styles ... */
+
+/* Base class for the content area */
+.role-item-content {
+  overflow: hidden;
+  transition-property: max-height;
+  transition-timing-function: ease-out;
+  transition-duration: 200ms; /* Adjust for collapsing */
+}
+
+/* When the component is fully collapsed */
+.role-item-content.collapsed {
+  max-height: 0;
+}
+
+/* When the component is fully expanded */
+.role-item-content.expanded {
+  max-height: 500px; /* Adjust the max height as needed */
+  transition-timing-function: ease-in;
+  transition-duration: 300ms; /* Adjust for expanding */
+}

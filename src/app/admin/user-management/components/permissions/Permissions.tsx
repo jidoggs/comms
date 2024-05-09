@@ -21,7 +21,7 @@ const Permissions = ({
 }: PermissionProps) => {
   const contextInfo = useContext(UserMgmtDataContext);
   return (
-    <div className="col-span-7 flex flex-col justify-between">
+    <>
       <PermissionSection
         title="Parastatal"
         permissions={categorizePermissions(
@@ -89,7 +89,7 @@ const Permissions = ({
         handleAddPermission={handleAddPermission}
         handleCancelPermission={handleCancelPermission}
       />
-    </div>
+    </>
   );
 };
 

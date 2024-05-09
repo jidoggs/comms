@@ -10,6 +10,8 @@ import ArrowUp from '@/common/components/icons/ArrowUp';
 import { Role, uniqueId, Permission } from '../../types';
 import { messageHandler } from '@/common/utils/notification';
 import { UserMgmtDataContext } from '../../service-context/UserMgmtContextWrapper';
+import ArrowDown from '@/common/components/icons/ArrowDown';
+import { mergeClassName } from '@/common/utils';
 
 const Permissions = dynamic(() => import('./Permissions'));
 const SectionMoreOptions = dynamic(
@@ -26,6 +28,7 @@ const RoleItem = ({ role }: RoleItemProps) => {
   const [editedRole, setEditedRole] = useState<Role>(role);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
   const firstRoleRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -140,7 +143,10 @@ const RoleItem = ({ role }: RoleItemProps) => {
 
   return (
     <div
-      className="mt-2 grid grid-cols-10 items-start bg-custom-white_100 p-4"
+      className={mergeClassName(
+        'mt-2 grid grid-cols-10 items-start bg-custom-white_100 p-4',
+        isCollapsed ? 'collapsed' : 'expanded'
+      )}
       ref={role._id === uniqueId ? firstRoleRef : null}
     >
       {isEditMode || editedRole._id === uniqueId ? (
@@ -156,13 +162,21 @@ const RoleItem = ({ role }: RoleItemProps) => {
         <Title className="col-span-2 pr-4">{editedRole.name}</Title>
       )}
 
-      <Permissions
-        editedRole={editedRole}
-        // allPermissions={contextInfo.permissionsData}
-        isEditMode={isEditMode}
-        handleAddPermission={handleAddPermission}
-        handleCancelPermission={handleCancelPermission}
-      />
+      {isCollapsed ? (
+        <div className="col-span-7 flex flex-col justify-between">
+          <Title>Permissions for {editedRole.name}</Title>
+        </div>
+      ) : (
+        <div className="role-item-content col-span-7 flex w-full flex-col justify-between">
+          <Permissions
+            editedRole={editedRole}
+            // allPermissions={contextInfo.permissionsData}
+            isEditMode={isEditMode}
+            handleAddPermission={handleAddPermission}
+            handleCancelPermission={handleCancelPermission}
+          />
+        </div>
+      )}
       {isEditMode || editedRole._id === uniqueId ? (
         <div className="flex w-full flex-row justify-end gap-2">
           <CustomButton
@@ -197,10 +211,11 @@ const RoleItem = ({ role }: RoleItemProps) => {
             openEditMode={openEditMode}
           />
           <CustomButton
-            icon={<ArrowUp />}
-            description="Collapse"
+            icon={isCollapsed ? <ArrowDown /> : <ArrowUp />}
+            description={isCollapsed ? 'Expand' : 'Collapse'}
             type="text"
             size="small"
+            onClick={() => setIsCollapsed(!isCollapsed)}
           />
         </div>
       )}
