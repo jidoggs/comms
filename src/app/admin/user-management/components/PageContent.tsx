@@ -1,20 +1,18 @@
 'use client';
 import dynamic from 'next/dynamic';
-import React, { useContext } from 'react';
+import React, { useContext, lazy, Suspense } from 'react';
 import CustomTab from '@/common/components/CustomTab';
 import Title from '@/common/components/Title';
 import { UserMgmtDataContext } from '../service-context/UserMgmtContextWrapper';
 import { Role, uniqueId } from '../types';
-// import PageLoader from './permissions/PageLoader';
+import RolesPageLoader from './permissions/RolesPageLoader';
 
-const PageLoader = dynamic(() => import('./permissions/PageLoader'));
+// const PageLoader = dynamic(() => import('./permissions/PageLoader'));
 
 const RolesSearchAction = dynamic(() => import('./RolesSearchAction'));
 const UserTabActions = dynamic(() => import('./UserTabActions'));
 const Users = dynamic(() => import('./Users'));
-const RolesPermissions = dynamic(
-  () => import('./permissions/RolesPermissions')
-);
+const RolesPermissions = lazy(() => import('./permissions/RolesPermissions'));
 
 const CorrespondencePage = () => {
   const contextInfo = useContext(UserMgmtDataContext);
@@ -52,19 +50,17 @@ const CorrespondencePage = () => {
           className="border-none [&_.ant-tabs-nav-list]:border-b [&_.ant-tabs-nav-list]:border-custom-gray_500"
           tabBarExtraContent={
             <>
-              {contextInfo?.currentTab === 'roles-permissions' ? (
+              {contextInfo?.currentTab !== 'users' ? (
                 <RolesSearchAction handleAddRole={handleAddRole} />
               ) : null}
               {contextInfo?.currentTab === 'users' ? <UserTabActions /> : null}
             </>
           }
         />
-        {contextInfo?.currentTab === 'roles-permissions' ? (
-          contextInfo.rolesData ? (
+        {contextInfo?.currentTab !== 'users' ? (
+          <Suspense fallback={<RolesPageLoader />}>
             <RolesPermissions />
-          ) : (
-            <PageLoader />
-          )
+          </Suspense>
         ) : null}
         {contextInfo?.currentTab === 'users' ? <Users /> : null}
       </div>

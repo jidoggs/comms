@@ -5,8 +5,14 @@ import Title from '@/common/components/Title';
 // import { Permission, Role } from '../../types';
 import PageLoader from './PageLoader';
 import { UserMgmtDataContext } from '../../service-context/UserMgmtContextWrapper';
+import RolesPageLoader from './RolesPageLoader';
+// import second from 'antd/es/table/e'
 
-const RoleItem = dynamic(() => import('./RoleItem'));
+const RoleItem = dynamic(() => import('./RoleItem'), {
+  loading: () => <PageLoader />,
+});
+
+// const Result = dynamic(() => import('antd/es/result'));
 
 const RolesPermissions = () => {
   const contextInfo = useContext(UserMgmtDataContext);
@@ -21,21 +27,13 @@ const RolesPermissions = () => {
           Permissions
         </Title>
       </div>
-      <div
-        className="h-full max-h-[calc(100vh_-_13.225rem)] overflow-y-scroll"
-        // ref={rolesWrapperRef}
-      >
-        {contextInfo && contextInfo.rolesData.length < 1 ? (
-          <>
-            <PageLoader />
-            <PageLoader />
-            <PageLoader />
-          </>
-        ) : (
-          contextInfo &&
+      <div className="h-full max-h-[calc(100vh_-_13.225rem)] overflow-y-scroll">
+        {contextInfo && contextInfo.rolesData.length ? (
           contextInfo.rolesData.map((role) => (
             <RoleItem role={role} key={role._id} />
           ))
+        ) : (
+          <RolesPageLoader />
         )}
       </div>
     </div>
