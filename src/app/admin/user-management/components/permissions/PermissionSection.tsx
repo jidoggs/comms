@@ -1,11 +1,13 @@
 import React from 'react';
-import Dropdown from 'antd/es/dropdown/dropdown';
 import { MenuProps } from 'antd/es/menu';
 import Title from '@/common/components/Title';
 import CustomButton from '@/common/components/CustomButton';
 import CloseCircle from '@/common/components/icons/CloseCircle';
 import ArrowDown from '@/common/components/icons/ArrowDown';
 import { Role, uniqueId, Permission } from '../../types';
+import dynamic from 'next/dynamic';
+
+const Dropdown = dynamic(() => import('antd/es/dropdown/dropdown'));
 
 interface PermissionSectionProps {
   editedRole: Role;
