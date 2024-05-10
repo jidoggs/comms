@@ -145,6 +145,46 @@ export const makeAuthRequest: tp.Request = async (
   });
 };
 
+export const makeAuthRequestWithFormData: tp.Request = async (
+  url: string,
+  { arg }: { arg: tp.apiRequestorArgs }
+) => {
+  let headers = {
+    'Content-Type': 'multipart/form-data',
+  };
+
+  let formData = new FormData();
+
+  for (const key in arg.data) {
+    if (Object.prototype.hasOwnProperty.call(arg?.data, key)) {
+      const temp: Record<string, any> = arg?.data;
+      const fieldData = temp?.[key];
+
+      switch (key) {
+        case 'files':
+          fieldData.forEach((field: any) => {
+            formData.append(key, field);
+          });
+          break;
+
+        default:
+          formData.append(key, fieldData);
+          break;
+      }
+    }
+  }
+
+  return await instance.request({
+    method: arg.type || 'post',
+    url: url,
+    data: formData,
+    headers: {
+      ...headers,
+      ...setAuthorization(),
+    },
+  });
+};
+
 export const apiErrorHandler = (error: any) => {
   if (error?.response?.data?.message) {
     return error.response.data.message;

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import CustomButton from '@/common/components/CustomButton';
 import CustomModal from '@/common/components/CustomModal';
-import SentCorrespondece from '../SentCorrespondece';
+import SentCorrespondence from '../SentCorrespondence';
 import Form from './Form';
 import { CorrespondenceData } from '../../types';
 import Maximize from '@/common/components/icons/Maximize';
@@ -52,7 +52,7 @@ function ExpandButton({ className, description }: Props) {
       >
         <Form handleSubmit={correspondenceFormSubmitHandler} />
       </CustomModal>
-      <SentCorrespondece
+      <SentCorrespondence
         newCorrespondence={newCorrespondenceHandler}
         viewCorrespondence={viewCorrespondenceHandler}
         onCancel={closeConfirmModalHandler}

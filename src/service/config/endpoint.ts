@@ -47,6 +47,9 @@ export const ENDPOINTS = {
     SPECIFIC_ROLE: (query: string) => `/roles/${query}`,
     UPDATE: '/roles/',
   },
+  CORRESPONDENCE: {
+    CREATE: '/correspondence',
+  },
   PERMISSIONS: {
     CREATE: '/permissions',
     VIEW_ALL_PERMISSIONS: '/permissions/all',

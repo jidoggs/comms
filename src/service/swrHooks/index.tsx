@@ -6,6 +6,7 @@ import {
   makeRequest,
   makeGetRequest,
   apiErrorHandler,
+  makeAuthRequestWithFormData,
 } from '../request';
 import {
   APIResponseErrorModel,
@@ -19,6 +20,27 @@ const errorMessageHandler = (error: APIResponseErrorModel) => {
   messageHandler('error', apiErrorHandler(error));
 };
 
+export const useFormDataAuthRequest = <T,>(
+  url: string,
+  options?: SWRMutation<T>
+) => {
+  const { trigger, isMutating, data, error } = useSWRMutation<
+    APIResponseSuccessModel<T>,
+    APIResponseErrorModel,
+    string,
+    apiRequestorArgs
+  >(url, makeAuthRequestWithFormData, {
+    ...options,
+    onError: options?.onError || errorMessageHandler,
+  });
+
+  return {
+    trigger,
+    isMutating,
+    data,
+    error,
+  };
+};
 export const useAuthRequest = <T,>(url: string, options?: SWRMutation<T>) => {
   const { trigger, isMutating, data, error } = useSWRMutation<
     APIResponseSuccessModel<T>,

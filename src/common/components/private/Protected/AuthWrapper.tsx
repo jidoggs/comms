@@ -2,12 +2,12 @@
 import React, { createContext, useState } from 'react';
 import { ContextWapper, User } from '@/types';
 
-type ContextType = {
+export type UserSessionContextType = {
   user: User | null;
   storeUserHandler: (res: User | null) => void;
-} | null;
+};
 
-export const UserContext = createContext<ContextType>(null);
+export const UserContext = createContext<UserSessionContextType | null>(null);
 
 function AuthWrapper({ children }: ContextWapper) {
   const [data, setData] = useState<null | User>(null);

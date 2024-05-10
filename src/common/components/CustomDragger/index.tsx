@@ -1,9 +1,10 @@
 import React from 'react';
-import dynamic from 'next/dynamic';
+// import dynamic from 'next/dynamic';
 import { DraggerProps } from 'antd/lib/upload/Dragger';
 import Document from '../icons/Document';
+import { Upload } from 'antd';
 
-const Dragger = dynamic(() => import('antd/lib/upload/Dragger'));
+// const Dragger = dynamic(() => import('antd/lib/upload/Dragger'));
 
 interface CustomDraggerProps extends DraggerProps {}
 
@@ -14,7 +15,7 @@ const CustomDragger: React.FunctionComponent<CustomDraggerProps> = ({
   ...otherDraggerProps
 }) => {
   return (
-    <Dragger
+    <Upload.Dragger
       beforeUpload={(_) => false} //eslint-disable-line
       accept={accept || contentType}
       {...otherDraggerProps}
@@ -31,7 +32,7 @@ const CustomDragger: React.FunctionComponent<CustomDraggerProps> = ({
           Upload the letter
         </button>
       </div>
-    </Dragger>
+    </Upload.Dragger>
   );
 };
 

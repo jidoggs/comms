@@ -1,10 +1,13 @@
 'use client';
 import { useContext } from 'react';
-import { UserContext } from '@/common/components/private/Protected/AuthWrapper';
+import {
+  UserContext,
+  UserSessionContextType,
+} from '@/common/components/private/Protected/AuthWrapper';
 import { User, UserPreDefinedRole } from '@/types';
 
 function useSession() {
-  const userInfo = useContext(UserContext);
+  const userInfo = useContext(UserContext) as UserSessionContextType;
 
   const isPrimaryAdmin =
     userInfo?.user?.role.name === UserPreDefinedRole.PRIMARYADMIN;
@@ -19,7 +22,7 @@ function useSession() {
   };
 
   return {
-    data: userInfo?.user,
+    data: userInfo.user as User,
     storeUserHandler,
     isPrimaryAdmin,
     isSecondaryAdmin,
