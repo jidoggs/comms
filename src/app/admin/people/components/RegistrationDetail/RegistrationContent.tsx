@@ -84,7 +84,7 @@ const RegistrationContent = ({
           />
           <FieldRow
             title="Parastatal"
-            value={registrationData?.parastatal?.name as string}
+            value={registrationData?.parastatal?.[0]?.name as string}
           />
         </div>
       </div>

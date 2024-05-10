@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { ENDPOINTS } from '@/service/config/endpoint';
 import {
   fetchOptions,
@@ -5,80 +6,47 @@ import {
   useAuthRequest,
   useServiceConfig,
 } from '@/service/swrHooks';
+import { Role } from '../user-management/types';
+import { queryHandler } from '@/service/request';
 import { RoleServiceArgs } from './types';
-import {
-  APIResponseSuccessModel,
-  BaseDataType,
-  Role,
-} from '../user-management/types';
-import { useCallback, useState } from 'react';
+import { APIResponseSuccessModel } from '@/types';
 
-const {
-  CREATE,
-  GET_ALL_ROLES,
-  DELETE_SPECIFIC_ROLE,
-  GET_ALL_ROLES_BY_NAME,
-  UPDATE,
-} = ENDPOINTS.ROLES;
+const { CREATE, GET_ALL_ROLES, SPECIFIC_ROLE, UPDATE } = ENDPOINTS.ROLES;
 
 function useRoles(props: RoleServiceArgs) {
-  const query = props._id || '';
-  // const nameQuery = props.name || '';
-  const [allRoles, setAllRoles] = useState<Role[]>([]);
+  const [addNewRole, setAddNewRole] = useState(false);
+
+  const searchQuery = props.search
+    ? JSON.stringify({ name: props.search })
+    : '';
+
+  const query = queryHandler({ search: searchQuery, sort: 'created_at' });
+
   const { revalidateRequest } = useServiceConfig();
 
   const revalidateListHandler = (res: APIResponseSuccessModel) => {
-    revalidateRequest(GET_ALL_ROLES, res.message);
+    revalidateRequest(GET_ALL_ROLES + query, res.message);
   };
-
-  const updateAllRolesHandler = useCallback(
-    (_id: string, update: Partial<Omit<Role, BaseDataType>>) => {
-      const updatedRoles = allRoles.map((role) =>
-        role._id === _id ? { ...role, ...update } : role
-      );
-      setAllRoles(updatedRoles);
-    },
-    []
-  );
-
-  const addNewRoleHandler = useCallback(
-    (role: Role) => {
-      setAllRoles((prevRoles) => [role, ...prevRoles]);
-    },
-    [setAllRoles]
-  );
-
-  const deleteSpecificRole = useCallback(
-    (_id: string) => {
-      const newRoles = allRoles.filter((r) => r._id !== _id);
-      setAllRoles(newRoles);
-    },
-    [allRoles]
-  );
-
-  const getAllRolesSwr = useAuthGetRequest<Role[]>(
-    props?.can_get_all ? GET_ALL_ROLES : '',
-    {
-      ...fetchOptions,
-      onSuccess: (res) => {
-        const temp =
-          res?.data.sort((a, b) => {
-            if (a.created_at < b.created_at) {
-              return 1;
-            } else if (a.created_at > b.created_at) {
-              return -1;
-            } else {
-              return 0;
-            }
-          }) || [];
-        setAllRoles(temp);
-      },
-    }
-  );
 
   const createRoleSwr = useAuthRequest<Role>(props?.can_create ? CREATE : '', {
     onSuccess: revalidateListHandler,
   });
+
+  const getAllRolesSwr = useAuthGetRequest<Role[]>(
+    props?.can_get_all ? GET_ALL_ROLES + query : '',
+    {
+      ...fetchOptions,
+      onSuccess: () => {
+        if (!addNewRole) return;
+        setAddNewRole(false);
+      },
+    }
+  );
+
+  const getRoleSwr = useAuthGetRequest<Role>(
+    props?.can_get_by_id && props._id ? SPECIFIC_ROLE(props._id) : '',
+    fetchOptions
+  );
 
   const updateRoleSwr = useAuthRequest<Role>(
     props?.can_update_by_id ? UPDATE : '',
@@ -86,26 +54,36 @@ function useRoles(props: RoleServiceArgs) {
       onSuccess: revalidateListHandler,
     }
   );
+
   const deleteRoleSwr = useAuthRequest<null>(
-    props?.can_delete_by_id && query ? DELETE_SPECIFIC_ROLE(query) : '',
+    props?.can_delete_by_id && props._id ? SPECIFIC_ROLE(props._id) : '',
     {
       onSuccess: revalidateListHandler,
     }
   );
 
+  const addNewRoleHandler = () => {
+    if (getAllRolesSwr.isLoading || getAllRolesSwr.isValidating) {
+      return;
+    }
+    setAddNewRole(true);
+  };
+
   return {
     createRoleSwr,
     getAllRolesSwr: {
       ...getAllRolesSwr,
-      data: allRoles,
+      data:
+        getAllRolesSwr.data?.data?.sort((a, b) =>
+          b?.created_at?.localeCompare(a?.created_at)
+        ) || [],
       loading: getAllRolesSwr.isLoading || getAllRolesSwr.isValidating,
     },
-    // getAllRolesByNameSwr,
+    getRoleSwr,
     updateRoleSwr,
     deleteRoleSwr,
-    updateAllRolesHandler,
     addNewRoleHandler,
-    deleteSpecificRole,
+    addNewRole,
   };
 }
 

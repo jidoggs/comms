@@ -4,10 +4,7 @@ import React, { useContext, lazy, Suspense } from 'react';
 import CustomTab from '@/common/components/CustomTab';
 import Title from '@/common/components/Title';
 import { UserMgmtDataContext } from '../service-context/UserMgmtContextWrapper';
-import { Role, uniqueId } from '../types';
 import RolesPageLoader from './permissions/RolesPageLoader';
-
-// const PageLoader = dynamic(() => import('./permissions/PageLoader'));
 
 const RolesSearchAction = dynamic(() => import('./RolesSearchAction'));
 const UserTabActions = dynamic(() => import('./UserTabActions'));
@@ -16,26 +13,6 @@ const RolesPermissions = lazy(() => import('./permissions/RolesPermissions'));
 
 const CorrespondencePage = () => {
   const contextInfo = useContext(UserMgmtDataContext);
-
-  const sampleRole: Role = {
-    active: true,
-    _id: uniqueId,
-    name: '',
-    permissions: [],
-    created_at: '',
-    deleted_at: '',
-    updated_at: '',
-    is_deleted: false,
-  };
-
-  const handleAddRole = () => {
-    const isRoleAlreadyAdded = contextInfo?.rolesData.some(
-      (role) => role._id === uniqueId
-    );
-    if (!isRoleAlreadyAdded) {
-      contextInfo?.addNewRoleHandler(sampleRole);
-    }
-  };
 
   return (
     <div className="pt-4">
@@ -51,7 +28,7 @@ const CorrespondencePage = () => {
           tabBarExtraContent={
             <>
               {contextInfo?.currentTab !== 'users' ? (
-                <RolesSearchAction handleAddRole={handleAddRole} />
+                <RolesSearchAction />
               ) : null}
               {contextInfo?.currentTab === 'users' ? <UserTabActions /> : null}
             </>

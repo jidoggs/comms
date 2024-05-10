@@ -8,16 +8,29 @@ import {
 import { APIResponseSuccessModel, User } from '@/types';
 import { queryHandler } from '@/service/request';
 
-type RequestType = 'can_get_all_invites' | 'can_approve';
+type RequestType = 'can_get_all_invites' | 'can_approve' | 'can_decline';
 type QueryType = 'status' | 'search';
 
 type Props = Partial<Record<RequestType, boolean>> &
   Partial<Record<QueryType, string>>;
 
-const { GET_ALL_INVITE_BY_STATUS, APPROVE_REQUEST } = ENDPOINTS.PEOPLE;
+const { GET_ALL_INVITE_BY_STATUS, APPROVE_REQUEST, DECLINE_REQUEST } =
+  ENDPOINTS.PEOPLE;
 
 function usePeople(props: Props) {
-  const query = queryHandler({ search: props.search, status: props.status });
+  const searchQuery = props.search
+    ? JSON.stringify({
+        // surname: debouceSearch,
+        // firstname: debouceSearch,
+        email: props.search,
+      })
+    : '';
+
+  const query = queryHandler({
+    search: searchQuery,
+    status: props.status,
+    sort: 'created_at',
+  });
 
   const { revalidateRequest } = useServiceConfig();
 
@@ -37,9 +50,17 @@ function usePeople(props: Props) {
     }
   );
 
+  const declineRequestSwr = useAuthRequest<null>(
+    props?.can_decline ? DECLINE_REQUEST : '',
+    {
+      onSuccess: revalidateListHandler,
+    }
+  );
+
   return {
     getAllSwr,
     approveRequestSwr,
+    declineRequestSwr,
   };
 }
 

@@ -14,7 +14,7 @@ export interface User extends BaseDataModel {
   title: string;
   phone: string;
   office: BasicTypeSet[];
-  parastatal: BasicTypeSet;
+  parastatal: BasicTypeSet[];
   department: BasicTypeSet[];
   last_seen: string;
   date_created: string;

@@ -2,10 +2,10 @@
 import React, { createContext, useState } from 'react';
 import {
   ContextWapper,
-  iHandleChange,
   UserMgmtDataContextType,
+  iHandleChange,
 } from '../types';
-import { useTabChange } from '@/common/hooks';
+import { useDebounce, useTabChange } from '@/common/hooks';
 import { defaultColumns, personKeys, tabItemList } from './userHelper';
 import { useRoles } from '../../hooks';
 import useUsers from '../../hooks/useUsers';
@@ -14,10 +14,8 @@ import usePermissions from '../../hooks/usePermission';
 export const UserMgmtDataContext = createContext<UserMgmtDataContextType>(null);
 
 function UserMgmtContextWrapper({ children }: ContextWapper) {
-  const tabs = useTabChange({
-    defaultKey: '/admin/user-management?tab=roles-permissions',
-  });
   const [search, setSearch] = useState('');
+  const searchDebounce = useDebounce(search);
 
   const resetHandler = () => {
     setSearch('');
@@ -28,13 +26,14 @@ function UserMgmtContextWrapper({ children }: ContextWapper) {
     setSearch(value);
   };
 
-  const {
-    getAllRolesSwr,
-    updateAllRolesHandler,
-    addNewRoleHandler,
-    deleteSpecificRole,
-  } = useRoles({
+  const tabs = useTabChange({
+    defaultKey: '/admin/user-management?tab=roles-permissions',
+    resetFields: resetHandler,
+  });
+
+  const roleInfo = useRoles({
     can_get_all: tabs.currentTab === 'roles-permissions',
+    search: searchDebounce,
   });
 
   const { getAllPermissionsSwr } = usePermissions({
@@ -43,6 +42,7 @@ function UserMgmtContextWrapper({ children }: ContextWapper) {
 
   const { getAllUsersSwr } = useUsers({
     can_get_all: tabs.currentTab === 'users',
+    search: searchDebounce,
   });
 
   const columns = defaultColumns
@@ -85,16 +85,14 @@ function UserMgmtContextWrapper({ children }: ContextWapper) {
         tabItemList,
         permissionsData: getAllPermissionsSwr.data,
         permissionsLoading: getAllPermissionsSwr.loading,
-        rolesData: getAllRolesSwr.data,
-        rolesLoading: getAllRolesSwr.loading,
+        rolesData: roleInfo.getAllRolesSwr.data,
+        rolesLoading: roleInfo.getAllRolesSwr.loading,
         usersData: getAllUsersSwr.data,
         usersLoading: getAllUsersSwr.loading,
+        addNewRoleHandler: roleInfo.addNewRoleHandler,
+        addNewRole: roleInfo.addNewRole,
         search,
-        resetHandler,
         searchHandler,
-        updateAllRolesHandler,
-        addNewRoleHandler,
-        deleteSpecificRole,
       }}
     >
       {children}

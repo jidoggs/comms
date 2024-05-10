@@ -39,14 +39,12 @@ export const ENDPOINTS = {
   PEOPLE: {
     GET_ALL_INVITE_BY_STATUS: (query: string) => `/invite/all${query}`,
     APPROVE_REQUEST: '/auth/approve',
+    DECLINE_REQUEST: '/auth/decline',
   },
   ROLES: {
     CREATE: '/roles',
     GET_ALL_ROLES: '/roles/all',
-    // ADD_PERMISSION_TO_ROLE: '/roles/',
-    // GET_SPECIFIC_ROLE: (query: string) => `/roles/${query}`,
-    GET_ALL_ROLES_BY_NAME: (query: string) => `/roles/${query}`,
-    DELETE_SPECIFIC_ROLE: (query: string) => `/roles/${query}`,
+    SPECIFIC_ROLE: (query: string) => `/roles/${query}`,
     UPDATE: '/roles/',
   },
   PERMISSIONS: {

@@ -7,23 +7,35 @@ import {
   useAuthRequest,
   useServiceConfig,
 } from '@/service/swrHooks';
-import { User } from '@/types';
 import { CustomTableProps } from '@/common/components/CustomTable';
 import { UserServiceArgs } from './types';
+import { User } from '@/types';
+import { queryHandler } from '@/service/request';
 
 const { GET_ALL, SPECIFIC_USER } = ENDPOINTS.USER;
 
 function useUsers(props?: UserServiceArgs) {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const user_id = props?._id || '';
+
+  const searchQuery = props?.search
+    ? JSON.stringify({
+        // surname: props?.search,
+        // firstname: props?.search,
+        email: props?.search,
+      })
+    : '';
+
+  const query = queryHandler({ search: searchQuery, sort: 'created_at' });
+
   const { revalidateRequest } = useServiceConfig();
 
   const revalidateListHandler = () => {
-    revalidateRequest(GET_ALL);
+    revalidateRequest(GET_ALL + query);
   };
 
   const getAllUsersSwr = useAuthGetRequest<User[]>(
-    props?.can_get_all ? GET_ALL : '',
+    props?.can_get_all ? GET_ALL + query : '',
     fetchOptions
   );
 

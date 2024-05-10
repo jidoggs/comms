@@ -1,11 +1,11 @@
+import dynamic from 'next/dynamic';
 import React from 'react';
 import { MenuProps } from 'antd/es/menu';
 import Title from '@/common/components/Title';
 import CustomButton from '@/common/components/CustomButton';
 import CloseCircle from '@/common/components/icons/CloseCircle';
 import ArrowDown from '@/common/components/icons/ArrowDown';
-import { Role, uniqueId, Permission } from '../../types';
-import dynamic from 'next/dynamic';
+import { Role, Permission } from '../../types';
 
 const Dropdown = dynamic(() => import('antd/es/dropdown/dropdown'));
 
@@ -59,7 +59,7 @@ const PermissionSection = ({
           >
             <Title>{permission.replace(/_/g, ' ')}</Title>
             <button onClick={() => handleCancelPermission(permission)}>
-              {isEditMode || editedRole._id === uniqueId ? (
+              {isEditMode || editedRole._id === '' ? (
                 <CloseCircle size="18" />
               ) : (
                 ''
@@ -67,7 +67,7 @@ const PermissionSection = ({
             </button>
           </div>
         ))}
-        {isEditMode || editedRole._id === uniqueId ? (
+        {isEditMode || editedRole._id === '' ? (
           <Dropdown menu={{ items }}>
             <CustomButton
               type="primary"

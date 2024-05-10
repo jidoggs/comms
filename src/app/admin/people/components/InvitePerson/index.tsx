@@ -8,7 +8,7 @@ import Add from '@/common/components/icons/Add';
 
 function InvitePerson() {
   const [isOpen, setIsOpen] = useState(false);
-  const parastatal = useSession().data?.parastatal._id;
+  const parastatal = useSession().data?.parastatal?.[0]?._id;
   const { inviteUserSwr } = useParastatals({ can_invite: true });
 
   const inviteQuery = queryHandler({ parastatal });

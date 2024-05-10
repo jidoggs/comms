@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import dayjs from 'dayjs';
-import { useSWRConfig } from 'swr';
+
 import Form from 'antd/es/form/Form';
 import FormItem from 'antd/es/form/FormItem';
 import { CascadeContext } from '@/common/components/SectionCascade';
@@ -10,14 +10,23 @@ import { CustomInputProps } from '@/common/components/CustomInput/types';
 import Title from '@/common/components/Title';
 import { MoreInfoContext } from '../../modals/MoreInformationModal';
 import DeleteInformation from '../../actions/DeleteInformation';
-import TickCircle from '@/common/components/icons/TickCircle';
 import Close from '@/common/components/icons/Close';
 import Building from '@/common/components/icons/Building';
+import Tick from '@/common/components/icons/Tick';
+import CustomSelect from '@/common/components/CustomSelect';
+import CloseCircled from '@/common/components/icons/CloseCircled';
+import { messageHandler } from '@/common/utils/notification';
+import { useRoles } from '@/app/admin/hooks';
+import { useServiceConfig } from '@/service/swrHooks';
 
 type FieldRowProps = {
   label: string;
   name: string;
 } & CustomInputProps;
+
+type SelectRowProps = {
+  defaultValue: string[];
+} & FieldRowProps;
 
 const FieldRow = ({ label, name, ...props }: FieldRowProps) => {
   return (
@@ -27,28 +36,84 @@ const FieldRow = ({ label, name, ...props }: FieldRowProps) => {
       className="!mb-0 border-b [&_.ant-form-item-row]:flex [&_.ant-form-item-row]:items-center"
     >
       <CustomInput
-        className="!mb-0 !border-none !bg-transparent"
-        name={name}
         {...props}
+        className="!mb-0 !border-none !bg-transparent disabled:!text-custom-main"
+        name={name}
       />
     </FormItem>
+  );
+};
+
+const SelectFieldRow = ({ label, name, ...props }: SelectRowProps) => {
+  const [isEditable, setIsEditable] = useState(false);
+
+  const focusHandler = () => {
+    setIsEditable(!isEditable);
+  };
+
+  return (
+    <div>
+      <FormItem
+        label={label}
+        name={name}
+        className="!mb-0 border-b [&_.ant-form-item-row]:flex [&_.ant-form-item-row]:items-center"
+      >
+        {isEditable ? (
+          <CustomSelect
+            {...props}
+            mode="tags"
+            placeholder="|Add by name or email. Type ',' to add, ‘⌫’ to remove"
+            className="[&_.ant-select-arrow]:!hidden [&_.ant-select-selector]:!border-none [&_.ant-select-selector]:!bg-transparent"
+            tokenSeparators={[',']}
+            removeIcon={<CloseCircled className="text-white" />}
+            onBlur={focusHandler}
+          />
+        ) : (
+          <CustomInput
+            {...props}
+            className="!mb-0 !border-none !bg-transparent"
+            name={name}
+            defaultValue={props?.defaultValue?.join(', ')}
+            onFocus={focusHandler}
+          />
+        )}
+      </FormItem>
+    </div>
   );
 };
 
 function MoreInformationForm() {
   const information = useContext(MoreInfoContext);
   const cascadeContextInfo = useContext(CascadeContext);
-  const { mutate } = useSWRConfig();
+  const { revalidateRequest } = useServiceConfig();
   const data = information?.data;
   const type = information?.type;
 
+  const { getRoleSwr } = useRoles({
+    can_get_by_id: true,
+    _id: data?.creator?.role,
+  });
+
+  const paths = [
+    data?.parastatal?.[0]?.name,
+    data?.office?.name,
+    data?.department?.name,
+  ]
+    .filter((itm) => itm)
+    .join('/');
+
   const submitHandler = (values: any) => {
+    const updatedValues = Object.values(values).filter((itm) => itm);
+    if (updatedValues.length === 0) {
+      messageHandler('warn', 'You have not made any change');
+      return;
+    }
     if (!information?.handleUpdate) return;
     information
       ?.handleUpdate({ data: values, type: 'put' })
       .then(() => {
         if (!cascadeContextInfo?.updateCascadeItemHandler || !type) return;
-        mutate(cascadeContextInfo.dataList?.[type]?.key); // revalidate key
+        revalidateRequest(cascadeContextInfo.dataList?.[type]?.key); // revalidate key
         cascadeContextInfo?.updateCascadeItemHandler({
           level: information.type,
           id: data?._id,
@@ -77,7 +142,11 @@ function MoreInformationForm() {
               <CustomButton
                 type="default"
                 className="!border-custom-green_100 !bg-custom-gray_100 !px-6"
-                icon={<TickCircle size={18} color="green" />}
+                icon={
+                  <span className="text-custom-green_100">
+                    <Tick size={18} />
+                  </span>
+                }
                 size="small"
                 title="Update"
                 htmlType="submit"
@@ -85,7 +154,11 @@ function MoreInformationForm() {
               <CustomButton
                 type="default"
                 className="!border-custom-red_200 !bg-custom-gray_100 !px-6"
-                icon={<Close size={32} color="green" />}
+                icon={
+                  <span className="text-custom-red_200">
+                    <Close size={32} />
+                  </span>
+                }
                 size="small"
                 title="Cancel"
                 onClick={information?.handleCancel}
@@ -99,16 +172,14 @@ function MoreInformationForm() {
             name="name"
             defaultValue={data?.name as string}
           />
-          <FieldRow
-            label="Path"
-            name="path"
-            defaultValue={data?.path as string}
-          />
-          <FieldRow
-            label="domains"
-            name="domains"
-            defaultValue={data?.domains?.join(', ') as string}
-          />
+          <FieldRow label="Path" name="path" defaultValue={paths} disabled />
+          {data?.domains?.length > 0 ? (
+            <SelectFieldRow
+              label="Domains"
+              name="domains"
+              defaultValue={data?.domains}
+            />
+          ) : null}
           <FieldRow
             label="Number of members"
             name="count"
@@ -124,7 +195,7 @@ function MoreInformationForm() {
             label="Parastatal"
             name="parastatal"
             disabled
-            defaultValue={data?.parastatal}
+            defaultValue={data?.parastatal?.[0]?.name || data?.parastatal}
           />
           <FieldRow
             label="Date added"
@@ -142,13 +213,13 @@ function MoreInformationForm() {
             label="Created by"
             name="creator"
             disabled
-            defaultValue={data?.creator}
+            defaultValue={data?.creator?.firstname || data?.creator || 'N/A'}
           />
           <FieldRow
             label="Role of creator"
             name="creator_role"
             disabled
-            defaultValue={data?.creator}
+            defaultValue={getRoleSwr.data?.data.name || 'N/A'}
           />
         </div>
       </Form>

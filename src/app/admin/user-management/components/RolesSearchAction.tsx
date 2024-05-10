@@ -6,14 +6,8 @@ import Add from '@/common/components/icons/Add';
 import Search from '@/common/components/icons/Search';
 import DocumentDownload from '@/common/components/icons/DocumentDownload';
 
-type Props = {
-  handleAddRole: () => void;
-};
-
-function RolesSearchAction({ handleAddRole }: Props) {
+function RolesSearchAction() {
   const contextInfo = useContext(UserMgmtDataContext);
-
-  // console.log('contextInfo.search', contextInfo?.search);
 
   return (
     <div className="flex flex-row items-center gap-2">
@@ -28,7 +22,7 @@ function RolesSearchAction({ handleAddRole }: Props) {
         type="default"
         icon={<Add />}
         size="small"
-        onClick={handleAddRole}
+        onClick={contextInfo?.addNewRoleHandler}
       >
         Add Role
       </CustomButton>

@@ -65,8 +65,6 @@ const navItems = {
       </span>,
       navClassName
     ),
-  },
-  other_user_menu: {
     ARCHIVES: getItem(
       <span>Archives</span>,
       '/app/archives',
@@ -136,23 +134,18 @@ const navItems = {
 const getUserNavItemsByRole = (role: UserRoles) => {
   let routes = null;
   switch (role) {
+    // case UserPreDefinedRole.PRIMARYADMIN:
+    //   routes = generateRoutes({ ...navItems.user, ...navItems.admin }); // this user should be able to see both the pages
+    //   break;
     case UserPreDefinedRole.PRIMARYADMIN:
-      routes = generateRoutes({ ...navItems.user, ...navItems.admin }); // this user should be able to see both the pages
-      break;
     case UserPreDefinedRole.SECONDARYADMIN:
       routes = generateRoutes(navItems.admin);
       break;
     case UserPreDefinedRole.BASICUSER:
-      routes = generateRoutes({
-        ...navItems.user,
-        ...navItems.other_user_menu,
-      });
+      routes = generateRoutes(navItems.user);
       break;
     default:
-      routes = generateRoutes({
-        ...navItems.user,
-        ...navItems.other_user_menu,
-      });
+      routes = generateRoutes(navItems.user);
       break;
   }
   return routes;

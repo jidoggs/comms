@@ -28,7 +28,7 @@ function Parastatal() {
   const { getListSwr, getItemSwr } = useParastatals({
     can_get_all: isPrimaryAdmin,
     can_get_by_id: !isPrimaryAdmin,
-    _id: user?.parastatal?._id || onBoardingParastatal, // this is for users that do not have permisson to get list
+    _id: user?.parastatal?.[0]?._id || onBoardingParastatal, // this is for users that do not have permisson to get list
   });
 
   const list = getListSwr.data?.data || [];

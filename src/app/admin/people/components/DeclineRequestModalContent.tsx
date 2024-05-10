@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import Form from 'antd/es/form/Form';
 import FormItem from 'antd/es/form/FormItem';
 import CustomButton from '@/common/components/CustomButton';
@@ -5,6 +6,8 @@ import { CustomTextArea } from '@/common/components/CustomInput';
 import CustomModal from '@/common/components/CustomModal';
 import Title from '@/common/components/Title';
 import { iHandleClick } from '@/types';
+import usePeople from '../../hooks/usePeople';
+import { TableRowActionContext } from './TableRowAction';
 
 type DeclineRequestModalContentProps = {
   isModalOpen: boolean;
@@ -17,8 +20,17 @@ const DeclineRequestModalContent = ({
   handleCancel,
   setIsSuccessModalOpen,
 }: DeclineRequestModalContentProps) => {
+  const userInfo = useContext(TableRowActionContext);
+  const { declineRequestSwr } = usePeople({ can_decline: true });
   const onFinishHandler = () => {
-    setIsSuccessModalOpen('success');
+    const data = {
+      user_id: userInfo?.data?._id,
+      email: userInfo?.data?.email,
+    };
+    declineRequestSwr
+      .trigger({ data })
+      .then(() => setIsSuccessModalOpen('success'))
+      .catch(handleCancel);
   };
 
   return (
@@ -35,7 +47,11 @@ const DeclineRequestModalContent = ({
           <FormItem name="reason" rules={[{ required: true }]}>
             <CustomTextArea name="reason" placeholder="Aa" />
           </FormItem>
-          <CustomButton className="mt-6 w-full bg-custom-main text-custom-gray_100">
+          <CustomButton
+            loading={declineRequestSwr.isMutating}
+            htmlType="submit"
+            className="mt-6 w-full bg-custom-main text-custom-gray_100"
+          >
             Submit
           </CustomButton>
         </Form>

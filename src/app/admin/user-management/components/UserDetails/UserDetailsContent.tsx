@@ -9,7 +9,7 @@ import TickCircle from '@/common/components/icons/TickCircle';
 import Edit2 from '@/common/components/icons/Edit2';
 import Delete from '@/common/components/icons/Delete';
 import Close from '@/common/components/icons/Close';
-import { User } from '../../types';
+import { User } from '@/types';
 
 type UserDetailsContentProps = {
   userData: User | null;
@@ -119,7 +119,7 @@ const UserDetailsContent = ({ userData }: UserDetailsContentProps) => {
           <hr />
           <FieldRow
             title="Parastatal"
-            value={(userData?.parastatal?.name as string) || 'N/A'}
+            value={(userData?.parastatal?.[0]?.name as string) || 'N/A'}
           />
         </div>
       </div>

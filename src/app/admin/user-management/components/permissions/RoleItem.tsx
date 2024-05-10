@@ -1,5 +1,5 @@
+import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
-import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useRoles } from '@/app/admin/hooks';
 import Title from '@/common/components/Title';
 import CustomInput from '@/common/components/CustomInput';
@@ -7,9 +7,8 @@ import CustomButton from '@/common/components/CustomButton';
 import TickCircle from '@/common/components/icons/TickCircle';
 import CloseCircled from '@/common/components/icons/CloseCircled';
 import ArrowUp from '@/common/components/icons/ArrowUp';
-import { Role, uniqueId, Permission } from '../../types';
+import { Role, Permission } from '../../types';
 import { messageHandler } from '@/common/utils/notification';
-import { UserMgmtDataContext } from '../../service-context/UserMgmtContextWrapper';
 import ArrowDown from '@/common/components/icons/ArrowDown';
 import { mergeClassName } from '@/common/utils';
 
@@ -24,50 +23,25 @@ interface RoleItemProps {
 }
 
 const RoleItem = ({ role }: RoleItemProps) => {
-  const contextInfo = useContext(UserMgmtDataContext);
   const [editedRole, setEditedRole] = useState<Role>(role);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const firstRoleRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setEditedRole(role);
   }, [role]); //eslint-disable-line
-
-  useEffect(() => {
-    if (firstRoleRef.current) {
-      firstRoleRef.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-      });
-    } else {
-      return;
-    }
-  }, [firstRoleRef.current]); //eslint-disable-line
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditedRole({ ...editedRole, name: e.target.value });
   };
 
   const closeEditMode = () => {
-    if (editedRole._id === uniqueId) {
-      setIsEditMode(false);
-      if (contextInfo) {
-        contextInfo.deleteSpecificRole(uniqueId);
-      }
-    } else {
-      setEditedRole(role);
-      setIsEditMode(!isEditMode);
-      if (!isEditMode) {
-        setEditedRole(role);
-        contextInfo?.updateAllRolesHandler(uniqueId, editedRole);
-      }
-    }
+    setIsEditMode(!isEditMode);
   };
 
   const openEditMode = () => {
-    if (editedRole._id === uniqueId) {
+    if (editedRole._id === '') {
       setIsEditMode(false);
     } else {
       setEditedRole(role);
@@ -100,20 +74,17 @@ const RoleItem = ({ role }: RoleItemProps) => {
   const createNewRole = (newRole: Role) => {
     const permissions = newRole.permissions.map((permission) => permission._id);
     const data = { name: newRole.name, permissions: permissions };
-
     createRoleSwr.trigger({ data, type: 'post' }).finally(onFinishedRequest);
   };
 
   const submitRoleHandler = async ({ _id }: any) => {
-    if (_id === uniqueId) {
-      if (editedRole.name !== '') {
-        createNewRole(editedRole);
-      } else {
-        messageHandler('error', 'The new role has no name');
-      }
-    } else {
-      updateExitingRole(editedRole);
+    if (_id !== '') {
+      return updateExitingRole(editedRole);
     }
+    if (!editedRole.name) {
+      return messageHandler('error', 'The new role has no name');
+    }
+    createNewRole(editedRole);
   };
 
   const handleAddPermission = (permission: Permission) => {
@@ -147,9 +118,8 @@ const RoleItem = ({ role }: RoleItemProps) => {
         'mt-2 grid grid-cols-10 items-start bg-custom-white_100 p-4',
         isCollapsed ? 'collapsed' : 'expanded'
       )}
-      ref={role._id === uniqueId ? firstRoleRef : null}
     >
-      {isEditMode || editedRole._id === uniqueId ? (
+      {isEditMode || editedRole._id === '' ? (
         <div className="col-span-2 pr-4">
           <CustomInput
             className="w-1/2 !px-2"
@@ -170,14 +140,13 @@ const RoleItem = ({ role }: RoleItemProps) => {
         <div className="role-item-content col-span-7 flex w-full flex-col justify-between">
           <Permissions
             editedRole={editedRole}
-            // allPermissions={contextInfo.permissionsData}
             isEditMode={isEditMode}
             handleAddPermission={handleAddPermission}
             handleCancelPermission={handleCancelPermission}
           />
         </div>
       )}
-      {isEditMode || editedRole._id === uniqueId ? (
+      {isEditMode || editedRole._id === '' ? (
         <div className="flex w-full flex-row justify-end gap-2">
           <CustomButton
             icon={<TickCircle size="18" />}
@@ -206,8 +175,6 @@ const RoleItem = ({ role }: RoleItemProps) => {
         <div className="flex w-full flex-row justify-end gap-2">
           <SectionMoreOptions
             editedRole={editedRole}
-            // allRoles={contextInfo?.rolesData}
-            // setAllRoles={setAllRoles}
             openEditMode={openEditMode}
           />
           <CustomButton
