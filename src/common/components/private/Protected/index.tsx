@@ -28,7 +28,7 @@ function Protected({ children }: ContextWapper) {
     if (!token) {
       router.replace(
         `/auth/login?type=unauthorized&session=${new Date().toISOString()}`
-      )
+      );
     }
   };
 

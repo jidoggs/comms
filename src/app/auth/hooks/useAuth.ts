@@ -92,10 +92,10 @@ function useAuth(props?: AuthParams) {
         messageLoading.current = true;
         messageHandler('success', res.message)
           .then(() => {
-            if (res?.data?.role?.name === UserPreDefinedRole.SECONDARYADMIN) {
-              router.push('/admin/people');
-            } else {
+            if (res?.data?.role?.name === UserPreDefinedRole.BASICUSER) {
               router.push('/app/home');
+            } else {
+              router.push('/admin/people');
             }
           })
           .finally(() => {

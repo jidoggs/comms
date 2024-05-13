@@ -123,21 +123,24 @@ function MoreInformationForm() {
       .finally(information?.handleCancel);
   };
   return (
-    <div className="flex h-[calc(100vh-40px)] w-full justify-center pb-8">
-      <Form className="w-2/4" onFinish={submitHandler}>
-        <Title bold tag="h6" className="pb-5">
+    <Form
+      className="!mx-auto size-full min-w-[400px] max-w-4xl"
+      onFinish={submitHandler}
+    >
+      <header>
+        <Title tag="h6" bold className="py-5">
           Details
         </Title>
         <div className="flex gap-x-2.5  border-b pb-7">
           <div className="text-custom-main">
             <Building size={200} />
           </div>
-          <div className="flex flex-col justify-end">
+          <div className="flex flex-col flex-wrap justify-end">
             <div className="flex items-center gap-x-1 px-2.5 py-1">
               <div className="size-2 rounded bg-custom-green_100" />
               <p>Active</p>
             </div>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
               <DeleteInformation />
               <CustomButton
                 type="default"
@@ -166,6 +169,8 @@ function MoreInformationForm() {
             </div>
           </div>
         </div>
+      </header>
+      <section className="h-[calc(100vh-372px)] overflow-y-scroll">
         <div>
           <FieldRow
             label="Name"
@@ -195,7 +200,11 @@ function MoreInformationForm() {
             label="Parastatal"
             name="parastatal"
             disabled
-            defaultValue={data?.parastatal?.[0]?.name || data?.parastatal}
+            defaultValue={
+              data?.parastatal?.[0]?.name ||
+              data?.parastatal?.name ||
+              data?.parastatal
+            }
           />
           <FieldRow
             label="Date added"
@@ -222,8 +231,8 @@ function MoreInformationForm() {
             defaultValue={getRoleSwr.data?.data.name || 'N/A'}
           />
         </div>
-      </Form>
-    </div>
+      </section>
+    </Form>
   );
 }
 
