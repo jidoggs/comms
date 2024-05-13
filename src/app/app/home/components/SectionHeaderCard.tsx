@@ -56,9 +56,11 @@ const SectionHeaderCard = ({
   };
 
   //eslint-disable-next-line
-  const correspondenceFormSubmitHandler = (values: any) => {
+  const correspondenceFormSubmitHandler = async (values: any) => {
     const allCorrespondence = values.correspondences;
     // console.log('allCorrespondence', allCorrespondence);
+
+    const results = [];
 
     try {
       for (const eachCorr of allCorrespondence) {
@@ -80,15 +82,56 @@ const SectionHeaderCard = ({
 
         // console.log(data);
 
-        createCorrSwr
-          .trigger({ data })
-          .then(() =>
-            messageHandler('success', 'Correspondence created successfully')
-          );
+        try {
+          await createCorrSwr.trigger({ data });
+          results.push({
+            success: true,
+            message: 'Correspondence created successfully',
+          });
+        } catch (error: any) {
+          results.push({ success: false, message: error.message });
+        }
+
+        // createCorrSwr
+        //   .trigger({ data })
+        //   .then(() =>
+        //     messageHandler('success', 'Correspondence created successfully')
+        //   );
       }
-    } catch (error: any) {
-      messageHandler('error', error.message);
+      // } catch (error: any) {
+      //   messageHandler('error', error.message);
+      // }
+    } catch (overallError: any) {
+      messageHandler(
+        'error',
+        `An unexpected error occurred: ${overallError.message}`
+      );
+      return; // Exit early if there's a major issue
     }
+
+    // Summarize results and craft a single message
+    const successCount = results.filter((r) => r.success).length;
+    const errorCount = results.filter((r) => !r.success).length;
+
+    let message = '';
+    if (successCount === allCorrespondence.length) {
+      message = 'All correspondences created successfully.';
+    } else if (errorCount === allCorrespondence.length) {
+      const firstErrorMessage =
+        results.find((r) => !r.success)?.message || 'Unknown error';
+      message = `All correspondences failed. First error: ${firstErrorMessage}`;
+    } else {
+      message = `${successCount} correspondence(s) created successfully. ${errorCount} failed.`;
+      if (errorCount > 0) {
+        const firstErrorMessage =
+          results.find((r) => !r.success)?.message || 'Unknown error';
+        message += ` First error: ${firstErrorMessage}`;
+      }
+    }
+
+    // Determine the overall message type based on the outcome
+    const messageType = errorCount > 0 ? 'error' : 'success';
+    messageHandler(messageType, message);
   };
 
   const viewCorrespondenceHandler = () => {

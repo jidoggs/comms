@@ -3,6 +3,7 @@ import { FormListFieldData } from 'antd';
 // import CustomDragger from '@/common/components/CustomDragger';
 import CustomInput from '@/common/components/CustomInput';
 import dynamic from 'next/dynamic';
+import Recipient from './Recipient';
 
 interface CorrespondenceFormProps {
   field: FormListFieldData;
@@ -58,7 +59,7 @@ function NewCorrespondenceForm({ field }: CorrespondenceFormProps) {
             className="flex flex-col"
             // rules={[{ required: true, message: 'Recipient is required' }]}
           >
-            <CustomInput name="recipient" />
+            <Recipient />
           </FormItem>
           <FormItem
             label="Subject"
