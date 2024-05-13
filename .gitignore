@@ -42,3 +42,4 @@ next-env.d.ts
 .fenvcon.json
 .fenvcon_prod.json
 tsconfig.tsbuildinfo
+.env.staging

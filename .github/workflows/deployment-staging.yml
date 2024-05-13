@@ -1,0 +1,73 @@
+name: Coms frontend X company CI/CD pipeline Development
+
+on:
+  push:
+    branches:
+      - staging
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Compose
+        run: |
+          sudo apt-get update
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Decrypt files for ${{ github.ref }}
+        run: |
+             gpg --quiet --batch --yes --decrypt --passphrase="$PASSPHRASE" --output .env .env.staging.gpg
+        env:
+             PASSPHRASE: ${{ secrets.PASSPHRASE }}
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Lint Code
+        run: yarn lint
+
+      - name: Type check
+        run: tsc
+
+      - name: build app
+        run: yarn build
+
+      - name: Create deployment tar file
+        run: touch deployment-artifacts1.tar.gz
+      - name: test
+        run: pwd
+      - name: Bundle deployment file
+        run: |
+          tar -czf deployment-artifacts1.tar.gz --exclude=deployment-artifacts1.tar.gz .
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: deployment-artifacts
+          path: deployment-artifacts1.tar.gz
+
+  deploy:
+    name: Deploy
+    runs-on: coms-staging
+    needs: build
+    steps:
+    - uses: actions/download-artifact@v3
+      with:
+        name: deployment-artifacts
+    - name: Remove node-modules dir
+      run: rm -rf node_modules
+    - name: Remove Environment Variable
+      run: rm -f .env
+    - name: Extract artifact extra comment
+      run: |
+        tar -xvf deployment-artifacts1.tar.gz
+        
+    - name: Start Application
+      run: pm2 reload --update-env coms-staging
