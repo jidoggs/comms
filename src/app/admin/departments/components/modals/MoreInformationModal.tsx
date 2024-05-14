@@ -1,6 +1,6 @@
 import React, { createContext, useState } from 'react';
 import CustomModal from '@/common/components/CustomModal';
-import CustomTab, { ItemProps } from '@/common/components/CustomTab';
+import CustomTab, { TabItemProps } from '@/common/components/CustomTab';
 import Information from '../forms/UpdateDetail/Form';
 import Members from '../forms/UpdateDetail/Members';
 import BackwardArrow from '@/common/components/icons/BackwardArrow';
@@ -19,7 +19,7 @@ type Props = {
 
 export const MoreInfoContext = createContext<Props | null>(null);
 
-export const tabItemList: ItemProps = [
+export const tabItemList: TabItemProps = [
   {
     key: 'details',
     label: 'Details',

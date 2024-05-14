@@ -10,7 +10,7 @@ import {
 import { CustomTableProps } from '@/common/components/CustomTable';
 import { UserServiceArgs } from './types';
 import { User } from '@/types';
-import { queryHandler } from '@/service/request';
+import { queryHandler, searchQueryHandler } from '@/service/request';
 
 const { GET_ALL, SPECIFIC_USER } = ENDPOINTS.USER;
 
@@ -18,15 +18,10 @@ function useUsers(props?: UserServiceArgs) {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const user_id = props?._id || '';
 
-  const searchQuery = props?.search
-    ? JSON.stringify({
-        // surname: props?.search,
-        // firstname: props?.search,
-        email: props?.search,
-      })
-    : '';
+  const searchBy = ['email'];
+  const search = searchQueryHandler(searchBy, props?.search || '');
 
-  const query = queryHandler({ search: searchQuery, sort: 'created_at' });
+  const query = queryHandler({ search, sort: 'created_at' });
 
   const { revalidateRequest } = useServiceConfig();
 

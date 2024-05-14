@@ -6,7 +6,7 @@ import {
   NoteInfo,
   NotesContextType,
 } from '../components/notes/type';
-import { ContextWapper } from '../../types';
+import { ContextWapper } from '@/types';
 
 const initialNoteInfo: NoteInfo = {
   showNote: false,

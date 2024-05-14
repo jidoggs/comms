@@ -8,7 +8,8 @@ import CustomButton from '@/common/components/CustomButton';
 import CloseCircled from '@/common/components/icons/CloseCircled';
 import MoreFile from '@/common/components/icons/MoreFile';
 import TickCircle from '@/common/components/icons/TickCircle';
-import { User, iHandleClick } from '../types';
+import { User, iHandleClick } from '@/types';
+
 
 const Dropdown = dynamic(() => import('antd/es/dropdown/dropdown'));
 

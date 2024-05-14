@@ -6,7 +6,7 @@ import {
   fetchOptions,
 } from '@/service/swrHooks';
 import { APIResponseSuccessModel, User } from '@/types';
-import { queryHandler } from '@/service/request';
+import { queryHandler, searchQueryHandler } from '@/service/request';
 
 type RequestType = 'can_get_all_invites' | 'can_approve' | 'can_decline';
 type QueryType = 'status' | 'search';
@@ -18,16 +18,11 @@ const { GET_ALL_INVITE_BY_STATUS, APPROVE_REQUEST, DECLINE_REQUEST } =
   ENDPOINTS.PEOPLE;
 
 function usePeople(props: Props) {
-  const searchQuery = props.search
-    ? JSON.stringify({
-        // surname: debouceSearch,
-        // firstname: debouceSearch,
-        email: props.search,
-      })
-    : '';
+  const searchBy = ['email'];
+  const search = searchQueryHandler(searchBy, props.search || '');
 
   const query = queryHandler({
-    search: searchQuery,
+    search,
     status: props.status,
     sort: 'created_at',
   });

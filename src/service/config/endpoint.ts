@@ -49,6 +49,8 @@ export const ENDPOINTS = {
   },
   CORRESPONDENCE: {
     CREATE: '/correspondence',
+    GET_ALL: '/correspondence/all',
+    SPECIFIC_ITEM: (query: string) => `/correspondence/${query}`,
   },
   PERMISSIONS: {
     CREATE: '/permissions',

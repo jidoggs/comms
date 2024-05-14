@@ -1,8 +1,9 @@
 import React, { Suspense, useCallback, useLayoutEffect, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useAnimation } from 'framer-motion';
-import { ContextWapper, DetailContextType, MultiSelectType } from '../../types';
+import { DetailContextType, MultiSelectType } from '../../types';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
+import { ContextWapper } from '@/types';
 
 export const DetailContext = React.createContext<DetailContextType>(null);
 

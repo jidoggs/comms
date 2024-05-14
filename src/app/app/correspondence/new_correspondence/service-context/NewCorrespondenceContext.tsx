@@ -1,13 +1,10 @@
 import React, { createContext, useState } from 'react';
 import TableRowAction from '../components/TableRowAction';
 import { mergeClassName } from '@/common/utils';
-import {
-  ContextWapper,
-  CorrespondenceContextNewType,
-  EditableTableColumnTypes,
-} from '../../types';
+import { CorrespondenceContextNewType } from '../../types';
 import { singleDummyCorrespondenceData } from '@/common/mockData';
 import Document from '@/common/components/icons/Document';
+import { ContextWapper, EditableTableColumnTypes } from '@/types';
 
 export const CorrespondenceContextNew =
   createContext<CorrespondenceContextNewType>(null);

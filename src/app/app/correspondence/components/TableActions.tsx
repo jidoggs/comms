@@ -1,15 +1,11 @@
-import React from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useContext } from 'react';
 import CustomInput from '@/common/components/CustomInput';
-import CustomButton from '@/common/components/CustomButton';
 import Search from '@/common/components/icons/Search';
-import Add from '@/common/components/icons/Add';
+import { CorrespondeceListContext } from '../service-context/CorrespondeceListContextWrapper';
+import CreateCorrespondence from '../../components/actions/CreateCorrespondence';
 
 function TableActions() {
-  const router = useRouter();
-  const createNewCorrespondeceHandler = () => {
-    router.push('correspondence/new_correspondence');
-  };
+  const contextInfo = useContext(CorrespondeceListContext);
 
   return (
     <div className="flex items-center gap-x-2.5">
@@ -17,13 +13,10 @@ function TableActions() {
         prefix={<Search className="text-custom-gray_400" />}
         placeholder="Search"
         className="border-custom-gray_400 bg-custom-white_100 placeholder:text-custom-gray_400"
+        value={contextInfo?.searchValue}
+        onChange={contextInfo?.searchHandler}
       />
-      <CustomButton
-        type="primary"
-        icon={<Add />}
-        description="Add New Correspondence"
-        onClick={createNewCorrespondeceHandler}
-      />
+      <CreateCorrespondence />
     </div>
   );
 }

@@ -4,7 +4,8 @@ import React, { useContext, useState } from 'react';
 import CustomTable, { CustomTableProps } from '@/common/components/CustomTable';
 import CustomTab from '@/common/components/CustomTab';
 import { PeopleDataContext } from '../service-context/PeopleListContextWrapper';
-import { User } from '../types';
+import { User } from '@/types';
+
 
 const TableActions = dynamic(() => import('./TableActions'));
 const RegistrationDetail = dynamic(() => import('./RegistrationDetail'));

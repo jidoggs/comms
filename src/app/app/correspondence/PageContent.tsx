@@ -32,17 +32,20 @@ const CorrespondencePage = () => {
         searchPanel={<TableActions />}
         className={{
           table: 'cursor-pointer',
+          tableWrapper:
+            'relative h-[calc(100vh-148px)] [&_.ant-table-container]:h-[calc(100vh-199px)] [&_.ant-table-container]:overflow-scroll  [&_.ant-table]:!relative',
         }}
         columns={contextInfo?.columns}
         components={components}
         dataSource={contextInfo?.dataSource}
+        loading={contextInfo?.loading}
         onRow={(row, id) => ({ ...row, id: id?.toString(), help: 'jide' })}
         size="large"
         rowClassName="group"
         rowSelection={{ columnWidth: 56 }}
         footer={() => {
           if (contextInfo?.currentTab === 'sent') return;
-          return <AddCorrespondence handleClick={contextInfo?.handleAdd} />;
+          return <AddCorrespondence />;
         }}
       />
     </div>

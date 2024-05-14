@@ -6,7 +6,7 @@ import CustomAvatar from '@/common/components/Avatar/CustomAvatar';
 import CustomButton from '@/common/components/CustomButton';
 import Title from '@/common/components/Title';
 import { dummyAvatarData } from '@/common/mockData';
-import { iHandleClick, iHandleKeyboard } from '../../correspondence/types';
+import { iHandleClick, iHandleKeyboard } from '@/types';
 import { generateInitials } from '@/common/utils';
 import Folder from '@/common/components/icons/Folder';
 import Send from '@/common/components/icons/Send';

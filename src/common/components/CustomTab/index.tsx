@@ -9,7 +9,7 @@ interface CustomTabProps extends TabsProps {
   defaultKey?: string;
 }
 
-export type ItemProps = TabsProps['items'];
+export type TabItemProps = TabsProps['items'];
 
 const CustomTab: React.FunctionComponent<CustomTabProps> = ({
   defaultKey,

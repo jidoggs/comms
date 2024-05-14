@@ -1,3 +1,5 @@
+import { GenericServiceParam } from '@/types';
+
 type GetUpdateDelete =
   | 'can_get_all'
   | 'can_get_by_id'
@@ -11,11 +13,6 @@ type RequestType = Create | GetUpdateDelete | Invite;
 
 type QueryType = '_id' | 'query' | 'search';
 type OfficeQueryType = QueryType | 'parastatal';
-
-type GenericServiceParam<A extends string, Q extends string> = Partial<
-  Record<A, boolean>
-> &
-  Partial<Record<Q, string>>;
 
 export type OfficeServiceParams = GenericServiceParam<
   RequestType,

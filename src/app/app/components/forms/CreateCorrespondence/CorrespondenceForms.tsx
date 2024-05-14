@@ -3,13 +3,13 @@ import React, { useState } from 'react';
 // import { Form, useForm } from 'antd'
 import CustomButton from '@/common/components/CustomButton';
 import Add from '@/common/components/icons/Add';
-import { CorrespondenceData } from '../../types';
 import Form, { useForm } from 'antd/es/form/Form';
 import List from 'antd/es/form/FormList';
 import Delete from '@/common/components/icons/Delete';
 import Title from '@/common/components/Title';
 import Copy from '@/common/components/icons/Copy';
 import NewCorrespondenceForm from './Form';
+import { CorrespondenceData } from '@/types';
 
 interface CorrespondenceFormsProps {
   handleSubmit: (data: CorrespondenceData) => void;

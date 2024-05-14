@@ -8,8 +8,9 @@ import {
   tabItemList,
 } from './helper';
 import usePeople from '../../hooks/usePeople';
-import { ContextWapper, PeopleDataContextType, iHandleChange } from '../types';
+import { PeopleDataContextType } from '../types';
 import { useDebounce, useSession, useTabChange } from '@/common/hooks';
+import { ContextWapper, iHandleChange } from '@/types';
 
 export const PeopleDataContext = createContext<PeopleDataContextType>(null);
 

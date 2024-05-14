@@ -1,10 +1,10 @@
 import dayjs from 'dayjs';
 import { mergeClassName } from '@/common/utils';
 import TableRowAction from '../components/TableRowAction';
-import { EditableTableColumnTypes } from '../types';
-import { ItemProps } from '@/common/components/CustomTab';
+import { TabItemProps } from '@/common/components/CustomTab';
 import CustomAvatar from '@/common/components/Avatar/CustomAvatar';
 import Profile from '@/common/components/icons/Profile';
+import { EditableTableColumnTypes } from '@/types';
 
 
 
@@ -118,7 +118,7 @@ export const defaultColumns: (EditableTableColumnTypes[number] & {
   className: mergeClassName('!py-4 text-sm font-medium', itm.className),
 }));
 
-export const tabItemList: ItemProps = [
+export const tabItemList: TabItemProps = [
   {
     key: 'pending',
     label: 'Pending onboarding',

@@ -7,7 +7,7 @@ import CustomButton from '@/common/components/CustomButton';
 import MoreFile from '@/common/components/icons/MoreFile';
 import Edit from '@/common/components/icons/Edit';
 import Delete from '@/common/components/icons/Delete';
-import { iHandleClick } from '../types';
+import { iHandleClick } from '@/types';
 
 type Props = {
   data: any;

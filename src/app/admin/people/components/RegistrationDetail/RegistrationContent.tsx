@@ -7,7 +7,8 @@ import FieldRow from '../../../components/FieldRow';
 import Close from '@/common/components/icons/Close';
 import Delete from '@/common/components/icons/Delete';
 import TickCircle from '@/common/components/icons/TickCircle';
-import { User } from '../../types';
+import { User } from '@/types';
+
 
 type RegistrationContentProps = {
   registrationData: User | null;

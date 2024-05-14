@@ -4,7 +4,7 @@ import { CascadeContext } from '@/common/components/SectionCascade';
 import Title from '@/common/components/Title';
 import { useMembers } from '@/app/admin/hooks';
 import { useDebounce } from '@/common/hooks';
-import { queryHandler } from '@/service/request';
+import { queryHandler, searchQueryHandler } from '@/service/request';
 import SearchIcon from '@/common/components/icons/Search';
 import InfoCircle from '@/common/components/icons/InfoCircle';
 import { iHandleChange } from '@/types';
@@ -22,12 +22,9 @@ function Members() {
   const contextInfo = useContext(CascadeContext);
   const [searchValue, setSearchValue] = useState('');
   const searchDebounce = useDebounce(searchValue);
-
-  const search = JSON.stringify({
-    email: searchDebounce,
-    firstname: searchDebounce,
-    surname: searchDebounce,
-  });
+  const searchBy = ['email', 'firstname', 'surname'];
+  
+  const search = searchQueryHandler(searchBy, searchDebounce);
 
   const query = queryHandler({
     parastatal: contextInfo?.dataList?.parastatal?.id,

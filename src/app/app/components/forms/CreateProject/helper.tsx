@@ -1,4 +1,5 @@
-import { FormItems, ProjectData } from './types';
+import { FormItems } from '@/types';
+import { ProjectData } from './types';
 
 export const createProjectFormInputs: FormItems<ProjectData>[] = [
   {

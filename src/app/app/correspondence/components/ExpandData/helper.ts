@@ -1,14 +1,14 @@
-import { CorrespondenceData, FormItems } from '../../types';
+import { CorrespondenceData, FormItems } from '@/types';
 
 export const correspondenceFormInputs: FormItems<CorrespondenceData>[] = [
   {
-    name: 'sent_by',
+    name: 'sender',
     label: 'Sender - Who sent it',
     placeholder: 'Aa',
     rules: [{ required: true, message: 'Sender is required' }],
   },
   {
-    name: 'recipient',
+    name: 'creator',
     label: 'Recipient (Primary)',
     placeholder: 'Add people, offices and departments. Comma separated',
     rules: [{ required: true, message: 'Recipient is required' }],
@@ -32,7 +32,7 @@ export const correspondenceFormInputs: FormItems<CorrespondenceData>[] = [
     rules: [{ required: true, message: 'Date of correspondence is required' }],
   },
   {
-    name: 'ref_no',
+    name: 'reference_number',
     label: 'Ref. No',
     placeholder: 'Aa',
     rules: [{ required: true, message: 'Ref. No is required' }],

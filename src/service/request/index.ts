@@ -210,3 +210,15 @@ export const queryHandler = (
   });
   return params;
 };
+
+export const searchQueryHandler = (searchBy: string[], value: string) => {
+  const clean = searchBy.filter((itm) => itm !== '');
+  if (value === '' || clean.length === 0) return '';
+  let searchObj: Record<string, string> = {};
+
+  clean.forEach((item) => {
+    searchObj[item] = value;
+  });
+
+  return JSON.stringify(searchObj);
+};

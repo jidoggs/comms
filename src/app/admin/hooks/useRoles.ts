@@ -7,7 +7,7 @@ import {
   useServiceConfig,
 } from '@/service/swrHooks';
 import { Role } from '../user-management/types';
-import { queryHandler } from '@/service/request';
+import { queryHandler, searchQueryHandler } from '@/service/request';
 import { RoleServiceArgs } from './types';
 import { APIResponseSuccessModel } from '@/types';
 
@@ -16,11 +16,10 @@ const { CREATE, GET_ALL_ROLES, SPECIFIC_ROLE, UPDATE } = ENDPOINTS.ROLES;
 function useRoles(props: RoleServiceArgs) {
   const [addNewRole, setAddNewRole] = useState(false);
 
-  const searchQuery = props.search
-    ? JSON.stringify({ name: props.search })
-    : '';
+  const searchBy = ['name'];
+  const search = searchQueryHandler(searchBy, props?.search || '');
 
-  const query = queryHandler({ search: searchQuery, sort: 'created_at' });
+  const query = queryHandler({ search, sort: 'created_at' });
 
   const { revalidateRequest } = useServiceConfig();
 

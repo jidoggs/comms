@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Form from 'antd/es/form/Form';
 import FormItem from 'antd/es/form/FormItem';
 import CustomDragger from '@/common/components/CustomDragger';
 import CustomInput from '@/common/components/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
 import { correspondenceFormInputs } from './helper';
-import { CorrespondenceData } from '../../types';
+import { TableRowActionContext } from '../TableRowAction';
+import { CorrespondenceData } from '@/types';
 
 type FieldType = CorrespondenceData;
 
@@ -14,6 +15,7 @@ type Props = {
 };
 
 function NewCorrespondenceForm({ handleSubmit }: Props) {
+  const context = useContext(TableRowActionContext);
   return (
     <Form layout="vertical" onFinish={handleSubmit}>
       <div className="flex items-start gap-x-5">
@@ -23,6 +25,7 @@ function NewCorrespondenceForm({ handleSubmit }: Props) {
             <FormItem<FieldType>
               key={item.name}
               {...item}
+              initialValue={context?.data?.[item.name]}
               className="flex flex-col"
             >
               <CustomInput name={item.name} />

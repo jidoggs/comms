@@ -2,7 +2,8 @@ import CustomButton from '@/common/components/CustomButton';
 import CustomModal from '@/common/components/CustomModal';
 import Title from '@/common/components/Title';
 import Send from '@/common/components/icons/Send';
-import { iHandleClick } from '../types';
+import { iHandleClick } from '@/types';
+
 
 type SubmittedResponseModalProps = {
   isModalOpen: boolean;

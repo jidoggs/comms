@@ -1,9 +1,8 @@
 'use client';
 import React, { useState } from 'react';
-import { TabsProps } from 'antd/es/tabs';
 import { ColumnsType } from 'antd/es/table';
 import CustomTable from '@/common/components/CustomTable';
-import CustomTab from '@/common/components/CustomTab';
+import CustomTab, { TabItemProps } from '@/common/components/CustomTab';
 import { mergeClassName } from '@/common/utils';
 import { dummyCorrespondence } from '@/common/mockData';
 import Document from '@/common/components/icons/Document';
@@ -87,7 +86,7 @@ const columns: ColumnsType<any> = [
 
 const SchedulePage = () => {
   const [activeKey, setActiveKey] = useState('draft');
-  const items: TabsProps['items'] = [
+  const items: TabItemProps = [
     {
       key: 'draft',
       label: 'Draft',

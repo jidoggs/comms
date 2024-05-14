@@ -11,7 +11,7 @@ type Props = {
   onCancel: () => void;
 };
 
-function CreateCorrespondence({
+function CorresponcenceCreated({
   newCorrespondence,
   viewCorrespondence,
   open,
@@ -60,4 +60,4 @@ function CreateCorrespondence({
   );
 }
 
-export default CreateCorrespondence;
+export default CorresponcenceCreated;

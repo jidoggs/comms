@@ -4,8 +4,8 @@ import CustomButton from '@/common/components/CustomButton';
 import CustomModal from '@/common/components/CustomModal';
 import SentCorrespondence from '../SentCorrespondence';
 import Form from './Form';
-import { CorrespondenceData } from '../../types';
 import Maximize from '@/common/components/icons/Maximize';
+import { CorrespondenceData } from '@/types';
 
 type Props = {
   className: string;

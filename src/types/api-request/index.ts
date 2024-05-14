@@ -21,3 +21,8 @@ export type Mutate<T = any> = TriggerWithArgs<
   string,
   apiRequestorArgs
 >;
+
+export type GenericServiceParam<A extends string, Q extends string> = Partial<
+  Record<A, boolean>
+> &
+  Partial<Record<Q, string>>;

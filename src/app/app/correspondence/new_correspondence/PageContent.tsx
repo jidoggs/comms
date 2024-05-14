@@ -33,9 +33,7 @@ function PageContent() {
         size="large"
         rowClassName="group"
         rowSelection={{ columnWidth: 56 }}
-        footer={() => (
-          <AddCorrespondence handleClick={contextInfo?.handleAdd} />
-        )}
+        footer={() => <AddCorrespondence />}
       />
     </div>
   );

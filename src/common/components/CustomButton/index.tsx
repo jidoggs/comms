@@ -1,13 +1,10 @@
-import React from 'react';
-import dynamic from 'next/dynamic';
+import React, { Suspense, lazy } from 'react';
 import { mergeClassName } from '@/common/utils';
 import { CustomButtonProps } from './types';
 export * from './types';
 
-const Button = dynamic(() => import('antd/es/button'), {
-  loading: (props: any) => <button {...props} />,
-});
-const Tooltip = dynamic(() => import('antd/es/tooltip'));
+const Button = lazy(() => import('antd/es/button'));
+const Tooltip = lazy(() => import('antd/es/tooltip'));
 
 function CustomButton({
   className,
@@ -49,28 +46,33 @@ function CustomButton({
         typeof className !== 'string' ? className?.container : ''
       )}
     >
-      {children || !description ? (
-        <Button
-          {...props}
-          className={btnClassName}
-          size={size}
-          block={block}
-          title={title}
-        >
-          {children}
-        </Button>
-      ) : (
-        <Tooltip placement={descriptionPlacement} title={description || title}>
+      <Suspense fallback={<button className={btnClassName} />}>
+        {children || !description ? (
           <Button
             {...props}
             className={btnClassName}
-            size={description ? 'small' : size}
+            size={size}
             block={block}
+            title={title}
           >
             {children}
           </Button>
-        </Tooltip>
-      )}
+        ) : (
+          <Tooltip
+            placement={descriptionPlacement}
+            title={description || title}
+          >
+            <Button
+              {...props}
+              className={btnClassName}
+              size={description ? 'small' : size}
+              block={block}
+            >
+              {children}
+            </Button>
+          </Tooltip>
+        )}
+      </Suspense>
     </div>
   );
 }

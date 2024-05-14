@@ -65,3 +65,8 @@ export async function copyTextToClipboard(text: string) {
 export const replaceUnderscorceWithSpace = (value: string) => {
   return value?.split('_')?.join(' ');
 };
+
+export const lastRoute = (str: string) => {
+  const items = str.split('/');
+  return items[items.length - 1]
+};

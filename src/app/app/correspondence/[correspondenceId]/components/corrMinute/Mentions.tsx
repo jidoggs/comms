@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
 import CustomAvatar from '@/common/components/Avatar/CustomAvatar';
-import { User, iHandleKeyboard } from '../../../types';
+import { User, iHandleKeyboard } from '@/types';
 import CloseCircle from '@/common/components/icons/CloseCircle';
 
 type CustomMentionProps = {

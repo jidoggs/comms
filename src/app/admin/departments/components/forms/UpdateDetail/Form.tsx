@@ -28,11 +28,12 @@ type SelectRowProps = {
   defaultValue: string[];
 } & FieldRowProps;
 
-const FieldRow = ({ label, name, ...props }: FieldRowProps) => {
+const FieldRow = ({ label, name, defaultValue, ...props }: FieldRowProps) => {
   return (
     <FormItem
       label={label}
       name={name}
+      initialValue={defaultValue}
       className="!mb-0 border-b [&_.ant-form-item-row]:flex [&_.ant-form-item-row]:items-center"
     >
       <CustomInput
@@ -44,7 +45,12 @@ const FieldRow = ({ label, name, ...props }: FieldRowProps) => {
   );
 };
 
-const SelectFieldRow = ({ label, name, ...props }: SelectRowProps) => {
+const SelectFieldRow = ({
+  label,
+  name,
+  defaultValue,
+  ...props
+}: SelectRowProps) => {
   const [isEditable, setIsEditable] = useState(false);
 
   const focusHandler = () => {
@@ -57,6 +63,7 @@ const SelectFieldRow = ({ label, name, ...props }: SelectRowProps) => {
         label={label}
         name={name}
         className="!mb-0 border-b [&_.ant-form-item-row]:flex [&_.ant-form-item-row]:items-center"
+        initialValue={isEditable ? defaultValue : defaultValue?.join(', ')}
       >
         {isEditable ? (
           <CustomSelect
@@ -73,7 +80,6 @@ const SelectFieldRow = ({ label, name, ...props }: SelectRowProps) => {
             {...props}
             className="!mb-0 !border-none !bg-transparent"
             name={name}
-            defaultValue={props?.defaultValue?.join(', ')}
             onFocus={focusHandler}
           />
         )}

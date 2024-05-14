@@ -1,4 +1,4 @@
-import { BaseDataModel } from '../correspondence/types';
+import { GenericServiceParam } from '@/types';
 
 type GetUpdateDelete =
   | 'can_get_all'
@@ -12,24 +12,9 @@ type RequestType = Create | GetUpdateDelete;
 
 type QueryType = '_id' | 'query' | 'search';
 
-type GenericServiceParam<A extends string, Q extends string> = Partial<
-  Record<A, boolean>
-> &
-  Partial<Record<Q, string>>;
-
-export interface CorrespondenceType extends BaseDataModel {
-  _id: string;
-  name: string;
-  active: boolean;
-  // permissions: Permission[];
-}
-// CorrespondenceType;
-
 export type ServiceParams = GenericServiceParam<RequestType, QueryType>;
 
 export type CorrespondenceServiceArgs = GenericServiceParam<
   Create | GetUpdateDelete,
   QueryType
 >;
-
-export type UserServiceArgs = GenericServiceParam<GetUpdateDelete, QueryType>;

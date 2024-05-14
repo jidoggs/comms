@@ -93,9 +93,9 @@ function useAuth(props?: AuthParams) {
         messageHandler('success', res.message)
           .then(() => {
             if (res?.data?.role?.name === UserPreDefinedRole.BASICUSER) {
-              router.push('/app/home');
+              router.replace('/app/home');
             } else {
-              router.push('/admin/people');
+              router.replace('/admin/people');
             }
           })
           .finally(() => {

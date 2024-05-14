@@ -1,7 +1,8 @@
 import React from 'react';
 import RegistrationContent from './RegistrationContent';
 import CustomModal, { CustomModalProps } from '@/common/components/CustomModal';
-import { User } from '../../types';
+import { User } from '@/types';
+
 
 
 interface Props extends CustomModalProps {

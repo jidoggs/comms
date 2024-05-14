@@ -1,10 +1,10 @@
 import dayjs from 'dayjs';
-import { TabsProps } from 'antd/es/tabs';
 import TableRowAction from '../components/TableRowAction';
 import { mergeClassName } from '@/common/utils';
-import { User, BasicTypeSet } from '../types';
+import { User, BasicTypeSet } from '@/types';
+import { TabItemProps } from '@/common/components/CustomTab';
 
-export const tabItemList: TabsProps['items'] = [
+export const tabItemList: TabItemProps = [
   {
     key: 'roles-permissions',
     label: 'Roles & Permissions',

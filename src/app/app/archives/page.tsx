@@ -1,9 +1,9 @@
 'use client';
 import React, { useState } from 'react';
-import { TabsProps } from 'antd/es/tabs';
+
 import { ColumnsType } from 'antd/es/table';
 import Action from './components/Action';
-import CustomTab from '@/common/components/CustomTab';
+import CustomTab, { TabItemProps } from '@/common/components/CustomTab';
 import CustomTable from '@/common/components/CustomTable';
 import { mergeClassName } from '@/common/utils';
 import { dummyPeople } from '@/common/mockData';
@@ -83,7 +83,7 @@ const columns: ColumnsType<any> = [
 
 const Page = () => {
   const [activeKey, setActiveKey] = useState('onboard');
-  const items: TabsProps['items'] = [
+  const items: TabItemProps = [
     {
       key: 'onboard',
       label: 'Onboard',

@@ -1,11 +1,13 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
-import { TabsProps } from 'antd/es/tabs';
-import { BaseDataModel, User } from '@/types';
+import {
+  BaseDataModel,
+  EditableTableColumnTypes,
+  User,
+  iHandleChange,
+} from '@/types';
 import { CustomTableProps } from '@/common/components/CustomTable';
-export * from '../../../types';
-import { iHandleChange } from './types';
-import { EditableTableColumnTypes } from '../people/types';
+import { TabItemProps } from '@/common/components/CustomTab';
 
 export interface Role extends BaseDataModel {
   _id: string;
@@ -30,7 +32,7 @@ export type UserMgmtDataContextType = {
   handleTabChange: (state: string) => void;
   columns: EditableTableColumnTypes;
   currentTab: string;
-  tabItemList: TabsProps['items'];
+  tabItemList: TabItemProps;
   permissionsData: Permission[];
   permissionsLoading: boolean;
   rolesData: Role[];

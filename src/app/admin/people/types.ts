@@ -1,35 +1,10 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
-import Table from 'antd/es/table/Table';
-import { TabsProps } from 'antd/es/tabs';
 import { AnimationControls } from 'framer-motion';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
-import { User } from './types';
+import { EditableTableColumnTypes, User, iHandleChange } from '@/types';
 import { CustomTableProps } from '@/common/components/CustomTable';
-import { iHandleChange } from './types';
-export * from '../../../types';
-export interface CorrespondenceData {
-  sent_by: string;
-  recipient: string;
-  subject: string;
-  ref_no: string;
-  document: string;
-  comment: string;
-  created_at: string;
-}
-
-type EditableTableProps = Parameters<typeof Table>[0];
-export type EditableTableColumnTypes = Exclude<
-  EditableTableProps['columns'],
-  undefined
->;
-
-export type CorrespondenceContextNewType = {
-  handleAdd: VoidFunction;
-  columns: EditableTableColumnTypes;
-  dataSource: any[];
-  handleDelete: (id: string | number) => void;
-} | null;
+import { TabItemProps } from '@/common/components/CustomTab';
 
 export type PeopleDataContextType = {
   handleTabChange: (state: string) => void;
@@ -37,7 +12,7 @@ export type PeopleDataContextType = {
   dataSource: User[];
   isLoading: boolean;
   currentTab: string;
-  tabItemList: TabsProps['items'];
+  tabItemList: TabItemProps;
   components: CustomTableProps<any>['components'];
   searchHandler: iHandleChange;
   search: string;

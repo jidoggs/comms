@@ -1,11 +1,11 @@
 'use client';
 import React, { useContext } from 'react';
-import CustomTab, { ItemProps } from '@/common/components/CustomTab';
+import CustomTab, { TabItemProps } from '@/common/components/CustomTab';
 import { DetailContext } from '../service-context/DetailContextWrapper';
 
 const CorrepondenceTabs = () => {
   const detailsData = useContext(DetailContext);
-  const items: ItemProps = [
+  const items: TabItemProps = [
     {
       key: 'minutes',
       label: 'Minutes',

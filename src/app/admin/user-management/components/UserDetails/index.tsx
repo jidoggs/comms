@@ -1,7 +1,7 @@
 import React from 'react';
 import CustomModal, { CustomModalProps } from '@/common/components/CustomModal';
-import { User } from '../../types';
 import UserDetailsContent from './UserDetailsContent';
+import { User } from '@/types';
 
 interface Props extends CustomModalProps {
   staffData: User | null;

@@ -1,5 +1,4 @@
-import React from 'react';
-import dynamic from 'next/dynamic';
+import React, { Suspense, lazy } from 'react';
 import { mergeClassName } from '../../utils';
 import { CustomInputProps, InputRef, TextAreaProp } from './types';
 
@@ -9,15 +8,9 @@ const FallBackInput = () => {
   );
 };
 
-const Input = dynamic(() => import('antd/es/input/Input'), {
-  loading: () => <FallBackInput />,
-});
-const Password = dynamic(() => import('antd/es/input/Password'), {
-  loading: () => <FallBackInput />,
-});
-const TextArea = dynamic(() => import('antd/es/input/TextArea'), {
-  loading: () => <FallBackInput />,
-});
+const Input = lazy(() => import('antd/es/input/Input'));
+const Password = lazy(() => import('antd/es/input/Password'));
+const TextArea = lazy(() => import('antd/es/input/TextArea'));
 
 const baseClass =
   'w-full placeholder-custom-main p-2.5 bg-transparent text-custom-main border border-custom-gray_600 !focus-within:border-transparent !focus:border-transparent !focus-within:outline-none !focus:outline-none';
@@ -27,7 +20,11 @@ export const CustomTextArea: React.FC<TextAreaProp> = React.forwardRef<
   TextAreaProp
 >(({ className, ...rest }, ref) => {
   const inputClassName: string = mergeClassName(baseClass, className);
-  return <TextArea {...rest} className={inputClassName} ref={ref} />;
+  return (
+    <Suspense fallback={<FallBackInput />}>
+      <TextArea {...rest} className={inputClassName} ref={ref} />
+    </Suspense>
+  );
 });
 
 const CustomInput: React.FC<CustomInputProps> = React.forwardRef<
@@ -36,13 +33,13 @@ const CustomInput: React.FC<CustomInputProps> = React.forwardRef<
 >(({ type, className, ...rest }, ref) => {
   const inputClassName: string = mergeClassName(baseClass, className);
   return (
-    <>
+    <Suspense fallback={<FallBackInput />}>
       {type === 'password' ? (
         <Password {...rest} className={inputClassName} ref={ref} />
       ) : (
         <Input {...rest} className={inputClassName} ref={ref} />
       )}
-    </>
+    </Suspense>
   );
 });
 

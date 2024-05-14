@@ -1,15 +1,12 @@
 'use client';
 import React, { createContext, useState } from 'react';
-import {
-  ContextWapper,
-  UserMgmtDataContextType,
-  iHandleChange,
-} from '../types';
+import { UserMgmtDataContextType } from '../types';
 import { useDebounce, useTabChange } from '@/common/hooks';
 import { defaultColumns, personKeys, tabItemList } from './userHelper';
 import { useRoles } from '../../hooks';
 import useUsers from '../../hooks/useUsers';
 import usePermissions from '../../hooks/usePermission';
+import { ContextWapper, iHandleChange } from '@/types';
 
 export const UserMgmtDataContext = createContext<UserMgmtDataContextType>(null);
 
