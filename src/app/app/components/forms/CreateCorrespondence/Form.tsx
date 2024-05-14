@@ -7,6 +7,7 @@ import Recipient from './Recipient';
 
 interface CorrespondenceFormProps {
   field: FormListFieldData;
+  handleRecipientChange: (value: string, type: string) => void;
 }
 const Input = dynamic(() => import('antd/es/input/Input'), { ssr: true });
 const FormItem = dynamic(() => import('antd/es/form/FormItem'), { ssr: true });
@@ -21,7 +22,10 @@ const CustomDragger = dynamic(
   }
 );
 
-function NewCorrespondenceForm({ field }: CorrespondenceFormProps) {
+function NewCorrespondenceForm({
+  field,
+  handleRecipientChange,
+}: CorrespondenceFormProps) {
   const normFile = (e: any) => {
     if (Array.isArray(e)) {
       return e;
@@ -59,7 +63,7 @@ function NewCorrespondenceForm({ field }: CorrespondenceFormProps) {
             className="flex flex-col"
             // rules={[{ required: true, message: 'Recipient is required' }]}
           >
-            <Recipient />
+            <Recipient onRecipientChange={handleRecipientChange} />
           </FormItem>
           <FormItem
             label="Subject"
@@ -68,6 +72,7 @@ function NewCorrespondenceForm({ field }: CorrespondenceFormProps) {
             // rules={[{ required: true, message: 'Subject is required' }]}
           >
             <CustomInput name="subject" />
+            {/* <Recipient /> */}
           </FormItem>
           <FormItem
             label="Minute"
@@ -94,7 +99,7 @@ function NewCorrespondenceForm({ field }: CorrespondenceFormProps) {
             label="Ref. No"
             name={[field.name, 'reference_number']}
             className="flex flex-col"
-            // rules={[{ required: true, message: 'Ref. No is required' }]}
+            rules={[{ required: true, message: 'Ref. No is required' }]}
           >
             <Input name="ref_no" />
           </FormItem>

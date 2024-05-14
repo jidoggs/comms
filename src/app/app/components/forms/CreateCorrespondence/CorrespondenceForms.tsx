@@ -18,25 +18,46 @@ interface CorrespondenceFormsProps {
 const CorrespondenceForms = ({ handleSubmit }: CorrespondenceFormsProps) => {
   const [form] = useForm();
   const [isFormValid, setIsFormValid] = useState(false);
+  const [selectedRecipient, setSelectedRecipient] = useState<{
+    value: string;
+    type: string;
+  } | null>(null);
 
   const hasData = (corrData: any) => {
     // Check for the existence of the fields you consider essential
     return (
-      corrData.sender ||
-      corrData.subject ||
-      corrData.minute ||
-      corrData.file ||
-      corrData.date_of_correspondence ||
-      corrData.recipient
+      corrData?.sender ||
+      corrData?.subject ||
+      corrData?.minute ||
+      corrData?.file ||
+      corrData?.date_of_correspondence ||
+      corrData?.recipient
     );
+  };
+
+  const handleRecipientChange = (value: string, type: string) => {
+    setSelectedRecipient({ value, type });
+  };
+
+  const modifiedHandleSubmit = (values: any) => {
+    const modifiedValues = {
+      ...values,
+      correspondences: values.correspondences.map((corr: any) => ({
+        ...corr,
+        recipient_type: selectedRecipient?.type, // Add recipient_type
+        recipient: selectedRecipient?.value, // Add recipient
+      })),
+    };
+
+    handleSubmit(modifiedValues); // Pass the modified data to the original handleSubmit
   };
 
   const checkFormValidity = () => {
     const values = form.getFieldsValue();
-    const allCorrespondences = values.correspondences;
+    const allCorrespondences = values?.correspondences;
 
     // Ensure at least one correspondence has data
-    const hasValidData = allCorrespondences.some((corr: any) => hasData(corr));
+    const hasValidData = allCorrespondences?.some((corr: any) => hasData(corr));
 
     setIsFormValid(hasValidData);
   };
@@ -44,7 +65,7 @@ const CorrespondenceForms = ({ handleSubmit }: CorrespondenceFormsProps) => {
   return (
     <Form
       layout="vertical"
-      onFinish={handleSubmit}
+      onFinish={modifiedHandleSubmit}
       className=""
       form={form}
       initialValues={{
@@ -100,7 +121,10 @@ const CorrespondenceForms = ({ handleSubmit }: CorrespondenceFormsProps) => {
                         />
                       </div>
                     </div>
-                    <NewCorrespondenceForm field={field} />
+                    <NewCorrespondenceForm
+                      field={field}
+                      handleRecipientChange={handleRecipientChange}
+                    />
                   </div>
                 ))}
               </div>
