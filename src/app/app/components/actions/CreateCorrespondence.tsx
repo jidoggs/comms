@@ -9,13 +9,25 @@ import Plus from '@/common/components/icons/Plus';
 import CustomModal from '@/common/components/CustomModal';
 import CorrespondenceForms from '../forms/CreateCorrespondence/CorrespondenceForms';
 import CorresponcenceCreated from '../forms/CreateCorrespondence/CorresponcenceCreated';
+import { useForm } from 'antd/es/form/Form';
 
 type Props = {
   type?: 'full';
 };
+export const removeNullOrUndefinedProperties = (obj: Record<string, any>) => {
+  let newObj: Record<string, any> = {};
+  const keys = Object.keys(obj);
+  keys.forEach((key) => {
+    if (obj[key] !== undefined && obj[key] !== '') {
+      newObj[key] = obj[key];
+    }
+  });
+  return newObj;
+};
 
 function CreateCorrespondence(props: Props) {
   const { data: user } = useSession();
+  const [form] = useForm();
   const parastatalId = user.parastatal?.[0]?._id;
   const router = useRouter();
   const [openModal, setOpenModal] = useState(false);
@@ -28,33 +40,67 @@ function CreateCorrespondence(props: Props) {
     can_create: true,
   });
 
-  const removeNullOrUndefinedProperties = (obj: Record<string, any>) => {
-    let newObj: Record<string, any> = {};
-    const keys = Object.keys(obj);
-    keys.forEach((key) => {
-      if (obj[key] !== undefined && obj[key] !== '') {
-        newObj[key] = obj[key];
-      }
-    });
-    return newObj;
+  // Define hasData function here
+  const hasData = (corrData: any) => {
+    return (
+      corrData?.sender ||
+      corrData?.subject ||
+      corrData?.minute ||
+      corrData?.file ||
+      corrData?.date_of_correspondence ||
+      corrData?.recipient
+    );
   };
 
   //eslint-disable-next-line
   const correspondenceFormSubmitHandler = async (values: any) => {
     const allCorrespondence = values.correspondences;
-    // console.log('allCorrespondence', allCorrespondence);
-
-    const results = [];
 
     try {
-      for (const eachCorr of allCorrespondence) {
+      // Create all correspondences and collect promises
+      const createPromises = allCorrespondence.map(async (eachCorr: any) => {
         const backendData = removeNullOrUndefinedProperties({
           ...eachCorr,
-          // files: eachCorr.files?.map((file: any) => ({
-          //   file: file.originFileObj,
-          //   name: file.originFileObj.name,
-          // })),
+          files: eachCorr?.files?.map(
+            (item: UploadFile<any>) => item.originFileObj
+          ),
+          status: 'sent', // Assuming the status for sent correspondences is "sent"
+        });
+        const data = {
+          ...backendData,
+          parastatal: parastatalId,
+        };
 
+        return createCorrSwr.trigger({ data });
+      });
+
+      // Wait for all promises to resolve
+      await Promise.all(createPromises);
+
+      // Close modal and show success message
+      closeModalHandler();
+      // Reset the form after submission
+      form.resetFields();
+    } catch (error: any) {
+      // Handle errors, potentially with more specific messages
+      messageHandler(
+        'error',
+        `Some correspondences failed to create. Error: ${error.message}`
+      );
+    }
+  };
+
+  const handleSaveDraft = async (values: any) => {
+    const allCorrespondence = values.correspondences.map((corr: any) => ({
+      ...corr,
+      status: 'draft',
+    }));
+
+    try {
+      // Create all draft correspondences and collect promises
+      const draftPromises = allCorrespondence.map(async (eachCorr: any) => {
+        const backendData = removeNullOrUndefinedProperties({
+          ...eachCorr,
           files: eachCorr?.files?.map(
             (item: UploadFile<any>) => item.originFileObj
           ),
@@ -64,58 +110,65 @@ function CreateCorrespondence(props: Props) {
           parastatal: parastatalId,
         };
 
-        // console.log(data);
+        return createCorrSwr.trigger({ data });
+      });
 
-        try {
-          await createCorrSwr.trigger({ data });
-          results.push({
-            success: true,
-            message: 'Correspondence created successfully',
-          });
-        } catch (error: any) {
-          results.push({ success: false, message: error.message });
-        }
+      // Wait for all draft promises to resolve
+      await Promise.all(draftPromises);
 
-        // createCorrSwr
-        //   .trigger({ data })
-        //   .then(() =>
-        //     messageHandler('success', 'Correspondence created successfully')
-        //   );
-      }
-      // } catch (error: any) {
-      //   messageHandler('error', error.message);
-      // }
-    } catch (overallError: any) {
+      // Show a success message (if desired)
+      // messageHandler('success', 'Draft saved successfully.');
+    } catch (error: any) {
+      // Handle errors if saving drafts fails
       messageHandler(
         'error',
-        `An unexpected error occurred: ${overallError.message}`
+        `Some drafts failed to save. Error: ${error.message}`
       );
-      return; // Exit early if there's a major issue
     }
+  };
 
-    // Summarize results and craft a single message
-    const successCount = results.filter((r) => r.success).length;
-    const errorCount = results.filter((r) => !r.success).length;
+  const handleArchive = async () => {
+    const values = form.getFieldsValue();
+    const allCorrespondence = values.correspondences;
 
-    let message = '';
-    if (successCount === allCorrespondence.length) {
-      message = 'All correspondences created successfully.';
-    } else if (errorCount === allCorrespondence.length) {
-      const firstErrorMessage =
-        results.find((r) => !r.success)?.message || 'Unknown error';
-      message = `All correspondences failed. First error: ${firstErrorMessage}`;
-    } else {
-      message = `${successCount} correspondence(s) created successfully. ${errorCount} failed.`;
-      if (errorCount > 0) {
-        const firstErrorMessage =
-          results.find((r) => !r.success)?.message || 'Unknown error';
-        message += ` First error: ${firstErrorMessage}`;
-      }
+    try {
+      // Archive all correspondences and collect promises
+      const archivePromises = allCorrespondence.map(async (eachCorr: any) => {
+        const backendData = removeNullOrUndefinedProperties({
+          ...eachCorr,
+          files: eachCorr?.files?.map(
+            (item: UploadFile<any>) => item.originFileObj
+          ),
+          status: 'archive',
+        });
+        const data = {
+          ...backendData,
+          parastatal: parastatalId,
+        };
+
+        return createCorrSwr.trigger({ data });
+      });
+
+      // Wait for all promises to resolve
+      await Promise.all(archivePromises);
+      closeModalHandler();
+      // Reset the form after submission
+      form.resetFields();
+
+      // Show a success message (if desired)
+      // messageHandler('success', 'All correspondences archived successfully.');
+    } catch (error: any) {
+      // Handle errors if archiving fails
+      messageHandler('error', 'Failed to archive some correspondences.');
     }
+  };
 
-    // Determine the overall message type based on the outcome
-    const messageType = errorCount > 0 ? 'error' : 'success';
-    messageHandler(messageType, message);
+  const closeModalHandlerWithDraftSave = () => {
+    const values = form.getFieldsValue();
+    if (values.correspondences.some((corr: any) => hasData(corr))) {
+      handleSaveDraft(values);
+    }
+    closeModalHandler();
   };
 
   const viewCorrespondenceHandler = () => {
@@ -140,11 +193,16 @@ function CreateCorrespondence(props: Props) {
       <CustomModal
         title="New correspondence"
         open={openModal}
-        onCancel={closeModalHandler}
+        // onCancel={closeModalHandler}
+        onCancel={closeModalHandlerWithDraftSave}
         width={800}
         style={{ top: 20 }}
       >
-        <CorrespondenceForms handleSubmit={correspondenceFormSubmitHandler} />
+        <CorrespondenceForms
+          handleSubmit={correspondenceFormSubmitHandler}
+          form={form} // Pass down the form instance
+          handleArchive={handleArchive}
+        />
       </CustomModal>
       <CorresponcenceCreated
         newCorrespondence={newCorrespondenceHandler}

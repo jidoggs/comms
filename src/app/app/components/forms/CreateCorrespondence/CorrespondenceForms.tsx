@@ -1,9 +1,8 @@
 'use client';
 import React, { useState } from 'react';
-// import { Form, useForm } from 'antd'
 import CustomButton from '@/common/components/CustomButton';
 import Add from '@/common/components/icons/Add';
-import Form, { useForm } from 'antd/es/form/Form';
+import Form, { FormInstance } from 'antd/es/form/Form';
 import List from 'antd/es/form/FormList';
 import Delete from '@/common/components/icons/Delete';
 import Title from '@/common/components/Title';
@@ -13,18 +12,28 @@ import { CorrespondenceData } from '@/types';
 
 interface CorrespondenceFormsProps {
   handleSubmit: (data: CorrespondenceData) => void;
+  form: FormInstance<any>;
+  handleArchive: () => Promise<void>;
 }
 
-const CorrespondenceForms = ({ handleSubmit }: CorrespondenceFormsProps) => {
-  const [form] = useForm();
+const CorrespondenceForms = ({
+  handleSubmit,
+  form,
+  handleArchive,
+}: CorrespondenceFormsProps) => {
+  // const { data: user } = useSession();
+  // const parastatalId = user.parastatal?.[0]?._id;
   const [isFormValid, setIsFormValid] = useState(false);
   const [selectedRecipient, setSelectedRecipient] = useState<{
     value: string;
     type: string;
   } | null>(null);
 
+  // const { createCorrSwr } = useCorrespondence({
+  //   can_create: true,
+  // });
+
   const hasData = (corrData: any) => {
-    // Check for the existence of the fields you consider essential
     return (
       corrData?.sender ||
       corrData?.subject ||
@@ -62,6 +71,39 @@ const CorrespondenceForms = ({ handleSubmit }: CorrespondenceFormsProps) => {
     setIsFormValid(hasValidData);
   };
 
+  const handleCopy = (index: number) => {
+    const values = form.getFieldsValue();
+    const copiedCorrespondence = values.correspondences[index];
+
+    // Update recipient if selectedRecipient exists
+    if (selectedRecipient) {
+      copiedCorrespondence.recipient_type = selectedRecipient.type;
+      copiedCorrespondence.recipient = selectedRecipient.value;
+    }
+
+    // Create a new empty correspondence to reset all fields and get a new index
+    const newCorrespondence = {
+      files: [],
+      sender: '',
+      recipient: '',
+      subject: '',
+      minute: '',
+      date_of_correspondence: '',
+      reference_number: '',
+      recipient_type: '', // Reset recipient_type for new index
+    };
+
+    // Merge the copied values with the new empty correspondence
+    const finalCopiedCorrespondence = {
+      ...newCorrespondence,
+      ...copiedCorrespondence,
+    };
+
+    form.setFieldsValue({
+      correspondences: [...values.correspondences, finalCopiedCorrespondence], // Append the copied correspondence at the end
+    });
+  };
+
   return (
     <Form
       layout="vertical"
@@ -91,7 +133,7 @@ const CorrespondenceForms = ({ handleSubmit }: CorrespondenceFormsProps) => {
               style={{ display: 'flex', rowGap: 16, flexDirection: 'column' }}
             >
               <div className="flex h-[70vh] flex-col gap-4 overflow-y-auto">
-                {fields.map((field) => (
+                {fields.map((field, index) => (
                   <div
                     // size="small"
                     className="!bg-custom-white_100"
@@ -102,13 +144,19 @@ const CorrespondenceForms = ({ handleSubmit }: CorrespondenceFormsProps) => {
                   >
                     <div className="flex flex-row justify-between pb-2">
                       <Title tag="h4" className="text-custom-gray_300">
-                        {field.name + 1}
+                        {/* {field.name + 1} */}
+                        {form.getFieldValue([
+                          'correspondences',
+                          index,
+                          'subject',
+                        ]) || `Correspondence ${index + 1}`}
                       </Title>
                       <div className="flex flex-row">
                         <CustomButton
                           type="text"
                           size="small"
                           icon={<Copy />}
+                          onClick={() => handleCopy(index)} // Call handleCopy with index
                         />
                         <CustomButton
                           type="text"
@@ -145,16 +193,16 @@ const CorrespondenceForms = ({ handleSubmit }: CorrespondenceFormsProps) => {
       </div>
 
       <div className="flex flex-row justify-end gap-2 border-t pt-4">
-        {/* <Form.Item noStyle shouldUpdate>
+        {/* <FormItem noStyle shouldUpdate>
           {() => (
             <Title>
               <pre>{JSON.stringify(form.getFieldsValue(), null, 2)}</pre>
             </Title>
           )}
-        </Form.Item> */}
+        </FormItem> */}
         <CustomButton
           size="small"
-          // htmlType="submit"
+          onClick={handleArchive}
           type="text"
           className="!rounded-10 !border !border-custom-main !text-custom-main"
         >
