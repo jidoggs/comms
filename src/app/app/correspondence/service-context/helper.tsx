@@ -67,8 +67,8 @@ export const defaultColumns: (EditableTableColumnTypes[number] & {
     },
   },
   {
-    title: 'Comment',
-    dataIndex: 'comment',
+    title: 'Minute',
+    dataIndex: 'minute',
     ellipsis: true,
     editable: true,
     width: 450,
@@ -81,7 +81,7 @@ export const defaultColumns: (EditableTableColumnTypes[number] & {
     width: 180,
   },
   {
-    title: 'Actions',
+    title: 'Action',
     className: '!pr-3',
     dataIndex: '',
     ellipsis: true,

@@ -78,8 +78,8 @@ const defaultColumns: (EditableTableColumnTypes[number] & {
     },
   },
   {
-    title: 'Comment',
-    dataIndex: 'comment',
+    title: 'Minute',
+    dataIndex: 'minute',
     ellipsis: true,
     editable: true,
     width: 450,

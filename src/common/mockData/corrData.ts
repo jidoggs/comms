@@ -12,7 +12,7 @@ export const correspondentData = [
         fileUpload: '',
         fileDesc: 'Export of Brewery Products',
       },
-      comment: 'I hope this message finds you well',
+      minute: 'I hope this message finds you well',
     },
     date: '4:22pm, 16 Feb 2024',
   },

@@ -60,8 +60,8 @@ const columns: ColumnsType<any> = [
     },
   },
   {
-    title: 'Comment',
-    dataIndex: 'comment',
+    title: 'Minute',
+    dataIndex: 'minute',
     ellipsis: true,
     width: 450,
     className: '!text-wrap !max-w-full !break-words',

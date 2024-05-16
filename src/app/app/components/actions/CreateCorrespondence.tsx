@@ -14,6 +14,17 @@ import { useForm } from 'antd/es/form/Form';
 type Props = {
   type?: 'full';
 };
+
+// Define hasData function here
+export const hasData = (corrData: any) => {
+  return (
+    corrData?.sender &&
+    corrData?.recipient &&
+    corrData?.subject &&
+    corrData?.reference_number
+  );
+};
+
 export const removeNullOrUndefinedProperties = (obj: Record<string, any>) => {
   let newObj: Record<string, any> = {};
   const keys = Object.keys(obj);
@@ -40,18 +51,6 @@ function CreateCorrespondence(props: Props) {
     can_create: true,
   });
 
-  // Define hasData function here
-  const hasData = (corrData: any) => {
-    return (
-      corrData?.sender ||
-      corrData?.subject ||
-      corrData?.minute ||
-      corrData?.file ||
-      corrData?.date_of_correspondence ||
-      corrData?.recipient
-    );
-  };
-
   //eslint-disable-next-line
   const correspondenceFormSubmitHandler = async (values: any) => {
     const allCorrespondence = values.correspondences;
@@ -74,15 +73,10 @@ function CreateCorrespondence(props: Props) {
         return createCorrSwr.trigger({ data });
       });
 
-      // Wait for all promises to resolve
       await Promise.all(createPromises);
-
-      // Close modal and show success message
       closeModalHandler();
-      // Reset the form after submission
       form.resetFields();
     } catch (error: any) {
-      // Handle errors, potentially with more specific messages
       messageHandler(
         'error',
         `Some correspondences failed to create. Error: ${error.message}`
@@ -97,7 +91,6 @@ function CreateCorrespondence(props: Props) {
     }));
 
     try {
-      // Create all draft correspondences and collect promises
       const draftPromises = allCorrespondence.map(async (eachCorr: any) => {
         const backendData = removeNullOrUndefinedProperties({
           ...eachCorr,
@@ -152,6 +145,8 @@ function CreateCorrespondence(props: Props) {
       // Wait for all promises to resolve
       await Promise.all(archivePromises);
       closeModalHandler();
+
+      messageHandler('success', 'Correspondence(s) Archived successfully');
       // Reset the form after submission
       form.resetFields();
 
@@ -168,6 +163,7 @@ function CreateCorrespondence(props: Props) {
     if (values.correspondences.some((corr: any) => hasData(corr))) {
       handleSaveDraft(values);
     }
+    messageHandler('success', 'Correspondence(s) saved to draft');
     closeModalHandler();
   };
 

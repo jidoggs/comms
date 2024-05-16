@@ -2,8 +2,19 @@
 import React, { useCallback, useState } from 'react';
 import Select from 'antd/es/select';
 import Spin from 'antd/es/spin';
+import { FormListFieldData } from 'antd';
 import { useDebounce } from '@/common/hooks';
 import useCorrespondence from '@/app/app/hooks/useCorrespondence';
+import dynamic from 'next/dynamic';
+
+// const { Option } = Select;
+
+const FormItem = dynamic(() => import('antd/es/form/FormItem'), { ssr: true });
+// interface RecipientData {
+//   user?: { _id: string; firstname: string; surname: string }[]; // Optional property for users
+//   department?: { _id: string; name: string }[]; // Optional property for departments
+//   office?: { _id: string; name: string }[]; // Optional property for offices
+// }
 
 // Filter `option.label` match the user type `input`
 const filterOption = (
@@ -13,7 +24,9 @@ const filterOption = (
 
 const Recipient = ({
   onRecipientChange,
+  field,
 }: {
+  field: FormListFieldData;
   onRecipientChange: (value: string, type: string) => void;
 }) => {
   const [search, setSearch] = useState('');
@@ -55,19 +68,26 @@ const Recipient = ({
   }, [recipientsData]);
 
   return (
-    <Select
-      showSearch
-      placeholder="Select a person"
-      optionFilterProp="children"
-      onChange={onChange}
-      onSearch={onSearch}
-      filterOption={filterOption}
-      options={options}
-      notFoundContent={
-        getRecipientsSwr.isLoading ? <Spin size="small" /> : null
-      }
-      allowClear
-    />
+    <FormItem
+      label="Recipient (Primary)"
+      name={[field.name, 'recipient']}
+      className="flex flex-col"
+      rules={[{ required: true, message: 'Recipient is required' }]}
+    >
+      <Select
+        showSearch
+        placeholder="Select a person"
+        optionFilterProp="children"
+        onChange={onChange}
+        onSearch={onSearch}
+        filterOption={filterOption}
+        options={options}
+        notFoundContent={
+          getRecipientsSwr.isLoading ? <Spin size="small" /> : null
+        }
+        allowClear
+      />
+    </FormItem>
   );
 };
 

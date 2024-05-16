@@ -5,7 +5,13 @@ import CustomModal from '@/common/components/CustomModal';
 import SentCorrespondence from '../SentCorrespondence';
 import Form from './Form';
 import Maximize from '@/common/components/icons/Maximize';
-import { CorrespondenceData } from '@/types';
+// import { CorrespondenceData } from '@/types';
+import { removeNullOrUndefinedProperties } from '@/app/app/components/actions/CreateCorrespondence';
+import { UploadFile } from 'antd';
+import { useSession } from '@/common/hooks';
+import useCorrespondence from '@/app/app/hooks/useCorrespondence';
+import { messageHandler } from '@/common/utils/notification';
+import { useForm } from 'antd/es/form/Form';
 
 type Props = {
   className: string;
@@ -20,10 +26,36 @@ function ExpandButton({ className, description }: Props) {
   const closeModalHandler = () => setOpenModal(false);
   const closeConfirmModalHandler = () => setOpenConfirmModal(false);
 
-  //eslint-disable-next-line
-  const correspondenceFormSubmitHandler = (data: CorrespondenceData) => {
-    closeModalHandler();
-    setOpenConfirmModal(true);
+  const { data: user } = useSession();
+  const [form] = useForm();
+  const parastatalId = user.parastatal?.[0]?._id;
+
+  const { createCorrSwr } = useCorrespondence({
+    can_create: true,
+  });
+
+  const correspondenceFormSubmitHandler = async (values: any) => {
+    // console.log('values', values);
+
+    // const allCorrespondence = values.correspondences;
+    const backendData = removeNullOrUndefinedProperties({
+      ...values,
+      files: values?.files?.map((item: UploadFile<any>) => item.originFileObj),
+      status: 'sent', // Assuming the status for sent correspondences is "sent"
+    });
+    const data = {
+      ...backendData,
+      parastatal: parastatalId,
+    };
+    createCorrSwr
+      .trigger({ data })
+      .then(() => {
+        closeModalHandler();
+        form.resetFields();
+      })
+      .catch((error) => {
+        messageHandler('error', error.message);
+      });
   };
 
   const viewCorrespondenceHandler = () => {
@@ -45,12 +77,12 @@ function ExpandButton({ className, description }: Props) {
         onClick={openModalHandler}
       />
       <CustomModal
-        title="New correspondence"
+        title="Edit correspondence"
         open={openModal}
         onCancel={closeModalHandler}
         width={800}
       >
-        <Form handleSubmit={correspondenceFormSubmitHandler} />
+        <Form form={form} handleSubmit={correspondenceFormSubmitHandler} />
       </CustomModal>
       <SentCorrespondence
         newCorrespondence={newCorrespondenceHandler}

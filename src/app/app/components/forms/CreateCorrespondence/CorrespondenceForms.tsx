@@ -9,6 +9,7 @@ import Title from '@/common/components/Title';
 import Copy from '@/common/components/icons/Copy';
 import NewCorrespondenceForm from './Form';
 import { CorrespondenceData } from '@/types';
+import { hasData } from '../../actions/CreateCorrespondence';
 
 interface CorrespondenceFormsProps {
   handleSubmit: (data: CorrespondenceData) => void;
@@ -33,22 +34,12 @@ const CorrespondenceForms = ({
   //   can_create: true,
   // });
 
-  const hasData = (corrData: any) => {
-    return (
-      corrData?.sender ||
-      corrData?.subject ||
-      corrData?.minute ||
-      corrData?.file ||
-      corrData?.date_of_correspondence ||
-      corrData?.recipient
-    );
-  };
-
   const handleRecipientChange = (value: string, type: string) => {
     setSelectedRecipient({ value, type });
   };
 
   const modifiedHandleSubmit = (values: any) => {
+    // console.log('values', values);
     const modifiedValues = {
       ...values,
       correspondences: values.correspondences.map((corr: any) => ({
@@ -63,6 +54,8 @@ const CorrespondenceForms = ({
 
   const checkFormValidity = () => {
     const values = form.getFieldsValue();
+    // console.log('values', values);
+
     const allCorrespondences = values?.correspondences;
 
     // Ensure at least one correspondence has data
@@ -157,6 +150,7 @@ const CorrespondenceForms = ({
                           size="small"
                           icon={<Copy />}
                           onClick={() => handleCopy(index)} // Call handleCopy with index
+                          disabled={!isFormValid}
                         />
                         <CustomButton
                           type="text"

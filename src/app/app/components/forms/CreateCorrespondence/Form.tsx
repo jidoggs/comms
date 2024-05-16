@@ -53,23 +53,16 @@ function NewCorrespondenceForm({
             label="Sender - Who sent it"
             name={[field.name, 'sender']}
             className="flex flex-col"
-            // rules={[{ required: true, message: 'Sender is required' }]}
+            rules={[{ required: true, message: 'Sender is required' }]}
           >
             <CustomInput name="sent_by" />
           </FormItem>
-          <FormItem
-            label="Recipient (Primary)"
-            name={[field.name, 'recipient']}
-            className="flex flex-col"
-            // rules={[{ required: true, message: 'Recipient is required' }]}
-          >
-            <Recipient onRecipientChange={handleRecipientChange} />
-          </FormItem>
+          <Recipient field={field} onRecipientChange={handleRecipientChange} />
           <FormItem
             label="Subject"
             name={[field.name, 'subject']}
             className="flex flex-col"
-            // rules={[{ required: true, message: 'Subject is required' }]}
+            rules={[{ required: true, message: 'Subject is required' }]}
           >
             <CustomInput name="subject" />
             {/* <Recipient /> */}
