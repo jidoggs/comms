@@ -38,8 +38,9 @@ const StepTwoForm = () => {
     let data: Record<string, string> = { _id };
 
     data_keys.forEach((key) => {
-      if (dataList[key].id) {
-        data[key] = dataList[key].id;
+      const info = dataList[key]?.data?._id;
+      if (info) {
+        data[key] = info;
       }
     });
 
@@ -61,7 +62,7 @@ const StepTwoForm = () => {
       <div className="flex items-center justify-end gap-x-2">
         <CustomButton
           disabled={
-            dataList?.[finalOfficeOnboardingStep as level]?.id === '' ||
+            !dataList?.[finalOfficeOnboardingStep as level]?.data?._id ||
             authSwr.isMutating
           }
           htmlType="submit"

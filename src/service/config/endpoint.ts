@@ -52,6 +52,7 @@ export const ENDPOINTS = {
     GET_ALL: '/correspondence/all',
     SPECIFIC_ITEM: (query: string) => `/correspondence/${query}`,
     GET_RECIPIENTS: (query: string) => `/correspondence/recipient${query}`,
+    ARCHIVE: '/correspondence/archive',
   },
   PERMISSIONS: {
     CREATE: '/permissions',

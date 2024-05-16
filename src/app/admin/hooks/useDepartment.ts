@@ -8,7 +8,7 @@ import { useSession } from '@/common/hooks';
 import { ENDPOINTS } from '@/service/config/endpoint';
 import { queryHandler } from '@/service/request';
 import { ServiceParams } from './types';
-import { OfficeType } from '../types';
+import { DepartmentType } from '../types';
 import { APIResponseSuccessModel } from '@/types';
 
 const { CREATE, GET_ALL, UPDATE, INVITE } = ENDPOINTS.DEPARTMENT;
@@ -27,24 +27,24 @@ function useDepartment(props: ServiceParams) {
     actionSuccessHandler(res.message);
   };
 
-  const createSwr = useAuthRequest<OfficeType>(
+  const createSwr = useAuthRequest<DepartmentType>(
     props?.can_create && !isBasicUser ? CREATE : '',
     {
       onSuccess: revalidateListHandler,
     }
   );
 
-  const getListSwr = useAuthGetRequest<OfficeType[]>(
+  const getListSwr = useAuthGetRequest<DepartmentType[]>(
     props?.can_get_all ? GET_ALL + props.query : '',
     fetchOptions
   );
 
-  const getItemSwr = useAuthGetRequest<OfficeType>(
+  const getItemSwr = useAuthGetRequest<DepartmentType>(
     props?.can_get_by_id && departmentId ? UPDATE(getById) : '',
     fetchOptions
   );
 
-  const updateItemSwr = useAuthRequest<OfficeType>(
+  const updateItemSwr = useAuthRequest<DepartmentType>(
     props?.can_update_by_id && departmentId && !isBasicUser
       ? UPDATE(departmentId)
       : '',

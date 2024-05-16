@@ -23,13 +23,13 @@ function Members() {
   const [searchValue, setSearchValue] = useState('');
   const searchDebounce = useDebounce(searchValue);
   const searchBy = ['email', 'firstname', 'surname'];
-  
+
   const search = searchQueryHandler(searchBy, searchDebounce);
 
   const query = queryHandler({
-    parastatal: contextInfo?.dataList?.parastatal?.id,
-    office: contextInfo?.dataList?.office?.id,
-    department: contextInfo?.dataList?.department?.id,
+    parastatal: contextInfo?.dataList?.parastatal?.data?._id,
+    office: contextInfo?.dataList?.office?.data?._id,
+    department: contextInfo?.dataList?.department?.data?._id,
     search,
   });
 

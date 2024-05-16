@@ -1,10 +1,10 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useContext } from 'react';
 import { CascadeContext } from '..';
 import SectionContainer from '../blocks/SectionContainer';
 import SectionMoreOptions from '../blocks/SectionMoreOptions';
 import { useDepartment, useOffice } from '@/app/admin/hooks';
 import useOnboarding from '@/app/onboarding/hooks/useOnboarding';
-import { useCache, useSession } from '@/common/hooks';
+import { useSession } from '@/common/hooks';
 import { queryHandler } from '@/service/request';
 
 interface Props {
@@ -17,11 +17,9 @@ type OptionsType = {
 
 const Options = ({ query }: OptionsType) => {
   const contextInfo = useContext(CascadeContext);
-  const parastatalId = contextInfo?.dataList?.parastatal?.id;
+  const parastatalId = contextInfo?.dataList?.parastatal?.data?._id;
   const officeInfo = contextInfo?.dataList?.office;
-  const officeId = officeInfo?.id;
-  const cachedQuery = officeInfo?.key as string;
-  const { cachedData } = useCache(cachedQuery);
+
   const { isPrimaryAdmin, isSecondaryAdmin } = useSession();
   const { createSwr } = useDepartment({
     can_create: isPrimaryAdmin || isSecondaryAdmin,
@@ -31,12 +29,8 @@ const Options = ({ query }: OptionsType) => {
     can_invite: isPrimaryAdmin || isSecondaryAdmin,
     can_delete_by_id: isPrimaryAdmin || isSecondaryAdmin,
     can_update_by_id: isPrimaryAdmin || isSecondaryAdmin,
-    _id: officeId,
+    _id: officeInfo?.data?._id,
   });
-  const officeInformation = useMemo(
-    () => cachedData?.find((item: any) => item?._id === officeId),
-    [officeId] //eslint-disable-line
-  );
 
   return (
     <>
@@ -44,7 +38,10 @@ const Options = ({ query }: OptionsType) => {
         <SectionMoreOptions
           addTrigger={createSwr.trigger}
           addIsLoading={createSwr.isMutating}
-          otherAddData={{ office: officeId, parastatal: parastatalId }}
+          otherAddData={{
+            office: officeInfo?.data?._id,
+            parastatal: parastatalId,
+          }}
           acceptedFeature={['add', 'invite', 'details']}
           inviteIsLoading={officeService.inviteUserSwr.isMutating}
           inviteTrigger={officeService.inviteUserSwr.trigger}
@@ -52,13 +49,13 @@ const Options = ({ query }: OptionsType) => {
           deleteTrigger={officeService.deleteItemSwr.trigger}
           updateIsLoading={officeService.updateItemSwr.isMutating}
           updateTrigger={officeService.updateItemSwr.trigger}
-          otherInviteData={{ office: officeId }}
+          otherInviteData={{ office: officeInfo?.data?._id }}
           inviteLink={query}
           title={{
             current: 'department',
             parent: 'office',
           }}
-          moreData={officeInformation}
+          moreData={officeInfo?.data}
         />
       ) : null}
     </>
@@ -70,8 +67,8 @@ function Department({ showMembers }: Props) {
   const { isPrimaryAdmin, data: user } = useSession();
   const { onBoardingDepartment, finalOfficeOnboardingStep } = useOnboarding();
   const query = queryHandler({
-    parastatal: contextInfo?.dataList?.parastatal?.id,
-    office: contextInfo?.dataList?.office?.id,
+    parastatal: contextInfo?.dataList?.parastatal?.data?._id,
+    office: contextInfo?.dataList?.office?.data?._id,
   });
 
   const { getListSwr, getItemSwr } = useDepartment({
@@ -89,10 +86,10 @@ function Department({ showMembers }: Props) {
     <>
       <SectionContainer
         items={data}
-        title={`${contextInfo?.dataList?.office?.title} (${data.length} departments)`}
+        title={`${contextInfo?.dataList?.office?.data?.name} (${data.length} departments)`}
         step="department"
         clickHandler={contextInfo?.clickCascadeItemHandler}
-        activeIdentifier={contextInfo?.dataList?.department?.id}
+        activeIdentifier={contextInfo?.dataList?.department?.data?._id}
         moreOptions={<Options query={query} />}
         hasChild={
           finalOfficeOnboardingStep === 'department'

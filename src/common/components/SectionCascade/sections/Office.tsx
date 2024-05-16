@@ -1,8 +1,8 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useContext } from 'react';
 import { CascadeContext } from '..';
 import { useOnboarding } from '@/app/onboarding/hooks';
 import { useOffice, useParastatals } from '@/app/admin/hooks';
-import { useCache, useSession } from '@/common/hooks';
+import { useSession } from '@/common/hooks';
 import SectionContainer from '../blocks/SectionContainer';
 import SectionMoreOptions from '../blocks/SectionMoreOptions';
 import { queryHandler } from '@/service/request';
@@ -13,25 +13,23 @@ type OptionsType = {
 
 const Options = ({ query }: OptionsType) => {
   const parastatalInfo = useContext(CascadeContext)?.dataList?.parastatal;
-  const parastatalId = parastatalInfo?.id;
-  const cachedQuery = parastatalInfo?.key as string;
-  const { cachedData } = useCache(cachedQuery);
+  const parastatalId = parastatalInfo?.data?._id;
+
   const { isPrimaryAdmin, isSecondaryAdmin } = useSession();
+
   const { createSwr } = useOffice({
     can_create: isPrimaryAdmin || isSecondaryAdmin,
     query,
   });
+
   const parastatalService = useParastatals({
     can_invite: isPrimaryAdmin || isSecondaryAdmin,
     can_delete_by_id: isPrimaryAdmin,
     can_update_by_id: isPrimaryAdmin,
     _id: parastatalId,
   });
+
   const otherData = { parastatal: parastatalId };
-  const parastatalInformation = useMemo(
-    () => cachedData?.find((item: any) => item?._id === parastatalId),
-    [parastatalId] //eslint-disable-line
-  );
 
   return (
     <>
@@ -53,7 +51,7 @@ const Options = ({ query }: OptionsType) => {
             current: 'office',
             parent: 'parastatal',
           }}
-          moreData={parastatalInformation}
+          moreData={parastatalInfo?.data}
         />
       ) : null}
     </>
@@ -65,7 +63,7 @@ function Office() {
   const { isPrimaryAdmin, isSecondaryAdmin, data: user } = useSession();
   const { onBoardingOffice, finalOfficeOnboardingStep } = useOnboarding();
   const query = queryHandler({
-    parastatal: contextInfo?.dataList?.parastatal?.id,
+    parastatal: contextInfo?.dataList?.parastatal?.data?._id,
   });
 
   const { getListSwr, getItemSwr } = useOffice({
@@ -83,10 +81,10 @@ function Office() {
     <>
       <SectionContainer
         items={data}
-        title={`${contextInfo?.dataList?.parastatal?.title} (${data.length} offices)`}
+        title={`${contextInfo?.dataList?.parastatal?.data?.name} (${data.length} offices)`}
         step="office"
         clickHandler={contextInfo?.clickCascadeItemHandler}
-        activeIdentifier={contextInfo?.dataList?.office?.id}
+        activeIdentifier={contextInfo?.dataList?.office?.data?._id}
         moreOptions={<Options query={query} />}
         hasChild={finalOfficeOnboardingStep === 'office' ? false : true}
         showTick={finalOfficeOnboardingStep === 'office'}

@@ -1,39 +1,32 @@
-import { useState } from 'react';
-import { iHandleClick } from '@/types';
+import { useCallback, useState } from 'react';
+import { DepartmentType, OfficeType, ParastatalType } from '@/app/admin/types';
 
-export const initialDataList = {
-  parastatal: { title: '', id: '', key: '' },
-  office: { title: '', id: '', key: '' },
-  department: { title: '', id: '', key: '' },
+type DataType = {
+  parastatal: { data: ParastatalType | null; key: string };
+  office: { data: OfficeType | null; key: string };
+  department: { data: DepartmentType | null; key: string };
+};
+
+export const initialDataList: DataType = {
+  parastatal: { data: null, key: '' },
+  office: { data: null, key: '' },
+  department: { data: null, key: '' },
 };
 export type UpdateItemType = {
   level: keyof typeof initialDataList;
-  id: string;
-  title: string;
+  data: any;
 };
 
-type Props = Partial<{
-  parastatal: '';
-  office: '';
-  department: '';
-}>;
-
-function useSectionCascade(props?: Props) {
+function useSectionCascade() {
   const [dataList, setDataList] = useState(initialDataList);
 
-  const clickCascadeItemHandler: iHandleClick = (e) => {
-    const dataset = e.currentTarget.dataset;
-    const title = dataset.value as string;
-    const id = dataset.id as string;
-
-    const value = { id, title };
-
-    switch (dataset.step) {
+  const clickCascadeItemHandler = useCallback((step: string, data: any) => {
+    switch (step) {
       case 'parastatals':
         setDataList({
           ...initialDataList,
           parastatal: {
-            ...value,
+            data,
             key: '/parastatals/all',
           },
         });
@@ -42,8 +35,8 @@ function useSectionCascade(props?: Props) {
         setDataList((prev) => ({
           ...prev,
           office: {
-            ...value,
-            key: `/offices/all?parastatal=${prev.parastatal.id}`,
+            data,
+            key: `/offices/all?parastatal=${prev?.parastatal?.data?._id}`,
           },
           department: initialDataList.department,
         }));
@@ -52,8 +45,8 @@ function useSectionCascade(props?: Props) {
         setDataList((prev) => ({
           ...prev,
           department: {
-            ...value,
-            key: `/departments/all?parastatal=${prev.parastatal.id}&office=${prev.office.id}`,
+            data,
+            key: `/departments/all?parastatal=${prev?.parastatal?.data?._id}&office=${prev?.office?.data?._id}`,
           },
         }));
         break;
@@ -64,34 +57,41 @@ function useSectionCascade(props?: Props) {
         });
         break;
     }
-  };
+  }, []);
 
-  const updateCascadeItemHandler = (values: UpdateItemType) => {
-    const { level, id, title } = values;
-    setDataList((prev) => ({ ...prev, [level]: { id, title } }));
-  };
-  const deleteCascadeItemHandler = (level: keyof typeof dataList) => {
-    switch (level) {
-      case 'office':
-        setDataList((prev) => ({
-          ...initialDataList,
-          parastatal: prev.parastatal,
-        }));
-        break;
-      case 'department':
-        setDataList((prev) => ({
-          ...prev,
-          department: initialDataList.department,
-        }));
-        break;
+  const updateCascadeItemHandler = useCallback((values: UpdateItemType) => {
+    const { level, data } = values;
 
-      default:
-        setDataList({
-          ...initialDataList,
-        });
-        break;
-    }
-  };
+    setDataList((prev) => ({
+      ...prev,
+      [level]: { ...prev[level], data: { ...prev[level].data, ...data } },
+    }));
+  }, []);
+  const deleteCascadeItemHandler = useCallback(
+    (level: keyof typeof dataList) => {
+      switch (level) {
+        case 'office':
+          setDataList((prev) => ({
+            ...initialDataList,
+            parastatal: prev.parastatal,
+          }));
+          break;
+        case 'department':
+          setDataList((prev) => ({
+            ...prev,
+            department: initialDataList.department,
+          }));
+          break;
+
+        default:
+          setDataList({
+            ...initialDataList,
+          });
+          break;
+      }
+    },
+    []
+  );
 
   return {
     dataList,

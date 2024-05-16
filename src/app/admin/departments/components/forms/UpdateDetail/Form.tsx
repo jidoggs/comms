@@ -1,96 +1,23 @@
 import React, { useContext, useState } from 'react';
 import dayjs from 'dayjs';
-
-import Form from 'antd/es/form/Form';
-import FormItem from 'antd/es/form/FormItem';
+import Form, { FormProps } from 'antd/es/form/Form';
 import { CascadeContext } from '@/common/components/SectionCascade';
 import CustomButton from '@/common/components/CustomButton';
-import CustomInput from '@/common/components/CustomInput';
-import { CustomInputProps } from '@/common/components/CustomInput/types';
 import Title from '@/common/components/Title';
 import { MoreInfoContext } from '../../modals/MoreInformationModal';
 import DeleteInformation from '../../actions/DeleteInformation';
 import Close from '@/common/components/icons/Close';
 import Building from '@/common/components/icons/Building';
 import Tick from '@/common/components/icons/Tick';
-import CustomSelect from '@/common/components/CustomSelect';
-import CloseCircled from '@/common/components/icons/CloseCircled';
 import { messageHandler } from '@/common/utils/notification';
 import { useRoles } from '@/app/admin/hooks';
 import { useServiceConfig } from '@/service/swrHooks';
-
-type FieldRowProps = {
-  label: string;
-  name: string;
-} & CustomInputProps;
-
-type SelectRowProps = {
-  defaultValue: string[];
-} & FieldRowProps;
-
-const FieldRow = ({ label, name, defaultValue, ...props }: FieldRowProps) => {
-  return (
-    <FormItem
-      label={label}
-      name={name}
-      initialValue={defaultValue}
-      className="!mb-0 border-b [&_.ant-form-item-row]:flex [&_.ant-form-item-row]:items-center"
-    >
-      <CustomInput
-        {...props}
-        className="!mb-0 !border-none !bg-transparent disabled:!text-custom-main"
-        name={name}
-      />
-    </FormItem>
-  );
-};
-
-const SelectFieldRow = ({
-  label,
-  name,
-  defaultValue,
-  ...props
-}: SelectRowProps) => {
-  const [isEditable, setIsEditable] = useState(false);
-
-  const focusHandler = () => {
-    setIsEditable(!isEditable);
-  };
-
-  return (
-    <div>
-      <FormItem
-        label={label}
-        name={name}
-        className="!mb-0 border-b [&_.ant-form-item-row]:flex [&_.ant-form-item-row]:items-center"
-        initialValue={isEditable ? defaultValue : defaultValue?.join(', ')}
-      >
-        {isEditable ? (
-          <CustomSelect
-            {...props}
-            mode="tags"
-            placeholder="|Add by name or email. Type ',' to add, ‘⌫’ to remove"
-            className="[&_.ant-select-arrow]:!hidden [&_.ant-select-selector]:!border-none [&_.ant-select-selector]:!bg-transparent"
-            tokenSeparators={[',']}
-            removeIcon={<CloseCircled className="text-white" />}
-            onBlur={focusHandler}
-          />
-        ) : (
-          <CustomInput
-            {...props}
-            className="!mb-0 !border-none !bg-transparent"
-            name={name}
-            onFocus={focusHandler}
-          />
-        )}
-      </FormItem>
-    </div>
-  );
-};
+import FieldRow, { SelectFieldRow } from './FieldRow';
 
 function MoreInformationForm() {
   const information = useContext(MoreInfoContext);
   const cascadeContextInfo = useContext(CascadeContext);
+  const [changes, setChanges] = useState<Record<string, any>>({});
   const { revalidateRequest } = useServiceConfig();
   const data = information?.data;
   const type = information?.type;
@@ -101,29 +28,35 @@ function MoreInformationForm() {
   });
 
   const paths = [
-    data?.parastatal?.[0]?.name,
+    data?.parastatal?.name,
     data?.office?.name,
     data?.department?.name,
+    data?.name,
   ]
     .filter((itm) => itm)
     .join('/');
 
-  const submitHandler = (values: any) => {
-    const updatedValues = Object.values(values).filter((itm) => itm);
+  const formChangeHandler: FormProps['onValuesChange'] = (value) => {
+    setChanges((prev) => ({ ...prev, ...value }));
+  };
+
+  const submitHandler = () => {
+    const updatedValues = Object.values(changes).filter((itm) => itm);
     if (updatedValues.length === 0) {
       messageHandler('warn', 'You have not made any change');
       return;
     }
     if (!information?.handleUpdate) return;
     information
-      ?.handleUpdate({ data: values, type: 'put' })
+      ?.handleUpdate({ data: changes, type: 'put' })
       .then(() => {
         if (!cascadeContextInfo?.updateCascadeItemHandler || !type) return;
         revalidateRequest(cascadeContextInfo.dataList?.[type]?.key); // revalidate key
         cascadeContextInfo?.updateCascadeItemHandler({
           level: information.type,
-          id: data?._id,
-          title: values.name,
+          data: {
+            ...changes,
+          },
         }); //update state stored info
       })
       .finally(information?.handleCancel);
@@ -132,6 +65,7 @@ function MoreInformationForm() {
     <Form
       className="!mx-auto size-full min-w-[400px] max-w-4xl"
       onFinish={submitHandler}
+      onValuesChange={formChangeHandler}
     >
       <header>
         <Title tag="h6" bold className="py-5">
@@ -148,30 +82,37 @@ function MoreInformationForm() {
             </div>
             <div className="flex flex-wrap gap-2">
               <DeleteInformation />
-              <CustomButton
-                type="default"
-                className="!border-custom-green_100 !bg-custom-gray_100 !px-6"
-                icon={
-                  <span className="text-custom-green_100">
-                    <Tick size={18} />
-                  </span>
-                }
-                size="small"
-                title="Update"
-                htmlType="submit"
-              />
-              <CustomButton
-                type="default"
-                className="!border-custom-red_200 !bg-custom-gray_100 !px-6"
-                icon={
-                  <span className="text-custom-red_200">
-                    <Close size={32} />
-                  </span>
-                }
-                size="small"
-                title="Cancel"
-                onClick={information?.handleCancel}
-              />
+              {Object.keys(changes).length ? (
+                <>
+                  <CustomButton
+                    type="default"
+                    className="!border-custom-green_100 !bg-custom-gray_100 !px-6 !text-custom-green_100 disabled:!border-custom-gray_850 disabled:!text-custom-gray_850"
+                    icon={
+                      <span>
+                        <Tick size={32} />
+                      </span>
+                    }
+                    size="small"
+                    title="Update"
+                    htmlType="submit"
+                    loading={information?.isUpdating}
+                    disabled={information?.isUpdating}
+                  />
+                  <CustomButton
+                    type="default"
+                    className="!border-custom-red_200 !bg-custom-gray_100 !px-6 !text-custom-red_200 disabled:!border-custom-gray_850 disabled:!text-custom-gray_850"
+                    icon={
+                      <span>
+                        <Close size={32} />
+                      </span>
+                    }
+                    size="small"
+                    title="Cancel"
+                    onClick={information?.handleCancel}
+                    disabled={information?.isUpdating}
+                  />
+                </>
+              ) : null}
             </div>
           </div>
         </div>
@@ -230,12 +171,15 @@ function MoreInformationForm() {
             disabled
             defaultValue={data?.creator?.firstname || data?.creator || 'N/A'}
           />
-          <FieldRow
-            label="Role of creator"
-            name="creator_role"
-            disabled
-            defaultValue={getRoleSwr.data?.data.name || 'N/A'}
-          />
+          {getRoleSwr.data?.data.name ? (
+            <FieldRow
+              label="Role of creator"
+              name="creator_role"
+              disabled
+              className="capitalize"
+              defaultValue={getRoleSwr.data?.data.name.replace(/_/g, ' ')}
+            />
+          ) : null}
         </div>
       </section>
     </Form>

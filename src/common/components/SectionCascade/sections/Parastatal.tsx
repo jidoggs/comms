@@ -32,7 +32,9 @@ function Parastatal() {
   });
 
   const list = getListSwr.data?.data || [];
-  const singleton = getItemSwr.data?.data?._id ? [getItemSwr.data?.data] : [];
+  const singleton = getItemSwr.data?.data?.[0]?._id
+    ? [getItemSwr.data?.data]
+    : [];
   const data = isPrimaryAdmin ? list : singleton;
 
   return (
@@ -41,7 +43,7 @@ function Parastatal() {
       title="Parastatals"
       step="parastatals"
       clickHandler={contextInfo?.clickCascadeItemHandler}
-      activeIdentifier={contextInfo?.dataList?.parastatal?.id}
+      activeIdentifier={contextInfo?.dataList?.parastatal?.data?._id}
       moreOptions={isPrimaryAdmin ? <Options /> : null}
       hasChild={finalOfficeOnboardingStep === 'parastatal' ? false : true}
       showTick={finalOfficeOnboardingStep === 'parastatal'}

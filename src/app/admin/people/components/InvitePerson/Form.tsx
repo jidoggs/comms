@@ -1,11 +1,12 @@
 import Form, { FormProps } from 'antd/es/form/Form';
 import FormItem from 'antd/es/form/FormItem';
-import React from 'react';
+import React, { useContext } from 'react';
 import CustomSelect from '@/common/components/CustomSelect';
 import CustomButton from '@/common/components/CustomButton';
 import CloseCircled from '@/common/components/icons/CloseCircled';
 import { useSession } from '@/common/hooks';
 import { useParastatals } from '@/app/admin/hooks';
+import { CascadeContext } from '@/common/components/SectionCascade';
 
 type Props = {
   onFinish: FormProps['onFinish'];
@@ -13,16 +14,18 @@ type Props = {
 };
 
 function InviteForm({ onFinish, isLoading }: Props) {
+  const cascadeContextInfo = useContext(CascadeContext);
+  const cascadeDomains = cascadeContextInfo?.dataList.parastatal.data?.domains;
   const parastatal = useSession().data?.parastatal?.[0]?._id;
   const { getItemSwr } = useParastatals({
-    can_get_by_id: true,
+    can_get_by_id: cascadeDomains?.length ? false : true, // only fetch if there is no accepted domain
     _id: parastatal,
   });
 
-  const acceptedDomains = getItemSwr.data?.data?.domains;
+  const domains = cascadeDomains || getItemSwr.data?.data?.[0].domains;
 
   const domainValidator = (_: any, values: string) => {
-    if (!acceptedDomains) {
+    if (!domains) {
       return Promise.reject(
         'You cannot add any user to the parastatal you belong to. Please contact Admin'
       );
@@ -34,9 +37,26 @@ function InviteForm({ onFinish, isLoading }: Props) {
     for (let index = 0; index < values.length; index++) {
       const value = values[index];
 
-      if (!acceptedDomains.find((domain) => value.includes(domain))) {
+      if (!domains.find((domain) => value.includes(domain))) {
+        let lang = '';
+
+        domains.forEach((domain: string, index) => {
+          if (domains.length - 1 !== index && index !== 0) {
+            lang += `, ${domain}`;
+          }
+          if (domains.length - 1 === index && index !== 0) {
+            lang += ` or ${domain}`;
+          }
+          if (index === 0) {
+            lang += `${domain}`;
+          }
+          if (domains.length - 1 === index) {
+            lang += ` domain${index ? 's' : ''}`;
+          }
+        });
+
         return Promise.reject(
-          'Invite field contain at least 1 user that cannot be part of the parastatal you belong to'
+          `You can only send an invite to users with ${lang}`
         );
       }
     }
@@ -61,6 +81,7 @@ function InviteForm({ onFinish, isLoading }: Props) {
           placeholder="|Add by name or email. Type ',' to add, ‘⌫’ to remove"
           tokenSeparators={[',']}
           removeIcon={<CloseCircled className="text-white" />}
+          loading={getItemSwr.isLoading}
         />
       </FormItem>
       <CustomButton

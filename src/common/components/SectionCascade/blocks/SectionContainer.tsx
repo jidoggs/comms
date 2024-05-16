@@ -2,7 +2,6 @@
 import React, { ReactNode } from 'react';
 import SectionItem from './SectionItem';
 import Title from '@/common/components/Title';
-import { iHandleClick } from '@/types';
 import { mergeClassName } from '@/common/utils';
 import CustomUser from '../../CustomUser';
 import SpinLoader from '../../icons/SpinLoader';
@@ -13,7 +12,7 @@ type Props = {
   items: any[];
   title?: string;
   step: 'parastatals' | 'office' | 'department' | 'person';
-  clickHandler?: iHandleClick;
+  clickHandler?: (type: string, data: any) => void;
   activeIdentifier?: string;
   hasChild?: boolean;
   showTick?: boolean;
@@ -53,10 +52,7 @@ function SectionContainer({
                       ? 'group-[.is-admin]:bg-custom-gray_500 group-[.is-onboard]:bg-custom-purple_500'
                       : 'group-[.is-admin]:hover:bg-custom-gray_500 group-[.is-onboard]:hover:bg-custom-purple_500'
                   }
-                  data-step={step}
-                  data-value={item?.name}
-                  data-id={item?._id}
-                  onClick={clickHandler}
+                  onClick={() => clickHandler && clickHandler(step, item)}
                   hasChild={
                     <span
                       className={mergeClassName(

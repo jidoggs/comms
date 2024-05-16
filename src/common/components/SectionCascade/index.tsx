@@ -7,7 +7,6 @@ import {
   initialDataList,
 } from '@/common/hooks/useSectionCascade';
 import { mergeClassName } from '@/common/utils';
-import { iHandleClick } from '@/types';
 
 const Parastatal = dynamic(() => import('./sections/Parastatal'));
 const Office = dynamic(() => import('./sections/Office'));
@@ -17,7 +16,7 @@ const Department = dynamic(() => import('./sections/Department'));
 type LevelType = keyof typeof initialDataList;
 
 type InfoType = {
-  clickCascadeItemHandler: iHandleClick;
+  clickCascadeItemHandler: (type: string, data: any) => void;
   dataList: typeof initialDataList;
   updateCascadeItemHandler?: (values: UpdateItemType) => void;
   deleteCascadeItemHandler?: (level: LevelType) => void;
@@ -41,9 +40,9 @@ function SectionCascade({ className, mode, ...props }: Props) {
   ) => {
     return (
       (mode === 'management' &&
-        props?.dataList?.[parentCascadeSection]?.id !== '') ||
+        !!props?.dataList?.[parentCascadeSection]?.data?._id) ||
       (mode === 'onboarding' &&
-        props?.dataList?.[parentCascadeSection]?.id !== '' &&
+        !!props?.dataList?.[parentCascadeSection]?.data?._id &&
         !!currentOnBoardingCascadeSection)
     );
   };

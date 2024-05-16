@@ -3,8 +3,8 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import { useSectionCascade } from '@/common/hooks';
 import Title from '@/common/components/Title';
-import CustomInput from '@/common/components/CustomInput';
-import Search from '@/common/components/icons/Search';
+// import CustomInput from '@/common/components/CustomInput';
+// import Search from '@/common/components/icons/Search';
 
 const SectionCascade = dynamic(
   () => import('../../../../common/components/SectionCascade')
@@ -18,11 +18,11 @@ const PageContent = () => {
         <Title tag="h5" bold>
           Departments & Offices
         </Title>
-        <CustomInput
+        {/* <CustomInput
           prefix={<Search className="text-custom-gray_400" />}
           placeholder="Search"
           className="!w-[160px] border-custom-gray_400 bg-custom-white_100 placeholder:text-custom-gray_400"
-        />
+        /> */}
       </header>
       {/* is-admin and group are style identifies */}
       <section className="is-admin group h-[calc(100vh-120px)] bg-custom-white_100 px-2.5">

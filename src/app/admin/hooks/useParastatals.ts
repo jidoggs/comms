@@ -38,8 +38,8 @@ function useParastatals(props: ServiceParams) {
     fetchOptions
   );
 
-  const getItemSwr = useAuthGetRequest<ParastatalType>(
-    props?.can_get_by_id && props?._id ? UPDATE(query) : '',
+  const getItemSwr = useAuthGetRequest<ParastatalType[]>(
+    props?.can_get_by_id && props?._id ? GET_ALL + query : '',
     fetchOptions
   );
 
