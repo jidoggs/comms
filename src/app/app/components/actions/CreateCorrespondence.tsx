@@ -197,6 +197,7 @@ function CreateCorrespondence(props: Props) {
         onCancel={closeModalHandlerWithDraftSave}
         width={800}
         style={{ top: 20 }}
+        destroyOnClose
       >
         <CorrespondenceForms
           handleSubmit={correspondenceFormSubmitHandler}

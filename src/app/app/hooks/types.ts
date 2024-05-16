@@ -11,7 +11,7 @@ type Create = 'can_create';
 
 type RequestType = Create | GetUpdateDelete;
 
-type QueryType = '_id' | 'query' | 'search' | 'recipient';
+type QueryType = '_id' | 'search' | 'status' | 'recipient';
 
 export type ServiceParams = GenericServiceParam<RequestType, QueryType>;
 

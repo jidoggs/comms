@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormListFieldData } from 'antd';
+import { FormListFieldData } from 'antd/es/form';
 // import CustomDragger from '@/common/components/CustomDragger';
 import CustomInput from '@/common/components/CustomInput';
 import dynamic from 'next/dynamic';

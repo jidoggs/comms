@@ -5,7 +5,7 @@ import { CorrespondenceListContextType } from '../types';
 import useCorrespondence from '../../hooks/useCorrespondence';
 import { ContextWapper, iHandleChange, CorrespondenceData } from '@/types';
 import { defaultColumns, tabItemList } from './helper';
-import { queryHandler, searchQueryHandler } from '@/service/request';
+import { searchQueryHandler } from '@/service/request';
 
 export const CorrespondeceListContext =
   createContext<CorrespondenceListContextType>(null);
@@ -30,12 +30,11 @@ function CorrespondeceListContextWrapper({ children }: ContextWapper) {
     resetFields,
   });
 
-  const query = queryHandler({
-    search,
+  const { getListSwr } = useCorrespondence({
+    can_get_all: true,
     status: tabs.currentTab,
+    search,
   });
-
-  const { getListSwr } = useCorrespondence({ can_get_all: true, query });
 
   return (
     <CorrespondeceListContext.Provider

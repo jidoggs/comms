@@ -13,6 +13,10 @@ export interface CorrespondenceData extends BaseDataModel {
   comment: string;
 }
 
-type RecipientKeys = '_id' | 'firstname' | 'surname' | 'middlename';
+type RecipientKeys = '_id' | 'firstname' | 'surname';
 
-export type RecipientData = Pick<User, RecipientKeys>;
+export type RecipientData = {
+  user: Pick<User, RecipientKeys>[];
+  department: BasicTypeSet[];
+  office: BasicTypeSet[];
+};

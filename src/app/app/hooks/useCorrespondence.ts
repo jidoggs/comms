@@ -6,23 +6,26 @@ import {
 } from '@/service/swrHooks';
 import { CorrespondenceServiceArgs } from './types';
 import { ENDPOINTS } from '@/service/config/endpoint';
-import { APIResponseSuccessModel, CorrespondenceData } from '@/types';
-import { queryHandler, searchQueryHandler } from '@/service/request';
+import {
+  APIResponseSuccessModel,
+  CorrespondenceData,
+  RecipientData,
+} from '@/types';
+import { queryHandler } from '@/service/request';
 
 const { CREATE, GET_ALL, GET_RECIPIENTS } = ENDPOINTS.CORRESPONDENCE;
 
 const useCorrespondence = (props: CorrespondenceServiceArgs) => {
-  const searchBy = ['recipient'];
-  // const recipient = searchQueryHandler(searchBy, props?.recipient || '');
+  const query = queryHandler({
+    search: props.search,
+    status: props.status,
+    recipient: props.recipient,
+  });
 
-  // const query = queryHandler({ recipient });
-  const query = `?recipient=${props?.recipient}`;
   const { revalidateRequest } = useServiceConfig();
 
-  // console.log('query', query);
-
   const revalidateListHandler = (res: APIResponseSuccessModel) => {
-    revalidateRequest(GET_ALL + props.query, res.message);
+    revalidateRequest(GET_ALL + query, res.message);
   };
 
   const createCorrSwr = useFormDataAuthRequest<CorrespondenceData>(
@@ -33,11 +36,11 @@ const useCorrespondence = (props: CorrespondenceServiceArgs) => {
   );
 
   const getListSwr = useAuthGetRequest<CorrespondenceData[]>(
-    props?.can_get_all ? GET_ALL : '',
+    props?.can_get_all ? GET_ALL + query : '',
     fetchOptions
   );
 
-  const getRecipientsSwr = useAuthGetRequest(
+  const getRecipientsSwr = useAuthGetRequest<RecipientData>(
     query && props?.can_get_all_recipients ? GET_RECIPIENTS(query) : '',
     fetchOptions
   );
