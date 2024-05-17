@@ -21,15 +21,7 @@ function PageContent() {
     can_get_all: true,
   });
 
-  // const getMinList = getMinListSwr?.data?.data;
-  const resultData = getMinListSwr?.data?.result || [];
-
-  // console.log('getMinListSwr', getMinListSwr);
-  // console.log('getMinListSwr?.data', getMinListSwr?.data);
-  // console.log('getMinListSwr?.data?.data', getMinListSwr?.data?.data);
-  // console.log('getMinList', getMinList);
-
-  // const resultData = getMinList?.result || [];
+  const getMinList = getMinListSwr?.data?.data || [];
 
   return (
     <div className="mx-auto grid size-full max-w-[1200px] grid-cols-homeMax gap-2.5 py-5">
@@ -37,8 +29,8 @@ function PageContent() {
         <EmptyQueuedAndOutgoing />
       ) : (
         <>
-          <QueuedList resultData={resultData} />
-          <OngoingList resultData={resultData} />
+          <QueuedList resultData={getMinList} />
+          <OngoingList resultData={getMinList} />
         </>
       )}
       <CalenderList />

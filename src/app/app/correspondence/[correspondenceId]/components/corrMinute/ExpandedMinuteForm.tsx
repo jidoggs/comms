@@ -8,7 +8,6 @@ import CustomMention from './Mentions';
 import Send from '@/common/components/icons/Send';
 import { User } from '@/types';
 
-
 const ExpandedMinuteForm = () => {
   const [value, setValue] = useState('');
 
@@ -36,7 +35,9 @@ const ExpandedMinuteForm = () => {
     <>
       <>
         <Title className="mb-6">New Minute</Title>
+        {/* <div className="mt-8 flex w-full items-center rounded-md border border-custom-gray_400 px-3"> */}
         <CustomMention data={dummyData} />
+        {/* </div> */}
         <RichTextEditor value={editorValue} onChange={handleTextChange} />
       </>
 

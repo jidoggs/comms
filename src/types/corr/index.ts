@@ -15,6 +15,52 @@ export interface CorrespondenceData extends BaseDataModel {
   result: string[];
 }
 
+export interface MinuteData extends BaseDataModel {
+  parastatal: {
+    _id: string;
+    name: string;
+  };
+  minute: string;
+  documents: string[]; // Array of document paths or URLs
+  status: string;
+  last_minute?: {
+    _id: string; // Reference to the previous minute (if any)
+  };
+  correspondence: {
+    _id: string;
+    sender: string;
+    documents: string[];
+  };
+  recipient: {
+    _id: string;
+    firstname: string;
+    surname: string;
+    middlename?: string; // Make middlename optional
+    role: string;
+  };
+  hasAccess: {
+    _id: string;
+    firstname: string;
+    surname: string;
+    middlename?: string; // Make middlename optional
+    role: string;
+  }[]; // Array of users who have access
+  from: {
+    _id: string;
+    firstname: string;
+    surname: string;
+    middlename?: string; // Make middlename optional
+    role: string;
+  };
+  attach: {
+    _id: string;
+    firstname: string;
+    surname: string;
+    middlename?: string; // Make middlename optional
+    role: string;
+  }[]; // Array of users attached to the minute
+}
+
 type RecipientKeys = '_id' | 'firstname' | 'surname';
 
 export type RecipientData = {

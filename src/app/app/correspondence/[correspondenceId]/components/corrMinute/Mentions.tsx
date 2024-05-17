@@ -44,7 +44,8 @@ function CustomMention({ data = [] }: CustomMentionProps) {
   };
 
   return (
-    <div className="mb-2">
+    <div className="">
+      <div className="mt-8 flex w-full items-center rounded-md border border-custom-gray_400 px-3"></div>
       <div className="flex gap-1">
         <p>Primary:</p>
         <div className="flex gap-1">

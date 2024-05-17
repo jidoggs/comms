@@ -2,7 +2,7 @@
 export type APIResponseSuccessModel<T = unknown> = {
   results?: number;
   data: T;
-  result: T;
+  result: T[]; // Change to an array of T
   message: string;
   success: true;
 };

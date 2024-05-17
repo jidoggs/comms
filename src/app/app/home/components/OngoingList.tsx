@@ -22,7 +22,7 @@ const OngoingList = ({ resultData }: minuteProps) => {
           <div
             role="button"
             tabIndex={0}
-            className="group flex w-full cursor-pointer gap-2 rounded-md bg-white p-2.5 text-custom-gray_600 shadow-wordBox"
+            className="group flex w-full gap-2 rounded-md bg-white p-2.5 text-custom-gray_600 shadow-wordBox"
           >
             <Title>No Ongoing Correspondence available</Title>
           </div>

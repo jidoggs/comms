@@ -134,10 +134,10 @@ const navItems = {
 const getUserNavItemsByRole = (role: UserRoles) => {
   let routes = null;
   switch (role) {
-    // case UserPreDefinedRole.PRIMARYADMIN:
-    //   routes = generateRoutes({ ...navItems.user, ...navItems.admin }); // this user should be able to see both the pages
-    //   break;
     case UserPreDefinedRole.PRIMARYADMIN:
+      routes = generateRoutes({ ...navItems.user, ...navItems.admin }); // this user should be able to see both the pages
+      break;
+    // case UserPreDefinedRole.PRIMARYADMIN:
     case UserPreDefinedRole.SECONDARYADMIN:
       routes = generateRoutes(navItems.admin);
       break;

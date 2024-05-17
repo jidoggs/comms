@@ -9,6 +9,7 @@ import { ENDPOINTS } from '@/service/config/endpoint';
 import {
   APIResponseSuccessModel,
   CorrespondenceData,
+  MinuteData,
   RecipientData,
 } from '@/types';
 import { queryHandler } from '@/service/request';
@@ -46,10 +47,9 @@ const useCorrespondence = (props: CorrespondenceServiceArgs) => {
     fetchOptions
   );
 
-  const getMinListSwr = useAuthGetRequest<CorrespondenceData[]>(
-    props?.can_get_all ? GET_ALL_MINUTES : '',
-    fetchOptions
-  );
+  const getMinListSwr = useAuthGetRequest<
+    APIResponseSuccessModel<MinuteData[]>
+  >(props?.can_get_all ? GET_ALL_MINUTES : '', fetchOptions);
 
   const getCorrMinListSwr = useAuthGetRequest<CorrespondenceData[]>(
     props._id && props?.can_get_all ? GET_ALL_MINUTES_IN_CORR(props._id) : '',

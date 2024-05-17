@@ -10,8 +10,11 @@ import CorrrespondenceMenu from './components/CorrrespondenceMenu';
 import MinuteDetails from './components/MinuteDetails';
 import { DetailContext } from './service-context/DetailContextWrapper';
 import useCorrespondence from '../../hooks/useCorrespondence';
+import { useParams } from 'next/navigation';
 
 const PageContent = () => {
+  const params = useParams();
+  const correspondenceId = params.correspondenceId; // Access the _id as params.id
   const detailsData = useContext(DetailContext);
   const demoDetails = {
     name: 'Export of Brewery Products',
@@ -31,17 +34,18 @@ const PageContent = () => {
 
   const { getCorrMinListSwr } = useCorrespondence({
     can_get_all: true,
-    _id: '',
+    _id: correspondenceId.toString(),
   });
 
   // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-  const minuteData = getCorrMinListSwr?.data?.data || [];
+  const minuteData = getCorrMinListSwr?.data || [];
 
   // console.log('minuteData', minuteData);
+  // console.log('correspondenceId', correspondenceId);
 
   return (
     <div className="flex w-full flex-col">
-      <CorrespondenceHeader />
+      <CorrespondenceHeader minuteData={minuteData} />
       <CorrrespondenceMenu />
       <div className="flex h-[calc(100vh_-_140px)] justify-between">
         <motion.div
@@ -51,7 +55,9 @@ const PageContent = () => {
           }}
           className="flex w-full items-center justify-between"
         >
-          {detailsData?.activeTab === 'minutes' ? <Minutes /> : null}
+          {detailsData?.activeTab === 'minutes' ? (
+            <Minutes minuteData={minuteData} />
+          ) : null}
           {detailsData?.activeTab === 'timelines' ? <Timelines /> : null}
           {detailsData?.activeTab === 'documents' ? <Documents /> : null}
         </motion.div>

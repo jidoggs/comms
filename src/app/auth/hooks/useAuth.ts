@@ -92,10 +92,13 @@ function useAuth(props?: AuthParams) {
         messageLoading.current = true;
         messageHandler('success', res.message)
           .then(() => {
-            if (res?.data?.role?.name === UserPreDefinedRole.BASICUSER) {
-              router.replace('/app/home');
-            } else {
+            // if (res?.data?.role?.name === UserPreDefinedRole.BASICUSER) {
+            if (res?.data?.role?.name === UserPreDefinedRole.SECONDARYADMIN) {
+              // router.replace('/app/home');
               router.replace('/admin/people');
+            } else {
+              router.replace('/app/home');
+              // router.replace('/admin/people');
             }
           })
           .finally(() => {

@@ -38,7 +38,7 @@ const MinuteAction = () => {
             <div className="h-8 self-center border-l border-custom-gray_500 bg-custom-gray_500" />
 
             <CustomButton
-              description="Create a meeting"
+              description="Maximize"
               type="primary"
               icon={<Maximize size={18} />}
               onClick={showModal}

@@ -6,8 +6,14 @@ import { correspondenceMinute } from '@/common/mockData/corrMinute';
 import { DetailContext } from '../../service-context/DetailContextWrapper';
 import NotesContextWapper from '../../service-context/NotesContextWapper';
 import { mergeClassName } from '@/common/utils';
+import { APIResponseSuccessModel, CorrespondenceData } from '@/types';
 
-const Minutes = () => {
+interface minuteProps {
+  minuteData: APIResponseSuccessModel<CorrespondenceData[]> | never[];
+}
+
+// eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+const Minutes = ({ minuteData }: minuteProps) => {
   const detailContextInfo = useContext(DetailContext);
   return (
     <div className="relative flex size-full flex-col justify-end">

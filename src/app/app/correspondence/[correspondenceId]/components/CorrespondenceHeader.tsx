@@ -9,7 +9,8 @@ import BackwardArrow from '@/common/components/icons/BackwardArrow';
 import Dot from '@/common/components/icons/Dot';
 import InfoCircle from '@/common/components/icons/InfoCircle';
 
-const CorrespondenceHeader = () => {
+// eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+const CorrespondenceHeader = ({ minuteData }: any) => {
   const router = useRouter();
   const detailsData = useContext(DetailContext);
 
