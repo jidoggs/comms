@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import CustomButton from '@/common/components/CustomButton';
 import CustomModal from '@/common/components/CustomModal';
@@ -12,6 +12,7 @@ import { useSession } from '@/common/hooks';
 import useCorrespondence from '@/app/app/hooks/useCorrespondence';
 import { messageHandler } from '@/common/utils/notification';
 import { useForm } from 'antd/es/form/Form';
+import { TableRowActionContext } from '../TableRowAction';
 
 type Props = {
   className: string;
@@ -25,6 +26,7 @@ function ExpandButton({ className, description }: Props) {
   const openModalHandler = () => setOpenModal(true);
   const closeModalHandler = () => setOpenModal(false);
   const closeConfirmModalHandler = () => setOpenConfirmModal(false);
+  const context = useContext(TableRowActionContext);
 
   const { data: user } = useSession();
   const [form] = useForm();
@@ -82,7 +84,11 @@ function ExpandButton({ className, description }: Props) {
         onCancel={closeModalHandler}
         width={800}
       >
-        <Form form={form} handleSubmit={correspondenceFormSubmitHandler} />
+        <Form
+          currentCorr={context?.data}
+          form={form}
+          handleSubmit={correspondenceFormSubmitHandler}
+        />
       </CustomModal>
       <SentCorrespondence
         newCorrespondence={newCorrespondenceHandler}

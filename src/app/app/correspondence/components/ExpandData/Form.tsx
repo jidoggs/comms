@@ -1,9 +1,9 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Form, { FormInstance } from 'antd/es/form/Form';
 import CustomDragger from '@/common/components/CustomDragger';
 import CustomInput from '@/common/components/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
-import { TableRowActionContext } from '../TableRowAction';
+// import { TableRowActionContext } from '../TableRowAction';
 import { CorrespondenceData } from '@/types';
 import dynamic from 'next/dynamic';
 import { Select, Spin } from 'antd';
@@ -20,6 +20,7 @@ const filterOption = (
 type Props = {
   handleSubmit: (data: CorrespondenceData) => void; //eslint-disable-line
   form: FormInstance<any>;
+  currentCorr: any;
 };
 
 const Input = dynamic(() => import('antd/es/input/Input'), { ssr: true });
@@ -29,8 +30,8 @@ const DatePicker = dynamic(() => import('antd/es/date-picker'), {
   ssr: true,
 });
 
-function NewCorrespondenceForm({ handleSubmit, form }: Props) {
-  const context = useContext(TableRowActionContext);
+function NewCorrespondenceForm({ handleSubmit, form, currentCorr }: Props) {
+  // const context = useContext(TableRowActionContext);
   const [search, setSearch] = useState('');
   const [selectedRecipient, setSelectedRecipient] = useState<{
     value: string;
@@ -101,9 +102,20 @@ function NewCorrespondenceForm({ handleSubmit, form }: Props) {
     return e?.fileList;
   };
 
-  // console.log('context?.data', context?.data);
+  // Update the form values when currentCorr changes.
+  useEffect(() => {
+    form.setFieldsValue({
+      sender: currentCorr?.sender,
+      subject: currentCorr?.subject,
+      minute: currentCorr?.minute,
+      reference_number: currentCorr?.reference_number,
+      date_of_correspondence: currentCorr?.created_at
+        ? dayjs(currentCorr?.created_at)
+        : null,
+    });
+  }, [currentCorr]);
 
-  // const dateObject = new Date(context?.data?.created_at);
+  // console.log('currentCorr', currentCorr);
 
   return (
     <Form layout="vertical" form={form} onFinish={modifiedHandleSubmit}>
@@ -125,8 +137,6 @@ function NewCorrespondenceForm({ handleSubmit, form }: Props) {
         <div className="flex-1">
           <FormItem
             label="Sender - Who sent it"
-            // name={[field.name, 'sender']}
-            initialValue={context?.data?.sender}
             className="flex flex-col"
             name="sender"
             rules={[{ required: true, message: 'Sender is required' }]}
@@ -157,8 +167,6 @@ function NewCorrespondenceForm({ handleSubmit, form }: Props) {
           <FormItem
             label="Subject"
             name="subject"
-            // name={[field.name, 'subject']}
-            initialValue={context?.data?.subject}
             className="flex flex-col"
             rules={[{ required: true, message: 'Subject is required' }]}
           >
@@ -167,8 +175,6 @@ function NewCorrespondenceForm({ handleSubmit, form }: Props) {
           <FormItem
             label="Minute"
             name="minute"
-            // name={[field.name, 'minute']}
-            initialValue={context?.data?.minute}
             className="flex flex-col"
             // rules={[{ required: true, message: 'Minute is required' }]}
           >
@@ -177,8 +183,6 @@ function NewCorrespondenceForm({ handleSubmit, form }: Props) {
           <FormItem
             label="Date of correspondence"
             name="date_of_correspondence"
-            // name={[field.name, 'date_of_correspondence']}
-            initialValue={dayjs(context?.data?.created_at)}
             className="flex flex-col"
             // rules={[
             //   { required: true, message: 'Date of correspondence is required' },
@@ -192,27 +196,12 @@ function NewCorrespondenceForm({ handleSubmit, form }: Props) {
           <FormItem
             label="Ref. No"
             name="reference_number"
-            // name={[field.name, 'reference_number']}
-            initialValue={context?.data?.reference_number}
             className="flex flex-col"
             rules={[{ required: true, message: 'Ref. No is required' }]}
           >
             <Input name="ref_no" />
           </FormItem>
         </div>
-        {/* <CustomDragger />
-        <div className="flex-1 ">
-          {correspondenceFormInputs.map((item) => (
-            <FormItem<FieldType>
-              key={item.name}
-              {...item}
-              initialValue={context?.data?.[item.name]}
-              className="flex flex-col"
-            >
-              <CustomInput name={item.name} />
-            </FormItem>
-          ))}
-        </div> */}
       </div>
       <div className="border-t pt-4">
         <CustomButton
