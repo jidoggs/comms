@@ -6,10 +6,10 @@ import { correspondenceMinute } from '@/common/mockData/corrMinute';
 import { DetailContext } from '../../service-context/DetailContextWrapper';
 import NotesContextWapper from '../../service-context/NotesContextWapper';
 import { mergeClassName } from '@/common/utils';
-import { APIResponseSuccessModel, CorrespondenceData } from '@/types';
+import { CorrespondenceData } from '@/types';
 
 interface minuteProps {
-  minuteData: APIResponseSuccessModel<CorrespondenceData[]> | never[];
+  minuteData: CorrespondenceData[];
 }
 
 // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars

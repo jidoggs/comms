@@ -34,7 +34,8 @@ const CorrespondenceHeader = ({ minuteData }: any) => {
           descriptionPlacement="bottom"
         />
         <Title tag="h1" className="text-lg leading-[22.77px]">
-          Export of Brewery Products
+          {/* Export of Brewery Products */}
+          {minuteData[0]?.correspondence?.subject}
         </Title>
       </div>
       <div className="flex items-center justify-between gap-1">

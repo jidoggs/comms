@@ -38,7 +38,7 @@ const PageContent = () => {
   });
 
   // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-  const minuteData = getCorrMinListSwr?.data || [];
+  const minuteData = getCorrMinListSwr?.data?.data || [];
 
   // console.log('minuteData', minuteData);
   // console.log('correspondenceId', correspondenceId);

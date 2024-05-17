@@ -15,9 +15,9 @@ export const generateInitials = (firstName: string, lastName?: string) => {
     result = getFirstCharacter(firstName) + getFirstCharacter(lastName);
   } else {
     result = firstName
-      .split(' ')
-      .map((name) => getFirstCharacter(name))
-      .join('');
+      ?.split(' ')
+      ?.map((name) => getFirstCharacter(name))
+      ?.join('');
   }
   return result;
 };
@@ -68,5 +68,5 @@ export const replaceUnderscorceWithSpace = (value: string) => {
 
 export const lastRoute = (str: string) => {
   const items = str.split('/');
-  return items[items.length - 1]
+  return items[items.length - 1];
 };

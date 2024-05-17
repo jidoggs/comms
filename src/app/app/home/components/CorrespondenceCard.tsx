@@ -42,7 +42,7 @@ const CorrespondenceCard = ({ minute }: Props) => {
     e.stopPropagation();
   };
 
-  // console.log('currentCorrespondence', currentCorrespondence);
+  // console.log('minute', minute);
 
   return (
     <>
@@ -58,19 +58,18 @@ const CorrespondenceCard = ({ minute }: Props) => {
         </div>
         <div className="space-y-2.5">
           <div className="flex items-center gap-x-2.5">
-            <CustomAvatar src="/images/user3.jpeg" size={28}>
-              {generateInitials('Jane', 'Doe')}
+            <CustomAvatar size={28}>
+              {generateInitials(minute?.from?.firstname, '')}
             </CustomAvatar>
             <div className="flex-1">
-              <Title>Jane Doe</Title>
-              <Title small className="text-xs">
+              <Title>{minute?.from?.firstname}</Title>
+              {/* <Title small className="text-xs">
                 PS, Ministry of Trade & Investment
-              </Title>
+              </Title> */}
             </div>
           </div>
           <Title small className="font-medium">
-            Dear HM, I hope this message finds you well. Please find
-            correspondence f ...
+            {minute?.minute}
           </Title>
           <div
             role="button"
@@ -83,13 +82,14 @@ const CorrespondenceCard = ({ minute }: Props) => {
               4:20 PM, 16 Feb 2024
             </Title>
             <div className="flex items-center gap-x-1">
-              <CustomAvatar
-                className="size-7"
-                size={28}
-                src="/images/user1.jpeg"
-              />
+              <CustomAvatar size={28}>
+                {generateInitials(
+                  minute?.recipient?.firstname,
+                  minute?.recipient?.surname
+                )}
+              </CustomAvatar>
               <AvatarGroup
-                maxCount={3}
+                maxCount={minute.hasAccess.length}
                 size={24}
                 maxPopoverPlacement="bottom"
                 avatarData={dummyAvatarData}
