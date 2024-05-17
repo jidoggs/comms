@@ -9,6 +9,7 @@ import CorrespondenceHeader from './components/CorrespondenceHeader';
 import CorrrespondenceMenu from './components/CorrrespondenceMenu';
 import MinuteDetails from './components/MinuteDetails';
 import { DetailContext } from './service-context/DetailContextWrapper';
+import useCorrespondence from '../../hooks/useCorrespondence';
 
 const PageContent = () => {
   const detailsData = useContext(DetailContext);
@@ -27,6 +28,16 @@ const PageContent = () => {
     },
     dateCreated: '30-01-2024',
   };
+
+  const { getCorrMinListSwr } = useCorrespondence({
+    can_get_all: true,
+    _id: '',
+  });
+
+  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+  const minuteData = getCorrMinListSwr?.data?.data || [];
+
+  // console.log('minuteData', minuteData);
 
   return (
     <div className="flex w-full flex-col">
@@ -64,7 +75,6 @@ const PageContent = () => {
             }}
             className="flex w-2/6 items-center justify-center border-l border-custom-gray_500"
           >
-            {/* <CorrespondentDocument correspondenceFile={correspondenceFile} /> */}
             <MinuteDetails corrMinuteDetails={demoDetails} />
           </motion.div>
         )}
@@ -74,3 +84,7 @@ const PageContent = () => {
 };
 
 export default PageContent;
+
+{
+  /* <CorrespondentDocument correspondenceFile={correspondenceFile} /> */
+}

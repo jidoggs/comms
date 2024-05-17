@@ -15,7 +15,6 @@ type Props = {
   type?: 'full';
 };
 
-// Define hasData function here
 export const hasData = (corrData: any) => {
   return (
     corrData?.sender &&
@@ -51,19 +50,16 @@ function CreateCorrespondence(props: Props) {
     can_create: true,
   });
 
-  //eslint-disable-next-line
   const correspondenceFormSubmitHandler = async (values: any) => {
     const allCorrespondence = values.correspondences;
-
     try {
-      // Create all correspondences and collect promises
       const createPromises = allCorrespondence.map(async (eachCorr: any) => {
         const backendData = removeNullOrUndefinedProperties({
           ...eachCorr,
           files: eachCorr?.files?.map(
             (item: UploadFile<any>) => item.originFileObj
           ),
-          status: 'sent', // Assuming the status for sent correspondences is "sent"
+          status: 'sent',
         });
         const data = {
           ...backendData,
@@ -89,7 +85,6 @@ function CreateCorrespondence(props: Props) {
       ...corr,
       status: 'draft',
     }));
-
     try {
       const draftPromises = allCorrespondence.map(async (eachCorr: any) => {
         const backendData = removeNullOrUndefinedProperties({
@@ -105,14 +100,8 @@ function CreateCorrespondence(props: Props) {
 
         return createCorrSwr.trigger({ data });
       });
-
-      // Wait for all draft promises to resolve
       await Promise.all(draftPromises);
-
-      // Show a success message (if desired)
-      // messageHandler('success', 'Draft saved successfully.');
     } catch (error: any) {
-      // Handle errors if saving drafts fails
       messageHandler(
         'error',
         `Some drafts failed to save. Error: ${error.message}`
@@ -125,7 +114,6 @@ function CreateCorrespondence(props: Props) {
     const allCorrespondence = values.correspondences;
 
     try {
-      // Archive all correspondences and collect promises
       const archivePromises = allCorrespondence.map(async (eachCorr: any) => {
         const backendData = removeNullOrUndefinedProperties({
           ...eachCorr,
@@ -141,17 +129,10 @@ function CreateCorrespondence(props: Props) {
 
         return createCorrSwr.trigger({ data });
       });
-
-      // Wait for all promises to resolve
       await Promise.all(archivePromises);
       closeModalHandler();
-
       messageHandler('success', 'Correspondence(s) Archived successfully');
-      // Reset the form after submission
       form.resetFields();
-
-      // Show a success message (if desired)
-      // messageHandler('success', 'All correspondences archived successfully.');
     } catch (error: any) {
       // Handle errors if archiving fails
       messageHandler('error', 'Failed to archive some correspondences.');

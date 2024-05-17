@@ -11,11 +11,18 @@ import { generateInitials } from '@/common/utils';
 import Folder from '@/common/components/icons/Folder';
 import Send from '@/common/components/icons/Send';
 
-const CorrespondenceCard = () => {
+interface Props {
+  minute: any;
+}
+
+// eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+const CorrespondenceCard = ({ minute }: Props) => {
   const router = useRouter();
 
   const handleClick = () => {
     router.push('correspondence/export_of_brewery_products');
+    // router.push(`correspondence/${correspondence.minute}`);
+    router.push(`correspondence/${minute.correspondence?._id}`);
   };
   const handleKeyDown: iHandleKeyboard = (e) => {
     if (e.key === 'Tab') return;

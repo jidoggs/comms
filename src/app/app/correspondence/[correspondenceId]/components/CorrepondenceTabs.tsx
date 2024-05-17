@@ -27,7 +27,7 @@ const CorrepondenceTabs = () => {
       defaultKey={detailsData?.activeTab}
       onChange={detailsData?.tabChangeHandler}
       tabBarGutter={24}
-      className="!bg-red-500"
+      // className="!bg-red-500"
     />
   );
 };
