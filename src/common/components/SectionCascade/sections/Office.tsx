@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { CascadeContext } from '..';
-import { useOnboarding } from '@/app/onboarding/hooks';
 import { useOffice, useParastatals } from '@/app/admin/hooks';
 import { useSession } from '@/common/hooks';
 import SectionContainer from '../blocks/SectionContainer';
@@ -61,7 +60,6 @@ const Options = ({ query }: OptionsType) => {
 function Office() {
   const contextInfo = useContext(CascadeContext);
   const { isPrimaryAdmin, isSecondaryAdmin, data: user } = useSession();
-  const { onBoardingOffice, finalOfficeOnboardingStep } = useOnboarding();
   const query = queryHandler({
     parastatal: contextInfo?.dataList?.parastatal?.data?._id,
   });
@@ -69,7 +67,7 @@ function Office() {
   const { getListSwr, getItemSwr } = useOffice({
     can_get_all: isPrimaryAdmin || isSecondaryAdmin,
     can_get_by_id: !isPrimaryAdmin,
-    _id: user?.office?.[0]?._id || onBoardingOffice, // this is for users that do not have permisson to get list
+    _id: user?.office?.[0]?._id, // this is for users that do not have permisson to get list
     query,
   });
 
@@ -86,8 +84,7 @@ function Office() {
         clickHandler={contextInfo?.clickCascadeItemHandler}
         activeIdentifier={contextInfo?.dataList?.office?.data?._id}
         moreOptions={<Options query={query} />}
-        hasChild={finalOfficeOnboardingStep === 'office' ? false : true}
-        showTick={finalOfficeOnboardingStep === 'office'}
+        hasChild
         loader={getListSwr.isLoading}
       />
     </>

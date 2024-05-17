@@ -1,7 +1,6 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
 import Conditional from '../Conditional';
-import useOnboarding from '@/app/onboarding/hooks/useOnboarding';
 import {
   UpdateItemType,
   initialDataList,
@@ -32,18 +31,10 @@ type ContextValue = InfoType | null;
 export const CascadeContext = React.createContext<ContextValue>(null);
 
 function SectionCascade({ className, mode, ...props }: Props) {
-  const { onBoardingDepartment, onBoardingOffice } = useOnboarding();
-
-  const checkCondition = (
-    parentCascadeSection: LevelType,
-    currentOnBoardingCascadeSection?: string
-  ) => {
+  const checkCondition = (parentCascadeSection: LevelType) => {
     return (
-      (mode === 'management' &&
-        !!props?.dataList?.[parentCascadeSection]?.data?._id) ||
-      (mode === 'onboarding' &&
-        !!props?.dataList?.[parentCascadeSection]?.data?._id &&
-        !!currentOnBoardingCascadeSection)
+      mode === 'management' &&
+      !!props?.dataList?.[parentCascadeSection]?.data?._id
     );
   };
 
@@ -57,12 +48,12 @@ function SectionCascade({ className, mode, ...props }: Props) {
       >
         <Parastatal />
         <Conditional
-          condition={checkCondition('parastatal', onBoardingOffice)}
+          condition={checkCondition('parastatal')}
           trueArg={<Office />}
           falseArg={null}
         />
         <Conditional
-          condition={checkCondition('office', onBoardingDepartment)}
+          condition={checkCondition('office')}
           trueArg={<Department showMembers={mode === 'management'} />}
           falseArg={null}
         />

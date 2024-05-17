@@ -30,10 +30,6 @@ export const clearUserDetails = () => {
   removeItem(STORAGE_KEYS.CLIENT_TOKEN_STORAGE_KEY);
   removeItem(STORAGE_KEYS.CLIENT_TOKEN_REFRESH_KEY);
 };
-export const clearOnboardDetails = () => {
-  removeItem(STORAGE_KEYS.CLIENT_ID_ONBOARD_KEY);
-  removeItem(STORAGE_KEYS.CLIENT_TOKEN_ONBOARD_KEY);
-};
 
 export const storeUserToken = (token: string) => {
   return setItem(STORAGE_KEYS.CLIENT_TOKEN_STORAGE_KEY, token);
@@ -41,24 +37,12 @@ export const storeUserToken = (token: string) => {
 export const storeRefreshToken = (token: string) => {
   return setItem(STORAGE_KEYS.CLIENT_TOKEN_REFRESH_KEY, token);
 };
-export const storeOnboardToken = (token: string) => {
-  return setItem(STORAGE_KEYS.CLIENT_TOKEN_ONBOARD_KEY, token);
-};
-export const storeOnboardUid = (uid: string) => {
-  return setItem(STORAGE_KEYS.CLIENT_ID_ONBOARD_KEY, uid);
-};
 
 export const fetchUserToken = () => {
   return getItem(STORAGE_KEYS.CLIENT_TOKEN_STORAGE_KEY);
 };
 export const fetchRefreshToken = () => {
   return getItem(STORAGE_KEYS.CLIENT_TOKEN_REFRESH_KEY);
-};
-export const fetchOnboardToken = () => {
-  return getItem(STORAGE_KEYS.CLIENT_TOKEN_ONBOARD_KEY);
-};
-export const fetchOnboardUid = () => {
-  return getItem(STORAGE_KEYS.CLIENT_ID_ONBOARD_KEY);
 };
 
 export const getSessionItem = (key: string) => {

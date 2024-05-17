@@ -1,7 +1,7 @@
 'use client';
 import dynamic from 'next/dynamic';
 import React, { useState } from 'react';
-import useOnboarding from '../../hooks/useOnboarding';
+// import useOnboarding from '../../hooks/useOnboarding';
 import { formatPhoneNumber } from '@/common/utils';
 
 const StepOneForm = dynamic(() => import('./components/StepOneForm'));
@@ -10,8 +10,8 @@ const ApproveModalContent = dynamic(
 );
 
 const LoginPageContent: React.FunctionComponent = () => {
-  const { nonAuthSwr } = useOnboarding({ step: 1 });
-  const [inData, setInData] = useState<Record<string, string>>({});
+  // const { nonAuthSwr } = useOnboarding({ step: 1 });
+  // const [inData, setInData] = useState<Record<string, string>>({});
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onFinish = (values: Record<string, string>) => {
@@ -27,7 +27,7 @@ const LoginPageContent: React.FunctionComponent = () => {
       }
     });
 
-    setInData(data);
+    // setInData(data);
     setIsModalOpen(true);
   };
 
@@ -36,15 +36,15 @@ const LoginPageContent: React.FunctionComponent = () => {
   };
 
   const confirmationHandler = () => {
-    nonAuthSwr.trigger({ data: inData }).finally(cancelHandler);
+    // nonAuthSwr.trigger({ data: inData }).finally(cancelHandler);
   };
 
   return (
     <>
-      <StepOneForm onFinish={onFinish} isMutating={nonAuthSwr.isMutating} />
+      <StepOneForm onFinish={onFinish} isMutating={false} />
       <ApproveModalContent
         isModalOpen={isModalOpen}
-        isLoading={nonAuthSwr.isMutating}
+        // isLoading={nonAuthSwr.isMutating}
         handleSubmit={confirmationHandler}
         actionText="continue"
         handleCancel={cancelHandler}

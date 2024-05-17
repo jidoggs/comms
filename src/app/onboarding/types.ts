@@ -12,3 +12,24 @@ export interface InviteQuery {
   invite: Invite;
   token: string;
 }
+
+export type PersonalInfo = {
+  firstname: string;
+  surname: string;
+  middlename: string;
+  email: string;
+  phone: string;
+};
+
+export type OfficelInfo = {
+  parastatal: string;
+  office: string;
+  department: string;
+};
+
+export type securityInfo = {
+  new_password: string;
+  confirm_password: string;
+};
+
+export type OnboardingInfo = PersonalInfo | OfficelInfo | securityInfo;

@@ -3,7 +3,6 @@ import { CascadeContext } from '..';
 import SectionContainer from '../blocks/SectionContainer';
 import SectionMoreOptions from '../blocks/SectionMoreOptions';
 import { useDepartment, useOffice } from '@/app/admin/hooks';
-import useOnboarding from '@/app/onboarding/hooks/useOnboarding';
 import { useSession } from '@/common/hooks';
 import { queryHandler } from '@/service/request';
 
@@ -65,7 +64,6 @@ const Options = ({ query }: OptionsType) => {
 function Department({ showMembers }: Props) {
   const contextInfo = useContext(CascadeContext);
   const { isPrimaryAdmin, data: user } = useSession();
-  const { onBoardingDepartment, finalOfficeOnboardingStep } = useOnboarding();
   const query = queryHandler({
     parastatal: contextInfo?.dataList?.parastatal?.data?._id,
     office: contextInfo?.dataList?.office?.data?._id,
@@ -74,7 +72,7 @@ function Department({ showMembers }: Props) {
   const { getListSwr, getItemSwr } = useDepartment({
     can_get_all: isPrimaryAdmin,
     can_get_by_id: !isPrimaryAdmin,
-    _id: user?.department?.[0]?._id || onBoardingDepartment, // this is for users that do not have permisson to get list
+    _id: user?.department?.[0]?._id, // this is for users that do not have permisson to get list
     query,
   });
 
@@ -91,12 +89,8 @@ function Department({ showMembers }: Props) {
         clickHandler={contextInfo?.clickCascadeItemHandler}
         activeIdentifier={contextInfo?.dataList?.department?.data?._id}
         moreOptions={<Options query={query} />}
-        hasChild={
-          finalOfficeOnboardingStep === 'department'
-            ? false
-            : true || showMembers
-        }
-        showTick={finalOfficeOnboardingStep === 'department' || !showMembers}
+        hasChild={showMembers}
+        showTick={!showMembers}
         loader={getListSwr.isLoading}
       />
     </>

@@ -16,10 +16,10 @@ const SuccessPageContent: React.FunctionComponent = () => {
         tag="h1"
         className={`text-center text-xl capitalize leading-6 ${helveticaNeue.className}`}
       >
-        Password Set
+        Form filled successfully
       </Title>
       <Title className="text-center text-custom-gray_200">
-        Your password has been set successfully. Awaiting approval
+        Your details have been sent to the admin. Awaiting approval
       </Title>
       <CustomButton
         className="rounded-md !border-2 !border-custom-main !bg-custom-gray_900 !px-10 !py-4 !text-base leading-none"

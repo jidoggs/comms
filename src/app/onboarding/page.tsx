@@ -1,8 +1,9 @@
 'use client';
-import { redirect } from 'next/navigation';
+
+import PageContent from './components/PageContent';
 
 const Onboarding = () => {
-  return redirect('/onboarding/personal-info');
+  return <PageContent />;
 };
 
 export default Onboarding;

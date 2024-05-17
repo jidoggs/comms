@@ -1,11 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { BASE_URL as API_URL, REQUEST_TIMEOUT } from '../config/constant';
-import {
-  fetchUserToken,
-  clearData,
-  fetchRefreshToken,
-  fetchOnboardToken,
-} from '../storage';
+import { fetchUserToken, clearData, fetchRefreshToken } from '../storage';
 import * as tp from '../../types';
 
 /** general headers **/
@@ -17,7 +12,7 @@ const headers = {
 /** authorization header for logged in user **/
 const setAuthorization = (url?: string) => {
   const authorize = {
-    Authorization: `Bearer ${fetchUserToken() || fetchOnboardToken()}`,
+    Authorization: `Bearer ${fetchUserToken()}`,
   };
   const refresh = {
     'X-Refresh-Token': fetchRefreshToken(),

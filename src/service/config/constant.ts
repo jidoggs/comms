@@ -9,6 +9,4 @@ export const REFRESH_INTERVAL = 300000; // in milliseconds
 export const STORAGE_KEYS = {
   CLIENT_TOKEN_STORAGE_KEY: 'correspondence.token',
   CLIENT_TOKEN_REFRESH_KEY: 'correspondence.refresh_token',
-  CLIENT_TOKEN_ONBOARD_KEY: 'correspondence.onboard_token',
-  CLIENT_ID_ONBOARD_KEY: 'correspondence.onboard_uid',
 };

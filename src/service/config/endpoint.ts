@@ -4,8 +4,14 @@ export const ENDPOINTS = {
     REFRESH_TOKEN: '/auth/refresh/token',
     FORGOT_PASSWORD: '/auth/forgot_password',
     RESET_PASSWORD: '/auth/reset_password',
-    ONBOARD: '/auth/onboard',
-    ONBOARD_STATUS: (email: string) => `/invite?email=${email}`,
+    ONBOARD: {
+      CREATE: '/auth/onboard',
+      PARASTATALS: (id: string) => `/parastatals/fetch?_id=${id}`,
+      OFFICE: (pid: string) => `/offices/fetch?parastatal=${pid}`,
+      DEPARTMENT: (pid: string, oid: string) =>
+        `/departments/fetch?parastatal=${pid}&office=${oid}`,
+    },
+    // ONBOARD_STATUS: (email: string) => `/invite?email=${email}`,
   },
   USER: {
     GET_USER: '/user/profile',

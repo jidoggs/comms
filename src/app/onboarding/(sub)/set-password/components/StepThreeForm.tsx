@@ -2,15 +2,15 @@
 import React from 'react';
 import Form from 'antd/es/form/Form';
 import FormItem from 'antd/es/form/FormItem';
-import { useOnboarding } from '@/app/onboarding/hooks';
-import { fetchOnboardUid } from '@/service/storage';
+// import { useOnboarding } from '@/app/onboarding/hooks';
+// import { fetchOnboardUid } from '@/service/storage';
 import CustomInput from '@/common/components/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
 import {
   confirmPasswordValidator,
   passwordStrengthValidator,
 } from '@/common/utils';
-import ArrowRight from '@/common/components/icons/ArrowRight';
+// import ArrowRight from '@/common/components/icons/ArrowRight';
 
 type FieldType = {
   new_password: string;
@@ -18,12 +18,12 @@ type FieldType = {
 };
 
 const StepThreeForm = () => {
-  const { authSwr } = useOnboarding({ step: 3 });
+  // const { authSwr } = useOnboarding({ step: 3 });
 
-  const onFinish = (values: FieldType) => {
-    const _id = fetchOnboardUid();
-    const data = { password: values.new_password, _id };
-    authSwr.trigger({ data, type: 'put' });
+  const onFinish = () => {
+    // const _id = fetchOnboardUid();
+    // const data = { password: values.new_password, _id };
+    // authSwr.trigger({ data, type: 'put' });
   };
 
   return (
@@ -42,7 +42,7 @@ const StepThreeForm = () => {
           placeholder="Enter Password"
           type="password"
           name="new_password"
-          disabled={authSwr.isMutating}
+          // disabled={authSwr.isMutating}
         />
       </FormItem>
 
@@ -56,20 +56,20 @@ const StepThreeForm = () => {
           placeholder="Password"
           type="password"
           name="confirm_password"
-          disabled={authSwr.isMutating}
+          // disabled={authSwr.isMutating}
         />
       </FormItem>
 
       <FormItem className="flex justify-end">
         <CustomButton
-          loading={authSwr.isMutating}
-          disabled={authSwr.isMutating}
+          // loading={authSwr.isMutating}
+          // disabled={authSwr.isMutating}
           block
           size="small"
           htmlType="submit"
         >
           Reset Password
-          {!authSwr.isMutating ? <ArrowRight /> : null}
+          {/* {!authSwr.isMutating ? <ArrowRight /> : null} */}
         </CustomButton>
       </FormItem>
     </Form>
