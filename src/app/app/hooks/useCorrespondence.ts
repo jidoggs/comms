@@ -13,7 +13,13 @@ import {
 } from '@/types';
 import { queryHandler } from '@/service/request';
 
-const { CREATE, GET_ALL, GET_RECIPIENTS } = ENDPOINTS.CORRESPONDENCE;
+const {
+  CREATE,
+  GET_ALL,
+  GET_ALL_MINUTES,
+  GET_ALL_MINUTES_IN_CORR,
+  GET_RECIPIENTS,
+} = ENDPOINTS.CORRESPONDENCE;
 
 const useCorrespondence = (props: CorrespondenceServiceArgs) => {
   const query = queryHandler({
@@ -40,12 +46,28 @@ const useCorrespondence = (props: CorrespondenceServiceArgs) => {
     fetchOptions
   );
 
+  const getMinListSwr = useAuthGetRequest<CorrespondenceData[]>(
+    props?.can_get_all ? GET_ALL_MINUTES : '',
+    fetchOptions
+  );
+
+  const getCorrMinListSwr = useAuthGetRequest<CorrespondenceData[]>(
+    props._id && props?.can_get_all ? GET_ALL_MINUTES_IN_CORR(props._id) : '',
+    fetchOptions
+  );
+
   const getRecipientsSwr = useAuthGetRequest<RecipientData>(
     query && props?.can_get_all_recipients ? GET_RECIPIENTS(query) : '',
     fetchOptions
   );
 
-  return { createCorrSwr, getListSwr, getRecipientsSwr };
+  return {
+    createCorrSwr,
+    getListSwr,
+    getMinListSwr,
+    getCorrMinListSwr,
+    getRecipientsSwr,
+  };
 };
 
 export default useCorrespondence;

@@ -2,6 +2,7 @@
 export type APIResponseSuccessModel<T = unknown> = {
   results?: number;
   data: T;
+  result: T;
   message: string;
   success: true;
 };

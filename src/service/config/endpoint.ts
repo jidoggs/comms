@@ -50,6 +50,9 @@ export const ENDPOINTS = {
   CORRESPONDENCE: {
     CREATE: '/correspondence',
     GET_ALL: '/correspondence/all',
+    GET_ALL_MINUTES: '/correspondence/minutes/all',
+    GET_ALL_MINUTES_IN_CORR: (correspondenceId: string) =>
+      `correspondence/${correspondenceId}/minutes/all`,
     SPECIFIC_ITEM: (query: string) => `/correspondence/${query}`,
     GET_RECIPIENTS: (query: string) => `/correspondence/recipient${query}`,
     ARCHIVE: '/correspondence/archive',

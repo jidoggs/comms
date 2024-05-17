@@ -12,6 +12,7 @@ export interface CorrespondenceData extends BaseDataModel {
   subject: string;
   date_of_correspondence: Date;
   minute: string;
+  result: string[];
 }
 
 type RecipientKeys = '_id' | 'firstname' | 'surname';
