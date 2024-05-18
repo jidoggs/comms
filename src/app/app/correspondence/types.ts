@@ -8,7 +8,9 @@ import {
   CorrespondenceData,
   EditableTableColumnTypes,
   iHandleChange,
+  MinuteData,
 } from '@/types';
+import { Dayjs } from 'dayjs';
 
 export type CorrespondenceContextNewType = {
   handleAdd: () => void;
@@ -42,6 +44,13 @@ export type DetailContextType = {
   turnMultiSelectOFFHandler: () => void;
   selectItemHandler: (e: CheckboxChangeEvent) => void;
   multiSelect: MultiSelectType;
+  minuteData: MinuteData[];
+  sampleTimeline: {
+    name: string;
+    office: string;
+    date: Dayjs;
+    img: string;
+  };
 } | null;
 
 export type MultiSelectType = {

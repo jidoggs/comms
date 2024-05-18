@@ -51,7 +51,7 @@ const useCorrespondence = (props: CorrespondenceServiceArgs) => {
     APIResponseSuccessModel<MinuteData[]>
   >(props?.can_get_all ? GET_ALL_MINUTES : '', fetchOptions);
 
-  const getCorrMinListSwr = useAuthGetRequest<CorrespondenceData[]>(
+  const getCorrMinListSwr = useAuthGetRequest<MinuteData[]>(
     props._id && props?.can_get_all ? GET_ALL_MINUTES_IN_CORR(props._id) : '',
     fetchOptions
   );

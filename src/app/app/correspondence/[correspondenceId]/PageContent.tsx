@@ -9,12 +9,12 @@ import CorrespondenceHeader from './components/CorrespondenceHeader';
 import CorrrespondenceMenu from './components/CorrrespondenceMenu';
 import MinuteDetails from './components/MinuteDetails';
 import { DetailContext } from './service-context/DetailContextWrapper';
-import useCorrespondence from '../../hooks/useCorrespondence';
-import { useParams } from 'next/navigation';
+// import useCorrespondence from '../../hooks/useCorrespondence';
+// import { useParams } from 'next/navigation';
 
 const PageContent = () => {
-  const params = useParams();
-  const correspondenceId = params.correspondenceId; // Access the _id as params.id
+  // const params = useParams();
+  // const correspondenceId = params.correspondenceId; // Access the _id as params.id
   const detailsData = useContext(DetailContext);
   const demoDetails = {
     name: 'Export of Brewery Products',
@@ -32,20 +32,20 @@ const PageContent = () => {
     dateCreated: '30-01-2024',
   };
 
-  const { getCorrMinListSwr } = useCorrespondence({
-    can_get_all: true,
-    _id: correspondenceId.toString(),
-  });
+  // const { getCorrMinListSwr } = useCorrespondence({
+  //   can_get_all: true,
+  //   _id: correspondenceId.toString(),
+  // });
 
   // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-  const minuteData = getCorrMinListSwr?.data?.data || [];
+  // const minuteData = getCorrMinListSwr?.data?.data || [];
 
   // console.log('minuteData', minuteData);
   // console.log('correspondenceId', correspondenceId);
 
   return (
     <div className="flex w-full flex-col">
-      <CorrespondenceHeader minuteData={minuteData} />
+      <CorrespondenceHeader />
       <CorrrespondenceMenu />
       <div className="flex h-[calc(100vh_-_140px)] justify-between">
         <motion.div
@@ -56,7 +56,7 @@ const PageContent = () => {
           className="flex w-full items-center justify-between"
         >
           {detailsData?.activeTab === 'minutes' ? (
-            <Minutes minuteData={minuteData} />
+            <Minutes minuteData={detailsData?.minuteData} />
           ) : null}
           {detailsData?.activeTab === 'timelines' ? <Timelines /> : null}
           {detailsData?.activeTab === 'documents' ? <Documents /> : null}

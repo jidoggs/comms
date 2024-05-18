@@ -21,10 +21,6 @@ interface Props {
 const CorrespondenceCard = ({ minute }: Props) => {
   const router = useRouter();
 
-  // const currentCorrespondence = demoCorrespondence;
-
-  // console.log('minute', minute);
-
   const handleClick = () => {
     router.push(`correspondence/${minute.correspondence._id}`);
     // router.push(`correspondence/${correspondence.minute}`);
@@ -41,8 +37,6 @@ const CorrespondenceCard = ({ minute }: Props) => {
   const actionsKeyboardHandler: iHandleKeyboard = (e) => {
     e.stopPropagation();
   };
-
-  // console.log('minute', minute);
 
   return (
     <>
