@@ -7,9 +7,9 @@ type Props = {
   resetFields?: () => void;
 };
 
-function useTabChange({ defaultKey, resetFields }: Props) {
+function useTabChange<T = string>({ defaultKey, resetFields }: Props) {
   const router = useRouter();
-  const currentTab = useSearchParams().get('tab') as string;
+  const currentTab = useSearchParams().get('tab') as T;
   const pageRef = useRef<HTMLElement | null>(null);
 
   const components: CustomTableProps<any>['components'] = {

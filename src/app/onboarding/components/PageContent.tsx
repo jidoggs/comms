@@ -24,7 +24,7 @@ function PageContent() {
     if (counter === 0) {
       onboardUserSwr.trigger({ data: inData });
     }
-  }, [counter]);
+  }, [counter]); //eslint-disable-line
 
   const submitHandler = (values: OnboardingInfo) => {
     const dataKeys = Object.keys(values) as Array<keyof typeof values>;

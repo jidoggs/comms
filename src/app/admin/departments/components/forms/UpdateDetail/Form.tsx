@@ -12,7 +12,7 @@ import Tick from '@/common/components/icons/Tick';
 import { messageHandler } from '@/common/utils/notification';
 import { useRoles } from '@/app/admin/hooks';
 import { useServiceConfig } from '@/service/swrHooks';
-import FieldRow, { SelectFieldRow } from './FieldRow';
+import FieldRow, { SelectFieldRow } from '../../../../components/FieldRow';
 
 function MoreInformationForm() {
   const information = useContext(MoreInfoContext);

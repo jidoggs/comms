@@ -83,42 +83,49 @@ const UserDetailsContent = ({ userData }: UserDetailsContentProps) => {
         </div>
         <hr />
         <FieldRow
-          title="Name"
+          label="Name"
+          name="name"
           value={`${userData?.firstname || ''} ${userData?.surname || ''}`}
-          isEdit={isEdit}
+          // isEdit={isEdit}
         />
         <FieldRow
-          title="Email"
+          label="Email"
+          name="email"
           value={userData?.email as string}
-          isEdit={isEdit}
+          // isEdit={isEdit}
         />
         <hr />
         <FieldRow
-          title="Phone Number"
+          label="Phone Number"
+          name="phone"
           value={(userData?.phone as string) || 'N/A'}
-          isEdit={isEdit}
+          // isEdit={isEdit}
         />
         <FieldRow
-          title="Date Added"
+          label="Date Added"
+          name="created_at"
           value={dayjs(userData?.created_at).format('DD-MMM-YYYY')}
         />
         <hr />
         <FieldRow
-          title="Last Active"
+          label="Last Active"
+          name="last_seen"
           value={dayjs(userData?.last_seen).format('DD-MMM-YYYY')}
         />
         <div>
           <Title className="my-2 font-semibold text-custom-gray_600">
             Office
           </Title>
-          <FieldRow title="Title" value={userData?.title} isEdit={isEdit} />
+          <FieldRow label="Title" name="title" value={userData?.title} />
           <FieldRow
-            title="Department"
+            label="Department"
+            name="department"
             value={userData?.department?.[0]?.name || 'N/A'}
           />
           <hr />
           <FieldRow
-            title="Parastatal"
+            label="Parastatal"
+            name="parastatal"
             value={(userData?.parastatal?.[0]?.name as string) || 'N/A'}
           />
         </div>

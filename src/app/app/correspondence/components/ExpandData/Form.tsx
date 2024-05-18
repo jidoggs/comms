@@ -113,7 +113,7 @@ function NewCorrespondenceForm({ handleSubmit, form, currentCorr }: Props) {
         ? dayjs(currentCorr?.created_at)
         : null,
     });
-  }, [currentCorr]);
+  }, [currentCorr]); //eslint-disable-line
 
   // console.log('currentCorr', currentCorr);
 

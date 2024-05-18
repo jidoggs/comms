@@ -6,16 +6,21 @@ import { EditableTableColumnTypes, User, iHandleChange } from '@/types';
 import { CustomTableProps } from '@/common/components/CustomTable';
 import { TabItemProps } from '@/common/components/CustomTab';
 
+export type TabKeysType = 'pending' | 'onboarded' | 'approved' | 'declined';
+
 export type PeopleDataContextType = {
   handleTabChange: (state: string) => void;
   columns: EditableTableColumnTypes;
   dataSource: User[];
   isLoading: boolean;
-  currentTab: string;
+  currentTab: TabKeysType;
   tabItemList: TabItemProps;
-  components: CustomTableProps<any>['components'];
+  components: CustomTableProps<User>['components'];
   searchHandler: iHandleChange;
   search: string;
+  viewDetailsHandler: CustomTableProps<User>['onRow'];
+  closeDetailsHandler: () => void;
+  userDetail: User | null;
 } | null;
 
 export type DetailContextType = {

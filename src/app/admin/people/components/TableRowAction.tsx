@@ -1,27 +1,21 @@
 import dynamic from 'next/dynamic';
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { MenuProps } from 'antd/es/menu';
-import usePeople from '../../hooks/usePeople';
-import { useSession } from '@/common/hooks';
-import { PeopleDataContext } from '../service-context/PeopleListContextWrapper';
 import CustomButton from '@/common/components/CustomButton';
 import CloseCircled from '@/common/components/icons/CloseCircled';
 import MoreFile from '@/common/components/icons/MoreFile';
 import TickCircle from '@/common/components/icons/TickCircle';
 import { User, iHandleClick } from '@/types';
-
+import useModalState from '@/common/hooks/useModalState';
+import { PeopleDataContext } from '../service-context/PeopleListContextWrapper';
 
 const Dropdown = dynamic(() => import('antd/es/dropdown/dropdown'));
 
-const DeclineRequestModalContent = dynamic(
-  () => import('./DeclineRequestModalContent')
-);
+const DeclinePerson = dynamic(() => import('./DeclinePerson'));
 const SubmittedResponseModal = dynamic(
   () => import('./SubmittedResponseModal')
 );
-const ApproveModalContent = dynamic(
-  () => import('../../../../common/components/ApproveModalContent')
-);
+const ApprovePerson = dynamic(() => import('./ApprovePerson'));
 
 type Props = {
   data: User;
@@ -36,17 +30,9 @@ const initialModalState = {
 };
 
 function TableRowAction({ data }: Props) {
-  const [isModalOpen, setIsModalOpen] = useState(initialModalState);
-  const { isBasicUser } = useSession();
   const contextInfo = useContext(PeopleDataContext);
-
-  const showModal = (val: keyof typeof initialModalState) => {
-    setIsModalOpen({ ...initialModalState, [val]: true });
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen({ ...initialModalState });
-  };
+  const { handleCancel, isModalOpen, showModal } =
+    useModalState(initialModalState);
 
   const clickHandler: iHandleClick = (e) => {
     e.stopPropagation();
@@ -54,7 +40,7 @@ function TableRowAction({ data }: Props) {
 
   const items: MenuProps['items'] = [
     {
-      key: '1',
+      key: 'approve',
       icon: (
         <span className="text-custom-green_100">
           <TickCircle size="18" fill="transparent" />
@@ -64,7 +50,7 @@ function TableRowAction({ data }: Props) {
       onClick: () => showModal('approve'),
     },
     {
-      key: '2',
+      key: 'decline',
       icon: (
         <span className="text-custom-red_100">
           <CloseCircled size="18" />
@@ -73,21 +59,12 @@ function TableRowAction({ data }: Props) {
       label: 'Decline',
       onClick: () => showModal('decline'),
     },
-  ];
-
-  const { approveRequestSwr } = usePeople({
-    can_approve: !isBasicUser,
-    status: contextInfo?.currentTab,
-  });
-
-  const handleApproveRequest = () => {
-    approveRequestSwr
-      .trigger({
-        data: { user_id: data._id, email: data.email },
-        type: 'post',
-      })
-      .finally(handleCancel);
-  };
+  ].filter((itm) =>
+    contextInfo?.currentTab === 'pending'
+      ? false
+      : (itm.key !== 'approve' && contextInfo?.currentTab === 'approved') ||
+        (itm.key !== 'decline' && contextInfo?.currentTab === 'declined')
+  );
 
   return (
     <TableRowActionContext.Provider value={{ data }}>
@@ -102,20 +79,20 @@ function TableRowAction({ data }: Props) {
           />
         </Dropdown>
         <div>
-          <DeclineRequestModalContent
+          <DeclinePerson
             handleCancel={handleCancel}
             isModalOpen={isModalOpen.decline}
-            setIsSuccessModalOpen={showModal}
+            showModal={showModal}
+            type="row"
           />
           <SubmittedResponseModal
             handleCancel={handleCancel}
             isModalOpen={isModalOpen.success}
           />
-          <ApproveModalContent
+          <ApprovePerson
             handleCancel={handleCancel}
             isModalOpen={isModalOpen.approve}
-            handleSubmit={handleApproveRequest}
-            isLoading={approveRequestSwr.isMutating}
+            type="row"
           />
         </div>
       </div>

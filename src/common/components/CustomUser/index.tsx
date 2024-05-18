@@ -25,7 +25,7 @@ function CustomUser({ data, avatarSize = 30 }: Props) {
         <Title semibold>
           {typeof data === 'string'
             ? data
-            : `${data?.firstname} ${data?.surname}`}
+            : `${data?.firstname} ${data?.surname || ''}`}
         </Title>
         {typeof data !== 'string' ? (
           <Title small className="text-custom-gray_600">

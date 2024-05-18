@@ -6,8 +6,6 @@ import CustomAvatar from '@/common/components/Avatar/CustomAvatar';
 import Profile from '@/common/components/icons/Profile';
 import { EditableTableColumnTypes } from '@/types';
 
-
-
 export const defaultColumns: (EditableTableColumnTypes[number] & {
   dataIndex: string;
 })[] = [
@@ -31,7 +29,6 @@ export const defaultColumns: (EditableTableColumnTypes[number] & {
                   </span>
                 }
               />
-              {/* <div className="size-7 rounded-full bg-red-500" /> */}
               <span>{value}</span>
             </div>
           ) : null}
@@ -132,7 +129,7 @@ export const tabItemList: TabItemProps = [
     label: 'Approved',
   },
   {
-    key: 'rejected',
+    key: 'declined',
     label: 'Declined',
   },
 ];

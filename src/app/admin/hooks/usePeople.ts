@@ -24,7 +24,7 @@ function usePeople(props: Props) {
   const query = queryHandler({
     search,
     status: props.status,
-    sort: 'created_at',
+    sort: '-created_at',
   });
 
   const { revalidateRequest } = useServiceConfig();

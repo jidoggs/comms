@@ -8,14 +8,16 @@ import {
   tabItemList,
 } from './helper';
 import usePeople from '../../hooks/usePeople';
-import { PeopleDataContextType } from '../types';
+import { PeopleDataContextType, TabKeysType } from '../types';
 import { useDebounce, useSession, useTabChange } from '@/common/hooks';
-import { ContextWapper, iHandleChange } from '@/types';
+import { ContextWapper, User, iHandleChange } from '@/types';
+import { CustomTableProps } from '@/common/components/CustomTable';
 
 export const PeopleDataContext = createContext<PeopleDataContextType>(null);
 
 function PeopleListContextWrapper({ children }: ContextWapper) {
   const [search, setSearch] = useState('');
+  const [userDetail, setUserDetail] = useState<User | null>(null);
 
   const resetHandler = () => {
     setSearch('');
@@ -26,7 +28,7 @@ function PeopleListContextWrapper({ children }: ContextWapper) {
     setSearch(value);
   };
 
-  const tabs = useTabChange({
+  const tabs = useTabChange<TabKeysType>({
     defaultKey: '/admin/people?tab=pending',
     resetFields: resetHandler,
   });
@@ -70,6 +72,17 @@ function PeopleListContextWrapper({ children }: ContextWapper) {
       return itm;
     });
 
+  const viewDetailsHandler: CustomTableProps<User>['onRow'] = (record) => ({
+    onClick: () => {
+      setUserDetail(record);
+    },
+    style: { cursor: 'pointer' },
+  });
+
+  const closeDetailsHandler = () => {
+    setUserDetail(null);
+  };
+
   return (
     <>
       <PeopleDataContext.Provider
@@ -81,6 +94,9 @@ function PeopleListContextWrapper({ children }: ContextWapper) {
           isLoading: getAllSwr.isLoading || getAllSwr.isValidating,
           searchHandler,
           search,
+          viewDetailsHandler,
+          closeDetailsHandler,
+          userDetail,
         }}
       >
         {children}
