@@ -73,39 +73,41 @@ function OnboardingForm({ loading }: Props) {
           </FormItem>
         ))}
       </section>
-      <section className="flex flex-col">
-        <Title tag="h6" className="mb-4 text-custom-gray_600">
-          Office information
-        </Title>
-        {officeInfoInputs.map((item) => (
-          <Fragment key={item.name}>
-            {item.name === 'parastatal' && parastatal ? (
-              <FormItem<OfficelInfo> {...item}>
-                <CustomSelect
-                  options={parastatalList}
-                  placeholder={item.placeholder}
-                />
-              </FormItem>
-            ) : null}
-            {item.name === 'office' && office ? (
-              <FormItem<OfficelInfo> {...item}>
-                <CustomSelect
-                  options={officeList}
-                  placeholder={item.placeholder}
-                />
-              </FormItem>
-            ) : null}
-            {item.name === 'department' && department ? (
-              <FormItem<OfficelInfo> {...item}>
-                <CustomSelect
-                  options={departmentList}
-                  placeholder={item.placeholder}
-                />
-              </FormItem>
-            ) : null}
-          </Fragment>
-        ))}
-      </section>
+      {parastatal ? (
+        <section className="flex flex-col">
+          <Title tag="h6" className="mb-4 text-custom-gray_600">
+            Office information
+          </Title>
+          {officeInfoInputs.map((item) => (
+            <Fragment key={item.name}>
+              {item.name === 'parastatal' && parastatal ? (
+                <FormItem<OfficelInfo> {...item}>
+                  <CustomSelect
+                    options={parastatalList}
+                    placeholder={item.placeholder}
+                  />
+                </FormItem>
+              ) : null}
+              {item.name === 'office' && office ? (
+                <FormItem<OfficelInfo> {...item}>
+                  <CustomSelect
+                    options={officeList}
+                    placeholder={item.placeholder}
+                  />
+                </FormItem>
+              ) : null}
+              {item.name === 'department' && department ? (
+                <FormItem<OfficelInfo> {...item}>
+                  <CustomSelect
+                    options={departmentList}
+                    placeholder={item.placeholder}
+                  />
+                </FormItem>
+              ) : null}
+            </Fragment>
+          ))}
+        </section>
+      ) : null}
       <section className="flex flex-col">
         <Title tag="h6" className="mb-4 text-custom-gray_600">
           Set Password

@@ -54,7 +54,7 @@ function PageContent() {
         <Form<OnboardingInfo>
           autoComplete="off"
           layout="vertical"
-          className="h-[calc(100vh_-_40px)] w-full min-w-80 max-w-[450px] rounded-[20px] bg-custom-white_100 !p-5"
+          className="w-full min-w-80 max-w-[450px] rounded-[20px] bg-custom-white_100 !p-5"
           scrollToFirstError
           onFinish={submitHandler}
           initialValues={{ ...inData }}
@@ -64,7 +64,7 @@ function PageContent() {
               Onboarding
             </Title>
           </header>
-          <div className="no-scrollbar h-[calc(100vh_-_193px)] w-100 overflow-scroll">
+          <div className="no-scrollbar max-h-[calc(100vh_-_193px)] w-100 overflow-scroll">
             <OnboardingForm />
           </div>
           <footer className="borde-t mt-4 flex justify-end border-t border-custom-gray_400 pt-4">
