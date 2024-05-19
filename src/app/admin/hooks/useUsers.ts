@@ -21,7 +21,12 @@ function useUsers(props?: UserServiceArgs) {
   const searchBy = ['email'];
   const search = searchQueryHandler(searchBy, props?.search || '');
 
-  const query = queryHandler({ search, sort: 'created_at' });
+  const query = queryHandler({
+    search,
+    sort: 'created_at',
+    page: props?.page,
+    limit: props?.limit,
+  });
 
   const { revalidateRequest } = useServiceConfig();
 
@@ -60,6 +65,7 @@ function useUsers(props?: UserServiceArgs) {
       ...getAllUsersSwr,
       data: getAllUsersSwr.data?.data || [],
       loading: getAllUsersSwr.isLoading || getAllUsersSwr.isValidating,
+      results: getAllUsersSwr.data?.results || 0,
     },
     deleteRoleSwr,
     selectedUser,

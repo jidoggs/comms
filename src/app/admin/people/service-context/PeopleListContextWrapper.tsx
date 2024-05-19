@@ -1,5 +1,5 @@
 'use client';
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import CustomUser from '@/common/components/CustomUser';
 import {
   defaultColumns,
@@ -9,7 +9,7 @@ import {
 } from './helper';
 import usePeople from '../../hooks/usePeople';
 import { PeopleDataContextType, TabKeysType } from '../types';
-import { useDebounce, useSession, useTabChange } from '@/common/hooks';
+import { useDebounce, usePagination, useTabChange } from '@/common/hooks';
 import { ContextWapper, User, iHandleChange } from '@/types';
 import { CustomTableProps } from '@/common/components/CustomTable';
 
@@ -17,15 +17,13 @@ export const PeopleDataContext = createContext<PeopleDataContextType>(null);
 
 function PeopleListContextWrapper({ children }: ContextWapper) {
   const [search, setSearch] = useState('');
+  const debounceValue = useDebounce(search);
   const [userDetail, setUserDetail] = useState<User | null>(null);
+  const pagination = usePagination();
 
   const resetHandler = () => {
     setSearch('');
-  };
-
-  const searchHandler: iHandleChange = (e) => {
-    const value = e.target.value;
-    setSearch(value);
+    pagination.pageChangeHandler(1);
   };
 
   const tabs = useTabChange<TabKeysType>({
@@ -33,15 +31,17 @@ function PeopleListContextWrapper({ children }: ContextWapper) {
     resetFields: resetHandler,
   });
 
-  const debounceValue = useDebounce(search);
-
-  const { isBasicUser } = useSession();
-
   const { getAllSwr } = usePeople({
-    can_get_all_invites: !isBasicUser,
+    can_get_all_invites: true,
     status: tabs.currentTab,
     search: debounceValue,
+    page: pagination.currentPage,
+    limit: pagination.itemPerPage,
   });
+
+  useEffect(() => {
+    pagination.setTotalCountHandler(getAllSwr.data?.results || 0);
+  }, [getAllSwr.data?.results]); //eslint-disable-line
 
   const columns = defaultColumns
     .filter((itm) =>
@@ -72,6 +72,11 @@ function PeopleListContextWrapper({ children }: ContextWapper) {
       return itm;
     });
 
+  const searchHandler: iHandleChange = (e) => {
+    const value = e.target.value;
+    setSearch(value);
+  };
+
   const viewDetailsHandler: CustomTableProps<User>['onRow'] = (record) => ({
     onClick: () => {
       setUserDetail(record);
@@ -97,6 +102,7 @@ function PeopleListContextWrapper({ children }: ContextWapper) {
           viewDetailsHandler,
           closeDetailsHandler,
           userDetail,
+          pagination,
         }}
       >
         {children}

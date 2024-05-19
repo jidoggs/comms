@@ -5,14 +5,14 @@ import {
   useServiceConfig,
   fetchOptions,
 } from '@/service/swrHooks';
-import { APIResponseSuccessModel, User } from '@/types';
+import { APIResponseSuccessModel, GenericServiceParam, User } from '@/types';
 import { queryHandler, searchQueryHandler } from '@/service/request';
 
 type RequestType = 'can_get_all_invites' | 'can_approve' | 'can_decline';
 type QueryType = 'status' | 'search';
+type PaginationType = 'page' | 'limit';
 
-type Props = Partial<Record<RequestType, boolean>> &
-  Partial<Record<QueryType, string>>;
+type Props = GenericServiceParam<RequestType, QueryType, PaginationType>;
 
 const { GET_ALL_INVITE_BY_STATUS, APPROVE_REQUEST, DECLINE_REQUEST } =
   ENDPOINTS.PEOPLE;
@@ -25,6 +25,8 @@ function usePeople(props: Props) {
     search,
     status: props.status,
     sort: '-created_at',
+    page: props.page,
+    limit: props.limit,
   });
 
   const { revalidateRequest } = useServiceConfig();

@@ -11,7 +11,7 @@ type ClassNames =
   | 'container'
   | 'header';
 
-export interface CustomTableProps<T>
+export interface CustomTableProps<T = any[]>
   extends Omit<TableProps<T>, 'pagination' | 'title' | 'className'> {
   tableTitle?: string | null | React.ReactNode;
   pageSize?: number;

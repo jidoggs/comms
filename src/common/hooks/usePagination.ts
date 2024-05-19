@@ -1,41 +1,56 @@
 /* eslint-disable no-unused-vars */
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from 'react';
 
 export type Ipagination = {
-  paginateHandler: (page: number) => void;
+  pageChangeHandler: (page: number) => void;
   setLimitHander: (limit: number) => void;
-  seTotalPageHandler: (pages: number) => void;
+  setTotalCountHandler: (count: number) => void;
   currentPage: number;
   itemPerPage: number;
   totalPages: number;
+  totalDataCount: number;
 };
 
-const usePagination = (defaultCurrentPage?: number): Ipagination => {
-  const [currentPage, setCurrentPage] = useState<number>(
-    defaultCurrentPage || 1
-  );
-  const [itemPerPage, seItemPerPage] = useState<number>(100);
-  const [totalPages, setTotalPages] = useState<number>(0);
+type args = {
+  startPage?: number;
+  pageSize?: number;
+  onPageChange?: () => void;
+};
 
-  const paginateHandler = useCallback((page: number) => {
-    setCurrentPage(page);
-  }, []);
+const usePagination = (args?: args): Ipagination => {
+  const intialData = {
+    currentPage: args?.startPage || 1,
+    itemPerPage: args?.pageSize || 20,
+    totalDataCount: 0,
+  };
+  const [data, setData] = useState(intialData);
+
+  const pageChangeHandler = useCallback(
+    (page: number) => {
+      args?.onPageChange && args.onPageChange();
+      setData((prev) => ({ ...prev, currentPage: page }));
+    },
+    [] //eslint-disable-line
+  );
 
   const setLimitHander = useCallback((limit: number) => {
-    seItemPerPage(limit);
+    setData((prev) => ({ ...prev, itemPerPage: limit }));
   }, []);
 
-  const seTotalPageHandler = useCallback((pages: number) => {
-    setTotalPages(pages);
+  const setTotalCountHandler = useCallback((count: number) => {
+    setData((prev) => ({ ...prev, totalDataCount: count }));
   }, []);
+
+  const totalPages = useMemo(() => {
+    return Math.ceil(data.totalDataCount / data.itemPerPage);
+  }, [data.itemPerPage, data.totalDataCount]);
 
   return {
-    paginateHandler,
-    currentPage,
+    ...data,
+    pageChangeHandler,
     setLimitHander,
-    itemPerPage,
+    setTotalCountHandler,
     totalPages,
-    seTotalPageHandler,
   };
 };
 

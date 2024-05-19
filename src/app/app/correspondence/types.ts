@@ -2,7 +2,6 @@
 /* eslint-disable no-unused-vars */
 import { AnimationControls } from 'framer-motion';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
-import { CustomTableProps } from '@/common/components/CustomTable';
 import { TabItemProps } from '@/common/components/CustomTab';
 import {
   CorrespondenceData,
@@ -17,14 +16,15 @@ export type CorrespondenceContextNewType = {
   handleDelete: (id: string | number) => void;
 } | null;
 
+export type TabKeysType = 'draft' | 'archive' | 'sent';
+
 export type CorrespondenceListContextType = {
   handleTabChange: (state: string) => void;
   columns: EditableTableColumnTypes;
   dataSource: CorrespondenceData[];
   loading: boolean;
-  currentTab: string;
+  currentTab: TabKeysType;
   tabItemList: TabItemProps;
-  components: CustomTableProps<any>['components'];
   searchValue: string;
   searchHandler: iHandleChange;
 } | null;

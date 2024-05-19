@@ -8,13 +8,17 @@ import { PeopleDataContext } from '../service-context/PeopleListContextWrapper';
 const TableActions = dynamic(() => import('./TableActions'));
 const RegistrationDetail = dynamic(() => import('./RegistrationDetail'));
 
-const CorrespondencePage = () => {
+const PeoplePage = () => {
   const contextInfo = useContext(PeopleDataContext);
 
   return (
     <div className="pt-4">
       <CustomTable
         tableTitle="People"
+        pageSize={contextInfo?.pagination.itemPerPage}
+        currentPage={contextInfo?.pagination.currentPage}
+        totalContent={contextInfo?.pagination.totalDataCount}
+        pageChangeCallBack={contextInfo?.pagination.pageChangeHandler}
         tabs={
           <CustomTab
             onChange={contextInfo?.handleTabChange}
@@ -32,11 +36,10 @@ const CorrespondencePage = () => {
         size="large"
         rowClassName="group"
         onRow={contextInfo?.viewDetailsHandler}
-        components={contextInfo?.components}
       />
       <RegistrationDetail />
     </div>
   );
 };
 
-export default CorrespondencePage;
+export default PeoplePage;

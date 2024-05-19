@@ -5,6 +5,7 @@ import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { EditableTableColumnTypes, User, iHandleChange } from '@/types';
 import { CustomTableProps } from '@/common/components/CustomTable';
 import { TabItemProps } from '@/common/components/CustomTab';
+import { Ipagination } from '@/common/hooks/usePagination';
 
 export type TabKeysType = 'pending' | 'onboarded' | 'approved' | 'declined';
 
@@ -15,12 +16,12 @@ export type PeopleDataContextType = {
   isLoading: boolean;
   currentTab: TabKeysType;
   tabItemList: TabItemProps;
-  components: CustomTableProps<User>['components'];
   searchHandler: iHandleChange;
   search: string;
   viewDetailsHandler: CustomTableProps<User>['onRow'];
   closeDetailsHandler: () => void;
   userDetail: User | null;
+  pagination: Ipagination;
 } | null;
 
 export type DetailContextType = {

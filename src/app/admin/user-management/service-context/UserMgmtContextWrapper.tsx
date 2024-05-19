@@ -1,7 +1,7 @@
 'use client';
-import React, { createContext, useState } from 'react';
-import { UserMgmtDataContextType } from '../types';
-import { useDebounce, useTabChange } from '@/common/hooks';
+import React, { createContext, useEffect, useState } from 'react';
+import { TabKeysType, UserMgmtDataContextType } from '../types';
+import { useDebounce, usePagination, useTabChange } from '@/common/hooks';
 import { defaultColumns, personKeys, tabItemList } from './userHelper';
 import { useRoles } from '../../hooks';
 import useUsers from '../../hooks/useUsers';
@@ -13,17 +13,14 @@ export const UserMgmtDataContext = createContext<UserMgmtDataContextType>(null);
 function UserMgmtContextWrapper({ children }: ContextWapper) {
   const [search, setSearch] = useState('');
   const searchDebounce = useDebounce(search);
+  const pagination = usePagination();
 
   const resetHandler = () => {
     setSearch('');
+    pagination.pageChangeHandler(1);
   };
 
-  const searchHandler: iHandleChange = (e) => {
-    const value = e.target.value;
-    setSearch(value);
-  };
-
-  const tabs = useTabChange({
+  const tabs = useTabChange<TabKeysType>({
     defaultKey: '/admin/user-management?tab=roles-permissions',
     resetFields: resetHandler,
   });
@@ -40,39 +37,22 @@ function UserMgmtContextWrapper({ children }: ContextWapper) {
   const { getAllUsersSwr } = useUsers({
     can_get_all: tabs.currentTab === 'users',
     search: searchDebounce,
+    page: pagination.currentPage,
+    limit: pagination.itemPerPage,
   });
 
-  const columns = defaultColumns
-    .filter(
-      (itm) => tabs.currentTab === 'users' && personKeys.includes(itm.dataIndex)
-    )
-    .map((itm) => {
-      if (tabs.currentTab === 'pending') {
-        if (itm.dataIndex === 'email') {
-          return {
-            ...itm,
-            render: (value: any) => {
-              return (
-                <>
-                  {value ? (
-                    <div className="flex items-center gap-x-2.5">
-                      <div className="size-7 rounded-full bg-red-500" />
-                      <span>{value}</span>
-                    </div>
-                  ) : null}
-                </>
-              );
-            },
-          };
-        }
-        if (itm.dataIndex === 'full_name') {
-          return {
-            ...itm,
-          };
-        }
-      }
-      return itm;
-    });
+  useEffect(() => {
+    pagination.setTotalCountHandler(getAllUsersSwr.results);
+  }, [getAllUsersSwr.results, tabs.currentTab]); //eslint-disable-line
+
+  const searchHandler: iHandleChange = (e) => {
+    const value = e.target.value;
+    setSearch(value);
+  };
+
+  const columns = defaultColumns.filter(
+    (itm) => tabs.currentTab === 'users' && personKeys.includes(itm.dataIndex)
+  );
 
   return (
     <UserMgmtDataContext.Provider
@@ -90,6 +70,7 @@ function UserMgmtContextWrapper({ children }: ContextWapper) {
         addNewRole: roleInfo.addNewRole,
         search,
         searchHandler,
+        pagination,
       }}
     >
       {children}

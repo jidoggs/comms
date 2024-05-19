@@ -1,14 +1,15 @@
 import dynamic from 'next/dynamic';
-import React, { forwardRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Title from '../Title';
 import CustomPaginationHeader from '../CustomPaginationHeader';
 import { CustomTableProps } from './type';
 import { mergeClassName } from '@/common/utils';
+import Folder from '../icons/Folder';
 export * from './type';
 
 const Table = dynamic(() => import('antd/es/table/Table'));
 
-const CustomTable = forwardRef<any, CustomTableProps<any>>((props, ref) => {
+const CustomTable = (props: CustomTableProps<any>) => {
   const {
     tabs,
     searchPanel,
@@ -22,6 +23,18 @@ const CustomTable = forwardRef<any, CustomTableProps<any>>((props, ref) => {
     rowClassName,
     ...otherTableProps
   } = props;
+  const stringClassName = typeof className === 'string';
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  const pageRef = useRef<HTMLDivElement>(null);
+
+  const calcScrollHeight = (other: number) => {
+    if (!containerRef.current) return 0;
+    return (
+      containerRef.current.offsetHeight - containerRef.current.offsetTop - other
+    );
+  };
+
   const paginationHeader = (
     <>
       {totalContent === 0 ? (
@@ -42,7 +55,27 @@ const CustomTable = forwardRef<any, CustomTableProps<any>>((props, ref) => {
       )}
     </>
   );
-  const stringClassName = typeof className === 'string';
+
+  const emptyTable = () => {
+    return (
+      <div
+        style={{
+          height: calcScrollHeight(64),
+        }}
+        className="flex items-center justify-center"
+      >
+        <Folder />
+        Empty
+      </div>
+    );
+  };
+
+  useEffect(() => {
+    pageRef.current?.children.item(0)?.scrollIntoView({
+      block: 'end',
+      behavior: 'smooth',
+    });
+  }, [JSON.stringify(dataSource)]); //eslint-disable-line
 
   return (
     <section
@@ -60,7 +93,7 @@ const CustomTable = forwardRef<any, CustomTableProps<any>>((props, ref) => {
         {tabs && paginationHeader}
         <div
           className={mergeClassName(
-            'mb-3 flex flex-wrap items-center justify-between gap-2',
+            'flex flex-wrap items-center justify-between gap-2',
             !stringClassName ? className?.['search-tabs'] : ''
           )}
         >
@@ -84,24 +117,35 @@ const CustomTable = forwardRef<any, CustomTableProps<any>>((props, ref) => {
       </div>
       <div
         className={mergeClassName(
-          'flex h-full flex-col bg-transparent',
+          'flex h-screen flex-col bg-transparent',
           !stringClassName ? className?.tableContainer : ''
         )}
       >
         <div
           className={mergeClassName(
-            'h-[calc(100vh-192px)] overflow-auto [&_.ant-empty-normal]:flex [&_.ant-empty-normal]:h-[calc(100vh-320px)] [&_.ant-empty-normal]:items-center [&_.ant-empty-normal]:justify-center [&_.ant-empty-normal_.ant-empty-image]:text-2xl',
+            'h-full [&_.ant-empty-normal]:flex [&_.ant-empty-normal]:h-[calc(100vh-360px)]  [&_.ant-empty-normal]:items-center [&_.ant-empty-normal]:justify-center [&_.ant-empty-normal_.ant-empty-image]:text-2xl',
             !stringClassName ? className?.tableWrapper : ''
           )}
+          ref={containerRef}
         >
           <Table
             {...otherTableProps}
             sticky
-            scroll={{ x: 'max-content' }}
+            scroll={{
+              x: 'max-content',
+              y: calcScrollHeight(50),
+            }}
             pagination={false}
             tableLayout="auto"
             dataSource={dataSource}
-            ref={ref}
+            locale={{
+              emptyText: emptyTable,
+            }}
+            components={{
+              body: {
+                wrapper: (props: any) => <tbody {...props} ref={pageRef} />,
+              },
+            }}
             rowClassName={mergeClassName('bg-transparent', rowClassName)}
             rowKey={otherTableProps.rowKey || '_id'}
             className={mergeClassName(
@@ -113,8 +157,6 @@ const CustomTable = forwardRef<any, CustomTableProps<any>>((props, ref) => {
       </div>
     </section>
   );
-});
-
-CustomTable.displayName = 'CustomTable';
+};
 
 export default CustomTable;

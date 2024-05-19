@@ -27,7 +27,7 @@ function CustomPaginationHeader({
   return (
     <header
       className={mergeClassName(
-        'mb-3 flex flex-wrap items-center justify-start gap-2',
+        'flex flex-wrap items-center justify-start gap-2',
         className?.container
       )}
     >
@@ -49,7 +49,15 @@ function CustomPaginationHeader({
         pageSize={pageSize}
         showTotal={(total, range) => `${range[0]}-${range[1]} of ${total}`}
         onChange={pageChangeCallBack}
-        className={className?.pagination}
+        className={mergeClassName(
+          '[&_.ant-pagination-item]:!hidden ',
+          className?.pagination
+        )}
+        showLessItems
+        showPrevNextJumpers
+        showQuickJumper={false}
+        showSizeChanger={false}
+        showTitle={false}
       />
     </header>
   );

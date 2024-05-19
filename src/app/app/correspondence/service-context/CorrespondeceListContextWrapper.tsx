@@ -1,7 +1,7 @@
 'use client';
 import React, { createContext, useState } from 'react';
 import { useDebounce, useTabChange } from '@/common/hooks';
-import { CorrespondenceListContextType } from '../types';
+import { CorrespondenceListContextType, TabKeysType } from '../types';
 import useCorrespondence from '../../hooks/useCorrespondence';
 import { ContextWapper, iHandleChange, CorrespondenceData } from '@/types';
 import { defaultColumns, tabItemList } from './helper';
@@ -25,7 +25,7 @@ function CorrespondeceListContextWrapper({ children }: ContextWapper) {
   const searchBy: (keyof CorrespondenceData)[] = ['sender'];
   const search = searchQueryHandler(searchBy, debounceValue);
 
-  const tabs = useTabChange({
+  const tabs = useTabChange<TabKeysType>({
     defaultKey: '/app/correspondence?tab=draft',
     resetFields,
   });

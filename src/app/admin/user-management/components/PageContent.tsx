@@ -5,6 +5,7 @@ import CustomTab from '@/common/components/CustomTab';
 import Title from '@/common/components/Title';
 import { UserMgmtDataContext } from '../service-context/UserMgmtContextWrapper';
 import RolesPageLoader from './permissions/RolesPageLoader';
+import CustomPaginationHeader from '@/common/components/CustomPaginationHeader';
 
 const RolesSearchAction = dynamic(() => import('./RolesSearchAction'));
 const UserTabActions = dynamic(() => import('./UserTabActions'));
@@ -16,9 +17,25 @@ const CorrespondencePage = () => {
 
   return (
     <div className="pt-4">
-      <Title tag="h3" className="px-5">
-        User Management
-      </Title>
+      <div className="px-5">
+        {contextInfo?.currentTab === 'roles-permissions' ||
+        contextInfo?.pagination.totalDataCount === 0 ? (
+          <Title tag="h3" className="text-lg">
+            User Management
+          </Title>
+        ) : (
+          <CustomPaginationHeader
+            currentPage={contextInfo?.pagination.currentPage}
+            pageChangeCallBack={contextInfo?.pagination.pageChangeHandler}
+            pageSize={contextInfo?.pagination.itemPerPage}
+            tableTitle="User Management"
+            totalContent={contextInfo?.pagination.totalDataCount}
+            className={{
+              title: 'text-lg',
+            }}
+          />
+        )}
+      </div>
       <div className="flex flex-col px-5 py-3">
         <CustomTab
           onChange={contextInfo?.handleTabChange}
@@ -27,14 +44,14 @@ const CorrespondencePage = () => {
           className="border-none [&_.ant-tabs-nav-list]:border-b [&_.ant-tabs-nav-list]:border-custom-gray_500"
           tabBarExtraContent={
             <>
-              {contextInfo?.currentTab !== 'users' ? (
+              {contextInfo?.currentTab === 'roles-permissions' ? (
                 <RolesSearchAction />
               ) : null}
               {contextInfo?.currentTab === 'users' ? <UserTabActions /> : null}
             </>
           }
         />
-        {contextInfo?.currentTab !== 'users' ? (
+        {contextInfo?.currentTab === 'roles-permissions' ? (
           <Suspense fallback={<RolesPageLoader />}>
             <RolesPermissions />
           </Suspense>
