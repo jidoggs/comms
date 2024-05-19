@@ -6,18 +6,11 @@ import MultiMinuteAction from '../corrMinute/MultiMinuteAction';
 import { DetailContext } from '../../service-context/DetailContextWrapper';
 import NotesContextWapper from '../../service-context/NotesContextWapper';
 import { mergeClassName } from '@/common/utils';
-import { MinuteData } from '@/types';
-import { useSession } from '@/common/hooks';
-
-interface minuteProps {
-  minuteData: MinuteData[];
-}
 
 // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-const Minutes = ({ minuteData }: minuteProps) => {
+const Minutes = () => {
   const detailContextInfo = useContext(DetailContext);
   const currentMinutes = detailContextInfo?.minuteData;
-  const { data: user } = useSession();
 
   // const minuteFromMe = currentMinutes?.filter(
   //   (minute) => minute?.from?._id === user._id
@@ -37,7 +30,9 @@ const Minutes = ({ minuteData }: minuteProps) => {
               minute={minute}
               className={mergeClassName(
                 'group first:mt-3 last:mb-3',
-                minute?.from?._id === user._id ? 'self-end' : 'self-start',
+                minute?.from?._id === detailContextInfo?.user._id
+                  ? 'self-end'
+                  : 'self-start',
                 detailContextInfo?.multiSelect.isMultiSelectMode
                   ? 'self-center'
                   : ''

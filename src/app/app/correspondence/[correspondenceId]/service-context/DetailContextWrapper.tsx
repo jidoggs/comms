@@ -11,6 +11,7 @@ import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { ContextWapper } from '@/types';
 import useCorrespondence from '@/app/app/hooks/useCorrespondence';
 import dayjs from 'dayjs';
+import { useSession } from '@/common/hooks';
 
 export const DetailContext = React.createContext<DetailContextType>(null);
 
@@ -25,6 +26,7 @@ function DetailContextWrapper({ children }: ContextWapper) {
   const pathname = usePathname();
   const router = useRouter();
   const activeTab = useSearchParams().get('tab') as string;
+  const { data: user } = useSession();
   // const currentId =
   const [openCorrespondenceDetails, setOpenCorrespondenceDetails] =
     useState<boolean>(false);
@@ -125,6 +127,7 @@ function DetailContextWrapper({ children }: ContextWapper) {
           multiSelect,
           minuteData,
           sampleTimeline,
+          user,
         }}
       >
         {children}

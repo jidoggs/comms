@@ -9,6 +9,7 @@ import {
   EditableTableColumnTypes,
   iHandleChange,
   MinuteData,
+  User,
 } from '@/types';
 import { Dayjs } from 'dayjs';
 
@@ -51,6 +52,7 @@ export type DetailContextType = {
     date: Dayjs;
     img: string;
   };
+  user: User;
 } | null;
 
 export type MultiSelectType = {

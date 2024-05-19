@@ -37,6 +37,8 @@ const MinuteCard = ({ className, minute }: Props) => {
   } as any;
 
   // console.log('minute', minute);
+  const minuteFromMe = minute?.from?._id === detailContextInfo?.user._id;
+  // console.log('minuteFromMe', minuteFromMe);
 
   return (
     <div
@@ -47,9 +49,7 @@ const MinuteCard = ({ className, minute }: Props) => {
         <div
           className={mergeClassName(
             'z-[2] flex w-full flex-col gap-y-1 rounded-xl bg-custom-white_100 p-0.5 shadow-wordBox md:w-100',
-            minute.messageFrom
-              ? 'order-2 rounded-br-none'
-              : 'order-1 rounded-bl-none'
+            minuteFromMe ? 'order-2 rounded-br-none' : 'order-1 rounded-bl-none'
           )}
         >
           <header className="flex items-center justify-between p-1 hover:rounded-t-xl hover:bg-custom-gray_100">
@@ -134,18 +134,16 @@ const MinuteCard = ({ className, minute }: Props) => {
           <SideMenu
             className={mergeClassName(
               'invisible ease-in-out group-hover:visible',
-              minute.messageFrom ? 'order-1' : 'order-2'
+              minuteFromMe ? 'order-1' : 'order-2'
             )}
-            placement={minute.messageFrom ? 'left' : 'right'}
+            placement={minuteFromMe ? 'left' : 'right'}
           />
         )}
       </div>
       <AnimatePresence>
         {noteContextInfo?.showNote ? (
           <Note
-            className={mergeClassName(
-              minute.messageFrom ? 'self-end' : 'self-start'
-            )}
+            className={mergeClassName(minuteFromMe ? 'self-end' : 'self-start')}
           />
         ) : null}
       </AnimatePresence>

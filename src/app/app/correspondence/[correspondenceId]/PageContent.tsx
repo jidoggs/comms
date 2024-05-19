@@ -55,9 +55,7 @@ const PageContent = () => {
           }}
           className="flex w-full items-center justify-between"
         >
-          {detailsData?.activeTab === 'minutes' ? (
-            <Minutes minuteData={detailsData?.minuteData} />
-          ) : null}
+          {detailsData?.activeTab === 'minutes' ? <Minutes /> : null}
           {detailsData?.activeTab === 'timelines' ? <Timelines /> : null}
           {detailsData?.activeTab === 'documents' ? <Documents /> : null}
         </motion.div>

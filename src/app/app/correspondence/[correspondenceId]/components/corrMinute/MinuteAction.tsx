@@ -23,7 +23,7 @@ const MinuteAction = () => {
     <div className="w-full rounded-md bg-white drop-shadow-chat ">
       <div className="flex flex-col p-3">
         <div className="mb-2 flex items-center justify-between">
-          <div className="left">Left</div>
+          <div className="left">New Minute</div>
           <div className="flex gap-1">
             <CustomButton
               description="Create a meeting"
