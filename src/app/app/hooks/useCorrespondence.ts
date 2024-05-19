@@ -53,7 +53,8 @@ const useCorrespondence = (props: CorrespondenceServiceArgs) => {
   const createMinuteSwr = useAuthRequest<MinuteData>(
     props._id && props?.can_create ? CREATE_MINUTE(props._id) : '',
     {
-      onSuccess: revalidateMinuteListHandler,
+      // onSuccess: revalidateMinuteListHandler,
+      onSuccess: (res) => revalidateMinuteListHandler(res, props._id as string),
     }
   );
 

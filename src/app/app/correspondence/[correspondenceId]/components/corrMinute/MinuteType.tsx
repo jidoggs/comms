@@ -11,13 +11,6 @@ interface MinuteTypeProps {
 }
 
 const MinuteType = ({ fileSend, minute, userDetails }: MinuteTypeProps) => {
-  // const userDetails = minute.userDetails;
-  // const initials = useIntials(minute.userDetails.name);
-
-  // eslint-disable-next-line no-console
-  //   console.log('minute', minute);
-
-  // const MinuteText = minute?.minuteDetails?.minuteText;
   const MinuteText = minute?.minute;
 
   return (

@@ -44,7 +44,6 @@ function NewCorrespondenceForm({ handleSubmit, form, currentCorr }: Props) {
     can_get_all_recipients: true,
     recipient: searchDebounce,
   });
-  // console.log('context?.data', context?.data);
 
   const onSearch = (value: string) => {
     setSearch(value);
@@ -114,8 +113,6 @@ function NewCorrespondenceForm({ handleSubmit, form, currentCorr }: Props) {
         : null,
     });
   }, [currentCorr]);
-
-  // console.log('currentCorr', currentCorr);
 
   return (
     <Form layout="vertical" form={form} onFinish={modifiedHandleSubmit}>

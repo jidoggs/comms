@@ -1,4 +1,5 @@
-import React, { Suspense, useContext } from 'react';
+'use client';
+import React, { Suspense, useContext, useEffect, useRef } from 'react';
 import MinuteCard from '../corrMinute/MinuteCard';
 import MinuteAction from '../corrMinute/MinuteAction';
 import MultiMinuteAction from '../corrMinute/MultiMinuteAction';
@@ -11,20 +12,24 @@ import MinuteContextWrapper from '../../service-context/MinuteContextWrapper';
 const Minutes = () => {
   const detailContextInfo = useContext(DetailContext);
   const currentMinutes = detailContextInfo?.minuteData;
+  const minutesContainerRef = useRef<HTMLDivElement>(null);
 
-  // const minuteFromMe = currentMinutes?.filter(
-  //   (minute) => minute?.from?._id === user._id
-  // );
-
-  // console.log('detailContextInfo', detailContextInfo?.minuteData);
-  // console.log('user', user);
-  // console.log('minuteFromMe', minuteFromMe);
+  // Scroll to bottom when currentMinutes changes or on initial render
+  useEffect(() => {
+    const container = minutesContainerRef.current;
+    if (container) {
+      container.scrollTop = container.scrollHeight;
+    }
+  }, [currentMinutes]);
 
   return (
     <Suspense>
       <MinuteContextWrapper>
         <div className="relative flex size-full flex-col justify-end">
-          <div className="flex h-full flex-col gap-3 overflow-y-auto px-5 transition-[width]">
+          <div
+            ref={minutesContainerRef} // Attach the ref to the container
+            className="flex h-full flex-col gap-3 overflow-y-auto scroll-smooth px-5 transition-[width]"
+          >
             {currentMinutes
               ?.slice() // Create a copy of the array to avoid mutating the original
               .sort((a, b) => {

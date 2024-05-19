@@ -11,8 +11,6 @@ type Props = {
 export const TableRowActionContext = React.createContext<Props | null>(null);
 
 function TableRowAction({ data }: Props) {
-  // console.log('data', data);
-
   const icon = 'transition-all hover:scale-125 group/button-hover:scale-125';
   return (
     <TableRowActionContext.Provider value={{ data }}>

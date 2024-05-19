@@ -1,6 +1,5 @@
 import dayjs, { Dayjs } from 'dayjs';
-import React from // { useContext }
-'react';
+import React from 'react'; // { useContext }
 import CustomAvatar from '../Avatar/CustomAvatar';
 import Title from '../Title';
 import { generateInitials, mergeClassName } from '@/common/utils';
@@ -25,11 +24,6 @@ export const FormattedDate = ({ date }: { date: Dayjs | undefined }) => {
 };
 
 const TimelineComponent = ({ timeline, nogap }: TimelineProps) => {
-  // const detailsData = useContext(DetailContext);
-  // const currentData = detailsData?.minuteData[0];
-  // console.log('currentData', currentData);
-  // console.log('detailsData', detailsData);
-
   return (
     <div className="flex items-center justify-start gap-3">
       <CustomAvatar

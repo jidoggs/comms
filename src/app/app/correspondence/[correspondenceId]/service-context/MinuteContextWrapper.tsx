@@ -47,7 +47,7 @@ const MinuteContextWrapper = ({ children }: ContextWapper) => {
   ) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
   const options = useMemo(() => {
-    if (!recipientsData) return []; // Handle null or undefined data
+    if (!recipientsData) return [];
 
     const recipientsDataKeys = Object.keys(recipientsData) as Array<
       keyof typeof recipientsData
@@ -68,7 +68,7 @@ const MinuteContextWrapper = ({ children }: ContextWapper) => {
       onRecipientChange(value, selectedType); // Call the parent's callback
     },
     [onRecipientChange]
-  ); // Add onRecipientChange as a dependency
+  );
 
   const initialValues = {
     //   last_minute: '6646ece9513f6338ab39e8f3',
@@ -90,8 +90,6 @@ const MinuteContextWrapper = ({ children }: ContextWapper) => {
   const { trigger, isMutating: createMinuteLoading } = createMinuteSwr;
 
   const minuteFormSubmitHandler = async (values: any) => {
-    // eslint-disable-next-line no-console
-    // console.log('values', values);
     const data = {
       last_minute: allMinuteData[allMinuteData.length - 1]?._id,
       //   subject: allMinuteData[allMinuteData.length - 1]?.correspondence?.subject,
@@ -100,7 +98,9 @@ const MinuteContextWrapper = ({ children }: ContextWapper) => {
       // parastatal: parastatalId,
     };
 
-    trigger({ data }).catch((error) => messageHandler('error', error));
+    trigger({ data })
+      .then(() => form.resetFields())
+      .catch((error) => messageHandler('error', error));
   };
 
   return (
