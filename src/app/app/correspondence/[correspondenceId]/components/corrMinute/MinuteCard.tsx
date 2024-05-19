@@ -14,9 +14,10 @@ import AvatarGroup from '@/common/components/Avatar/AvatarGroup';
 import MoreFile from '@/common/components/icons/MoreFile';
 import { generateInitials, mergeClassName } from '@/common/utils';
 import { dummyAvatarData } from '@/common/mockData';
+import dayjs from 'dayjs';
 
 type Props = {
-  minuteId: number;
+  minuteId: string;
   minute: any;
   className?: string;
 };
@@ -29,14 +30,13 @@ const MinuteCard = ({ className, minute }: Props) => {
     detailContextInfo?.handleUpdateFile(files);
   };
 
-  const userDetails = minute.userDetails;
-  const initials = generateInitials(minute.userDetails.name);
-
-  const formattedDate = '4:22pm, 16 Feb 2024';
+  // const formattedDate = '4:22pm, 16 Feb 2024';
 
   const customStyles: React.CSSProperties = {
     '--defaultNoteColor': noteContextInfo?.color,
   } as any;
+
+  // console.log('minute', minute);
 
   return (
     <div
@@ -54,22 +54,22 @@ const MinuteCard = ({ className, minute }: Props) => {
         >
           <header className="flex items-center justify-between p-1 hover:rounded-t-xl hover:bg-custom-gray_100">
             <div className="flex items-center gap-x-1">
-              {userDetails.image ? (
+              {minute?.from?.image ? (
                 <CustomAvatar
-                  src={userDetails.image}
+                  src={minute?.from?.image}
                   className="mr-2"
                   size="default"
                 />
               ) : (
                 <CustomAvatar style={{ backgroundColor: '#87d068' }}>
-                  {initials}
+                  {generateInitials(minute?.from?.firstname)}
                 </CustomAvatar>
               )}
               <div className="flex flex-col">
-                <Title bold={false}>{userDetails.name}</Title>
-                <Title small className="leading-[15.18px] text-gray-600">
-                  {userDetails.title} - {userDetails.office}
-                </Title>
+                <Title bold={false}>{minute?.from?.firstname}</Title>
+                {/* <Title small className="leading-[15.18px] text-gray-600">
+                  {minute?.from?.title} - {minute?.from?.office}
+                </Title> */}
               </div>
             </div>
             <CustomButton
@@ -82,15 +82,46 @@ const MinuteCard = ({ className, minute }: Props) => {
           <MinuteType
             fileSend={fileSend}
             minute={minute}
-            userDetails={userDetails}
+            // userDetails={userDetails}
             // formattedDate={formattedDate}
           />
 
           <footer className="flex w-full items-center justify-between border-t border-custom-gray_500 px-1 pt-1">
-            <Title className="text-custom-gray_600">{formattedDate}</Title>
+            <Title className="text-custom-gray_600">
+              {dayjs(minute.created_at).format('h:mma, DD MMM YYYY')}
+            </Title>
             <div className="flex items-center gap-x-1">
-              <CustomAvatar src="/images/user1.jpeg" size={30} />
-              <AvatarGroup avatarData={dummyAvatarData} maxCount={3} />
+              {minute?.from?.image ? (
+                <CustomAvatar
+                  src={minute?.from?.image}
+                  className="mr-2"
+                  size="default"
+                />
+              ) : (
+                <CustomAvatar style={{ backgroundColor: '#87d068' }}>
+                  {generateInitials(minute?.from?.firstname)}
+                </CustomAvatar>
+              )}
+              {/* <CustomAvatar src="/images/user1.jpeg" size={30} /> */}
+              <AvatarGroup
+                avatarData={dummyAvatarData}
+                maxCount={minute?.hasAccess?.length}
+                // maxCount={2}
+              >
+                {minute?.hasAccess?.map((access: any) => {
+                  access?.image ? (
+                    <CustomAvatar
+                      src={access?.image}
+                      className="mr-2"
+                      size="default"
+                    />
+                  ) : (
+                    <CustomAvatar style={{ backgroundColor: '#87d068' }}>
+                      {generateInitials(access?.firstname)}
+                    </CustomAvatar>
+                  );
+                })}
+              </AvatarGroup>
             </div>
           </footer>
         </div>

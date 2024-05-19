@@ -25,6 +25,7 @@ function DetailContextWrapper({ children }: ContextWapper) {
   const pathname = usePathname();
   const router = useRouter();
   const activeTab = useSearchParams().get('tab') as string;
+  // const currentId =
   const [openCorrespondenceDetails, setOpenCorrespondenceDetails] =
     useState<boolean>(false);
   const [correspondenceFile, setCorrespondenceFile] = useState<FileList | null>(

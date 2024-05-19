@@ -17,10 +17,12 @@ const MinuteType = ({ fileSend, minute, userDetails }: MinuteTypeProps) => {
   // eslint-disable-next-line no-console
   //   console.log('minute', minute);
 
-  const MinuteText = minute.minuteDetails.minuteText;
+  // const MinuteText = minute?.minuteDetails?.minuteText;
+  const MinuteText = minute?.minute;
 
   return (
     <>
+      <TextMinute MinuteText={MinuteText} />
       {minute?.type === 'text' ? <TextMinute MinuteText={MinuteText} /> : null}
       {minute?.type === 'document' ? <FileMinute fileSend={fileSend} /> : null}
       {minute?.type === 'letter' ? <LetterMinute /> : null}

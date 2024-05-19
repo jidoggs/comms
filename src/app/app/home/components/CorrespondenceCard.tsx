@@ -12,6 +12,7 @@ import Folder from '@/common/components/icons/Folder';
 // import Send from '@/common/components/icons/Send';
 // import { demoCorrespondence } from './demodata';
 import NewMinute from './NewMinute';
+// import _ from 'lodash';
 
 interface Props {
   minute: any;
@@ -20,8 +21,12 @@ interface Props {
 // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
 const CorrespondenceCard = ({ minute }: Props) => {
   const router = useRouter();
+  // const minuteTitle = _.snakeCase(minute.correspondence.subject);
 
   const handleClick = () => {
+    // router.push(
+    //   `correspondence/${minuteTitle}&id=${minute.correspondence._id}`
+    // );
     router.push(`correspondence/${minute.correspondence._id}`);
     // router.push(`correspondence/${correspondence.minute}`);
     // router.push(`correspondence/${minute.correspondence?._id}`);
