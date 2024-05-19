@@ -7,7 +7,6 @@ import { DetailContext } from '../../service-context/DetailContextWrapper';
 import NotesContextWapper from '../../service-context/NotesContextWapper';
 import { mergeClassName } from '@/common/utils';
 
-// eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
 const Minutes = () => {
   const detailContextInfo = useContext(DetailContext);
   const currentMinutes = detailContextInfo?.minuteData;
