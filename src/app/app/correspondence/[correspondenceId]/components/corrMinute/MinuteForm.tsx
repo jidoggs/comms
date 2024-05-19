@@ -8,18 +8,25 @@ import Title from '@/common/components/Title';
 import TextArea from 'antd/es/input/TextArea';
 import dynamic from 'next/dynamic';
 import { MinuteContext } from '../../service-context/MinuteContextWrapper';
+import { CorrAppContext } from '@/app/app/service-context/AppContextWrapper';
 
 const FormItem = dynamic(() => import('antd/es/form/FormItem'), { ssr: true });
 
 const MinuteForm = () => {
   const minuteContextData = useContext(MinuteContext);
+  const appContextData = useContext(CorrAppContext);
 
   return (
     <Form
       className="flex flex-col gap-2"
-      form={minuteContextData?.form}
-      initialValues={minuteContextData?.initialValues}
-      onFinish={minuteContextData?.minuteFormSubmitHandler}
+      form={minuteContextData?.form || appContextData?.form}
+      initialValues={
+        minuteContextData?.initialValues || appContextData?.initialValues
+      }
+      onFinish={
+        minuteContextData?.minuteFormSubmitHandler ||
+        appContextData?.minuteFormSubmitHandler
+      }
     >
       <div className="flex flex-row items-center justify-center gap-2 rounded-md border border-custom-gray_400 p-2">
         <Title className="pr-2">Primary:</Title>
@@ -34,14 +41,12 @@ const MinuteForm = () => {
             showSearch
             // placeholder="Select a person"
             optionFilterProp="children"
-            onChange={minuteContextData?.onChange}
-            onSearch={minuteContextData?.onSearch}
-            filterOption={minuteContextData?.filterOption}
-            options={minuteContextData?.options}
+            onChange={appContextData?.onChange}
+            onSearch={appContextData?.onSearch}
+            filterOption={appContextData?.filterOption}
+            options={appContextData?.options}
             notFoundContent={
-              minuteContextData?.recipientIsLoading ? (
-                <Spin size="small" />
-              ) : null
+              appContextData?.recipientIsLoading ? <Spin size="small" /> : null
             }
             allowClear
             className="!border-none !bg-custom-white_100"
@@ -67,7 +72,10 @@ const MinuteForm = () => {
           htmlType="submit"
           icon={<Send />}
           size="small"
-          loading={minuteContextData?.createMinuteLoading}
+          loading={
+            minuteContextData?.createMinuteLoading ||
+            appContextData?.createMinuteLoading
+          }
         >
           Push
         </CustomButton>

@@ -1,5 +1,4 @@
 import { APIResponseSuccessModel, MinuteData } from '@/types';
-import React from 'react';
 
 export type HomeContextType = {
   minuteData: APIResponseSuccessModel<MinuteData[]> | never[];

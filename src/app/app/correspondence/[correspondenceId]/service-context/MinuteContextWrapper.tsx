@@ -1,15 +1,7 @@
 'use client';
-import React, {
-  createContext,
-  Suspense,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from 'react';
+import React, { createContext, Suspense, useContext } from 'react';
 import { MinuteContextType } from '../../types';
 import { ContextWapper } from '@/types';
-import { useDebounce } from '@/common/hooks';
 import useCorrespondence from '@/app/app/hooks/useCorrespondence';
 import { useForm } from 'antd/es/form/Form';
 import { DetailContext } from './DetailContextWrapper';
@@ -20,55 +12,6 @@ export const MinuteContext = createContext<MinuteContextType>(null);
 const MinuteContextWrapper = ({ children }: ContextWapper) => {
   const detailContextInfo = useContext(DetailContext);
   const [form] = useForm();
-  const [search, setSearch] = useState('');
-  const [selectedRecipient, setSelectedRecipient] = useState<{
-    value: string;
-    type: string;
-  } | null>(null);
-  const searchDebounce = useDebounce(search);
-  const { getRecipientsSwr } = useCorrespondence({
-    can_get_all_recipients: true,
-    recipient: searchDebounce,
-  });
-
-  const recipientsData: any = getRecipientsSwr?.data?.data || [];
-  const recipientIsLoading = getRecipientsSwr.isLoading;
-  const onSearch = (value: string) => {
-    setSearch(value);
-  };
-
-  const onRecipientChange = (value: string, type: string) => {
-    setSelectedRecipient({ value, type });
-  };
-  // Filter `option.label` match the user type `input`
-  const filterOption = (
-    input: string,
-    option?: { label: string; value: string }
-  ) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
-
-  const options = useMemo(() => {
-    if (!recipientsData) return [];
-
-    const recipientsDataKeys = Object.keys(recipientsData) as Array<
-      keyof typeof recipientsData
-    >;
-
-    return recipientsDataKeys.flatMap((key) =>
-      recipientsData[key]?.map((item: any) => ({
-        value: item._id,
-        type: key,
-        label: item.name ? item.name : `${item.firstname} ${item.surname}`,
-      }))
-    );
-  }, [recipientsData]);
-
-  const onChange = useCallback(
-    (value: string, option: any) => {
-      const selectedType = option?.type;
-      onRecipientChange(value, selectedType); // Call the parent's callback
-    },
-    [onRecipientChange]
-  );
 
   const initialValues = {
     //   last_minute: '6646ece9513f6338ab39e8f3',
@@ -108,13 +51,13 @@ const MinuteContextWrapper = ({ children }: ContextWapper) => {
       <MinuteContext.Provider
         value={{
           form,
-          selectedRecipient,
-          onSearch,
-          recipientsData,
-          filterOption,
-          options,
-          onChange,
-          recipientIsLoading,
+          //   selectedRecipient,
+          //   onSearch,
+          //   recipientsData,
+          //   filterOption,
+          //   options,
+          //   onChange,
+          //   recipientIsLoading,
           initialValues,
           minuteFormSubmitHandler,
           genDetailsData: detailContextInfo,

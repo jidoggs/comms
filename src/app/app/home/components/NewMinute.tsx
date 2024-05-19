@@ -2,19 +2,31 @@
 import CustomButton from '@/common/components/CustomButton';
 import CustomModal from '@/common/components/CustomModal';
 import Send from '@/common/components/icons/Send';
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import ExpandedMinuteForm from '../../correspondence/[correspondenceId]/components/corrMinute/ExpandedMinuteForm';
+import { CorrAppContext } from '../../service-context/AppContextWrapper';
 
-const NewMinute = () => {
+const NewMinute = ({ minute }: any) => {
+  // const detailsData = useContext(DetailContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const appContextData = useContext(CorrAppContext);
+
   const showModal = () => {
+    appContextData?.setCorrId(minute.correspondence._id);
     setIsModalOpen(true);
   };
 
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+
+  useEffect(() => {
+    if (appContextData?.closeModal) {
+      setIsModalOpen(false);
+    }
+  }, [appContextData?.closeModal]);
+
   return (
     <>
       {/* <CustomButton
@@ -41,7 +53,10 @@ const NewMinute = () => {
         description="Push"
         type="primary"
         icon={<Send size={18} />}
-        onClick={showModal}
+        onClick={() => {
+          showModal();
+          appContextData?.setCorrId(minute.correspondence._id);
+        }}
       />
       <CustomModal width={500} open={isModalOpen} onCancel={handleCancel}>
         <ExpandedMinuteForm />

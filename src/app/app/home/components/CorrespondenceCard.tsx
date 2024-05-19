@@ -3,36 +3,30 @@ import CreateMeeting from '../../components/actions/CreateMeeting';
 import CreateProject from '../../components/actions/CreateProject';
 import AvatarGroup from '@/common/components/Avatar/AvatarGroup';
 import CustomAvatar from '@/common/components/Avatar/CustomAvatar';
-// import CustomButton from '@/common/components/CustomButton';
 import Title from '@/common/components/Title';
 import { dummyAvatarData } from '@/common/mockData';
 import { iHandleClick, iHandleKeyboard } from '@/types';
 import { generateInitials } from '@/common/utils';
 import Folder from '@/common/components/icons/Folder';
-// import Send from '@/common/components/icons/Send';
-// import { demoCorrespondence } from './demodata';
 import NewMinute from './NewMinute';
-// import _ from 'lodash';
 
 interface Props {
   minute: any;
 }
 
-// eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
 const CorrespondenceCard = ({ minute }: Props) => {
   const router = useRouter();
-  // const minuteTitle = _.snakeCase(minute.correspondence.subject);
 
   const handleClick = () => {
     // router.push(
     //   `correspondence/${minuteTitle}&id=${minute.correspondence._id}`
     // );
+    // appContextData?.setCorrId(minute.correspondence._id);
     router.push(`correspondence/${minute.correspondence._id}`);
-    // router.push(`correspondence/${correspondence.minute}`);
-    // router.push(`correspondence/${minute.correspondence?._id}`);
   };
   const handleKeyDown: iHandleKeyboard = (e) => {
     if (e.key === 'Tab') return;
+
     handleClick();
   };
 
@@ -103,7 +97,7 @@ const CorrespondenceCard = ({ minute }: Props) => {
                 icon={<Send />}
                 description="Push"
               /> */}
-              <NewMinute />
+              <NewMinute minute={minute} />
             </div>
           </div>
         </div>

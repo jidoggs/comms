@@ -61,6 +61,34 @@ export type DetailContextType = {
 
 export type MinuteContextType = {
   form: FormInstance<any>;
+  // recipientsData: RecipientData | never[];
+  // onSearch: (value: string) => void;
+  // filterOption: (
+  //   input: string,
+  //   option?: {
+  //     label: string;
+  //     value: string;
+  //   }
+  // ) => boolean;
+  // options: any[];
+  // onChange: (value: string, option: any) => void;
+  // selectedRecipient: {
+  //   value: string;
+  //   type: string;
+  // } | null;
+  // recipientIsLoading: boolean;
+  initialValues: {
+    minute: string;
+    recipient: string;
+    attach: never[];
+  };
+  minuteFormSubmitHandler: (values: any) => Promise<void>;
+  genDetailsData: DetailContextType;
+  createMinuteLoading: boolean;
+} | null;
+
+export type AppContextType = {
+  form: FormInstance<any>;
   recipientsData: RecipientData | never[];
   onSearch: (value: string) => void;
   filterOption: (
@@ -83,8 +111,12 @@ export type MinuteContextType = {
     attach: never[];
   };
   minuteFormSubmitHandler: (values: any) => Promise<void>;
-  genDetailsData: DetailContextType;
+  // genDetailsData: DetailContextType;
   createMinuteLoading: boolean;
+  setCorrId: (_id: string) => void;
+  correspondenceId: string | undefined;
+  closeModal: boolean;
+  setCloseModal: React.Dispatch<React.SetStateAction<boolean>>;
 } | null;
 
 export type MultiSelectType = {
