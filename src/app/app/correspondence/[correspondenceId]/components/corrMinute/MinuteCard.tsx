@@ -62,7 +62,10 @@ const MinuteCard = ({ className, minute }: Props) => {
                 />
               ) : (
                 <CustomAvatar style={{ backgroundColor: '#87d068' }}>
-                  {generateInitials(minute?.from?.firstname)}
+                  {generateInitials(
+                    minute?.from?.firstname,
+                    minute?.from?.surname
+                  )}
                 </CustomAvatar>
               )}
               <div className="flex flex-col">
@@ -91,15 +94,18 @@ const MinuteCard = ({ className, minute }: Props) => {
               {dayjs(minute.created_at).format('h:mma, DD MMM YYYY')}
             </Title>
             <div className="flex items-center gap-x-1">
-              {minute?.from?.image ? (
+              {minute?.recipient?.image ? (
                 <CustomAvatar
-                  src={minute?.from?.image}
+                  src={minute?.recipient?.image}
                   className="mr-2"
                   size="default"
                 />
               ) : (
                 <CustomAvatar style={{ backgroundColor: '#87d068' }}>
-                  {generateInitials(minute?.from?.firstname)}
+                  {generateInitials(
+                    minute?.recipient?.firstname,
+                    minute?.recipient?.surname
+                  )}
                 </CustomAvatar>
               )}
               {/* <CustomAvatar src="/images/user1.jpeg" size={30} /> */}

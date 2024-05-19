@@ -27,7 +27,6 @@ function DetailContextWrapper({ children }: ContextWapper) {
   const router = useRouter();
   const activeTab = useSearchParams().get('tab') as string;
   const { data: user } = useSession();
-  // const currentId =
   const [openCorrespondenceDetails, setOpenCorrespondenceDetails] =
     useState<boolean>(false);
   const [correspondenceFile, setCorrespondenceFile] = useState<FileList | null>(
@@ -95,6 +94,7 @@ function DetailContextWrapper({ children }: ContextWapper) {
       setCorrespondenceFile(files);
     }
   };
+
   const { getCorrMinListSwr } = useCorrespondence({
     can_get_all: true,
     _id: correspondenceId.toString(),
@@ -128,6 +128,8 @@ function DetailContextWrapper({ children }: ContextWapper) {
           minuteData,
           sampleTimeline,
           user,
+          // onSearch,
+          // recipientData,
         }}
       >
         {children}

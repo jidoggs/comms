@@ -1,6 +1,7 @@
 import {
   fetchOptions,
   useAuthGetRequest,
+  useAuthRequest,
   useFormDataAuthRequest,
   useServiceConfig,
 } from '@/service/swrHooks';
@@ -16,6 +17,7 @@ import { queryHandler } from '@/service/request';
 
 const {
   CREATE,
+  CREATE_MINUTE,
   GET_ALL,
   GET_ALL_MINUTES,
   GET_ALL_MINUTES_IN_CORR,
@@ -34,11 +36,24 @@ const useCorrespondence = (props: CorrespondenceServiceArgs) => {
   const revalidateListHandler = (res: APIResponseSuccessModel) => {
     revalidateRequest(GET_ALL + query, res.message);
   };
+  const revalidateMinuteListHandler = (
+    res: APIResponseSuccessModel,
+    _id: string
+  ) => {
+    revalidateRequest(GET_ALL_MINUTES_IN_CORR(_id) + query, res.message);
+  };
 
   const createCorrSwr = useFormDataAuthRequest<CorrespondenceData>(
     props?.can_create ? CREATE : '',
     {
       onSuccess: revalidateListHandler,
+    }
+  );
+
+  const createMinuteSwr = useAuthRequest<MinuteData>(
+    props._id && props?.can_create ? CREATE_MINUTE(props._id) : '',
+    {
+      onSuccess: revalidateMinuteListHandler,
     }
   );
 
@@ -63,6 +78,7 @@ const useCorrespondence = (props: CorrespondenceServiceArgs) => {
 
   return {
     createCorrSwr,
+    createMinuteSwr,
     getListSwr,
     getMinListSwr,
     getCorrMinListSwr,
