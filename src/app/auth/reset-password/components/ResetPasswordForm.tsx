@@ -22,7 +22,7 @@ const ResetPasswordForm = () => {
   }).resetPasswordSwr;
   const searchParams = useSearchParams();
   const email = searchParams.get('email');
-  const code = searchParams.get('token');
+  const code = searchParams.get('code');
 
   const onFinish = (data: FieldType) => {
     trigger({

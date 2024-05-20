@@ -12,12 +12,10 @@ const HomeContextWrapper = ({ children }: ContextWrapper) => {
     can_get_all: true,
   });
 
-  const minuteData: any = getMinListSwr?.data?.data || [];
+  const minuteData = getMinListSwr.data;
 
-  const queuedList = minuteData.filter((list: any) => list.status === 'queue');
-  const ongoingList = minuteData?.filter(
-    (list: any) => list.status === 'ongoing'
-  );
+  const queuedList = minuteData.filter((list) => list.status === 'queue');
+  const ongoingList = minuteData?.filter((list) => list.status === 'ongoing');
   const triggerSelectedMinute = (value: MinuteData) => {
     setSelectedMinute(value);
   };

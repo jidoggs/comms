@@ -16,8 +16,6 @@ type Props = {
   loading?: boolean;
 };
 
-const can_query_by_id = false;
-
 function OnboardingForm({ loading }: Props) {
   const searchParams = useSearchParams();
   const email = searchParams.get('email') || '';
@@ -52,10 +50,10 @@ function OnboardingForm({ loading }: Props) {
     label: item?.name,
     value: item?._id,
   }));
-
-  const officeSwr = office && can_query_by_id ? getOfficeByIdSwr : getOfficeSwr;
-  const departmentSwr =
-    department && can_query_by_id ? getDepartmentByIdSwr : getDepartmentSwr;
+  //we are quering by id so the users can also onboard themselves into an office or department
+  // if user already has a predefined department or office they can only onboard to them
+  const officeSwr = office ? getOfficeByIdSwr : getOfficeSwr;
+  const departmentSwr = department ? getDepartmentByIdSwr : getDepartmentSwr;
 
   const officeList = officeSwr.data?.data.map((item) => ({
     label: item?.name,
