@@ -1,7 +1,7 @@
-import { APIResponseSuccessModel, MinuteData } from '@/types';
+import { MinuteData } from '@/types';
 
 export type HomeContextType = {
-  minuteData: APIResponseSuccessModel<MinuteData[]> | never[];
+  minuteData: MinuteData[];
   queuedList: any;
   ongoingList: any;
   selectedMinute: MinuteData | undefined;

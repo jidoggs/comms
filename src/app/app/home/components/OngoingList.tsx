@@ -8,7 +8,6 @@ import { HomeContext } from '../service-context/HomeContextWrapper';
 const OngoingList = () => {
   const homeContextData = useContext(HomeContext);
   const minuteData = homeContextData?.ongoingList;
-
   const uniqueCorrespondences = minuteData.reduce(
     (acc: any[], current: any) => {
       if (
