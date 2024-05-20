@@ -2,9 +2,9 @@ import dynamic from 'next/dynamic';
 import React, { useEffect, useRef } from 'react';
 import Title from '../Title';
 import CustomPaginationHeader from '../CustomPaginationHeader';
-import { CustomTableProps } from './type';
+import EmptyList from '../EmptyList';
 import { mergeClassName } from '@/common/utils';
-import Folder from '../icons/Folder';
+import { CustomTableProps } from './type';
 export * from './type';
 
 const Table = dynamic(() => import('antd/es/table/Table'));
@@ -57,17 +57,7 @@ const CustomTable = (props: CustomTableProps<any>) => {
   );
 
   const emptyTable = () => {
-    return (
-      <div
-        style={{
-          height: calcScrollHeight(64),
-        }}
-        className="flex items-center justify-center"
-      >
-        <Folder />
-        Empty
-      </div>
-    );
+    return <EmptyList style={{ height: calcScrollHeight(64) }} />;
   };
 
   useEffect(() => {
@@ -123,7 +113,7 @@ const CustomTable = (props: CustomTableProps<any>) => {
       >
         <div
           className={mergeClassName(
-            'h-full [&_.ant-empty-normal]:flex [&_.ant-empty-normal]:h-[calc(100vh-360px)]  [&_.ant-empty-normal]:items-center [&_.ant-empty-normal]:justify-center [&_.ant-empty-normal_.ant-empty-image]:text-2xl',
+            'h-full',
             !stringClassName ? className?.tableWrapper : ''
           )}
           ref={containerRef}

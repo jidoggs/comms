@@ -1,26 +1,32 @@
+import React, { useState } from 'react';
+import FormItem, { FormItemProps } from 'antd/es/form/FormItem';
 import CustomInput from '@/common/components/CustomInput';
 import { CustomInputProps } from '@/common/components/CustomInput/types';
-import CustomSelect from '@/common/components/CustomSelect';
-import CloseCircled from '@/common/components/icons/CloseCircled';
+import CustomSelect, {
+  CustomSelectProps,
+} from '@/common/components/CustomSelect';
 import { mergeClassName } from '@/common/utils';
-import FormItem from 'antd/es/form/FormItem';
-import React, { useState } from 'react';
 
 type FieldRowProps = {
   label: string;
   name: string;
   className?: string;
+  rules?: FormItemProps['rules'];
 } & CustomInputProps;
 
+type fs = CustomSelectProps & FieldRowProps;
+
 type SelectRowProps = {
-  defaultValue: string[];
-} & FieldRowProps;
+  defaultValue?: string[] | string;
+  defaultModeSelect?: boolean;
+} & fs;
 
 const FieldRow = ({
   label,
   name,
   defaultValue,
   className,
+  rules,
   ...props
 }: FieldRowProps) => {
   return (
@@ -28,7 +34,8 @@ const FieldRow = ({
       label={label}
       name={name}
       initialValue={defaultValue}
-      className="!mb-0 border-b [&_.ant-form-item-row]:flex [&_.ant-form-item-row]:items-center"
+      className="!mb-0 border-b [&_.ant-form-item-required]:after:!invisible [&_.ant-form-item-row]:flex [&_.ant-form-item-row]:items-center"
+      rules={rules}
     >
       <CustomInput
         {...props}
@@ -47,9 +54,14 @@ export const SelectFieldRow = ({
   name,
   defaultValue,
   className,
+  mode,
+  placeholder,
+  removeIcon,
+  tokenSeparators,
+  defaultModeSelect = false,
   ...props
 }: SelectRowProps) => {
-  const [isEditable, setIsEditable] = useState(false);
+  const [isEditable, setIsEditable] = useState(defaultModeSelect);
 
   const focusHandler = () => {
     setIsEditable(!isEditable);
@@ -66,14 +78,14 @@ export const SelectFieldRow = ({
         {isEditable ? (
           <CustomSelect
             {...props}
-            mode="tags"
-            placeholder="|Add by name or email. Type ',' to add, ‘⌫’ to remove"
+            mode={mode}
+            placeholder={placeholder}
             className={mergeClassName(
               '[&_.ant-select-arrow]:!hidden [&_.ant-select-selector]:!border-none [&_.ant-select-selector]:!bg-transparent',
               className
             )}
-            tokenSeparators={[',']}
-            removeIcon={<CloseCircled className="text-white" />}
+            tokenSeparators={tokenSeparators}
+            removeIcon={removeIcon}
             onBlur={focusHandler}
           />
         ) : (

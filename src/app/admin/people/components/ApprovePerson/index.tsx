@@ -13,9 +13,10 @@ function ApprovePerson({ handleCancel, isModalOpen, type }: Props) {
   const contextInfo = useContext(PeopleDataContext);
   const userDetail = contextInfo?.userDetail;
   const rowDetail = useContext(TableRowActionContext)?.data;
+
   const { approveRequestSwr } = usePeople({
     can_approve: true,
-    status: contextInfo?.currentTab,
+    // status: contextInfo?.currentTab,
   });
 
   const userInfo = type === 'row' ? rowDetail : userDetail;

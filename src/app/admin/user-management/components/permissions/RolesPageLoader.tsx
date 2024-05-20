@@ -8,10 +8,6 @@ function RolesPageLoader() {
       <PageLoader />
       <PageLoader />
       <PageLoader />
-      <PageLoader />
-      <PageLoader />
-      <PageLoader />
-      <PageLoader />
     </div>
   );
 }

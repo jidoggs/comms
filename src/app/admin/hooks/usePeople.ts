@@ -7,9 +7,11 @@ import {
 } from '@/service/swrHooks';
 import { APIResponseSuccessModel, GenericServiceParam, User } from '@/types';
 import { queryHandler, searchQueryHandler } from '@/service/request';
+import { DEFAULT_PARAMS } from '@/common/hooks/usePagination';
+import { useTabChange } from '@/common/hooks';
 
 type RequestType = 'can_get_all_invites' | 'can_approve' | 'can_decline';
-type QueryType = 'status' | 'search';
+type QueryType = 'search';
 type PaginationType = 'page' | 'limit';
 
 type Props = GenericServiceParam<RequestType, QueryType, PaginationType>;
@@ -20,13 +22,14 @@ const { GET_ALL_INVITE_BY_STATUS, APPROVE_REQUEST, DECLINE_REQUEST } =
 function usePeople(props: Props) {
   const searchBy = ['email'];
   const search = searchQueryHandler(searchBy, props.search || '');
+  const { currentTab } = useTabChange();
 
   const query = queryHandler({
     search,
-    status: props.status,
+    status: currentTab,
     sort: '-created_at',
-    page: props.page,
-    limit: props.limit,
+    page: props.page || DEFAULT_PARAMS.currentPage,
+    limit: props.limit || DEFAULT_PARAMS.itemPerPage,
   });
 
   const { revalidateRequest } = useServiceConfig();

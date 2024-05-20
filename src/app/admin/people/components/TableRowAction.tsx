@@ -62,8 +62,10 @@ function TableRowAction({ data }: Props) {
   ].filter((itm) =>
     contextInfo?.currentTab === 'pending'
       ? false
-      : (itm.key !== 'approve' && contextInfo?.currentTab === 'approved') ||
-        (itm.key !== 'decline' && contextInfo?.currentTab === 'declined')
+      : contextInfo?.currentTab === 'onboarded'
+        ? true
+        : (itm.key !== 'approve' && contextInfo?.currentTab === 'approved') ||
+          (itm.key !== 'decline' && contextInfo?.currentTab === 'declined')
   );
 
   return (

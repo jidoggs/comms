@@ -74,8 +74,8 @@ export const defaultColumns: {
     dataIndex: 'office',
     ellipsis: true,
     width: 150,
-    render: (value: BasicTypeSet) => {
-      return <>{value?.name}</>;
+    render: (value: BasicTypeSet[]) => {
+      return <>{value?.[0]?.name}</>;
     },
   },
   {
@@ -84,8 +84,8 @@ export const defaultColumns: {
     dataIndex: 'parastatal',
     ellipsis: true,
     width: 150,
-    render: (value: BasicTypeSet) => {
-      return <>{value?.name}</>;
+    render: (value: BasicTypeSet[]) => {
+      return <>{value?.[0]?.name}</>;
     },
   },
   {

@@ -17,10 +17,15 @@ type args = {
   onPageChange?: () => void;
 };
 
+export const DEFAULT_PARAMS = {
+  currentPage: 1,
+  itemPerPage: 20,
+};
+
 const usePagination = (args?: args): Ipagination => {
   const intialData = {
-    currentPage: args?.startPage || 1,
-    itemPerPage: args?.pageSize || 20,
+    currentPage: args?.startPage || DEFAULT_PARAMS.currentPage,
+    itemPerPage: args?.pageSize || DEFAULT_PARAMS.itemPerPage,
     totalDataCount: 0,
   };
   const [data, setData] = useState(intialData);

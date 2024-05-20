@@ -33,7 +33,6 @@ function PeopleListContextWrapper({ children }: ContextWapper) {
 
   const { getAllSwr } = usePeople({
     can_get_all_invites: true,
-    status: tabs.currentTab,
     search: debounceValue,
     page: pagination.currentPage,
     limit: pagination.itemPerPage,

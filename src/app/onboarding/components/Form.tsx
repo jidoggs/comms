@@ -1,20 +1,22 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import FormItem from 'antd/es/form/FormItem';
 import {
   officeInfoInputs,
   personalInfoInputs,
   securityInfoInputs,
 } from './formHelpers';
-import FormItem from 'antd/es/form/FormItem';
 import CustomInput from '@/common/components/CustomInput';
-import { OfficelInfo, PersonalInfo, securityInfo } from '../types';
-import { useSearchParams } from 'next/navigation';
 import Title from '@/common/components/Title';
 import CustomSelect from '@/common/components/CustomSelect';
 import { useOnboarding } from '../hooks';
+import { OfficelInfo, PersonalInfo, securityInfo } from '../types';
 
 type Props = {
   loading?: boolean;
 };
+
+const can_query_by_id = false;
 
 function OnboardingForm({ loading }: Props) {
   const searchParams = useSearchParams();
@@ -22,32 +24,44 @@ function OnboardingForm({ loading }: Props) {
   const parastatal = searchParams.get('parastatal') || '';
   const office = searchParams.get('office') || '';
   const department = searchParams.get('department') || '';
+  const [selectedOffice, setSelectedOffice] = useState('');
 
-  const permissons = {
+  const { getParastatalSwr } = useOnboarding({
     can_get_parastatal: true,
+    _id: parastatal,
+  });
+  const { getOfficeSwr } = useOnboarding({
     can_get_office: true,
-    can_get_department: true,
-  };
-
-  const query = {
     parastatal,
-    office,
-  };
-
-  const { getParastatalSwr, getOfficeSwr, getDepartmentSwr } = useOnboarding({
-    ...permissons,
-    ...query,
+  });
+  const { getOfficeByIdSwr } = useOnboarding({
+    can_get_office: true,
+    _id: office,
+  });
+  const { getDepartmentSwr } = useOnboarding({
+    can_get_department: true,
+    parastatal,
+    office: office || selectedOffice,
+  });
+  const { getDepartmentByIdSwr } = useOnboarding({
+    can_get_department: true,
+    _id: department,
   });
 
   const parastatalList = [getParastatalSwr.data?.data].map((item) => ({
     label: item?.name,
     value: item?._id,
   }));
-  const officeList = getOfficeSwr.data?.data.map((item) => ({
+
+  const officeSwr = office && can_query_by_id ? getOfficeByIdSwr : getOfficeSwr;
+  const departmentSwr =
+    department && can_query_by_id ? getDepartmentByIdSwr : getDepartmentSwr;
+
+  const officeList = officeSwr.data?.data.map((item) => ({
     label: item?.name,
     value: item?._id,
   }));
-  const departmentList = [getDepartmentSwr.data?.data].map((item) => ({
+  const departmentList = departmentSwr.data?.data.map((item) => ({
     label: item?.name,
     value: item?._id,
   }));
@@ -88,15 +102,17 @@ function OnboardingForm({ loading }: Props) {
                   />
                 </FormItem>
               ) : null}
-              {item.name === 'office' && office ? (
+              {item.name === 'office' && getOfficeSwr.data?.data.length ? (
                 <FormItem<OfficelInfo> {...item}>
                   <CustomSelect
                     options={officeList}
                     placeholder={item.placeholder}
+                    onSelect={(val) => setSelectedOffice(val)}
                   />
                 </FormItem>
               ) : null}
-              {item.name === 'department' && department ? (
+              {item.name === 'department' &&
+              getDepartmentSwr.data?.data.length ? (
                 <FormItem<OfficelInfo> {...item}>
                   <CustomSelect
                     options={departmentList}

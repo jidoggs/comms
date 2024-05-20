@@ -27,7 +27,8 @@ const Users = () => {
       <UserDetails
         open={!!selectedUser?._id}
         staffData={selectedUser}
-        onCancel={handleCancel}
+        closeHandler={handleCancel}
+        key={selectedUser?._id}
       />
     </>
   );

@@ -6,10 +6,11 @@ import Title from '@/common/components/Title';
 import { UserMgmtDataContext } from '../service-context/UserMgmtContextWrapper';
 import RolesPageLoader from './permissions/RolesPageLoader';
 import CustomPaginationHeader from '@/common/components/CustomPaginationHeader';
+import FullPageLoader from '@/common/components/FullPageLoader';
 
 const RolesSearchAction = dynamic(() => import('./RolesSearchAction'));
 const UserTabActions = dynamic(() => import('./UserTabActions'));
-const Users = dynamic(() => import('./Users'));
+const Users = lazy(() => import('./Users'));
 const RolesPermissions = lazy(() => import('./permissions/RolesPermissions'));
 
 const CorrespondencePage = () => {
@@ -56,7 +57,11 @@ const CorrespondencePage = () => {
             <RolesPermissions />
           </Suspense>
         ) : null}
-        {contextInfo?.currentTab === 'users' ? <Users /> : null}
+        {contextInfo?.currentTab === 'users' ? (
+          <Suspense fallback={<FullPageLoader />}>
+            <Users />
+          </Suspense>
+        ) : null}
       </div>
     </div>
   );
