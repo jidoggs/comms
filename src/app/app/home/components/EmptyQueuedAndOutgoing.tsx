@@ -12,10 +12,13 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
   title: string;
 }
 
-const OnboardBtn = ({ icon, title }: Props) => {
+const OnboardBtn = ({ icon, title, ...props }: Props) => {
   return (
     <div className="flex w-24 flex-col gap-y-1 ">
-      <button className="flex items-center justify-center self-center rounded-[20px] bg-custom-gray_100 p-6 text-custom-main">
+      <button
+        {...props}
+        className="flex items-center justify-center self-center rounded-[20px] bg-custom-gray_100 p-6 text-custom-main"
+      >
         {icon}
       </button>
       <Title small className="text-wrap text-center text-custom-gray_200">
@@ -55,7 +58,7 @@ function EmptyQueuedAndOutgoing() {
               icon={<Briefcase size={38} />}
               title="Create a project"
             />
-            <CreateCorrespondence ref={createCorrRef} />
+            <CreateCorrespondence ref={createCorrRef} className="invisible" />
           </div>
         </div>
       </div>
