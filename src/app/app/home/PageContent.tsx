@@ -18,7 +18,8 @@ function PageContent() {
   const homeContextData = useContext(HomeContext);
   const minuteData = homeContextData?.minuteData;
 
-  const isNewAccount =true|| minuteData?.length === 0;
+  // const isNewAccount = minuteData?.length === 0;
+  const isNewAccount = minuteData?.length === 0;
 
   return (
     <div className="mx-auto grid size-full max-w-[1200px] grid-cols-homeMax gap-2.5 py-5">
