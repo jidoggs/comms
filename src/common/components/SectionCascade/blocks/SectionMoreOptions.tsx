@@ -155,6 +155,7 @@ function SectionMoreOptions({
           isDeleting={deleteIsLoading}
           handleUpdate={updateTrigger}
           isUpdating={updateIsLoading}
+          key={moreData?._id}
         />
       ) : null}
     </>

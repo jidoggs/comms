@@ -6,8 +6,6 @@ import CustomAvatar from '@/common/components/Avatar/CustomAvatar';
 import Profile from '@/common/components/icons/Profile';
 import { EditableTableColumnTypes } from '@/types';
 
-
-
 export const defaultColumns: (EditableTableColumnTypes[number] & {
   dataIndex: string;
 })[] = [
@@ -20,7 +18,7 @@ export const defaultColumns: (EditableTableColumnTypes[number] & {
     render: (value: any, record: any) => {
       return (
         <>
-          {value ? (
+          {record?.firstname ? (
             <div className="flex items-center gap-x-2.5">
               <CustomAvatar
                 src={record?.img}
@@ -31,8 +29,7 @@ export const defaultColumns: (EditableTableColumnTypes[number] & {
                   </span>
                 }
               />
-              {/* <div className="size-7 rounded-full bg-red-500" /> */}
-              <span>{value}</span>
+              <span>{`${record.firstname} ${record.surname}`}</span>
             </div>
           ) : null}
         </>
@@ -132,7 +129,7 @@ export const tabItemList: TabItemProps = [
     label: 'Approved',
   },
   {
-    key: 'rejected',
+    key: 'declined',
     label: 'Declined',
   },
 ];

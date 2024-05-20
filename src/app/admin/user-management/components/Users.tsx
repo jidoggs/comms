@@ -16,7 +16,6 @@ const Users = () => {
       <CustomTable
         className={{
           table: 'cursor-pointer',
-          tableWrapper: '!h-[calc(100vh-182px)] !w-full',
         }}
         columns={contextInfo?.columns}
         dataSource={contextInfo?.usersData}
@@ -24,12 +23,12 @@ const Users = () => {
         size="large"
         rowClassName="group"
         onRow={rowClickHandler}
-        components={contextInfo?.components}
       />
       <UserDetails
         open={!!selectedUser?._id}
         staffData={selectedUser}
-        onCancel={handleCancel}
+        closeHandler={handleCancel}
+        key={selectedUser?._id}
       />
     </>
   );

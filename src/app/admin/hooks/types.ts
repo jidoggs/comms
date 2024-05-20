@@ -13,6 +13,7 @@ type RequestType = Create | GetUpdateDelete | Invite;
 
 type QueryType = '_id' | 'query' | 'search';
 type OfficeQueryType = QueryType | 'parastatal';
+type PaginationType = 'page' | 'limit';
 
 export type OfficeServiceParams = GenericServiceParam<
   RequestType,
@@ -26,6 +27,10 @@ export type RoleServiceArgs = GenericServiceParam<
   QueryType
 >;
 
-export type UserServiceArgs = GenericServiceParam<GetUpdateDelete, QueryType>;
+export type UserServiceArgs = GenericServiceParam<
+  GetUpdateDelete,
+  QueryType,
+  PaginationType
+>;
 
 export type PermissionServiceArgs = GenericServiceParam<RequestType, QueryType>;

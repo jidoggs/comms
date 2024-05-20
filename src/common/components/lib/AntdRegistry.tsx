@@ -127,6 +127,7 @@ const appTheme: ThemeConfig = {
       itemActiveBg: customThemeColor.blue_100,
       colorText: customThemeColor.gray_600,
       colorPrimary: customThemeColor.white_200,
+      controlHeight: 28,
     },
     Table: {
       // headerBg: primary[500],

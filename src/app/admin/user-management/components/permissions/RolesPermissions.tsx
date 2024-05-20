@@ -6,13 +6,11 @@ import PageLoader from './PageLoader';
 import { UserMgmtDataContext } from '../../service-context/UserMgmtContextWrapper';
 import RolesPageLoader from './RolesPageLoader';
 import { Role } from '../../types';
-import InfoCircle from '@/common/components/icons/InfoCircle';
+import EmptyList from '@/common/components/EmptyList';
 
 const RoleItem = dynamic(() => import('./RoleItem'), {
   loading: () => <PageLoader />,
 });
-
-const Result = dynamic(() => import('antd/es/result'));
 
 const sampleRole: Role = {
   active: true,
@@ -38,6 +36,11 @@ const RolesPermissions = () => {
     }
   }, [contextInfo?.rolesData.length, contextInfo?.addNewRole]);
 
+  const calcScrollHeight = () => {
+    if (!containerRef.current) return '100%';
+    return window.document.body.offsetHeight - containerRef.current.offsetTop;
+  };
+
   return (
     <div className="flex flex-col">
       <div className="grid grid-cols-10 border-b border-custom-black_200/10 p-4">
@@ -50,7 +53,10 @@ const RolesPermissions = () => {
       </div>
       <div
         ref={containerRef}
-        className="h-full max-h-[calc(100vh_-_13.225rem)] overflow-y-scroll"
+        style={{
+          height: calcScrollHeight(),
+        }}
+        className=" overflow-y-scroll"
       >
         {contextInfo?.addNewRole ? <RoleItem role={sampleRole} /> : null}
         {contextInfo?.rolesData.length
@@ -60,11 +66,7 @@ const RolesPermissions = () => {
           : null}
         {contextInfo?.rolesLoading ? <RolesPageLoader /> : null}
         {!contextInfo?.rolesLoading && contextInfo?.rolesData.length === 0 ? (
-          <Result
-            title="No Data Available"
-            className="flex h-[calc(100vh_-_13.225rem)] flex-col items-center justify-center"
-            icon={<InfoCircle size={80} className="text-amber-400" />}
-          />
+          <EmptyList title="No Data Available" />
         ) : null}
       </div>
     </div>

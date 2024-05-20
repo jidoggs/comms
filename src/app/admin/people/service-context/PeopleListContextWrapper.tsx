@@ -1,5 +1,5 @@
 'use client';
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import CustomUser from '@/common/components/CustomUser';
 import {
   defaultColumns,
@@ -8,38 +8,39 @@ import {
   tabItemList,
 } from './helper';
 import usePeople from '../../hooks/usePeople';
-import { PeopleDataContextType } from '../types';
-import { useDebounce, useSession, useTabChange } from '@/common/hooks';
-import { ContextWapper, iHandleChange } from '@/types';
+import { PeopleDataContextType, TabKeysType } from '../types';
+import { useDebounce, usePagination, useTabChange } from '@/common/hooks';
+import { ContextWapper, User, iHandleChange } from '@/types';
+import { CustomTableProps } from '@/common/components/CustomTable';
 
 export const PeopleDataContext = createContext<PeopleDataContextType>(null);
 
 function PeopleListContextWrapper({ children }: ContextWapper) {
   const [search, setSearch] = useState('');
+  const debounceValue = useDebounce(search);
+  const [userDetail, setUserDetail] = useState<User | null>(null);
+  const pagination = usePagination();
 
   const resetHandler = () => {
     setSearch('');
+    pagination.pageChangeHandler(1);
   };
 
-  const searchHandler: iHandleChange = (e) => {
-    const value = e.target.value;
-    setSearch(value);
-  };
-
-  const tabs = useTabChange({
+  const tabs = useTabChange<TabKeysType>({
     defaultKey: '/admin/people?tab=pending',
     resetFields: resetHandler,
   });
 
-  const debounceValue = useDebounce(search);
-
-  const { isBasicUser } = useSession();
-
   const { getAllSwr } = usePeople({
-    can_get_all_invites: !isBasicUser,
-    status: tabs.currentTab,
+    can_get_all_invites: true,
     search: debounceValue,
+    page: pagination.currentPage,
+    limit: pagination.itemPerPage,
   });
+
+  useEffect(() => {
+    pagination.setTotalCountHandler(getAllSwr.data?.results || 0);
+  }, [getAllSwr.data?.results]); //eslint-disable-line
 
   const columns = defaultColumns
     .filter((itm) =>
@@ -70,6 +71,22 @@ function PeopleListContextWrapper({ children }: ContextWapper) {
       return itm;
     });
 
+  const searchHandler: iHandleChange = (e) => {
+    const value = e.target.value;
+    setSearch(value);
+  };
+
+  const viewDetailsHandler: CustomTableProps<User>['onRow'] = (record) => ({
+    onClick: () => {
+      setUserDetail(record);
+    },
+    style: { cursor: 'pointer' },
+  });
+
+  const closeDetailsHandler = () => {
+    setUserDetail(null);
+  };
+
   return (
     <>
       <PeopleDataContext.Provider
@@ -81,6 +98,10 @@ function PeopleListContextWrapper({ children }: ContextWapper) {
           isLoading: getAllSwr.isLoading || getAllSwr.isValidating,
           searchHandler,
           search,
+          viewDetailsHandler,
+          closeDetailsHandler,
+          userDetail,
+          pagination,
         }}
       >
         {children}

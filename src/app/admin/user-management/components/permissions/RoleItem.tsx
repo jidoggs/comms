@@ -9,7 +9,6 @@ import CloseCircled from '@/common/components/icons/CloseCircled';
 import ArrowUp from '@/common/components/icons/ArrowUp';
 import { Role, Permission } from '../../types';
 import { messageHandler } from '@/common/utils/notification';
-import ArrowDown from '@/common/components/icons/ArrowDown';
 import { mergeClassName } from '@/common/utils';
 
 const Permissions = dynamic(() => import('./Permissions'));
@@ -115,7 +114,7 @@ const RoleItem = ({ role }: RoleItemProps) => {
   return (
     <div
       className={mergeClassName(
-        'mt-2 grid grid-cols-10 items-start bg-custom-white_100 p-4',
+        'mt-2 grid grid-cols-10 items-start bg-custom-white_100 p-4 transition-all',
         isCollapsed ? 'collapsed' : 'expanded'
       )}
     >
@@ -178,7 +177,14 @@ const RoleItem = ({ role }: RoleItemProps) => {
             openEditMode={openEditMode}
           />
           <CustomButton
-            icon={isCollapsed ? <ArrowDown /> : <ArrowUp />}
+            icon={
+              <ArrowUp
+                className={mergeClassName(
+                  isCollapsed ? 'rotate-180' : '',
+                  'transition-all'
+                )}
+              />
+            }
             description={isCollapsed ? 'Expand' : 'Collapse'}
             type="text"
             size="small"

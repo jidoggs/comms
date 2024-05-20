@@ -12,7 +12,8 @@ import Tick from '@/common/components/icons/Tick';
 import { messageHandler } from '@/common/utils/notification';
 import { useRoles } from '@/app/admin/hooks';
 import { useServiceConfig } from '@/service/swrHooks';
-import FieldRow, { SelectFieldRow } from './FieldRow';
+import FieldRow, { SelectFieldRow } from '../../../../components/FieldRow';
+import CloseCircled from '@/common/components/icons/CloseCircled';
 
 function MoreInformationForm() {
   const information = useContext(MoreInfoContext);
@@ -129,6 +130,10 @@ function MoreInformationForm() {
             <SelectFieldRow
               label="Domains"
               name="domains"
+              mode="tags"
+              placeholder="|Add by name or email. Type ',' to add, ‘⌫’ to remove"
+              tokenSeparators={[',']}
+              removeIcon={<CloseCircled className="text-white" />}
               defaultValue={data?.domains}
             />
           ) : null}

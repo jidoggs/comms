@@ -5,11 +5,10 @@ export const ENDPOINTS = {
     FORGOT_PASSWORD: '/auth/forgot_password',
     RESET_PASSWORD: '/auth/reset_password',
     ONBOARD: {
-      CREATE: '/auth/onboard',
-      PARASTATALS: (id: string) => `/parastatals/fetch?_id=${id}`,
-      OFFICE: (pid: string) => `/offices/fetch?parastatal=${pid}`,
-      DEPARTMENT: (pid: string, oid: string) =>
-        `/departments/fetch?parastatal=${pid}&office=${oid}`,
+      CREATE: '/auth/onboard/invite',
+      PARASTATALS: (query: string) => `/parastatals/fetch${query}`,
+      OFFICE: (query: string) => `/offices/fetch${query}`,
+      DEPARTMENT: (query: string) => `/departments/fetch${query}`,
     },
     // ONBOARD_STATUS: (email: string) => `/invite?email=${email}`,
   },

@@ -1,47 +1,35 @@
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useLayoutEffect, useRef } from 'react';
-import { CustomTableProps } from '../components/CustomTable';
+import { useLayoutEffect } from 'react';
 
 type Props = {
-  defaultKey: string;
+  defaultKey?: string;
   resetFields?: () => void;
 };
 
-function useTabChange({ defaultKey, resetFields }: Props) {
+function useTabChange<T = string>(args?: Props) {
   const router = useRouter();
-  const currentTab = useSearchParams().get('tab') as string;
-  const pageRef = useRef<HTMLElement | null>(null);
-
-  const components: CustomTableProps<any>['components'] = {
-    body: {
-      wrapper: (props: any) => <tbody {...props} ref={pageRef} />,
-    },
-  };
-
-  const base = defaultKey.split('=')?.[0].split('/');
-  const query = base[base.length - 1];
+  const currentTab = useSearchParams().get('tab') as T;
 
   useLayoutEffect(() => {
+    if (!args?.defaultKey) return;
     if (!currentTab) {
-      router.replace(defaultKey);
+      router.replace(args.defaultKey);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentTab]);
 
   const handleTabChange = (state: string) => {
+    if (!args?.defaultKey) return;
+    const base = args.defaultKey.split('=')?.[0].split('/');
+    const query = base[base.length - 1];
     router.push(`${query}=${state}`);
-    if (resetFields) {
-      resetFields();
+    if (args?.resetFields) {
+      args.resetFields();
     }
-    pageRef.current?.firstElementChild?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'end',
-    });
   };
   return {
     handleTabChange,
     currentTab,
-    components,
   };
 }
 

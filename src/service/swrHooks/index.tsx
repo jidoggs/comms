@@ -147,6 +147,6 @@ type PickTypes =
 export const fetchOptions: Pick<SWRFetcher<any>, PickTypes> = {
   revalidateOnFocus: false,
   revalidateOnMount: true,
-  revalidateIfStale: false,
+  revalidateIfStale: true,
   errorRetryCount: process.env.NODE_ENV === 'development' ? 1 : 3,
 };

@@ -6,8 +6,8 @@ import {
   User,
   iHandleChange,
 } from '@/types';
-import { CustomTableProps } from '@/common/components/CustomTable';
 import { TabItemProps } from '@/common/components/CustomTab';
+import { Ipagination } from '@/common/hooks/usePagination';
 
 export interface Role extends BaseDataModel {
   _id: string;
@@ -28,10 +28,12 @@ export const initialModalState = {
   delete: false,
 };
 
+export type TabKeysType = 'users' | 'roles-permissions';
+
 export type UserMgmtDataContextType = {
   handleTabChange: (state: string) => void;
   columns: EditableTableColumnTypes;
-  currentTab: string;
+  currentTab: TabKeysType;
   tabItemList: TabItemProps;
   permissionsData: Permission[];
   permissionsLoading: boolean;
@@ -39,9 +41,9 @@ export type UserMgmtDataContextType = {
   rolesLoading: boolean;
   usersData: User[];
   usersLoading: boolean;
-  components: CustomTableProps<any>['components'];
   addNewRole: boolean;
   addNewRoleHandler: () => void;
   search: string;
   searchHandler: iHandleChange;
+  pagination: Ipagination;
 } | null;

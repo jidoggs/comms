@@ -6,10 +6,9 @@ import { useMembers } from '@/app/admin/hooks';
 import { useDebounce } from '@/common/hooks';
 import { queryHandler, searchQueryHandler } from '@/service/request';
 import SearchIcon from '@/common/components/icons/Search';
-import InfoCircle from '@/common/components/icons/InfoCircle';
 import { iHandleChange } from '@/types';
+import EmptyList from '@/common/components/EmptyList';
 
-const Result = dynamic(() => import('antd/es/result'));
 const CustomInput = dynamic(
   () => import('../../../../../../common/components/CustomInput')
 );
@@ -66,11 +65,7 @@ function Members() {
             ))
           : null}
         {!getListSwr.isLoading && !getListSwr.data?.data.length ? (
-          <Result
-            title="No Data Available"
-            className="flex h-[calc(100vh_-_13.225rem)] flex-col items-center justify-center"
-            icon={<InfoCircle size={80} className="text-amber-400" />}
-          />
+          <EmptyList />
         ) : null}
       </div>
     </section>

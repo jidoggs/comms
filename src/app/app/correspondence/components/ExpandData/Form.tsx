@@ -112,7 +112,7 @@ function NewCorrespondenceForm({ handleSubmit, form, currentCorr }: Props) {
         ? dayjs(currentCorr?.created_at)
         : null,
     });
-  }, [currentCorr]);
+  }, [currentCorr]); //eslint-disable-line
 
   return (
     <Form layout="vertical" form={form} onFinish={modifiedHandleSubmit}>

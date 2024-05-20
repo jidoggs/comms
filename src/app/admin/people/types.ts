@@ -5,17 +5,23 @@ import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { EditableTableColumnTypes, User, iHandleChange } from '@/types';
 import { CustomTableProps } from '@/common/components/CustomTable';
 import { TabItemProps } from '@/common/components/CustomTab';
+import { Ipagination } from '@/common/hooks/usePagination';
+
+export type TabKeysType = 'pending' | 'onboarded' | 'approved' | 'declined';
 
 export type PeopleDataContextType = {
   handleTabChange: (state: string) => void;
   columns: EditableTableColumnTypes;
   dataSource: User[];
   isLoading: boolean;
-  currentTab: string;
+  currentTab: TabKeysType;
   tabItemList: TabItemProps;
-  components: CustomTableProps<any>['components'];
   searchHandler: iHandleChange;
   search: string;
+  viewDetailsHandler: CustomTableProps<User>['onRow'];
+  closeDetailsHandler: () => void;
+  userDetail: User | null;
+  pagination: Ipagination;
 } | null;
 
 export type DetailContextType = {

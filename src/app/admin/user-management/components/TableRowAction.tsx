@@ -80,7 +80,7 @@ function TableRowAction({ data }: Props) {
         <UserDetails
           open={isModalOpen.edit}
           staffData={data}
-          onCancel={handleCancel}
+          closeHandler={handleCancel}
         />
         <DeleteModal
           warningText="Are you sure you want to delete this account?"
