@@ -7,7 +7,12 @@ import {
   CorrespondenceData,
   EditableTableColumnTypes,
   iHandleChange,
+  MinuteData,
+  RecipientData,
+  User,
 } from '@/types';
+import { Dayjs } from 'dayjs';
+import { FormInstance } from 'antd';
 
 export type CorrespondenceContextNewType = {
   handleAdd: () => void;
@@ -42,6 +47,76 @@ export type DetailContextType = {
   turnMultiSelectOFFHandler: () => void;
   selectItemHandler: (e: CheckboxChangeEvent) => void;
   multiSelect: MultiSelectType;
+  minuteData: MinuteData[];
+  sampleTimeline: {
+    name: string;
+    office: string;
+    date: Dayjs;
+    img: string;
+  };
+  user: User;
+  // onSearch: (value: string) => void;
+  // recipientData: never[] | RecipientData;
+} | null;
+
+export type MinuteContextType = {
+  form: FormInstance<any>;
+  // recipientsData: RecipientData | never[];
+  // onSearch: (value: string) => void;
+  // filterOption: (
+  //   input: string,
+  //   option?: {
+  //     label: string;
+  //     value: string;
+  //   }
+  // ) => boolean;
+  // options: any[];
+  // onChange: (value: string, option: any) => void;
+  // selectedRecipient: {
+  //   value: string;
+  //   type: string;
+  // } | null;
+  // recipientIsLoading: boolean;
+  initialValues: {
+    minute: string;
+    recipient: string;
+    attach: never[];
+  };
+  minuteFormSubmitHandler: (values: any) => Promise<void>;
+  genDetailsData: DetailContextType;
+  createMinuteLoading: boolean;
+} | null;
+
+export type AppContextType = {
+  form: FormInstance<any>;
+  recipientsData: RecipientData | never[];
+  onSearch: (value: string) => void;
+  filterOption: (
+    input: string,
+    option?: {
+      label: string;
+      value: string;
+    }
+  ) => boolean;
+  options: any[];
+  onChange: (value: string, option: any) => void;
+  selectedRecipient: {
+    value: string;
+    type: string;
+  } | null;
+  recipientIsLoading: boolean;
+  initialValues: {
+    minute: string;
+    recipient: string;
+    attach: never[];
+  };
+  minuteFormSubmitHandler: (values: any) => Promise<void>;
+  // genDetailsData: DetailContextType;
+  createMinuteLoading: boolean;
+  setCorrId: (_id: string) => void;
+  correspondenceId: string | undefined;
+  closeModal: boolean;
+  setCloseModal: React.Dispatch<React.SetStateAction<boolean>>;
 } | null;
 
 export type MultiSelectType = {

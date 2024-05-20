@@ -1,9 +1,17 @@
 import React, { Suspense, useCallback, useLayoutEffect, useState } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import {
+  useParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from 'next/navigation';
 import { useAnimation } from 'framer-motion';
 import { DetailContextType, MultiSelectType } from '../../types';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { ContextWapper } from '@/types';
+import useCorrespondence from '@/app/app/hooks/useCorrespondence';
+import dayjs from 'dayjs';
+import { useSession } from '@/common/hooks';
 
 export const DetailContext = React.createContext<DetailContextType>(null);
 
@@ -13,9 +21,12 @@ const initialMutliSelect = {
 };
 
 function DetailContextWrapper({ children }: ContextWapper) {
+  const params = useParams();
+  const correspondenceId = params.correspondenceId;
   const pathname = usePathname();
   const router = useRouter();
   const activeTab = useSearchParams().get('tab') as string;
+  const { data: user } = useSession();
   const [openCorrespondenceDetails, setOpenCorrespondenceDetails] =
     useState<boolean>(false);
   const [correspondenceFile, setCorrespondenceFile] = useState<FileList | null>(
@@ -83,6 +94,21 @@ function DetailContextWrapper({ children }: ContextWapper) {
       setCorrespondenceFile(files);
     }
   };
+
+  const { getCorrMinListSwr } = useCorrespondence({
+    can_get_all: true,
+    _id: correspondenceId.toString(),
+  });
+
+  const minuteData = getCorrMinListSwr?.data?.data || [];
+
+  const sampleTimeline = {
+    name: 'Adbul Jabar',
+    office: 'HM Trade & Inv...',
+    date: dayjs(new Date(), 'DD MMM YYYY, h:mmA'),
+    img: '/images/user2.jpeg',
+  };
+
   return (
     <Suspense fallback={null}>
       <DetailContext.Provider
@@ -99,6 +125,11 @@ function DetailContextWrapper({ children }: ContextWapper) {
           turnMultiSelectOFFHandler,
           selectItemHandler,
           multiSelect,
+          minuteData,
+          sampleTimeline,
+          user,
+          // onSearch,
+          // recipientData,
         }}
       >
         {children}

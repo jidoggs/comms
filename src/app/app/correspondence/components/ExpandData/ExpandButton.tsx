@@ -37,9 +37,6 @@ function ExpandButton({ className, description }: Props) {
   });
 
   const correspondenceFormSubmitHandler = async (values: any) => {
-    // console.log('values', values);
-
-    // const allCorrespondence = values.correspondences;
     const backendData = removeNullOrUndefinedProperties({
       ...values,
       files: values?.files?.map((item: UploadFile<any>) => item.originFileObj),

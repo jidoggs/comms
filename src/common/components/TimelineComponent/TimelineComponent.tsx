@@ -1,28 +1,29 @@
 import dayjs, { Dayjs } from 'dayjs';
-import React from 'react';
+import React from 'react'; // { useContext }
 import CustomAvatar from '../Avatar/CustomAvatar';
 import Title from '../Title';
 import { generateInitials, mergeClassName } from '@/common/utils';
+// import { DetailContext } from '@/app/app/correspondence/[correspondenceId]/service-context/DetailContextWrapper';
 
 interface TimelineProps {
+  nogap?: boolean;
   timeline: {
     name: string;
     office: string;
     date: Dayjs;
     img?: string;
   };
-  nogap?: boolean;
 }
 
-export const FormattedDate = ({ date }: { date: Dayjs }) => {
+export const FormattedDate = ({ date }: { date: Dayjs | undefined }) => {
   return (
-    <span className="date">{dayjs(date).format('DD MMM YYYY, h:mm A')}</span>
+    <span className="date">
+      {dayjs(date).format('DD MMM YYYY, h:mm A') || ''}
+    </span>
   );
 };
 
 const TimelineComponent = ({ timeline, nogap }: TimelineProps) => {
-  // console.log('timeline.date', timeline.date);
-
   return (
     <div className="flex items-center justify-start gap-3">
       <CustomAvatar
@@ -32,7 +33,12 @@ const TimelineComponent = ({ timeline, nogap }: TimelineProps) => {
       >
         {generateInitials(`${timeline.name}`)}
       </CustomAvatar>
-      <div className={mergeClassName('flex flex-col items-start', nogap ? '' : 'gap-y-1')}>
+      <div
+        className={mergeClassName(
+          'flex flex-col items-start',
+          nogap ? '' : 'gap-y-1'
+        )}
+      >
         <Title semibold>{timeline.name}</Title>
         <Title className="leading-[15.18px] text-custom-gray_600">
           <span className="office">{timeline.office} </span>-

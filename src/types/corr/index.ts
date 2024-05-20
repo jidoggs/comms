@@ -30,6 +30,7 @@ export interface MinuteData extends BaseDataModel {
     _id: string;
     sender: string;
     documents: string[];
+    subject: string;
   };
   recipient: {
     _id: string;

@@ -1,26 +1,41 @@
 'use client';
-import React from 'react';
+import React, { useContext } from 'react';
 import SectionHeaderCard from './SectionHeaderCard';
 import CorrespondenceCard from './CorrespondenceCard';
 import Title from '@/common/components/Title';
-import { minuteProps } from '../PageContent';
+import { HomeContext } from '../service-context/HomeContextWrapper';
 
-const QueuedList = ({ resultData }: minuteProps) => {
-  const allQueuedList = resultData?.filter(
-    (list: any) => list.status === 'queue'
+const QueuedList = () => {
+  const homeContextData = useContext(HomeContext);
+  const minuteData = homeContextData?.queuedList;
+
+  const uniqueCorrespondences = minuteData.reduce(
+    (acc: any[], current: any) => {
+      if (
+        !acc.some(
+          (minute) => minute.correspondence._id === current.correspondence._id
+        )
+      ) {
+        acc.push(current);
+      }
+      return acc;
+    },
+    []
   );
-
-  // console.log('resultData', resultData);
 
   return (
     <section className="flex flex-col gap-y-2.5">
-      <SectionHeaderCard title="Queue" count={allQueuedList.length} newData />
+      <SectionHeaderCard
+        title="Queue"
+        count={uniqueCorrespondences?.length || 0}
+        newData
+      />
       <div className="no-scrollbar h-full max-h-[calc(100vh_-_8.625rem)] space-y-2.5 overflow-y-scroll">
         {/* {[...Array(5)]?.map((_, id) => (
           <CorrespondenceCard key={id} minute={allQueuedList[0]} />
         ))} */}
-        {allQueuedList.length > 0 ? (
-          allQueuedList.map((correspondence: any, index: number) => (
+        {uniqueCorrespondences?.length > 0 ? (
+          uniqueCorrespondences?.map((correspondence: any, index: number) => (
             <CorrespondenceCard key={index} minute={correspondence} />
           ))
         ) : (

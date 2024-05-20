@@ -9,8 +9,7 @@ import BackwardArrow from '@/common/components/icons/BackwardArrow';
 import Dot from '@/common/components/icons/Dot';
 import InfoCircle from '@/common/components/icons/InfoCircle';
 
-// eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-const CorrespondenceHeader = ({ minuteData }: any) => {
+const CorrespondenceHeader = () => {
   const router = useRouter();
   const detailsData = useContext(DetailContext);
 
@@ -35,7 +34,7 @@ const CorrespondenceHeader = ({ minuteData }: any) => {
         />
         <Title tag="h1" className="text-lg leading-[22.77px]">
           {/* Export of Brewery Products */}
-          {minuteData[0]?.correspondence?.subject}
+          {detailsData?.minuteData[0]?.correspondence?.subject}
         </Title>
       </div>
       <div className="flex items-center justify-between gap-1">
