@@ -11,9 +11,10 @@ import CorrespondenceForms from '../forms/CreateCorrespondence/CorrespondenceFor
 import CorresponcenceCreated from '../forms/CreateCorrespondence/CorresponcenceCreated';
 import { useForm } from 'antd/es/form/Form';
 
-type Props = {
+interface Props {
   type?: 'full';
-};
+  className?: string;
+}
 
 export const hasData = (corrData: any) => {
   return (
@@ -166,6 +167,7 @@ const CreateCorrespondence = forwardRef<HTMLButtonElement, Props>(
           description="Create Correspondence"
           onClick={openModalHandler}
           ref={ref}
+          className={props.className}
         >
           {props.type === 'full' ? 'Add correspondence' : null}
         </CustomButton>
