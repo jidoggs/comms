@@ -58,7 +58,7 @@ const NewMinute = ({ minute }: any) => {
           appContextData?.setCorrId(minute.correspondence._id);
         }}
       />
-      <CustomModal width={500} open={isModalOpen} onCancel={handleCancel}>
+      <CustomModal width={600} open={isModalOpen} onCancel={handleCancel}>
         <ExpandedMinuteForm />
       </CustomModal>
     </>

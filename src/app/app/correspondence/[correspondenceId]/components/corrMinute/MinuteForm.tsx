@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 'use client';
 import React, { useContext } from 'react';
 import { Form, Select, Spin } from 'antd';
@@ -5,16 +6,33 @@ import CustomButton from '@/common/components/CustomButton';
 // import CustomInput, { CustomTextArea } from '@/common/components/CustomInput';
 import Send from '@/common/components/icons/Send';
 import Title from '@/common/components/Title';
-import TextArea from 'antd/es/input/TextArea';
+// import TextArea from 'antd/es/input/TextArea';
 import dynamic from 'next/dynamic';
 import { MinuteContext } from '../../service-context/MinuteContextWrapper';
 import { CorrAppContext } from '@/app/app/service-context/AppContextWrapper';
+// import CustomRichTextEditor from '@/common/components/CustomRichTextEditor';
+// import CustomReactQuill from '@/common/components/CustomReactQuill';
+import CustomMinute from '@/common/components/CustomMinute';
+// import CustomJoditEditor from '@/common/components/CustomJoditEditor';
 
 const FormItem = dynamic(() => import('antd/es/form/FormItem'), { ssr: true });
 
 const MinuteForm = () => {
   const minuteContextData = useContext(MinuteContext);
   const appContextData = useContext(CorrAppContext);
+
+  const handleEditorChange = (htmlContent: string) => {
+    // Process the updated HTML content from the RichTextEditor
+    console.log(htmlContent);
+  };
+  // const handleEditorChange = (value: string) => {
+  //   // Process the updated HTML content from the RichTextEditor
+  //   console.log(value);
+  // };
+
+  const handleTempFinish = (values: any) => {
+    console.log('values', values);
+  };
 
   return (
     <Form
@@ -23,10 +41,11 @@ const MinuteForm = () => {
       initialValues={
         minuteContextData?.initialValues || appContextData?.initialValues
       }
-      onFinish={
-        minuteContextData?.minuteFormSubmitHandler ||
-        appContextData?.minuteFormSubmitHandler
-      }
+      // onFinish={
+      //   minuteContextData?.minuteFormSubmitHandler ||
+      //   appContextData?.minuteFormSubmitHandler
+      // }
+      onFinish={handleTempFinish}
     >
       <div className="flex flex-row items-center justify-center gap-2 rounded-md border border-custom-gray_400 p-2">
         <Title className="pr-2">Primary:</Title>
@@ -61,10 +80,17 @@ const MinuteForm = () => {
         name="minute"
         rules={[{ required: true, message: 'Minute is required' }]}
       >
-        <TextArea
+        {/* <TextArea
           className="!bg-custom-white_100 !px-2"
           placeholder="Type minute"
-        />
+        /> */}
+        {/* <CustomRichTextEditor onChange={handleEditorChange} /> */}
+        {/* <CustomReactQuill onChange={handleEditorChange} /> */}
+        <CustomMinute onChange={handleEditorChange} />
+        {/* <CustomJoditEditor
+          placeholder={'handleEditorChange'}
+          onChange={handleEditorChange}
+        /> */}
       </FormItem>
 
       <div className="flex w-full justify-end">

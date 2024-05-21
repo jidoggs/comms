@@ -34,7 +34,7 @@ const MinuteAction = () => {
               icon={<Maximize size={18} />}
               onClick={showModal}
             />
-            <CustomModal width={500} open={isModalOpen} onCancel={handleCancel}>
+            <CustomModal width={600} open={isModalOpen} onCancel={handleCancel}>
               <ExpandedMinuteForm />
             </CustomModal>
           </div>
