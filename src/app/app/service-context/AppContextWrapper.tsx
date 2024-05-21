@@ -11,17 +11,31 @@ import { ContextWapper } from '@/types';
 import { useDebounce } from '@/common/hooks';
 import useCorrespondence from '../hooks/useCorrespondence';
 import { useForm } from 'antd/es/form/Form';
-import { messageHandler } from '@/common/utils/notification';
+import { useParams } from 'next/navigation';
+import { removeNullOrUndefinedProperties } from '@/common/utils';
 
 export const CorrAppContext = createContext<AppContextType>(null);
 
 const AppContextWrapper = ({ children }: ContextWapper) => {
+  const params = useParams();
+  const paramCorrespondenceId = params.correspondenceId as string;
   const [correspondenceId, setCorrespondenceId] = useState<string>();
   const [closeModal, setCloseModal] = useState<boolean>(false);
-  //   const detailContextInfo = useContext(DetailContext);
+  const [attachSelected, setAttachSelected] = useState<boolean>(false);
+  const [uploadSelected, setUploadSelected] = useState<boolean>(false);
+  const [search, setSearch] = useState<string>('');
+  const [selectedRecipient, setSelectedRecipient] = useState<{
+    value: string;
+    type: string;
+  } | null>(null);
+
+  const [selectedAttachedRecipients, setSelectedAttachedRecipients] = useState<
+    any[]
+  >([]);
+  const [form] = useForm();
   const { getCorrMinListSwr } = useCorrespondence({
     can_get_all: true,
-    _id: correspondenceId?.toString(),
+    _id: correspondenceId?.toString() || paramCorrespondenceId,
   });
 
   const minuteData = getCorrMinListSwr?.data?.data || [];
@@ -30,8 +44,12 @@ const AppContextWrapper = ({ children }: ContextWapper) => {
     setCorrespondenceId(_id);
   };
 
-  //   const allMinuteData = detailContextInfo?.minuteData || [];
-  //   const lastMinute = allMinuteData[allMinuteData.length - 1];
+  const setAttached = () => {
+    setAttachSelected(!attachSelected);
+  };
+  const setUpload = () => {
+    setUploadSelected(!uploadSelected);
+  };
 
   const { createMinuteSwr } = useCorrespondence({
     can_create: true,
@@ -40,24 +58,6 @@ const AppContextWrapper = ({ children }: ContextWapper) => {
 
   const { trigger, isMutating: createMinuteLoading } = createMinuteSwr;
 
-  const minuteFormSubmitHandler = async (values: any) => {
-    const data = {
-      last_minute: minuteData[minuteData.length - 1]?._id,
-      //   subject: allMinuteData[allMinuteData.length - 1]?.correspondence?.subject,
-      parastatal: minuteData[minuteData.length - 1]?.parastatal?._id,
-      ...values,
-      // parastatal: parastatalId,
-    };
-
-    trigger({ data })
-      .then(() => {
-        form.resetFields();
-        setCloseModal(true);
-      })
-      .catch((error) => messageHandler('error', error));
-  };
-  const [form] = useForm();
-
   const initialValues = {
     //   last_minute: '6646ece9513f6338ab39e8f3',
     //   subject: 'Working Minute',
@@ -65,12 +65,9 @@ const AppContextWrapper = ({ children }: ContextWapper) => {
     minute: '',
     recipient: '',
     attach: [],
+    upload: [],
   };
-  const [search, setSearch] = useState<string>('');
-  const [selectedRecipient, setSelectedRecipient] = useState<{
-    value: string;
-    type: string;
-  } | null>(null);
+
   const searchDebounce = useDebounce(search);
   const { getRecipientsSwr } = useCorrespondence({
     can_get_all_recipients: true,
@@ -108,17 +105,56 @@ const AppContextWrapper = ({ children }: ContextWapper) => {
     },
     [onRecipientChange]
   );
+
+  const onAttachedRecipientsChange = useCallback(
+    (
+      newValues: string[],
+      selectedOptions: { value: string; type: string }[]
+    ) => {
+      const newSelectedRecipients = selectedOptions.map((option) => ({
+        type: option.type,
+        _id: option.value,
+      }));
+
+      setSelectedAttachedRecipients(newSelectedRecipients);
+    },
+    []
+  );
+
   const filterOption = (
     input: string,
     option?: { label: string; value: string }
   ) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
+
+  const minuteFormSubmitHandler = async (values: any) => {
+    const data = removeNullOrUndefinedProperties({
+      ...values,
+      last_minute: minuteData[minuteData.length - 1]?._id,
+      attach: selectedAttachedRecipients,
+      parastatal: minuteData[minuteData.length - 1]?.parastatal?._id,
+      // minute: values.minute,
+      // recipient: values.recipient,
+    });
+
+    trigger({ data }).then(() => {
+      form.resetFields();
+      setCloseModal(true);
+    });
+  };
+
   return (
     <Suspense fallback={null}>
       <CorrAppContext.Provider
         value={{
+          form,
+          correspondenceId,
+          setCorrId,
+          attachSelected,
+          setAttached,
+          uploadSelected,
+          setUpload,
           closeModal,
           setCloseModal,
-          form,
           selectedRecipient,
           onSearch,
           recipientsData,
@@ -128,10 +164,9 @@ const AppContextWrapper = ({ children }: ContextWapper) => {
           recipientIsLoading,
           initialValues,
           minuteFormSubmitHandler,
-          //   genDetailsData: detailContextInfo,
           createMinuteLoading,
-          correspondenceId,
-          setCorrId,
+          minuteData,
+          onAttachedRecipientsChange,
         }}
       >
         {children}

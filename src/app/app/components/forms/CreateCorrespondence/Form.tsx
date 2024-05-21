@@ -4,6 +4,7 @@ import { FormListFieldData } from 'antd/es/form';
 import CustomInput from '@/common/components/CustomInput';
 import dynamic from 'next/dynamic';
 import Recipient from './Recipient';
+import { normFile } from '@/common/utils';
 
 interface CorrespondenceFormProps {
   field: FormListFieldData;
@@ -26,13 +27,6 @@ function NewCorrespondenceForm({
   field,
   handleRecipientChange,
 }: CorrespondenceFormProps) {
-  const normFile = (e: any) => {
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e?.fileList;
-  };
-
   return (
     <div className="mb-5 border-b border-custom-gray_400">
       <div className="flex items-start gap-x-5">

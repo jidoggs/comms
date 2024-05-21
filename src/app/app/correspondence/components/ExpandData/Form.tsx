@@ -10,6 +10,7 @@ import { Select, Spin } from 'antd';
 import { useDebounce } from '@/common/hooks';
 import useCorrespondence from '@/app/app/hooks/useCorrespondence';
 import dayjs from 'dayjs';
+import { normFile } from '@/common/utils';
 
 // Filter `option.label` match the user type `input`
 const filterOption = (
@@ -93,13 +94,6 @@ function NewCorrespondenceForm({ handleSubmit, form, currentCorr }: Props) {
     },
     [onRecipientChange, options]
   );
-
-  const normFile = (e: any) => {
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e?.fileList;
-  };
 
   // Update the form values when currentCorr changes.
   useEffect(() => {

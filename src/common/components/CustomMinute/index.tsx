@@ -1,5 +1,5 @@
 import TextArea from 'antd/es/input/TextArea';
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import CustomButton from '../CustomButton';
 import Undo from '../icons/Undo';
 import Redo from '../icons/Redo';
@@ -9,12 +9,10 @@ import Link from '../icons/Link';
 import PaperClip from '../icons/PaperClip';
 import Edit from '../icons/Edit';
 import Sticker from '../icons/Sticker';
+import { CorrAppContext } from '@/app/app/service-context/AppContextWrapper';
 
-interface CustomMinuteProps {
-  onChange?: (value: string) => void;
-}
-
-const CustomMinute = ({ onChange }: CustomMinuteProps) => {
+const CustomMinute = () => {
+  const appContextData = useContext(CorrAppContext);
   const [value, setValue] = useState('');
   const textAreaRef = useRef<HTMLTextAreaElement>(null); // Ref for the TextArea
   const [history, setHistory] = useState<string[]>([value]);
@@ -30,7 +28,8 @@ const CustomMinute = ({ onChange }: CustomMinuteProps) => {
     setHistory(newHistory);
     setHistoryIndex(newHistory.length - 1);
 
-    onChange && onChange(newValue);
+    // Update the Form's value directly
+    appContextData?.form.setFieldsValue({ minute: newValue });
   };
 
   const handleUndo = () => {
@@ -97,6 +96,7 @@ const CustomMinute = ({ onChange }: CustomMinuteProps) => {
             icon={<PaperClip size="18" />}
             size="small"
             description="Attach"
+            onClick={appContextData?.setUpload}
           />
           <div className="h-8 border border-custom-gray_100" />
           <CustomButton

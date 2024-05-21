@@ -5,14 +5,13 @@ import CustomModal from '@/common/components/CustomModal';
 import SentCorrespondence from '../SentCorrespondence';
 import Form from './Form';
 import Maximize from '@/common/components/icons/Maximize';
-// import { CorrespondenceData } from '@/types';
-import { removeNullOrUndefinedProperties } from '@/app/app/components/actions/CreateCorrespondence';
 import { UploadFile } from 'antd';
 import { useSession } from '@/common/hooks';
 import useCorrespondence from '@/app/app/hooks/useCorrespondence';
 import { messageHandler } from '@/common/utils/notification';
 import { useForm } from 'antd/es/form/Form';
 import { TableRowActionContext } from '../TableRowAction';
+import { removeNullOrUndefinedProperties } from '@/common/utils';
 
 type Props = {
   className: string;

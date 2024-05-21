@@ -14,9 +14,9 @@ import NewCorrespondenceForm from './components/ExpandData/Form';
 import { useForm } from 'antd/es/form/Form';
 import { messageHandler } from '@/common/utils/notification';
 import { useSession } from '@/common/hooks';
-import { removeNullOrUndefinedProperties } from '../components/actions/CreateCorrespondence';
 import { UploadFile } from 'antd';
 import useCorrespondence from '../hooks/useCorrespondence';
+import { removeNullOrUndefinedProperties } from '@/common/utils';
 
 const CorrespondencePage = () => {
   const [form] = useForm();

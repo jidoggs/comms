@@ -1,6 +1,6 @@
 import React, { Suspense, useCallback, useLayoutEffect, useState } from 'react';
 import {
-  useParams,
+  // useParams,
   usePathname,
   useRouter,
   useSearchParams,
@@ -9,7 +9,7 @@ import { useAnimation } from 'framer-motion';
 import { DetailContextType, MultiSelectType } from '../../types';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { ContextWapper } from '@/types';
-import useCorrespondence from '@/app/app/hooks/useCorrespondence';
+// import useCorrespondence from '@/app/app/hooks/useCorrespondence';
 import dayjs from 'dayjs';
 import { useSession } from '@/common/hooks';
 
@@ -21,8 +21,8 @@ const initialMutliSelect = {
 };
 
 function DetailContextWrapper({ children }: ContextWapper) {
-  const params = useParams();
-  const correspondenceId = params.correspondenceId;
+  // const params = useParams();
+  // const correspondenceId = params.correspondenceId;
   const pathname = usePathname();
   const router = useRouter();
   const activeTab = useSearchParams().get('tab') as string;
@@ -95,12 +95,12 @@ function DetailContextWrapper({ children }: ContextWapper) {
     }
   };
 
-  const { getCorrMinListSwr } = useCorrespondence({
-    can_get_all: true,
-    _id: correspondenceId.toString(),
-  });
+  // const { getCorrMinListSwr } = useCorrespondence({
+  //   can_get_all: true,
+  //   _id: correspondenceId.toString(),
+  // });
 
-  const minuteData = getCorrMinListSwr?.data?.data || [];
+  // const minuteData = getCorrMinListSwr?.data?.data || [];
 
   const sampleTimeline = {
     name: 'Adbul Jabar',
@@ -125,7 +125,7 @@ function DetailContextWrapper({ children }: ContextWapper) {
           turnMultiSelectOFFHandler,
           selectItemHandler,
           multiSelect,
-          minuteData,
+          // minuteData,
           sampleTimeline,
           user,
           // onSearch,

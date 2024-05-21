@@ -10,6 +10,7 @@ import CustomModal from '@/common/components/CustomModal';
 import CorrespondenceForms from '../forms/CreateCorrespondence/CorrespondenceForms';
 import CorresponcenceCreated from '../forms/CreateCorrespondence/CorresponcenceCreated';
 import { useForm } from 'antd/es/form/Form';
+import { removeNullOrUndefinedProperties } from '@/common/utils';
 
 interface Props {
   type?: 'full';
@@ -23,17 +24,6 @@ export const hasData = (corrData: any) => {
     corrData?.subject &&
     corrData?.reference_number
   );
-};
-
-export const removeNullOrUndefinedProperties = (obj: Record<string, any>) => {
-  let newObj: Record<string, any> = {};
-  const keys = Object.keys(obj);
-  keys.forEach((key) => {
-    if (obj[key] !== undefined && obj[key] !== '') {
-      newObj[key] = obj[key];
-    }
-  });
-  return newObj;
 };
 
 const CreateCorrespondence = forwardRef<HTMLButtonElement, Props>(

@@ -70,3 +70,40 @@ export const lastRoute = (str: string) => {
   const items = str.split('/');
   return items[items.length - 1];
 };
+
+export const normFile = (e: any) => {
+  if (Array.isArray(e)) {
+    return e;
+  }
+  return e?.fileList;
+};
+
+// export const removeNullOrUndefinedProperties = (obj: Record<string, any>) => {
+//   let newObj: Record<string, any> = {};
+//   const keys = Object.keys(obj);
+//   keys.forEach((key) => {
+//     if (obj[key] !== undefined && obj[key] !== '') {
+//       newObj[key] = obj[key];
+//     }
+//   });
+//   return newObj;
+// };
+
+export const removeNullOrUndefinedProperties = (obj: Record<string, any>) => {
+  let newObj: Record<string, any> = {};
+  const keys = Object.keys(obj);
+  keys.forEach((key) => {
+    if (obj[key] !== undefined && obj[key] !== '' && obj[key] !== null) {
+      if (Array.isArray(obj[key]) && obj[key].length === 0) {
+        // Remove empty array
+        return;
+      }
+      if (typeof obj[key] === 'object' && Object.keys(obj[key]).length === 0) {
+        // Remove empty object
+        return;
+      }
+      newObj[key] = obj[key];
+    }
+  });
+  return newObj;
+};

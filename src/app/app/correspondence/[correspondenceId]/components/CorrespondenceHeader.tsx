@@ -8,10 +8,12 @@ import TimelineComponent from '@/common/components/TimelineComponent/TimelineCom
 import BackwardArrow from '@/common/components/icons/BackwardArrow';
 import Dot from '@/common/components/icons/Dot';
 import InfoCircle from '@/common/components/icons/InfoCircle';
+import { CorrAppContext } from '@/app/app/service-context/AppContextWrapper';
 
 const CorrespondenceHeader = () => {
   const router = useRouter();
   const detailsData = useContext(DetailContext);
+  const appContextData = useContext(CorrAppContext);
 
   const timeline = {
     name: 'Adbul Jabar',
@@ -34,7 +36,7 @@ const CorrespondenceHeader = () => {
         />
         <Title tag="h1" className="text-lg leading-[22.77px]">
           {/* Export of Brewery Products */}
-          {detailsData?.minuteData[0]?.correspondence?.subject}
+          {appContextData?.minuteData[0]?.correspondence?.subject}
         </Title>
       </div>
       <div className="flex items-center justify-between gap-1">
