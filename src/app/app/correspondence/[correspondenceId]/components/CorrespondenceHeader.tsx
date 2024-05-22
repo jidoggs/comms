@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import dayjs from 'dayjs';
 import { DetailContext } from '../service-context/DetailContextWrapper';
 import CustomButton from '@/common/components/CustomButton';
@@ -8,12 +8,11 @@ import TimelineComponent from '@/common/components/TimelineComponent/TimelineCom
 import BackwardArrow from '@/common/components/icons/BackwardArrow';
 import Dot from '@/common/components/icons/Dot';
 import InfoCircle from '@/common/components/icons/InfoCircle';
-import { CorrAppContext } from '@/app/app/service-context/AppContextWrapper';
 
 const CorrespondenceHeader = () => {
   const router = useRouter();
   const detailsData = useContext(DetailContext);
-  const appContextData = useContext(CorrAppContext);
+  const title = useParams().correspondenceId as string;
 
   const timeline = {
     name: 'Adbul Jabar',
@@ -34,9 +33,8 @@ const CorrespondenceHeader = () => {
           className="border !border-custom-gray_400"
           descriptionPlacement="bottom"
         />
-        <Title tag="h1" className="text-lg leading-[22.77px]">
-          {/* Export of Brewery Products */}
-          {appContextData?.minuteData[0]?.correspondence?.subject}
+        <Title tag="h1" className="text-lg capitalize leading-[22.77px]">
+          {title.replace(/_/g, ' ')}
         </Title>
       </div>
       <div className="flex items-center justify-between gap-1">

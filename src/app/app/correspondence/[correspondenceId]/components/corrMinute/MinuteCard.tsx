@@ -48,7 +48,7 @@ const MinuteCard = ({ className, minute }: Props) => {
       <div className="flex items-center gap-x-2.5">
         <div
           className={mergeClassName(
-            'z-[2] flex w-full flex-col gap-y-1 rounded-xl bg-custom-white_100 p-0.5 shadow-wordBox md:w-100',
+            'flex w-full flex-col gap-y-1 rounded-xl bg-custom-white_100 p-0.5 shadow-wordBox md:w-100',
             minuteFromMe ? 'order-2 rounded-br-none' : 'order-1 rounded-bl-none'
           )}
         >

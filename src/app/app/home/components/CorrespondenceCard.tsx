@@ -30,7 +30,9 @@ const CorrespondenceCard = ({ minute, type }: Props) => {
     //   `correspondence/${minuteTitle}&id=${minute.correspondence._id}`
     // );
     // appContextData?.setCorrId(minute.correspondence._id);
-    router.push(`correspondence/${minute.correspondence._id}`);
+    router.push(
+      `correspondence/${minute.correspondence.subject.replace(/ /g, '_')}?corrs=${minute.correspondence._id}&tab=minutes`
+    );
   };
   const handleKeyDown: iHandleKeyboard = (e) => {
     if (e.key === 'Tab') return;

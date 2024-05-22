@@ -8,7 +8,7 @@ import Title from '@/common/components/Title';
 // import TextArea from 'antd/es/input/TextArea';
 import dynamic from 'next/dynamic';
 // import { MinuteContext } from '../../service-context/MinuteContextWrapper';
-import { CorrAppContext } from '@/app/app/service-context/AppContextWrapper';
+import { CorrAppContext } from '@/app/app/correspondence/[correspondenceId]/service-context/AppContextWrapper';
 import CustomMinute from '@/common/components/CustomMinute';
 import { Upload } from 'antd';
 

@@ -2,24 +2,22 @@ import React, {
   createContext,
   Suspense,
   useCallback,
-  //   useContext,
   useMemo,
   useState,
 } from 'react';
-import { AppContextType } from '../correspondence/types';
+import { AppContextType } from '../../types';
 import { ContextWrapper } from '@/types';
 import { useDebounce } from '@/common/hooks';
-import useRecipient from '../hooks/useRecipient';
-import useMinute from '../hooks/useMinute';
+import useRecipient from '../../../hooks/useRecipient';
+import useMinute from '../../../hooks/useMinute';
 import { useForm } from 'antd/es/form/Form';
-import { useParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { removeNullOrUndefinedProperties } from '@/common/utils';
 
 export const CorrAppContext = createContext<AppContextType>(null);
 
 const AppContextWrapper = ({ children }: ContextWrapper) => {
-  const params = useParams();
-  const paramCorrespondenceId = params.correspondenceId as string;
+  const paramCorrespondenceId = useSearchParams().get('corrs') as string;
   const [correspondenceId, setCorrespondenceId] = useState<string>();
   const [closeModal, setCloseModal] = useState<boolean>(false);
   const [attachSelected, setAttachSelected] = useState<boolean>(false);

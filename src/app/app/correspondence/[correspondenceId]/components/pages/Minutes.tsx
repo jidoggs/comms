@@ -8,7 +8,7 @@ import { DetailContext } from '../../service-context/DetailContextWrapper';
 import NotesContextWapper from '../../service-context/NotesContextWapper';
 import { mergeClassName } from '@/common/utils';
 import MinuteContextWrapper from '../../service-context/MinuteContextWrapper';
-import { CorrAppContext } from '@/app/app/service-context/AppContextWrapper';
+import { CorrAppContext } from '@/app/app/correspondence/[correspondenceId]/service-context/AppContextWrapper';
 
 const Minutes = () => {
   const detailContextInfo = useContext(DetailContext);

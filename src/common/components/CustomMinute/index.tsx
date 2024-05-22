@@ -9,7 +9,7 @@ import Link from '../icons/Link';
 import PaperClip from '../icons/PaperClip';
 import Edit from '../icons/Edit';
 import Sticker from '../icons/Sticker';
-import { CorrAppContext } from '@/app/app/service-context/AppContextWrapper';
+import { CorrAppContext } from '@/app/app/correspondence/[correspondenceId]/service-context/AppContextWrapper';
 
 const CustomMinute = () => {
   const appContextData = useContext(CorrAppContext);
