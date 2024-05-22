@@ -8,30 +8,27 @@ import CorrespondenceCard from './CorrespondenceCard';
 const OngoingList = () => {
   const homeContextData = useContext(HomeContext);
   const minuteData = homeContextData?.ongoingList;
-  const uniqueCorrespondences = minuteData.reduce(
-    (acc: any[], current: any) => {
-      if (
-        !acc.some(
-          (minute) => minute.correspondence._id === current.correspondence._id
-        )
-      ) {
-        acc.push(current);
-      }
-      return acc;
-    },
-    []
-  );
+  // const uniqueCorrespondences = minuteData.reduce(
+  //   (acc: any[], current: any) => {
+  //     if (
+  //       !acc.some(
+  //         (minute) => minute.correspondence._id === current.correspondence._id
+  //       )
+  //     ) {
+  //       acc.push(current);
+  //     }
+  //     return acc;
+  //   },
+  //   []
+  // );
 
   return (
     <section className="flex flex-col gap-y-2.5">
-      <SectionHeaderCard
-        title="Ongoing"
-        count={uniqueCorrespondences?.length}
-      />
+      <SectionHeaderCard title="Ongoing" count={minuteData?.length || 0} />
       <div className="no-scrollbar h-full max-h-[calc(100vh_-_8.625rem)] space-y-2.5 overflow-y-scroll">
-        {uniqueCorrespondences.length > 0 ? (
-          uniqueCorrespondences?.map((correspondence: any, index: number) => (
-            <CorrespondenceCard key={index} minute={correspondence} />
+        {minuteData && minuteData.length > 0 ? (
+          minuteData?.map((itm) => (
+            <CorrespondenceCard key={itm._id} minute={itm} type="ongoing" />
           ))
         ) : (
           <div

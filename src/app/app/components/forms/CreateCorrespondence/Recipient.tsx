@@ -2,9 +2,9 @@
 import React, { useCallback, useState } from 'react';
 import Select from 'antd/es/select';
 import Spin from 'antd/es/spin';
-import { FormListFieldData } from 'antd';
+import { FormListFieldData } from 'antd/es/form/FormList';
 import { useDebounce } from '@/common/hooks';
-import useCorrespondence from '@/app/app/hooks/useCorrespondence';
+import useRecipient from '@/app/app/hooks/useRecipient';
 import dynamic from 'next/dynamic';
 
 // const { Option } = Select;
@@ -32,8 +32,7 @@ const Recipient = ({
   const [search, setSearch] = useState('');
   const searchDebounce = useDebounce(search);
 
-  const { getRecipientsSwr } = useCorrespondence({
-    can_get_all_recipients: true,
+  const { getRecipientsSwr } = useRecipient({
     recipient: searchDebounce,
   });
 
@@ -49,7 +48,7 @@ const Recipient = ({
     setSearch(value);
   };
 
-  const recipientsData = getRecipientsSwr?.data?.data;
+  const recipientsData = getRecipientsSwr.data;
 
   const options = React.useMemo(() => {
     if (!recipientsData) return []; // Handle null or undefined data

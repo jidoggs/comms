@@ -6,11 +6,11 @@ import { defaultColumns, personKeys, tabItemList } from './userHelper';
 import { useRoles } from '../../hooks';
 import useUsers from '../../hooks/useUsers';
 import usePermissions from '../../hooks/usePermission';
-import { ContextWapper, iHandleChange } from '@/types';
+import { ContextWrapper, iHandleChange } from '@/types';
 
 export const UserMgmtDataContext = createContext<UserMgmtDataContextType>(null);
 
-function UserMgmtContextWrapper({ children }: ContextWapper) {
+function UserMgmtContextWrapper({ children }: ContextWrapper) {
   const [search, setSearch] = useState('');
   const searchDebounce = useDebounce(search);
   const pagination = usePagination();

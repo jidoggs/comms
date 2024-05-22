@@ -1,7 +1,7 @@
 'use client';
 import { createContext, useEffect, useState } from 'react';
 import { PeopleDataContextType, TabKeysType } from '../types';
-import { ContextWapper, User, iHandleChange } from '@/types';
+import { ContextWrapper, User, iHandleChange } from '@/types';
 import { useDebounce, usePagination, useTabChange } from '@/common/hooks';
 import usePeople from '../../hooks/usePeople';
 import { columnHelper, tabItemList } from './helper';
@@ -9,7 +9,7 @@ import { CustomTableProps } from '@/common/components/CustomTable';
 
 export const PeopleDataContext = createContext<PeopleDataContextType>(null);
 
-function PeopleListContextWrapper({ children }: ContextWapper) {
+function PeopleListContextWrapper({ children }: ContextWrapper) {
   const [search, setSearch] = useState('');
   const debounceValue = useDebounce(search);
   const [userDetail, setUserDetail] = useState<User | null>(null);

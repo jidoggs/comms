@@ -1,10 +1,8 @@
 import { MinuteData } from '@/types';
 
 export type HomeContextType = {
-  minuteData: MinuteData[];
   isMinutesFetching: boolean;
-  queuedList: any;
-  ongoingList: any;
-  selectedMinute: MinuteData | undefined;
-  triggerSelectedMinute: (value: MinuteData) => void;
+  queuedList: MinuteData[];
+  ongoingList: MinuteData[];
+  isNewAccount: boolean;
 } | null;

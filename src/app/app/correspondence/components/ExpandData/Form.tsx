@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Form, { FormInstance } from 'antd/es/form/Form';
 import CustomDragger from '@/common/components/CustomDragger';
-import CustomInput from '@/common/components/CustomInput';
+import CustomInput, { CustomTextArea } from '@/common/components/CustomInput';
 import CustomButton from '@/common/components/CustomButton';
 // import { TableRowActionContext } from '../TableRowAction';
 import { CorrespondenceData } from '@/types';
 import dynamic from 'next/dynamic';
 import { Select, Spin } from 'antd';
 import { useDebounce } from '@/common/hooks';
-import useCorrespondence from '@/app/app/hooks/useCorrespondence';
+import useRecipient from '@/app/app/hooks/useRecipient';
 import dayjs from 'dayjs';
 import { normFile } from '@/common/utils';
 
@@ -24,9 +24,9 @@ type Props = {
   currentCorr: any;
 };
 
-const Input = dynamic(() => import('antd/es/input/Input'), { ssr: true });
+// const Input = dynamic(() => import('antd/es/input/Input'), { ssr: true });
 const FormItem = dynamic(() => import('antd/es/form/FormItem'), { ssr: true });
-const TextArea = dynamic(() => import('antd/es/input/TextArea'), { ssr: true });
+// const TextArea = dynamic(() => import('antd/es/input/TextArea'), { ssr: true });
 const DatePicker = dynamic(() => import('antd/es/date-picker'), {
   ssr: true,
 });
@@ -41,8 +41,7 @@ function NewCorrespondenceForm({ handleSubmit, form, currentCorr }: Props) {
 
   const searchDebounce = useDebounce(search);
 
-  const { getRecipientsSwr } = useCorrespondence({
-    can_get_all_recipients: true,
+  const { getRecipientsSwr } = useRecipient({
     recipient: searchDebounce,
   });
 
@@ -60,7 +59,7 @@ function NewCorrespondenceForm({ handleSubmit, form, currentCorr }: Props) {
     handleSubmit(modifiedValues);
   };
 
-  const recipientsData = getRecipientsSwr?.data?.data;
+  const recipientsData = getRecipientsSwr.data;
 
   const options = React.useMemo(() => {
     if (!recipientsData) return []; // Handle null or undefined data
@@ -169,7 +168,7 @@ function NewCorrespondenceForm({ handleSubmit, form, currentCorr }: Props) {
             className="flex flex-col"
             // rules={[{ required: true, message: 'Minute is required' }]}
           >
-            <TextArea name="minute" />
+            <CustomTextArea name="minute" />
           </FormItem>
           <FormItem
             label="Date of correspondence"
@@ -190,7 +189,7 @@ function NewCorrespondenceForm({ handleSubmit, form, currentCorr }: Props) {
             className="flex flex-col"
             rules={[{ required: true, message: 'Ref. No is required' }]}
           >
-            <Input name="ref_no" />
+            <CustomInput name="ref_no" />
           </FormItem>
         </div>
       </div>

@@ -6,7 +6,7 @@ import {
   NoteInfo,
   NotesContextType,
 } from '../components/notes/type';
-import { ContextWapper } from '@/types';
+import { ContextWrapper } from '@/types';
 
 const initialNoteInfo: NoteInfo = {
   showNote: false,
@@ -18,7 +18,7 @@ const initialNoteInfo: NoteInfo = {
 
 export const NoteContext = createContext<NotesContextType>(null);
 
-function NotesContextWapper({ children }: ContextWapper) {
+function NotesContextWapper({ children }: ContextWrapper) {
   const [noteInfo, setNoteInfo] = useState<NoteInfo>(initialNoteInfo);
 
   const showNoteHandler = () => {

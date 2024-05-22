@@ -4,7 +4,7 @@ import { mergeClassName } from '@/common/utils';
 import { CorrespondenceContextNewType } from '../../types';
 import { singleDummyCorrespondenceData } from '@/common/mockData';
 import Document from '@/common/components/icons/Document';
-import { ContextWapper, EditableTableColumnTypes } from '@/types';
+import { ContextWrapper, EditableTableColumnTypes } from '@/types';
 
 export const CorrespondenceContextNew =
   createContext<CorrespondenceContextNewType>(null);
@@ -106,7 +106,7 @@ const defaultColumns: (EditableTableColumnTypes[number] & {
   className: mergeClassName('!py-4 text-sm font-medium', itm.className),
 }));
 
-function NewCorrespondenceContext({ children }: ContextWapper) {
+function NewCorrespondenceContext({ children }: ContextWrapper) {
   const [dataSource, setDataSource] = useState<any[]>([]);
 
   const handleDelete = (id: string | number) => {

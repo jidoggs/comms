@@ -8,7 +8,7 @@ import {
 import { useAnimation } from 'framer-motion';
 import { DetailContextType, MultiSelectType } from '../../types';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
-import { ContextWapper } from '@/types';
+import { ContextWrapper } from '@/types';
 // import useCorrespondence from '@/app/app/hooks/useCorrespondence';
 import dayjs from 'dayjs';
 import { useSession } from '@/common/hooks';
@@ -20,7 +20,7 @@ const initialMutliSelect = {
   selectedItems: [],
 };
 
-function DetailContextWrapper({ children }: ContextWapper) {
+function DetailContextWrapper({ children }: ContextWrapper) {
   // const params = useParams();
   // const correspondenceId = params.correspondenceId;
   const pathname = usePathname();
@@ -95,7 +95,7 @@ function DetailContextWrapper({ children }: ContextWapper) {
     }
   };
 
-  // const { getCorrMinListSwr } = useCorrespondence({
+  // const { getCorrMinListSwr } = useMinute({
   //   can_get_all: true,
   //   _id: correspondenceId.toString(),
   // });

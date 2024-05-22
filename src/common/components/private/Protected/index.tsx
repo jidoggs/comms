@@ -8,11 +8,11 @@ import FullPageLoader from '../../FullPageLoader';
 import useAuth from '@/app/auth/hooks/useAuth';
 import { isServer, requestRefreshToken } from '@/common/utils';
 import { fetchUserToken } from '@/service/storage';
-import { ContextWapper, User } from '@/types';
+import { ContextWrapper, User } from '@/types';
 
 const AppLayout = lazy(() => import('../Layout'));
 
-function Protected({ children }: ContextWapper) {
+function Protected({ children }: ContextWrapper) {
   const token = fetchUserToken();
   const router = useRouter();
 

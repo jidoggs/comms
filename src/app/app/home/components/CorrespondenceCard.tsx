@@ -1,10 +1,11 @@
+import dayjs from 'dayjs';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import AvatarGroup from '@/common/components/Avatar/AvatarGroup';
 import CustomAvatar from '@/common/components/Avatar/CustomAvatar';
 import Title from '@/common/components/Title';
 import { dummyAvatarData } from '@/common/mockData';
-import { iHandleClick, iHandleKeyboard } from '@/types';
+import { MinuteData, iHandleClick, iHandleKeyboard } from '@/types';
 import { generateInitials } from '@/common/utils';
 import Folder from '@/common/components/icons/Folder';
 
@@ -17,10 +18,11 @@ const CreateProject = dynamic(
 const NewMinute = dynamic(() => import('./NewMinute'));
 
 interface Props {
-  minute: any;
+  minute: MinuteData;
+  type: 'queue' | 'ongoing';
 }
 
-const CorrespondenceCard = ({ minute }: Props) => {
+const CorrespondenceCard = ({ minute, type }: Props) => {
   const router = useRouter();
 
   const handleClick = () => {
@@ -78,7 +80,9 @@ const CorrespondenceCard = ({ minute }: Props) => {
             className="flex items-center gap-1"
           >
             <Title small className="font-medium text-custom-gray_200">
-              4:20 PM, 16 Feb 2024
+              {dayjs(
+                type === 'queue' ? minute.created_at : minute.updated_at
+              ).format('h:mm A, D MMM YYYY')}
             </Title>
             <div className="flex items-center gap-x-1">
               <CustomAvatar size={28}>

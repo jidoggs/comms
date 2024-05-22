@@ -1,37 +1,36 @@
 'use client';
-import React, { createContext, useState } from 'react';
+import React, { createContext } from 'react';
+import useMinute from '../../hooks/useMinute';
 import { HomeContextType } from '../types';
-import { ContextWapper as ContextWrapper, MinuteData } from '@/types';
-import useCorrespondence from '../../hooks/useCorrespondence';
+import { ContextWrapper } from '@/types';
 
 export const HomeContext = createContext<HomeContextType>(null);
 
 const HomeContextWrapper = ({ children }: ContextWrapper) => {
-  const [selectedMinute, setSelectedMinute] = useState<MinuteData>();
-  const { getMinListSwr } = useCorrespondence({
+  const { getMinListSwr: queueSwr } = useMinute({
     can_get_all: true,
+    status: 'queue',
+  });
+  const { getMinListSwr: ongoingSwr } = useMinute({
+    can_get_all: true,
+    status: 'ongoing',
   });
 
-  const minuteData = getMinListSwr.data;
-  const isMinutesFetching =
-    getMinListSwr.isLoading || getMinListSwr.isValidating;
+  const isMinutesFetching = queueSwr.loading || ongoingSwr.loading;
 
-  const queuedList = minuteData.filter((list) => list.status === 'queue');
-  const ongoingList = minuteData?.filter((list) => list.status === 'ongoing');
-  const triggerSelectedMinute = (value: MinuteData) => {
-    setSelectedMinute(value);
-  };
+  const queuedList = queueSwr.data;
+  const ongoingList = ongoingSwr.data;
+
+  const isNewAccount = queuedList.length === 0 && ongoingList.length === 0;
 
   return (
     <>
       <HomeContext.Provider
         value={{
-          minuteData,
           isMinutesFetching,
           queuedList,
           ongoingList,
-          triggerSelectedMinute,
-          selectedMinute,
+          isNewAccount,
         }}
       >
         {children}
