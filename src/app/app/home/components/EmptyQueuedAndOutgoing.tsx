@@ -62,7 +62,7 @@ function EmptyQueuedAndOutgoing() {
               title="Create a project"
             />
             <Suspense fallback={null}>
-              <CreateCorrespondence ref={createCorrRef} className="invisible" />
+              <CreateCorrespondence ref={createCorrRef} className="!hidden" />
             </Suspense>
           </div>
         </div>

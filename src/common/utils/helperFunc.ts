@@ -1,3 +1,4 @@
+import { DefaultTableProps } from '@/types';
 import * as clsx from 'clsx';
 import dayjs from 'dayjs';
 import { twMerge } from 'tailwind-merge';
@@ -106,4 +107,24 @@ export const removeNullOrUndefinedProperties = (obj: Record<string, any>) => {
     }
   });
   return newObj;
+};
+
+export const arrangeColumnsAndFilter = (
+  columns: DefaultTableProps[],
+  keys: string[]
+): DefaultTableProps[] => {
+  const keyIndex = keys.reduce<Record<string, number>>((acc, key, index) => {
+    acc[key] = index;
+    return acc;
+  }, {});
+
+  return columns
+    .slice()
+    .sort((a, b) => {
+      return (
+        (keyIndex[a.dataIndex as string] ?? Number.MAX_SAFE_INTEGER) -
+        (keyIndex[b.dataIndex as string] ?? Number.MAX_SAFE_INTEGER)
+      );
+    })
+    .filter((itm) => keys.includes(itm.dataIndex));
 };
