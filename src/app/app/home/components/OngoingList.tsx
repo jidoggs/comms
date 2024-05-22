@@ -1,9 +1,11 @@
 'use client';
 import React, { useContext } from 'react';
 import SectionHeaderCard from './SectionHeaderCard';
-import CorrespondenceCard from './CorrespondenceCard';
 import Title from '@/common/components/Title';
 import { HomeContext } from '../service-context/HomeContextWrapper';
+import dynamic from 'next/dynamic';
+
+const CorrespondenceCard = dynamic(() => import('./CorrespondenceCard'));
 
 const OngoingList = () => {
   const homeContextData = useContext(HomeContext);

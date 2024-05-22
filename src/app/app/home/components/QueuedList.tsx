@@ -1,9 +1,11 @@
 'use client';
+import dynamic from 'next/dynamic';
 import React, { useContext } from 'react';
 import SectionHeaderCard from './SectionHeaderCard';
-import CorrespondenceCard from './CorrespondenceCard';
 import Title from '@/common/components/Title';
 import { HomeContext } from '../service-context/HomeContextWrapper';
+
+const CorrespondenceCard = dynamic(() => import('./CorrespondenceCard'));
 
 const QueuedList = () => {
   const homeContextData = useContext(HomeContext);

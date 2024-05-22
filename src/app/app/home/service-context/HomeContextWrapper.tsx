@@ -13,6 +13,8 @@ const HomeContextWrapper = ({ children }: ContextWrapper) => {
   });
 
   const minuteData = getMinListSwr.data;
+  const isMinutesFetching =
+    getMinListSwr.isLoading || getMinListSwr.isValidating;
 
   const queuedList = minuteData.filter((list) => list.status === 'queue');
   const ongoingList = minuteData?.filter((list) => list.status === 'ongoing');
@@ -25,6 +27,7 @@ const HomeContextWrapper = ({ children }: ContextWrapper) => {
       <HomeContext.Provider
         value={{
           minuteData,
+          isMinutesFetching,
           queuedList,
           ongoingList,
           triggerSelectedMinute,
