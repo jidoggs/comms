@@ -54,14 +54,16 @@ export const ENDPOINTS = {
   },
   CORRESPONDENCE: {
     CREATE: '/correspondence',
-    CREATE_MINUTE: (id: string) => `correspondence/${id}/minutes`,
     GET_ALL: '/correspondence/all',
-    GET_ALL_MINUTES: '/correspondence/minutes/all',
-    GET_ALL_MINUTES_IN_CORR: (correspondenceId: string) =>
-      `correspondence/${correspondenceId}/minutes/all`,
     SPECIFIC_ITEM: (query: string) => `/correspondence/${query}`,
     GET_RECIPIENTS: (query: string) => `/correspondence/recipient${query}`,
     ARCHIVE: '/correspondence/archive',
+  },
+  MINUTE: {
+    CREATE: (id: string) => `correspondence/${id}/minutes`,
+    GET_ALL: (query: string) => '/correspondence/minutes/all' + query,
+    GET_ALL_IN_CORR: (correspondenceId: string) =>
+      `correspondence/${correspondenceId}/minutes/all`,
   },
   PERMISSIONS: {
     CREATE: '/permissions',

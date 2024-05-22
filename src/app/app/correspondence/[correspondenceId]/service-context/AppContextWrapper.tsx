@@ -2,23 +2,22 @@ import React, {
   createContext,
   Suspense,
   useCallback,
-  //   useContext,
   useMemo,
   useState,
 } from 'react';
-import { AppContextType } from '../correspondence/types';
-import { ContextWapper } from '@/types';
+import { AppContextType } from '../../types';
+import { ContextWrapper } from '@/types';
 import { useDebounce } from '@/common/hooks';
-import useCorrespondence from '../hooks/useCorrespondence';
+import useRecipient from '../../../hooks/useRecipient';
+import useMinute from '../../../hooks/useMinute';
 import { useForm } from 'antd/es/form/Form';
-import { useParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { removeNullOrUndefinedProperties } from '@/common/utils';
 
 export const CorrAppContext = createContext<AppContextType>(null);
 
-const AppContextWrapper = ({ children }: ContextWapper) => {
-  const params = useParams();
-  const paramCorrespondenceId = params.correspondenceId as string;
+const AppContextWrapper = ({ children }: ContextWrapper) => {
+  const paramCorrespondenceId = useSearchParams().get('corrs') as string;
   const [correspondenceId, setCorrespondenceId] = useState<string>();
   const [closeModal, setCloseModal] = useState<boolean>(false);
   const [attachSelected, setAttachSelected] = useState<boolean>(false);
@@ -33,7 +32,7 @@ const AppContextWrapper = ({ children }: ContextWapper) => {
     any[]
   >([]);
   const [form] = useForm();
-  const { getCorrMinListSwr } = useCorrespondence({
+  const { getCorrMinListSwr } = useMinute({
     can_get_all: true,
     _id: correspondenceId?.toString() || paramCorrespondenceId,
   });
@@ -51,7 +50,7 @@ const AppContextWrapper = ({ children }: ContextWapper) => {
     setUploadSelected(!uploadSelected);
   };
 
-  const { createMinuteSwr } = useCorrespondence({
+  const { createMinuteSwr } = useMinute({
     can_create: true,
     _id: minuteData[minuteData.length - 1]?.correspondence?._id,
   });
@@ -69,11 +68,10 @@ const AppContextWrapper = ({ children }: ContextWapper) => {
   };
 
   const searchDebounce = useDebounce(search);
-  const { getRecipientsSwr } = useCorrespondence({
-    can_get_all_recipients: true,
+  const { getRecipientsSwr } = useRecipient({
     recipient: searchDebounce,
   });
-  const recipientsData: any = getRecipientsSwr?.data?.data || [];
+  const recipientsData = getRecipientsSwr?.data;
   const recipientIsLoading = getRecipientsSwr.isLoading;
   const options = useMemo(() => {
     if (!recipientsData) return [];

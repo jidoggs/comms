@@ -20,9 +20,9 @@ function useTabChange<T = string>(args?: Props) {
 
   const handleTabChange = (state: string) => {
     if (!args?.defaultKey) return;
-    const base = args.defaultKey.split('=')?.[0].split('/');
-    const query = base[base.length - 1];
-    router.push(`${query}=${state}`);
+    const base = args.defaultKey.split('tab=')[0];
+
+    router.replace(`${base}tab=${state}`);
     if (args?.resetFields) {
       args.resetFields();
     }

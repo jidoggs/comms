@@ -5,3 +5,7 @@ export type EditableTableColumnTypes = Exclude<
   EditableTableProps['columns'],
   undefined
 >;
+
+export type DefaultTableProps = EditableTableColumnTypes[number] & {
+  dataIndex: string;
+};

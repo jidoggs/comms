@@ -4,7 +4,7 @@ import CustomModal from '@/common/components/CustomModal';
 import Send from '@/common/components/icons/Send';
 import React, { useContext, useEffect, useState } from 'react';
 import ExpandedMinuteForm from '../../correspondence/[correspondenceId]/components/corrMinute/ExpandedMinuteForm';
-import { CorrAppContext } from '../../service-context/AppContextWrapper';
+import { CorrAppContext } from '../../correspondence/[correspondenceId]/service-context/AppContextWrapper';
 
 const NewMinute = ({ minute }: any) => {
   // const detailsData = useContext(DetailContext);

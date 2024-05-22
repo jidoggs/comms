@@ -39,7 +39,9 @@ function usePeople(props: Props) {
   };
 
   const getAllSwr = useAuthGetRequest<User[]>(
-    props?.can_get_all_invites && query ? GET_ALL_INVITE_BY_STATUS(query) : '',
+    props?.can_get_all_invites && currentTab
+      ? GET_ALL_INVITE_BY_STATUS(query)
+      : '',
     fetchOptions
   );
 

@@ -3,15 +3,24 @@ import CustomAvatar from '../Avatar/CustomAvatar';
 import Title from '../Title';
 import { User } from '@/types';
 import Profile from '../icons/Profile';
+import { mergeClassName } from '@/common/utils';
+
+type IclassName = 'container';
 
 type Props = {
   data: User | string;
   avatarSize?: number;
+  className?: Partial<Record<IclassName, string>>;
 };
 
-function CustomUser({ data, avatarSize = 30 }: Props) {
+function CustomUser({ data, avatarSize = 30, className }: Props) {
   return (
-    <div className="flex cursor-pointer items-center gap-x-2.5 px-1.5 py-0.5">
+    <div
+      className={mergeClassName(
+        'flex cursor-pointer items-center gap-x-2.5 px-1.5 py-0.5',
+        className?.container
+      )}
+    >
       <CustomAvatar
         size={avatarSize}
         src={typeof data !== 'string' && data?.img}

@@ -27,6 +27,7 @@ const CustomJoditEditor = ({ placeholder, onChange }: JoditProps) => {
   }, [placeholder]);
 
   return (
+    <>
     <JoditEditor
       ref={editor}
       value={content}
@@ -38,6 +39,7 @@ const CustomJoditEditor = ({ placeholder, onChange }: JoditProps) => {
         onChange && onChange(newContent);
       }}
     />
+    </>
   );
 };
 

@@ -8,17 +8,18 @@ import React, {
   useState,
 } from 'react';
 import { MinuteContextType } from '../../types';
-import { ContextWapper } from '@/types';
-import useCorrespondence from '@/app/app/hooks/useCorrespondence';
+import { ContextWrapper } from '@/types';
+import useRecipient from '@/app/app/hooks/useRecipient';
 import { useForm } from 'antd/es/form/Form';
 // import { DetailContext } from './DetailContextWrapper';
 // import { messageHandler } from '@/common/utils/notification';
 import { useDebounce } from '@/common/hooks';
+
 // import { CorrAppContext } from '@/app/app/service-context/AppContextWrapper';
 
 export const MinuteContext = createContext<MinuteContextType>(null);
 
-const MinuteContextWrapper = ({ children }: ContextWapper) => {
+const MinuteContextWrapper = ({ children }: ContextWrapper) => {
   // const detailContextInfo = useContext(DetailContext);
   // const appContextInfo = useContext(CorrAppContext);
   const [search, setSearch] = useState<string>('');
@@ -42,12 +43,11 @@ const MinuteContextWrapper = ({ children }: ContextWapper) => {
   //   const lastMinute = allMinuteData[allMinuteData.length - 1];
 
   const searchDebounce = useDebounce(search);
-  const { getRecipientsSwr } = useCorrespondence({
-    can_get_all_recipients: true,
+  const { getRecipientsSwr } = useRecipient({
     recipient: searchDebounce,
   });
 
-  const recipientsData: any = getRecipientsSwr?.data?.data || [];
+  const recipientsData = getRecipientsSwr.data;
   const recipientIsLoading = getRecipientsSwr.isLoading;
   const options = useMemo(() => {
     if (!recipientsData) return [];
@@ -65,7 +65,7 @@ const MinuteContextWrapper = ({ children }: ContextWapper) => {
     );
   }, [recipientsData]);
 
-  // const { createMinuteSwr } = useCorrespondence({
+  // const { createMinuteSwr } = useMinute({
   //   can_create: true,
   //   _id: allMinuteData[allMinuteData.length - 1]?.correspondence?._id,
   // });

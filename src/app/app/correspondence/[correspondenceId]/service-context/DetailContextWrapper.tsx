@@ -1,17 +1,12 @@
-import React, { Suspense, useCallback, useLayoutEffect, useState } from 'react';
-import {
-  // useParams,
-  usePathname,
-  useRouter,
-  useSearchParams,
-} from 'next/navigation';
+import React, { Suspense, useCallback, useState } from 'react';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { useAnimation } from 'framer-motion';
 import { DetailContextType, MultiSelectType } from '../../types';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
-import { ContextWapper } from '@/types';
+import { ContextWrapper } from '@/types';
 // import useCorrespondence from '@/app/app/hooks/useCorrespondence';
 import dayjs from 'dayjs';
-import { useSession } from '@/common/hooks';
+import { useSession, useTabChange } from '@/common/hooks';
 
 export const DetailContext = React.createContext<DetailContextType>(null);
 
@@ -20,12 +15,10 @@ const initialMutliSelect = {
   selectedItems: [],
 };
 
-function DetailContextWrapper({ children }: ContextWapper) {
-  // const params = useParams();
-  // const correspondenceId = params.correspondenceId;
+function DetailContextWrapper({ children }: ContextWrapper) {
+  const params = useSearchParams();
+
   const pathname = usePathname();
-  const router = useRouter();
-  const activeTab = useSearchParams().get('tab') as string;
   const { data: user } = useSession();
   const [openCorrespondenceDetails, setOpenCorrespondenceDetails] =
     useState<boolean>(false);
@@ -43,6 +36,10 @@ function DetailContextWrapper({ children }: ContextWapper) {
   const turnMultiSelectOFFHandler = () => {
     setMultiSelect({ ...initialMutliSelect });
   };
+
+  const { currentTab, handleTabChange } = useTabChange({
+    defaultKey: `${pathname}?${params.toString()}&tab=minutes`,
+  });
 
   const selectItemHandler = useCallback((e: CheckboxChangeEvent) => {
     const { checked, name } = e.target;
@@ -64,17 +61,6 @@ function DetailContextWrapper({ children }: ContextWapper) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const tabChangeHandler = (state: string) => {
-    router.push(`${pathname}?tab=${state}`);
-  };
-
-  useLayoutEffect(() => {
-    if (!activeTab) {
-      router.replace(`${pathname}?tab=minutes`);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeTab]);
-
   const openDetailsHandler = () => {
     setOpenCorrespondenceDetails(true);
     contentControls.start({ width: '66.666%' });
@@ -95,7 +81,7 @@ function DetailContextWrapper({ children }: ContextWapper) {
     }
   };
 
-  // const { getCorrMinListSwr } = useCorrespondence({
+  // const { getCorrMinListSwr } = useMinute({
   //   can_get_all: true,
   //   _id: correspondenceId.toString(),
   // });
@@ -118,8 +104,8 @@ function DetailContextWrapper({ children }: ContextWapper) {
           closeDetailsHandler,
           correspondenceFile,
           handleUpdateFile,
-          tabChangeHandler,
-          activeTab,
+          tabChangeHandler: handleTabChange,
+          activeTab: currentTab,
           contentControls,
           turnMultiSelectOnHandler,
           turnMultiSelectOFFHandler,

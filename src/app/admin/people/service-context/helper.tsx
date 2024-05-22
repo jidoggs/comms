@@ -1,36 +1,48 @@
 import dayjs from 'dayjs';
-import { mergeClassName } from '@/common/utils';
 import TableRowAction from '../components/TableRowAction';
 import { TabItemProps } from '@/common/components/CustomTab';
-import CustomAvatar from '@/common/components/Avatar/CustomAvatar';
-import Profile from '@/common/components/icons/Profile';
-import { EditableTableColumnTypes } from '@/types';
+import { DefaultTableProps } from '@/types';
+import { arrangeColumnsAndFilter, mergeClassName } from '@/common/utils';
+import CustomUser from '@/common/components/CustomUser';
+import { TabKeysType } from '../types';
 
-export const defaultColumns: (EditableTableColumnTypes[number] & {
-  dataIndex: string;
-})[] = [
+export const tabItemList: TabItemProps = [
+  {
+    key: 'pending',
+    label: 'Pending onboarding',
+  },
+  {
+    key: 'onboarded',
+    label: 'Onboarded',
+  },
+  {
+    key: 'approved',
+    label: 'Approved',
+  },
+  {
+    key: 'declined',
+    label: 'Declined',
+  },
+];
+
+export const defaultColumns: DefaultTableProps[] = [
   {
     title: 'Person',
     className: '!pl-5',
     dataIndex: 'fullname',
     width: 180,
     ellipsis: true,
-    render: (value: any, record: any) => {
+    render: (_: any, record: any) => {
       return (
         <>
           {record?.firstname ? (
-            <div className="flex items-center gap-x-2.5">
-              <CustomAvatar
-                src={record?.img}
-                size={28}
-                icon={
-                  <span className="flex h-full flex-1 items-center justify-center">
-                    <Profile size="22" className="stroke-white" />
-                  </span>
-                }
-              />
-              <span>{`${record.firstname} ${record.surname}`}</span>
-            </div>
+            <CustomUser
+              data={record}
+              avatarSize={28}
+              className={{
+                container: 'px-0',
+              }}
+            />
           ) : null}
         </>
       );
@@ -103,44 +115,22 @@ export const defaultColumns: (EditableTableColumnTypes[number] & {
   {
     title: 'Actions',
     className: '!pr-3 !text-center',
-    dataIndex: '',
+    dataIndex: 'actions',
     ellipsis: true,
     width: 150,
     render: (_: any, record: any) => {
       return <TableRowAction data={record} />;
     },
   },
-].map((itm) => ({
-  ...itm,
-  className: mergeClassName('!py-4 text-sm font-medium', itm.className),
-}));
-
-export const tabItemList: TabItemProps = [
-  {
-    key: 'pending',
-    label: 'Pending onboarding',
-  },
-  {
-    key: 'onboarded',
-    label: 'Onboarded',
-  },
-  {
-    key: 'approved',
-    label: 'Approved',
-  },
-  {
-    key: 'declined',
-    label: 'Declined',
-  },
 ];
 
-export const onboardingKeys = [
+export const pendingKeys = [
   'email',
   'fullname',
   'title',
   'parastatal',
   'date_sent',
-  '',
+  'actions',
 ];
 export const personKeys = [
   'fullname',
@@ -150,5 +140,45 @@ export const personKeys = [
   'parastatal',
   'last_seen',
   'date_created',
-  '',
+  'actions',
 ];
+
+export const columnHelper = (currentTab: TabKeysType) => {
+  const columns = arrangeColumnsAndFilter(
+    defaultColumns,
+    currentTab === 'pending' ? pendingKeys : personKeys
+  );
+  return columns.map((itm) => {
+    if (currentTab === 'pending' && itm.dataIndex === 'email') {
+      return {
+        ...itm,
+        className: mergeClassName(
+          '!py-4 text-sm font-medium !pl-5',
+          itm.className
+        ),
+        render: (value: string) => {
+          return (
+            <>
+              {value ? (
+                <CustomUser
+                  data={value}
+                  avatarSize={28}
+                  className={{
+                    container: 'px-0',
+                  }}
+                />
+              ) : null}
+            </>
+          );
+        },
+      };
+    }
+    return {
+      ...itm,
+      className: mergeClassName(
+        '!py-4 text-sm font-medium last:!pr-5',
+        itm.className
+      ),
+    };
+  });
+};

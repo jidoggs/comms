@@ -1,6 +1,6 @@
 'use client';
 import React, { createContext, useState } from 'react';
-import { ContextWapper, User } from '@/types';
+import { ContextWrapper, User } from '@/types';
 
 export type UserSessionContextType = {
   user: User | null;
@@ -9,7 +9,7 @@ export type UserSessionContextType = {
 
 export const UserContext = createContext<UserSessionContextType | null>(null);
 
-function AuthWrapper({ children }: ContextWapper) {
+function AuthWrapper({ children }: ContextWrapper) {
   const [data, setData] = useState<null | User>(null);
 
   const storeUserHandler = (res: User | null) => {

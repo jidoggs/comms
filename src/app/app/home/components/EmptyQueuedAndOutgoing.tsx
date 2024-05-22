@@ -1,11 +1,14 @@
 'use client';
-import React, { ReactNode, useRef } from 'react';
+import React, { ReactNode, Suspense, lazy, useRef } from 'react';
 import SectionHeaderCard from './SectionHeaderCard';
 import Title from '@/common/components/Title';
 import FolderOpen from '@/common/components/icons/FolderOpen';
 import Briefcase from '@/common/components/icons/Briefcase';
 import Users from '@/common/components/icons/Users';
-import CreateCorrespondence from '../../components/actions/CreateCorrespondence';
+
+const CreateCorrespondence = lazy(
+  () => import('../../components/actions/CreateCorrespondence')
+);
 
 interface Props extends React.HTMLAttributes<HTMLButtonElement> {
   icon: ReactNode;
@@ -58,7 +61,9 @@ function EmptyQueuedAndOutgoing() {
               icon={<Briefcase size={38} />}
               title="Create a project"
             />
-            <CreateCorrespondence ref={createCorrRef} className="invisible" />
+            <Suspense fallback={null}>
+              <CreateCorrespondence ref={createCorrRef} className="!hidden" />
+            </Suspense>
           </div>
         </div>
       </div>

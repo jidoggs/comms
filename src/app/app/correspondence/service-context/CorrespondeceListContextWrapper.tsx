@@ -3,14 +3,14 @@ import React, { createContext, useState } from 'react';
 import { useDebounce, useTabChange } from '@/common/hooks';
 import { CorrespondenceListContextType, TabKeysType } from '../types';
 import useCorrespondence from '../../hooks/useCorrespondence';
-import { ContextWapper, iHandleChange, CorrespondenceData } from '@/types';
+import { ContextWrapper, iHandleChange, CorrespondenceData } from '@/types';
 import { defaultColumns, tabItemList } from './helper';
 import { searchQueryHandler } from '@/service/request';
 
 export const CorrespondeceListContext =
   createContext<CorrespondenceListContextType>(null);
 
-function CorrespondeceListContextWrapper({ children }: ContextWapper) {
+function CorrespondeceListContextWrapper({ children }: ContextWrapper) {
   const [searchValue, setSearchValue] = useState('');
   const debounceValue = useDebounce(searchValue);
 

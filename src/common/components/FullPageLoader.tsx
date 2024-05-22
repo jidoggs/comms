@@ -1,16 +1,14 @@
+import React from 'react';
 import dynamic from 'next/dynamic';
-import { CSSProperties } from 'react';
 import SpinLoader from './icons/SpinLoader';
 
 const Spin = dynamic(() => import('antd/es/spin'), {
   loading: () => <Loader />,
 });
 
-type FullPageLoaderProps = {
-  background?: CSSProperties['background'];
-  height?: CSSProperties['height'];
+interface FullPageLoaderProps extends React.HTMLAttributes<HTMLDivElement> {
   fullscreen?: boolean;
-};
+}
 
 export const Loader = ({ size }: { size?: number }) => {
   return (
@@ -23,15 +21,17 @@ export const Loader = ({ size }: { size?: number }) => {
 };
 
 export default function FullPageLoader({
-  background,
-  height,
+  style,
   fullscreen,
+  ...props
 }: FullPageLoaderProps) {
   return (
     <div
+      {...props}
       style={{
-        background: background || '#f6f4f9',
-        height: height,
+        ...style,
+        background: style?.background || '#f6f4f9',
+        height: style?.height,
       }}
       className="flex h-screen w-full items-center justify-center"
     >
