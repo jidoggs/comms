@@ -1,13 +1,11 @@
 import React from 'react';
-import dynamic from 'next/dynamic';
 import HomeContextWrapper from './service-context/HomeContextWrapper';
-
-const PageLoader = dynamic(() => import('./PageContent'));
+import PageContent from './PageContent';
 
 const HomePage = () => {
   return (
     <HomeContextWrapper>
-      <PageLoader />
+      <PageContent />
     </HomeContextWrapper>
   );
 };

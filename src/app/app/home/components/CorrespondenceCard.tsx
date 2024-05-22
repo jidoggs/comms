@@ -1,6 +1,5 @@
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
-import CreateMeeting from '../../components/actions/CreateMeeting';
-import CreateProject from '../../components/actions/CreateProject';
 import AvatarGroup from '@/common/components/Avatar/AvatarGroup';
 import CustomAvatar from '@/common/components/Avatar/CustomAvatar';
 import Title from '@/common/components/Title';
@@ -8,7 +7,14 @@ import { dummyAvatarData } from '@/common/mockData';
 import { iHandleClick, iHandleKeyboard } from '@/types';
 import { generateInitials } from '@/common/utils';
 import Folder from '@/common/components/icons/Folder';
-import NewMinute from './NewMinute';
+
+const CreateMeeting = dynamic(
+  () => import('../../components/actions/CreateMeeting')
+);
+const CreateProject = dynamic(
+  () => import('../../components/actions/CreateProject')
+);
+const NewMinute = dynamic(() => import('./NewMinute'));
 
 interface Props {
   minute: any;
@@ -91,12 +97,6 @@ const CorrespondenceCard = ({ minute }: Props) => {
             <div className="invisible flex flex-1 items-center justify-end gap-x-1.5 group-hover:visible">
               <CreateMeeting />
               <CreateProject />
-              {/* <CustomButton
-                size="small"
-                type="text"
-                icon={<Send />}
-                description="Push"
-              /> */}
               <NewMinute minute={minute} />
             </div>
           </div>

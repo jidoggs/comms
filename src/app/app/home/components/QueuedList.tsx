@@ -1,11 +1,9 @@
 'use client';
-import dynamic from 'next/dynamic';
 import React, { useContext } from 'react';
 import SectionHeaderCard from './SectionHeaderCard';
 import Title from '@/common/components/Title';
 import { HomeContext } from '../service-context/HomeContextWrapper';
-
-const CorrespondenceCard = dynamic(() => import('./CorrespondenceCard'));
+import CorrespondenceCard from './CorrespondenceCard';
 
 const QueuedList = () => {
   const homeContextData = useContext(HomeContext);
@@ -33,9 +31,6 @@ const QueuedList = () => {
         newData
       />
       <div className="no-scrollbar h-full max-h-[calc(100vh_-_8.625rem)] space-y-2.5 overflow-y-scroll">
-        {/* {[...Array(5)]?.map((_, id) => (
-          <CorrespondenceCard key={id} minute={allQueuedList[0]} />
-        ))} */}
         {uniqueCorrespondences?.length > 0 ? (
           uniqueCorrespondences?.map((correspondence: any, index: number) => (
             <CorrespondenceCard key={index} minute={correspondence} />

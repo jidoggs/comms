@@ -1,16 +1,17 @@
 import { Suspense, lazy } from 'react';
 
 import UserMgmtContextWrapper from './service-context/UserMgmtContextWrapper';
+import FullPageLoader from '@/common/components/FullPageLoader';
 
 const UserContent = lazy(() => import('./components/PageContent'));
 
 const Page = () => {
   return (
-    <Suspense>
-      <UserMgmtContextWrapper>
+    <UserMgmtContextWrapper>
+      <Suspense fallback={<FullPageLoader />}>
         <UserContent />
-      </UserMgmtContextWrapper>
-    </Suspense>
+      </Suspense>
+    </UserMgmtContextWrapper>
   );
 };
 
