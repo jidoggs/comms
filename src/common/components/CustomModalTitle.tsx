@@ -16,7 +16,7 @@ function CustomModalTitle({ title, hasLink, linkRef }: Props) {
     if (!linkRef) return;
     setIsLinkCopied(true);
     copyTextToClipboard(
-      window.location.origin + '/onboarding/personal-info' + linkRef
+      window.location.origin + '/onboarding' + linkRef
     ).then(() => {
       setTimeout(() => {
         setIsLinkCopied(false);

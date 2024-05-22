@@ -54,7 +54,7 @@ function useOnboarding(props: Props) {
     fetchOptions
   );
   const getOfficeByIdSwr = useNonAuthGetRequest<OfficeType[]>(
-    props.can_get_office && props._id ? DEPARTMENT(query) : '',
+    props.can_get_office && props._id ? OFFICE(query) : '',
     fetchOptions
   );
   const getDepartmentByIdSwr = useNonAuthGetRequest<DepartmentType[]>(
