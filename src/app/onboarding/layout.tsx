@@ -1,19 +1,18 @@
 'use client';
-import React, { useLayoutEffect } from 'react';
+import React from 'react';
 import { Content } from 'antd/lib/layout/layout';
-import { clearUserDetails, fetchUserToken } from '@/service/storage';
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
 const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
-  const token = fetchUserToken();
-  useLayoutEffect(() => {
-    if (token) {
-      clearUserDetails();
-    }
-  }, []); //eslint-disable-line
+  // const token = fetchUserToken();
+  // useLayoutEffect(() => {
+  //   if (token) {
+  //     clearUserDetails();
+  //   }
+  // }, []); //eslint-disable-line
   return (
     <Content
       className="flex h-screen w-screen items-center justify-center bg-cover bg-center"

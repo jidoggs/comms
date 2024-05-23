@@ -63,7 +63,7 @@ export const officeInfoInputs: FormItems<OfficelInfo>[] = [
 ];
 export const securityInfoInputs: FormItems<securityInfo>[] = [
   {
-    name: 'new_password',
+    name: 'password',
     label: 'New Password',
     placeholder: 'Enter Password',
     rules: [{ required: true, validator: passwordStrengthValidator }],
@@ -72,7 +72,7 @@ export const securityInfoInputs: FormItems<securityInfo>[] = [
     name: 'confirm_password',
     label: 'Confirm Password',
     placeholder: 'Password',
-    dependencies: ['new_password'],
+    dependencies: ['password'],
     rules: [confirmPasswordValidator, { required: true }],
   },
 ];

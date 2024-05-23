@@ -38,6 +38,11 @@ export const storeRefreshToken = (token: string) => {
   return setItem(STORAGE_KEYS.CLIENT_TOKEN_REFRESH_KEY, token);
 };
 
+export const storeUserDetails = (data: Record<string, string>) => {
+  storeUserToken(data.access_token);
+  storeRefreshToken(data.refresh_token);
+};
+
 export const fetchUserToken = () => {
   return getItem(STORAGE_KEYS.CLIENT_TOKEN_STORAGE_KEY);
 };

@@ -41,6 +41,15 @@ const config: Config = {
       lineHeight: {
         '4.5': '18px',
       },
+      keyframes: {
+        opacity: {
+          '0%, 100%': { opacity: '0.3' },
+          '50%': { opacity: '1' },
+        },
+      },
+      animation: {
+        opacity: 'opacity 2s infinite',
+      },
     },
   },
   plugins: [],

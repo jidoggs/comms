@@ -3,14 +3,16 @@ import CustomButton from '@/common/components/CustomButton';
 import Title from '@/common/components/Title';
 import Form from 'antd/es/form/Form';
 import React, { useEffect, useState } from 'react';
-import OnboardingForm from './Form';
 import { OnboardingInfo } from '../types';
 import ArrowRight from '@/common/components/icons/ArrowRight';
 import { formatPhoneNumber } from '@/common/utils';
-import ConfirmationForm from './ConfirmationForm';
 import { useCounter } from '@/common/hooks';
 import { useOnboarding } from '../hooks';
 import { helveticaNeue } from '@/common/font';
+import dynamic from 'next/dynamic';
+
+const OnboardingForm = dynamic(() => import('./Form'));
+const ConfirmationForm = dynamic(() => import('./ConfirmationForm'));
 
 type StageType = 'form' | 'confirm';
 
@@ -22,7 +24,11 @@ function PageContent() {
 
   useEffect(() => {
     if (counter === 0) {
-      onboardUserSwr.trigger({ data: inData });
+      let data = inData;
+      delete data.confirm_password; // removed confirm password
+      onboardUserSwr.trigger({ data }).catch(() => {
+        setStage('form');
+      });
     }
   }, [counter]); //eslint-disable-line
 

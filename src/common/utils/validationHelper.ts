@@ -87,7 +87,11 @@ export const passwordStrengthValidator = (_: any, value: string) => {
 
 export const confirmPasswordValidator: Rule = ({ getFieldValue }) => ({
   validator(_, value) {
-    if (!value || getFieldValue('new_password') === value) {
+    if (
+      !value ||
+      getFieldValue('new_password') === value ||
+      getFieldValue('password') === value
+    ) {
       return Promise.resolve();
     }
     return Promise.reject(
