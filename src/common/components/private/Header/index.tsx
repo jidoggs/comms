@@ -9,8 +9,8 @@ import Title from '@/common/components/Title';
 import CustomAvatar from '../../Avatar/CustomAvatar';
 import Profile from '../../icons/Profile';
 import Logout from '../../icons/Logout';
-import NotificationBell from '../../icons/NotificationBell';
 import SpinLoader from '../../icons/SpinLoader';
+import Notification from '../notification';
 
 const { Header } = Layout;
 
@@ -51,11 +51,7 @@ const AppHeader: React.FunctionComponent = () => {
         <BreadCrumb />
       </Suspense>
       <div className="flex items-center gap-x-2.5">
-        <button className="p-2">
-          <span className="">
-            <NotificationBell />
-          </span>
-        </button>
+        <Notification />
         <Dropdown menu={{ items }} placement="bottom" className="flex h-auto">
           {isMutating ? (
             <SpinLoader size="24" />

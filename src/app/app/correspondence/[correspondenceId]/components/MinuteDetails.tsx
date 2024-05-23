@@ -3,6 +3,7 @@ import TimelineComponent from '@/common/components/TimelineComponent/TimelineCom
 import Title from '@/common/components/Title';
 import { TimelineProps } from '@/common/mockData/corrTimeline';
 import Folder from '@/common/components/icons/Folder';
+// import { CorrAppContext } from '@/app/app/service-context/AppContextWrapper';
 
 type ItemProps = {
   title: string;
@@ -33,6 +34,9 @@ interface DetailsProps {
 }
 
 const MinuteDetails = ({ corrMinuteDetails }: DetailsProps) => {
+  // const appContextData = useContext(CorrAppContext);
+  // console.log('appContextData', appContextData);
+
   return (
     <div className="flex size-full flex-col gap-y-2.5 bg-custom-white_100 p-5">
       <div className="self-start rounded-10 bg-custom-gray_100 p-8 text-custom-main">

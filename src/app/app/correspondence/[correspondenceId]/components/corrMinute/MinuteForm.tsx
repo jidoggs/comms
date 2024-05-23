@@ -11,6 +11,7 @@ import dynamic from 'next/dynamic';
 import { CorrAppContext } from '@/app/app/correspondence/[correspondenceId]/service-context/AppContextWrapper';
 import CustomMinute from '@/common/components/CustomMinute';
 import { Upload } from 'antd';
+import CloseCircle from '@/common/components/icons/CloseCircle';
 
 const FormItem = dynamic(() => import('antd/es/form/FormItem'), { ssr: true });
 
@@ -114,6 +115,9 @@ const MinuteForm = () => {
                 rootClassName="!border-none !bg-custom-white_100"
               />
             </FormItem>
+            <CustomButton>
+              <CloseCircle />
+            </CustomButton>
           </div>
         ) : null}
       </div>
