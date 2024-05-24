@@ -6,7 +6,6 @@ import { Dropdown, MenuProps, message } from 'antd';
 import Title from '../../Title';
 import { sampleData } from './component/sampleData';
 import SingleNotification from './component';
-// import SingleNotification from './component';
 
 const Notification = () => {
   const onClick: MenuProps['onClick'] = ({ key }) => {
@@ -33,7 +32,7 @@ const Notification = () => {
 
   const menuStyle: React.CSSProperties = {
     boxShadow: 'none',
-    maxHeight: '85vh',
+    maxHeight: '80vh',
     overflowY: 'auto',
     paddingBottom: '10px',
   };
@@ -70,10 +69,17 @@ const Notification = () => {
             <div className="h-px w-full bg-custom-gray_100" />
             {React.cloneElement(menu as React.ReactElement, {
               style: menuStyle,
-              //   maxHeight: '60vh',
-              //   overflowY: 'auto',
-              //   paddingBottom: '10px',
             })}
+            <div className="h-px w-full bg-custom-gray_100" />
+            <div className="flex flex-col items-center justify-between p-2">
+              <CustomButton
+                type="text"
+                size="small"
+                className="!text-custom-purple_100"
+              >
+                Clear ist
+              </CustomButton>
+            </div>
           </div>
         )}
       >
