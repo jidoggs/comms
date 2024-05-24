@@ -135,8 +135,8 @@ const CreateCorrespondence = forwardRef<HTMLButtonElement, Props>(
       const values = form.getFieldsValue();
       if (values.correspondences.some((corr: any) => hasData(corr))) {
         handleSaveDraft(values);
+        // messageHandler('success', 'Correspondence(s) saved to draft');
       }
-      messageHandler('success', 'Correspondence(s) saved to draft');
       closeModalHandler();
     };
 
