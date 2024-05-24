@@ -53,10 +53,7 @@ const NewMinute = ({ minute }: any) => {
         description="Push"
         type="primary"
         icon={<Send size={18} />}
-        onClick={() => {
-          showModal();
-          appContextData?.setCorrId(minute.correspondence._id);
-        }}
+        onClick={showModal}
       />
       <CustomModal width={600} open={isModalOpen} onCancel={handleCancel}>
         <ExpandedMinuteForm />
