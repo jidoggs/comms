@@ -26,21 +26,14 @@ export const clearData = () => {
   }
 };
 
-export const clearUserDetails = () => {
+export const clearUserToken = () => {
   removeItem(STORAGE_KEYS.CLIENT_TOKEN_STORAGE_KEY);
   removeItem(STORAGE_KEYS.CLIENT_TOKEN_REFRESH_KEY);
 };
 
-export const storeUserToken = (token: string) => {
-  return setItem(STORAGE_KEYS.CLIENT_TOKEN_STORAGE_KEY, token);
-};
-export const storeRefreshToken = (token: string) => {
-  return setItem(STORAGE_KEYS.CLIENT_TOKEN_REFRESH_KEY, token);
-};
-
-export const storeUserDetails = (data: Record<string, string>) => {
-  storeUserToken(data.access_token);
-  storeRefreshToken(data.refresh_token);
+export const storeUserTokens = (data: any) => {
+  setItem(STORAGE_KEYS.CLIENT_TOKEN_STORAGE_KEY, data?.access_token);
+  setItem(STORAGE_KEYS.CLIENT_TOKEN_REFRESH_KEY, data?.refresh_token);
 };
 
 export const fetchUserToken = () => {

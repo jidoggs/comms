@@ -9,7 +9,8 @@ import { UserSession } from '@/app/auth/types/auth';
 import { GenericServiceParam } from '@/types';
 import { DepartmentType, OfficeType, ParastatalType } from '@/app/admin/types';
 import { queryHandler } from '@/service/request';
-import { storeRefreshToken, storeUserToken } from '@/service/storage';
+import { storeUserTokens } from '@/service/storage';
+import { useSession } from '@/common/hooks';
 
 type RequestType =
   | 'can_onboard'
@@ -24,6 +25,7 @@ const { CREATE, DEPARTMENT, OFFICE, PARASTATALS } = ENDPOINTS.AUTH.ONBOARD;
 
 function useOnboarding(props: Props) {
   const router = useRouter();
+  const { storeUserHandler } = useSession();
 
   const query = queryHandler({
     _id: props._id,
@@ -36,8 +38,8 @@ function useOnboarding(props: Props) {
     props?.can_onboard ? CREATE : '',
     {
       onSuccess(res) {
-        storeUserToken(res.data.access_token);
-        storeRefreshToken(res.data.refresh_token);
+        storeUserHandler(res.data);
+        storeUserTokens(res.data);
         router.replace(`/onboarding/success?type=${res.data.role.name}`);
       },
     }

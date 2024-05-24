@@ -2,7 +2,6 @@
 import { useRouter } from 'next/navigation';
 import { useSWRConfig } from 'swr';
 import { useRef } from 'react';
-import dayjs from 'dayjs';
 import useSession from '../../../common/hooks/useSession';
 import {
   fetchOptions,
@@ -13,11 +12,7 @@ import {
 
 import { ENDPOINTS } from '@/service/config/endpoint';
 import { REFRESH_INTERVAL } from '@/service/config/constant';
-import {
-  clearUserDetails,
-  storeRefreshToken,
-  storeUserToken,
-} from '@/service/storage';
+import { clearUserToken, storeUserTokens } from '@/service/storage';
 
 import { SessionResponse, UserSession, ResetResponse } from '../types/auth';
 import { User, UserPreDefinedRole } from '@/types';
@@ -32,36 +27,13 @@ function useAuth(props?: AuthParams) {
   const { mutate } = useSWRConfig();
   const router = useRouter();
   const { data, storeUserHandler } = useSession();
-  const logoutRef = useRef(false);
   const messageLoading = useRef(false);
 
   const handleLogout = async () => {
-    //eslint-disable-next-line
-
-    mutate((_) => true, undefined, { revalidate: false }).then(() => {
-      messageHandler('loading', 'Logging User out...').then(() => {
-        router.replace(
-          `/auth/login?type=logout&session=${new Date().toISOString()}`
-        );
-        clearUserDetails();
-        storeUserHandler(null);
-      });
-    });
-  };
-
-  const loggoutSuccessHandler = async (session_end: string, type: string) => {
-    const now = dayjs();
-    const logouttime = dayjs(session_end);
-    const diffTime = now.diff(logouttime, 'second');
-
-    if (diffTime <= 4 && logoutRef.current === false) {
-      logoutRef.current = true;
-      if (type === 'logout') {
-        messageHandler('success', 'Logout Successful');
-      } else {
-        messageHandler('error', 'Unauthorized/Session Expired');
-      }
-    }
+    storeUserHandler(null);
+    router.replace(`/auth/login`);
+    mutate((_) => true, undefined, { revalidate: false });
+    clearUserToken();
   };
 
   const userSwr = useAuthGetRequest<User>(
@@ -77,36 +49,24 @@ function useAuth(props?: AuthParams) {
   useAuthGetRequest<SessionResponse>(props?.refresh ? REFRESH_TOKEN : '', {
     refreshInterval: REFRESH_INTERVAL,
     onSuccess(res) {
-      storeUserToken(res.data.access_token);
-      storeRefreshToken(res.data.refresh_token);
+      storeUserTokens(res.data);
     },
   });
 
-  const loginSwr = useNonAuthRequest<UserSession>(
-    props?.login && !messageLoading.current ? LOGIN : '',
-    {
-      onSuccess: (res) => {
-        storeUserToken(res.data.access_token);
-        storeRefreshToken(res.data.refresh_token);
-        storeUserHandler(res.data);
-        messageLoading.current = true;
-        messageHandler('success', res.message)
-          .then(() => {
-            // if (res?.data?.role?.name === UserPreDefinedRole.BASICUSER) {
-            if (res?.data?.role?.name === UserPreDefinedRole.SECONDARYADMIN) {
-              // router.replace('/app/home');
-              router.replace('/admin/people');
-            } else {
-              router.replace('/app/home');
-              // router.replace('/admin/people');
-            }
-          })
-          .finally(() => {
-            messageLoading.current = false;
-          });
-      },
-    }
-  );
+  const loginSwr = useNonAuthRequest<UserSession>(props?.login ? LOGIN : '', {
+    onSuccess: (res) => {
+      storeUserTokens(res.data);
+      storeUserHandler(res.data);
+      // if (res?.data?.role?.name === UserPreDefinedRole.BASICUSER) {
+      if (res?.data?.role?.name === UserPreDefinedRole.SECONDARYADMIN) {
+        // router.replace('/app/home');
+        router.replace('/admin/people');
+      } else {
+        router.replace('/app/home');
+        // router.replace('/admin/people');
+      }
+    },
+  });
 
   const updatePasswordSwr = useAuthRequest<User>(
     props?.user_password ? UPDATE_USER_PASSWORD : ''
@@ -142,7 +102,6 @@ function useAuth(props?: AuthParams) {
     updatePasswordSwr,
     forgotPasswordSwr,
     resetPasswordSwr,
-    loggoutSuccessHandler,
     handleLogout,
     messageLoading: messageLoading.current,
   };

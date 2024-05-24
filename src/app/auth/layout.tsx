@@ -1,23 +1,16 @@
 'use client';
-import React, { useLayoutEffect } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import Title from '@/common/components/Title';
-import { clearUserDetails, fetchUserToken } from '@/service/storage';
-import { isServer } from '@/common/utils';
+import { fetchUserToken } from '@/service/storage';
+import { redirect } from 'next/navigation';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const token = fetchUserToken();
+  if (token) {
+    return redirect('/app/home');
+  }
 
-  useLayoutEffect(() => {
-    if (!token || isServer) {
-      return;
-    }
-
-    if (!document?.referrer) {
-      // clears token if user with token access login page
-      clearUserDetails();
-    }
-  }, [token]);
   return (
     <main className="min-h-screen bg-custom-white_100">
       <div className="flex h-screen w-screen flex-row items-center justify-center bg-custom-gray_100">

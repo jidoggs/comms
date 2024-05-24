@@ -10,7 +10,7 @@ const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
   // const token = fetchUserToken();
   // useLayoutEffect(() => {
   //   if (token) {
-  //     clearUserDetails();
+  //     clearUserToken();
   //   }
   // }, []); //eslint-disable-line
   return (
