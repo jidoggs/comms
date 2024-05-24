@@ -1,6 +1,5 @@
 import React from 'react';
 import CustomButton from '@/common/components/CustomButton';
-// import ExpandButton from './ExpandData/ExpandButton';
 import Send from '@/common/components/icons/Send';
 import MoreFile from '@/common/components/icons/MoreFile';
 
@@ -15,7 +14,6 @@ function TableRowAction({ data }: Props) {
   return (
     <TableRowActionContext.Provider value={{ data }}>
       <div className="hidden items-center gap-x-1 px-2.5 group-hover:flex">
-        {/* <ExpandButton className={icon} /> */}
         <CustomButton
           icon={<MoreFile size={18} className={icon} />}
           description="View More"

@@ -9,6 +9,7 @@ import { UserSession } from '@/app/auth/types/auth';
 import { GenericServiceParam } from '@/types';
 import { DepartmentType, OfficeType, ParastatalType } from '@/app/admin/types';
 import { queryHandler } from '@/service/request';
+import { storeRefreshToken, storeUserToken } from '@/service/storage';
 
 type RequestType =
   | 'can_onboard'
@@ -34,8 +35,10 @@ function useOnboarding(props: Props) {
   const onboardUserSwr = useNonAuthRequest<UserSession>(
     props?.can_onboard ? CREATE : '',
     {
-      onSuccess() {
-        router.replace(`/onboarding/success`);
+      onSuccess(res) {
+        storeUserToken(res.data.access_token);
+        storeRefreshToken(res.data.refresh_token);
+        router.replace(`/onboarding/success?type=${res.data.role.name}`);
       },
     }
   );

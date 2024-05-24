@@ -1,14 +1,29 @@
 'use client';
 import React from 'react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Title from '@/common/components/Title';
 import CustomButton from '@/common/components/CustomButton';
 import { helveticaNeue } from '@/common/font';
+import { UserPreDefinedRole } from '@/types';
 
 const SuccessPageContent: React.FunctionComponent = () => {
   const router = useRouter();
-  const clickHandler = () => router.replace('/auth/login');
+  const userType: UserPreDefinedRole = useSearchParams().get(
+    'type'
+  ) as UserPreDefinedRole;
+  const clickHandler = () => {
+    let path = '';
+    if (!userType) {
+      path = '/auth/login';
+    }
+    if (userType === 'secondary_admin') {
+      path = '/admin/people';
+    } else {
+      path = '/app/home';
+    }
+    router.replace(path);
+  };
   return (
     <div className="flex w-full flex-col items-center gap-y-3.5 py-5">
       <Image src="/success.gif" alt="success-svg" width={100} height={100} />
@@ -26,7 +41,7 @@ const SuccessPageContent: React.FunctionComponent = () => {
         type="primary"
         onClick={clickHandler}
       >
-        Go to Login
+        {`Go to ${!userType ? 'login' : 'dashboard'}`}
       </CustomButton>
     </div>
   );

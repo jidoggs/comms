@@ -12,9 +12,9 @@ import CorresponcenceCreated from '../forms/CreateCorrespondence/CorresponcenceC
 import { useForm } from 'antd/es/form/Form';
 import { removeNullOrUndefinedProperties } from '@/common/utils';
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLButtonElement> {
   type?: 'full';
-  className?: string;
+  disabled?: boolean;
 }
 
 export const hasData = (corrData: any) => {
@@ -27,7 +27,7 @@ export const hasData = (corrData: any) => {
 };
 
 const CreateCorrespondence = forwardRef<HTMLButtonElement, Props>(
-  (props, ref) => {
+  ({ type, disabled, ...props }, ref) => {
     const { data: user } = useSession();
     const [form] = useForm();
     const parastatalId = user.parastatal?.[0]?._id;
@@ -137,8 +137,8 @@ const CreateCorrespondence = forwardRef<HTMLButtonElement, Props>(
       const values = form.getFieldsValue();
       if (values.correspondences.some((corr: any) => hasData(corr))) {
         handleSaveDraft(values);
+        // messageHandler('success', 'Correspondence(s) saved to draft');
       }
-      messageHandler('success', 'Correspondence(s) saved to draft');
       closeModalHandler();
     };
 
@@ -153,15 +153,16 @@ const CreateCorrespondence = forwardRef<HTMLButtonElement, Props>(
     return (
       <>
         <CustomButton
+          {...props}
           size="small"
-          type={props.type === 'full' ? 'text' : 'primary'}
+          type={type === 'full' ? 'text' : 'primary'}
           icon={<Plus />}
           description="Create Correspondence"
           onClick={openModalHandler}
           ref={ref}
-          className={props.className}
+          disabled={disabled}
         >
-          {props.type === 'full' ? 'Add correspondence' : null}
+          {type === 'full' ? 'Add correspondence' : null}
         </CustomButton>
         <CustomModal
           title="New correspondence"

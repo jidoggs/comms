@@ -8,6 +8,7 @@ import { dummyAvatarData } from '@/common/mockData';
 import { MinuteData, iHandleClick, iHandleKeyboard } from '@/types';
 import { generateInitials } from '@/common/utils';
 import Folder from '@/common/components/icons/Folder';
+import AppContextWrapper from '../../correspondence/[correspondenceId]/service-context/AppContextWrapper';
 
 const CreateMeeting = dynamic(
   () => import('../../components/actions/CreateMeeting')
@@ -103,7 +104,9 @@ const CorrespondenceCard = ({ minute, type }: Props) => {
             <div className="invisible flex flex-1 items-center justify-end gap-x-1.5 group-hover:visible">
               <CreateMeeting />
               <CreateProject />
-              <NewMinute minute={minute} />
+              <AppContextWrapper>
+                <NewMinute minute={minute} />
+              </AppContextWrapper>
             </div>
           </div>
         </div>

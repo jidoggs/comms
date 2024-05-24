@@ -11,6 +11,7 @@ import dynamic from 'next/dynamic';
 import { CorrAppContext } from '@/app/app/correspondence/[correspondenceId]/service-context/AppContextWrapper';
 import CustomMinute from '@/common/components/CustomMinute';
 import { Upload } from 'antd';
+import CloseCircle from '@/common/components/icons/CloseCircle';
 
 const FormItem = dynamic(() => import('antd/es/form/FormItem'), { ssr: true });
 
@@ -51,7 +52,7 @@ const MinuteForm = () => {
       ) : null}
       <div className="rounded-md border border-custom-gray_400 ">
         <div className="flex flex-row items-center justify-center gap-2 p-2">
-          <Title className="pr-2">Primary:</Title>
+          <Title className="w-24 pr-2">Primary:</Title>
           <FormItem
             //   label="Recipient (Primary)"
             name="recipient"
@@ -81,7 +82,8 @@ const MinuteForm = () => {
               title="Attach"
               type="text"
               className="hover:!bg-none"
-              onClick={appContextData?.setAttached}
+              onClick={appContextData?.addAttached}
+              size="small"
             >
               Attach
             </CustomButton>
@@ -89,7 +91,7 @@ const MinuteForm = () => {
         </div>
         {appContextData?.attachSelected ? (
           <div className="flex flex-row items-center justify-center gap-2 p-2">
-            <Title className="pr-2">Attach:</Title>
+            <Title className="w-24 pr-2">Attach:</Title>
             <FormItem
               //   label="Recipient (Primary)"
               name="attach"
@@ -114,6 +116,13 @@ const MinuteForm = () => {
                 rootClassName="!border-none !bg-custom-white_100"
               />
             </FormItem>
+            <CustomButton
+              size="small"
+              onClick={appContextData?.removeAttached}
+              className="!bg-custom-red_100"
+            >
+              <CloseCircle />
+            </CustomButton>
           </div>
         ) : null}
       </div>

@@ -92,7 +92,8 @@ export type AppContextType = {
   correspondenceId: string | undefined;
   setCorrId: (_id: string) => void;
   attachSelected: boolean;
-  setAttached: () => void;
+  addAttached: () => void;
+  removeAttached: () => void;
   uploadSelected: boolean;
   setUpload: () => void;
   closeModal: boolean;

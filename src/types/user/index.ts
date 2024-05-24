@@ -21,4 +21,5 @@ export interface User extends BaseDataModel {
   img: string;
   status: string;
   role: UserRole;
+  is_approved: boolean;
 }

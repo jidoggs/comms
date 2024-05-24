@@ -4,6 +4,7 @@ import Title from '@/common/components/Title';
 import Search from '@/common/components/icons/Search';
 import ThreeDots from '@/common/components/icons/ThreeDots';
 import CreateCorrespondence from '../../components/actions/CreateCorrespondence';
+import { useSession } from '@/common/hooks';
 
 type SectionHeaderCardProps = {
   title: string;
@@ -20,6 +21,7 @@ const SectionHeaderCard = ({
   moreHandler,
   searchHandler,
 }: SectionHeaderCardProps) => {
+  const user_is_approved = useSession().data.is_approved;
   return (
     <div className="flex w-full items-center justify-between rounded-md bg-white p-2 font-semibold shadow-wordBox">
       <div className="flex items-center gap-x-2.5">
@@ -40,14 +42,16 @@ const SectionHeaderCard = ({
           icon={<Search />}
           description="Search"
           onClick={searchHandler}
+          disabled={user_is_approved === false}
         />
-        <CreateCorrespondence />
+        <CreateCorrespondence disabled={user_is_approved === false} />
         <CustomButton
           size="small"
           type="text"
           icon={<ThreeDots />}
           description="More"
           onClick={moreHandler}
+          disabled={user_is_approved === false}
         />
       </div>
     </div>

@@ -37,14 +37,19 @@ const AppContextWrapper = ({ children }: ContextWrapper) => {
     _id: correspondenceId?.toString() || paramCorrespondenceId,
   });
 
+  // console.log('paramCorrespondenceId', paramCorrespondenceId);
+
   const minuteData = getCorrMinListSwr?.data?.data || [];
 
   const setCorrId = (_id: string) => {
     setCorrespondenceId(_id);
   };
 
-  const setAttached = () => {
-    setAttachSelected(!attachSelected);
+  const addAttached = () => {
+    setAttachSelected(true);
+  };
+  const removeAttached = () => {
+    setAttachSelected(false);
   };
   const setUpload = () => {
     setUploadSelected(!uploadSelected);
@@ -148,7 +153,8 @@ const AppContextWrapper = ({ children }: ContextWrapper) => {
           correspondenceId,
           setCorrId,
           attachSelected,
-          setAttached,
+          addAttached,
+          removeAttached,
           uploadSelected,
           setUpload,
           closeModal,

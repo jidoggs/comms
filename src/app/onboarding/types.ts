@@ -28,7 +28,7 @@ export type OfficelInfo = {
 };
 
 export type securityInfo = {
-  new_password: string;
+  password: string;
   confirm_password: string;
 };
 
