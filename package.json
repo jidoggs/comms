@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -H 192.168.1.100",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -39,6 +39,7 @@
     "react-quill": "^2.0.0",
     "react-rte": "^0.16.5",
     "react-signature-canvas": "^1.0.6",
+    "socket.io-client": "^4.7.5",
     "swr": "^2.2.4",
     "tailwind-merge": "^2.0.0"
   },

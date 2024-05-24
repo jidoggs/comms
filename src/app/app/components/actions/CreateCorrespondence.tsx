@@ -60,7 +60,6 @@ const CreateCorrespondence = forwardRef<HTMLButtonElement, Props>(
 
           return createCorrSwr.trigger({ data });
         });
-
         await Promise.all(createPromises);
         closeModalHandler();
         form.resetFields();
@@ -85,12 +84,13 @@ const CreateCorrespondence = forwardRef<HTMLButtonElement, Props>(
               (item: UploadFile<any>) => item.originFileObj
             ),
           });
+          //eslint-disable-next-line
           const data = {
             ...backendData,
             parastatal: parastatalId,
           };
 
-          return createCorrSwr.trigger({ data });
+          // return createCorrSwr.trigger({ data });
         });
         await Promise.all(draftPromises);
       } catch (error: any) {
@@ -106,6 +106,7 @@ const CreateCorrespondence = forwardRef<HTMLButtonElement, Props>(
       const allCorrespondence = values.correspondences;
 
       try {
+        //eslint-disable-next-line
         const archivePromises = allCorrespondence.map(async (eachCorr: any) => {
           const backendData = removeNullOrUndefinedProperties({
             ...eachCorr,
@@ -114,14 +115,15 @@ const CreateCorrespondence = forwardRef<HTMLButtonElement, Props>(
             ),
             status: 'archive',
           });
+          //eslint-disable-next-line
           const data = {
             ...backendData,
             parastatal: parastatalId,
           };
 
-          return createCorrSwr.trigger({ data });
+          // return createCorrSwr.trigger({ data });
         });
-        await Promise.all(archivePromises);
+        // await Promise.all(archivePromises);
         closeModalHandler();
         messageHandler('success', 'Correspondence(s) Archived successfully');
         form.resetFields();

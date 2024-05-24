@@ -106,7 +106,7 @@ const AppContextWrapper = ({ children }: ContextWrapper) => {
 
   const onAttachedRecipientsChange = useCallback(
     (
-      newValues: string[],
+      newValues: string[], //eslint-disable-line
       selectedOptions: { value: string; type: string }[]
     ) => {
       const newSelectedRecipients = selectedOptions.map((option) => ({

@@ -1,4 +1,5 @@
 export const BASE_URL = process.env.NEXT_PUBLIC_SERVER_API;
+export const SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_API as string;
 
 export const REQUEST_TIMEOUT = 60000;
 export const PAGE_SIZE = 10;
