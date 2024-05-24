@@ -5,4 +5,11 @@ export type HomeContextType = {
   queuedList: MinuteData[];
   ongoingList: MinuteData[];
   isNewAccount: boolean;
+  queuedListHasNewItem: boolean;
+  ongoingListHasNewItem: boolean;
 } | null;
+
+export type SocketDataType = {
+  queue: MinuteData[];
+  ongoing: MinuteData[];
+};

@@ -8,13 +8,20 @@ import { CorrespondenceServiceArgs } from './types';
 import { ENDPOINTS } from '@/service/config/endpoint';
 import { APIResponseSuccessModel, MinuteData } from '@/types';
 import { queryHandler } from '@/service/request';
+import useSWRSubscription from 'swr/subscription';
+import { EVENTS } from '@/service/config/events';
+import { useSession } from '@/common/hooks';
+import { socket } from '@/service/socket';
+import { useEffect, useRef } from 'react';
 
 const { CREATE, GET_ALL, GET_ALL_IN_CORR } = ENDPOINTS.MINUTE;
 
 const useMinute = (props: CorrespondenceServiceArgs) => {
+  const { data: user } = useSession();
   const query = queryHandler({
     search: props.search,
     status: props.status,
+    sort: '-created_at',
   });
 
   const { revalidateRequest } = useServiceConfig();

@@ -8,27 +8,14 @@ import CorrespondenceCard from './CorrespondenceCard';
 const QueuedList = () => {
   const homeContextData = useContext(HomeContext);
   const minuteData = homeContextData?.queuedList;
-
-  // const uniqueCorrespondences = minuteData.reduce(
-  //   (acc: any[], current: any) => {
-  //     if (
-  //       !acc.some(
-  //         (minute) => minute.correspondence._id === current.correspondence._id
-  //       )
-  //     ) {
-  //       acc.push(current);
-  //     }
-  //     return acc;
-  //   },
-  //   []
-  // );
+  const hasNewData = homeContextData?.queuedListHasNewItem;
 
   return (
     <section className="flex flex-col gap-y-2.5">
       <SectionHeaderCard
         title="Queue"
         count={minuteData?.length || 0}
-        newData
+        newData={hasNewData}
       />
       <div className="no-scrollbar h-full max-h-[calc(100vh_-_8.625rem)] space-y-2.5 overflow-y-scroll">
         {minuteData && minuteData.length > 0 ? (

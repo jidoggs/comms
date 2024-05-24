@@ -48,8 +48,11 @@ function CreateNote() {
         <FormItem<CreateNoteFormType> name="isPrivate">
           <Checkbox>Make private</Checkbox>
         </FormItem>
-        <FormItem<CreateNoteFormType> name="color">
-          <Colors defaultValue={noteContextInfo?.color} />
+        <FormItem<CreateNoteFormType>
+          name="color"
+          initialValue={noteContextInfo?.color}
+        >
+          <Colors />
         </FormItem>
         <CustomButton htmlType="submit" size="small">
           Post

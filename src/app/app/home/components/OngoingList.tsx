@@ -8,6 +8,7 @@ import CorrespondenceCard from './CorrespondenceCard';
 const OngoingList = () => {
   const homeContextData = useContext(HomeContext);
   const minuteData = homeContextData?.ongoingList;
+  const hasNewData = homeContextData?.ongoingListHasNewItem;
   // const uniqueCorrespondences = minuteData.reduce(
   //   (acc: any[], current: any) => {
   //     if (
@@ -24,7 +25,11 @@ const OngoingList = () => {
 
   return (
     <section className="flex flex-col gap-y-2.5">
-      <SectionHeaderCard title="Ongoing" count={minuteData?.length || 0} />
+      <SectionHeaderCard
+        title="Ongoing"
+        count={minuteData?.length || 0}
+        newData={hasNewData}
+      />
       <div className="no-scrollbar h-full max-h-[calc(100vh_-_8.625rem)] space-y-2.5 overflow-y-scroll">
         {minuteData && minuteData.length > 0 ? (
           minuteData?.map((itm) => (

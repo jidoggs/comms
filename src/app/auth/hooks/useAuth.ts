@@ -18,6 +18,7 @@ import { SessionResponse, UserSession, ResetResponse } from '../types/auth';
 import { User, UserPreDefinedRole } from '@/types';
 import { AuthParams } from './types';
 import { messageHandler } from '@/common/utils/notification';
+import { socket } from '@/service/socket';
 
 const { FORGOT_PASSWORD, REFRESH_TOKEN } = ENDPOINTS.AUTH;
 const { LOGIN, RESET_PASSWORD } = ENDPOINTS.AUTH;
@@ -34,6 +35,9 @@ function useAuth(props?: AuthParams) {
     router.replace(`/auth/login`);
     mutate((_) => true, undefined, { revalidate: false });
     clearUserToken();
+    if (socket.connected) {
+      socket.disconnect();
+    }
   };
 
   const userSwr = useAuthGetRequest<User>(
