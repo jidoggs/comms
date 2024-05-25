@@ -1,18 +1,15 @@
 import React from 'react';
 import { FormListFieldData } from 'antd/es/form';
-// import CustomDragger from '@/common/components/CustomDragger';
-import CustomInput from '@/common/components/CustomInput';
+import CustomInput, { CustomTextArea } from '@/common/components/CustomInput';
 import dynamic from 'next/dynamic';
-import Recipient from './Recipient';
+import Recipient from '../../Recipient';
 import { normFile } from '@/common/utils';
 
 interface CorrespondenceFormProps {
   field: FormListFieldData;
-  handleRecipientChange: (value: string, type: string) => void;
 }
-const Input = dynamic(() => import('antd/es/input/Input'), { ssr: true });
+
 const FormItem = dynamic(() => import('antd/es/form/FormItem'), { ssr: true });
-const TextArea = dynamic(() => import('antd/es/input/TextArea'), { ssr: true });
 const DatePicker = dynamic(() => import('antd/es/date-picker'), {
   ssr: true,
 });
@@ -23,10 +20,7 @@ const CustomDragger = dynamic(
   }
 );
 
-function NewCorrespondenceForm({
-  field,
-  handleRecipientChange,
-}: CorrespondenceFormProps) {
+function NewCorrespondenceForm({ field }: CorrespondenceFormProps) {
   return (
     <div className="mb-5 border-b border-custom-gray_400">
       <div className="flex items-start gap-x-5">
@@ -51,7 +45,14 @@ function NewCorrespondenceForm({
           >
             <CustomInput name="sent_by" />
           </FormItem>
-          <Recipient field={field} onRecipientChange={handleRecipientChange} />
+          <FormItem
+            label="Recipient (Primary)"
+            name={[field.name, 'recipient']}
+            className="flex flex-col"
+            rules={[{ required: true, message: 'Recipient is required' }]}
+          >
+            <Recipient placeholder="Select a person" />
+          </FormItem>
           <FormItem
             label="Subject"
             name={[field.name, 'subject']}
@@ -59,15 +60,13 @@ function NewCorrespondenceForm({
             rules={[{ required: true, message: 'Subject is required' }]}
           >
             <CustomInput name="subject" />
-            {/* <Recipient /> */}
           </FormItem>
           <FormItem
             label="Minute"
             name={[field.name, 'minute']}
             className="flex flex-col"
-            // rules={[{ required: true, message: 'Minute is required' }]}
           >
-            <TextArea name="minute" />
+            <CustomTextArea name="minute" />
           </FormItem>
           <FormItem
             label="Date of correspondence"
@@ -88,7 +87,7 @@ function NewCorrespondenceForm({
             className="flex flex-col"
             rules={[{ required: true, message: 'Ref. No is required' }]}
           >
-            <Input name="ref_no" />
+            <CustomInput name="ref_no" />
           </FormItem>
         </div>
       </div>

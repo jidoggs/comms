@@ -1,6 +1,6 @@
 import React, { Suspense, lazy } from 'react';
 import { mergeClassName } from '../../utils';
-import { CustomInputProps, InputRef, TextAreaProp } from './types';
+import { CustomInputProps, InputRef, CustomTextAreaProps } from './types';
 
 const FallBackInput = () => {
   return (
@@ -15,9 +15,9 @@ const TextArea = lazy(() => import('antd/es/input/TextArea'));
 const baseClass =
   'w-full placeholder-custom-main p-2.5 bg-transparent text-custom-main border border-custom-gray_600 !focus-within:border-transparent !focus:border-transparent !focus-within:outline-none !focus:outline-none';
 
-export const CustomTextArea: React.FC<TextAreaProp> = React.forwardRef<
-  InputRef,
-  TextAreaProp
+export const CustomTextArea = React.forwardRef<
+  HTMLTextAreaElement,
+  CustomTextAreaProps
 >(({ className, ...rest }, ref) => {
   const inputClassName: string = mergeClassName(baseClass, className);
   return (
@@ -27,21 +27,20 @@ export const CustomTextArea: React.FC<TextAreaProp> = React.forwardRef<
   );
 });
 
-const CustomInput: React.FC<CustomInputProps> = React.forwardRef<
-  InputRef,
-  CustomInputProps
->(({ type, className, ...rest }, ref) => {
-  const inputClassName: string = mergeClassName(baseClass, className);
-  return (
-    <Suspense fallback={<FallBackInput />}>
-      {type === 'password' ? (
-        <Password {...rest} className={inputClassName} ref={ref} />
-      ) : (
-        <Input {...rest} className={inputClassName} ref={ref} />
-      )}
-    </Suspense>
-  );
-});
+const CustomInput = React.forwardRef<InputRef, CustomInputProps>(
+  ({ type, className, ...rest }, ref) => {
+    const inputClassName: string = mergeClassName(baseClass, className);
+    return (
+      <Suspense fallback={<FallBackInput />}>
+        {type === 'password' ? (
+          <Password {...rest} className={inputClassName} ref={ref} />
+        ) : (
+          <Input {...rest} className={inputClassName} ref={ref} />
+        )}
+      </Suspense>
+    );
+  }
+);
 
 CustomTextArea.displayName = 'CustomTextArea';
 CustomInput.displayName = 'CustomInput';

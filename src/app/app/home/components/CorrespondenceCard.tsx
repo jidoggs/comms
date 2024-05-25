@@ -8,7 +8,7 @@ import { dummyAvatarData } from '@/common/mockData';
 import { MinuteData, iHandleClick, iHandleKeyboard } from '@/types';
 import { generateInitials } from '@/common/utils';
 import Folder from '@/common/components/icons/Folder';
-import AppContextWrapper from '../../correspondence/[correspondenceId]/service-context/AppContextWrapper';
+import { CorrsInfoContext } from '../../correspondence/[correspondenceId]/service-context/DetailContextWrapper';
 
 const CreateMeeting = dynamic(
   () => import('../../components/actions/CreateMeeting')
@@ -27,11 +27,6 @@ const CorrespondenceCard = ({ minute, type }: Props) => {
   const router = useRouter();
 
   const handleClick = () => {
-    // router.push(
-    //   `correspondence/${minuteTitle}&id=${minute.correspondence._id}`
-    // );
-    // appContextData?.setCorrId(minute.correspondence._id);
-
     router.push(
       `correspondence/${minute.correspondence.subject.replace(/ /g, '_')}?corrs=${minute.correspondence._id}&tab=minutes`
     );
@@ -105,9 +100,9 @@ const CorrespondenceCard = ({ minute, type }: Props) => {
             <div className="invisible flex flex-1 items-center justify-end gap-x-1.5 group-hover:visible">
               <CreateMeeting />
               <CreateProject />
-              <AppContextWrapper>
-                <NewMinute minute={minute} />
-              </AppContextWrapper>
+              <CorrsInfoContext.Provider value={{ ...minute }}>
+                <NewMinute />
+              </CorrsInfoContext.Provider>
             </div>
           </div>
         </div>

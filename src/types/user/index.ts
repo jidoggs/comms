@@ -23,3 +23,9 @@ export interface User extends BaseDataModel {
   role: UserRole;
   is_approved: boolean;
 }
+
+type Picks = 'firstname' | 'role' | 'surname' | '_id' | 'middlename';
+
+export interface BasicUser extends Omit<Pick<User, Picks>, 'role'> {
+  role: string;
+}

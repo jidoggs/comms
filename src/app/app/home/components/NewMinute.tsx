@@ -2,18 +2,34 @@
 import CustomButton from '@/common/components/CustomButton';
 import CustomModal from '@/common/components/CustomModal';
 import Send from '@/common/components/icons/Send';
-import React, { useContext, useEffect, useState } from 'react';
-import ExpandedMinuteForm from '../../correspondence/[correspondenceId]/components/corrMinute/ExpandedMinuteForm';
-import { CorrAppContext } from '../../correspondence/[correspondenceId]/service-context/AppContextWrapper';
+import React, { useState } from 'react';
+import { useForm } from 'antd/es/form/Form';
+import MinuteForm from '../../components/forms/CreateMinute/MinuteForm';
 
-const NewMinute = ({ minute }: any) => {
-  // const detailsData = useContext(DetailContext);
+const initialFormExtras = {
+  upload: false,
+  attachment: false,
+};
+
+const NewMinute = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [form] = useForm();
+  const [formExtras, setFormExtras] = useState(initialFormExtras);
 
-  const appContextData = useContext(CorrAppContext);
+  const toggleAttachment = () => {
+    setFormExtras((prev) => ({ ...prev, attachment: !prev.attachment }));
+    if (formExtras.attachment) {
+      form.setFieldValue('attach', []);
+    }
+  };
+  const toggleUpload = () => {
+    setFormExtras((prev) => ({ ...prev, upload: !prev.upload }));
+    if (formExtras.upload) {
+      form.setFieldValue('upload', undefined);
+    }
+  };
 
   const showModal = () => {
-    appContextData?.setCorrId(minute.correspondence._id);
     setIsModalOpen(true);
   };
 
@@ -21,33 +37,8 @@ const NewMinute = ({ minute }: any) => {
     setIsModalOpen(false);
   };
 
-  useEffect(() => {
-    if (appContextData?.closeModal) {
-      setIsModalOpen(false);
-    }
-  }, [appContextData?.closeModal]);
-
   return (
     <>
-      {/* <CustomButton
-        size="small"
-        type="text"
-        icon={<Send />}
-        description="Push"
-        onClick={openModalHandler}
-        />
-      <CustomModal
-        title="Edit correspondence"
-        open={openModal}
-        onCancel={closeModalHandler}
-        width={800}
-        >
-        <Form
-          currentCorr={context?.data}
-          form={form}
-          handleSubmit={correspondenceFormSubmitHandler}
-          />
-      </CustomModal> */}
       <CustomButton
         size="small"
         description="Push"
@@ -56,7 +47,13 @@ const NewMinute = ({ minute }: any) => {
         onClick={showModal}
       />
       <CustomModal width={600} open={isModalOpen} onCancel={handleCancel}>
-        <ExpandedMinuteForm />
+        <MinuteForm
+          form={form}
+          isAttachmentOpen={formExtras.attachment}
+          isUploadOpen={formExtras.upload}
+          toggleAttachment={toggleAttachment}
+          toggleUpload={toggleUpload}
+        />
       </CustomModal>
     </>
   );

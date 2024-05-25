@@ -34,6 +34,10 @@ export type CorrespondenceListContextType = {
   searchHandler: iHandleChange;
 } | null;
 
+export type CorrsInfoContextType = {
+  minuteData: MinuteData;
+} | null;
+
 export type DetailContextType = {
   openCorrespondenceDetails: boolean;
   openDetailsHandler: () => void;
@@ -47,7 +51,8 @@ export type DetailContextType = {
   turnMultiSelectOFFHandler: () => void;
   selectItemHandler: (e: CheckboxChangeEvent) => void;
   multiSelect: MultiSelectType;
-  // minuteData: MinuteData[];
+  minutesThread: MinuteData[];
+  loadingMinutesThread: boolean;
   sampleTimeline: {
     name: string;
     office: string;
@@ -85,46 +90,6 @@ export type MinuteContextType = {
   };
   // minuteFormSubmitHandler: (values: any) => Promise<void>;
   // createMinuteLoading: boolean;
-} | null;
-
-export type AppContextType = {
-  form: FormInstance<any>;
-  correspondenceId: string | undefined;
-  setCorrId: (_id: string) => void;
-  attachSelected: boolean;
-  addAttached: () => void;
-  removeAttached: () => void;
-  uploadSelected: boolean;
-  setUpload: () => void;
-  closeModal: boolean;
-  setCloseModal: React.Dispatch<React.SetStateAction<boolean>>;
-  selectedRecipient: {
-    value: string;
-    type: string;
-  } | null;
-  onSearch: (value: string) => void;
-  recipientsData: RecipientData | never[];
-  filterOption: (
-    input: string,
-    option?: {
-      label: string;
-      value: string;
-    }
-  ) => boolean;
-  options: any[];
-  onChange: (value: string, option: any) => void;
-  recipientIsLoading: boolean;
-  // onRecipientChange: (values: string[], options: any[]) => void;
-  initialValues: {
-    minute: string;
-    recipient: string;
-    attach: never[];
-    upload?: never[];
-  };
-  minuteFormSubmitHandler: (values: any) => Promise<void>;
-  createMinuteLoading: boolean;
-  minuteData: MinuteData[];
-  onAttachedRecipientsChange: (values: string[], options: any[]) => void;
 } | null;
 
 export type MultiSelectType = {

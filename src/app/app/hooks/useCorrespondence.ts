@@ -6,7 +6,7 @@ import {
 } from '@/service/swrHooks';
 import { CorrespondenceServiceArgs } from './types';
 import { ENDPOINTS } from '@/service/config/endpoint';
-import { APIResponseSuccessModel, CorrespondenceData } from '@/types';
+import { CorrespondenceData } from '@/types';
 import { queryHandler } from '@/service/request';
 
 const { CREATE, GET_ALL } = ENDPOINTS.CORRESPONDENCE;
@@ -19,8 +19,8 @@ const useCorrespondence = (props: CorrespondenceServiceArgs) => {
 
   const { revalidateRequest } = useServiceConfig();
 
-  const revalidateListHandler = (res: APIResponseSuccessModel) => {
-    revalidateRequest(GET_ALL + query, res.message);
+  const revalidateListHandler = () => {
+    revalidateRequest(GET_ALL + query);
   };
 
   const createCorrSwr = useFormDataAuthRequest<CorrespondenceData>(

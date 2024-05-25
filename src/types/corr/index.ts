@@ -1,5 +1,5 @@
 import { BaseDataModel, BasicTypeSet } from '../api-response';
-import { User } from '../user';
+import { BasicUser, User } from '../user';
 
 export interface CorrespondenceData extends BaseDataModel {
   creator: User;
@@ -16,15 +16,13 @@ export interface CorrespondenceData extends BaseDataModel {
 }
 
 export interface MinuteData extends BaseDataModel {
-  parastatal: {
-    _id: string;
-    name: string;
-  };
+  parastatal: BasicTypeSet;
   minute: string;
   documents: string[]; // Array of document paths or URLs
-  status: string;
+  status: 'queue' | 'ongoing' | 'archive';
   last_minute?: {
     _id: string; // Reference to the previous minute (if any)
+    minute: string;
   };
   correspondence: {
     _id: string;
@@ -32,40 +30,14 @@ export interface MinuteData extends BaseDataModel {
     documents: string[];
     subject: string;
   };
-  recipient: {
-    _id: string;
-    firstname: string;
-    surname: string;
-    middlename?: string; // Make middlename optional
-    role: string;
-  };
-  hasAccess: {
-    _id: string;
-    firstname: string;
-    surname: string;
-    middlename?: string; // Make middlename optional
-    role: string;
-  }[]; // Array of users who have access
-  from: {
-    _id: string;
-    firstname: string;
-    surname: string;
-    middlename?: string; // Make middlename optional
-    role: string;
-  };
-  attach: {
-    _id: string;
-    firstname: string;
-    surname: string;
-    middlename?: string; // Make middlename optional
-    role: string;
-  }[]; // Array of users attached to the minute
+  recipient: BasicUser;
+  hasAccess: BasicUser[]; // Array of users who have access
+  from: BasicUser;
+  attach: BasicUser[];
 }
 
-type RecipientKeys = '_id' | 'firstname' | 'surname';
-
 export type RecipientData = {
-  user: Pick<User, RecipientKeys>[];
+  user: Omit<BasicUser, 'role'>[];
   department: BasicTypeSet[];
   office: BasicTypeSet[];
 };

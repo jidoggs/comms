@@ -11,8 +11,6 @@ interface InputProp extends InputProps {
 interface PasswordProp extends PasswordProps {
   type: 'password';
 }
-export type TextAreaProp = TextAreaProps;
+export type CustomTextAreaProps = TextAreaProps;
 
-export type CustomInputProps = (InputProp | PasswordProp) & {
-  ref?: any;
-};
+export type CustomInputProps = InputProp | PasswordProp;

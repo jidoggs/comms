@@ -1,24 +1,30 @@
-import TextArea from 'antd/es/input/TextArea';
-import React, { useContext, useRef, useState } from 'react';
-import CustomButton from '../CustomButton';
-import Undo from '../icons/Undo';
-import Redo from '../icons/Redo';
-import ListUl from '../icons/ListUl';
-import ListOl from '../icons/ListOl ';
-import Link from '../icons/Link';
-import PaperClip from '../icons/PaperClip';
-import Edit from '../icons/Edit';
-import Sticker from '../icons/Sticker';
-import { CorrAppContext } from '@/app/app/correspondence/[correspondenceId]/service-context/AppContextWrapper';
+import FormItem from 'antd/es/form/FormItem';
+import React, { useRef, useState } from 'react';
+import CustomButton from '../../../../../common/components/CustomButton';
+import { CustomTextArea } from '../../../../../common/components/CustomInput';
+import Undo from '../../../../../common/components/icons/Undo';
+import Redo from '../../../../../common/components/icons/Redo';
+import ListUl from '../../../../../common/components/icons/ListUl';
+import ListOl from '../../../../../common/components/icons/ListOl ';
+import Link from '../../../../../common/components/icons/Link';
+import PaperClip from '../../../../../common/components/icons/PaperClip';
+import Edit from '../../../../../common/components/icons/Edit';
+import Sticker from '../../../../../common/components/icons/Sticker';
+import { iHandleChange } from '@/types';
+import { FormInstance } from 'antd/es/form/Form';
 
-const CustomMinute = () => {
-  const appContextData = useContext(CorrAppContext);
+type Props = {
+  updateUploadHandler: () => void;
+  form: FormInstance<any>;
+};
+
+const MinuteTextActions = ({ updateUploadHandler, form }: Props) => {
   const [value, setValue] = useState('');
   const textAreaRef = useRef<HTMLTextAreaElement>(null); // Ref for the TextArea
   const [history, setHistory] = useState<string[]>([value]);
   const [historyIndex, setHistoryIndex] = useState(0);
 
-  const onValueChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const onValueChange: iHandleChange<HTMLTextAreaElement> = (e) => {
     const newValue = e.target.value;
     setValue(newValue);
 
@@ -27,43 +33,49 @@ const CustomMinute = () => {
     newHistory.push(newValue);
     setHistory(newHistory);
     setHistoryIndex(newHistory.length - 1);
+  };
 
-    // Update the Form's value directly
-    appContextData?.form.setFieldsValue({ minute: newValue });
+  const updateHelper = (newIndex: number) => {
+    setHistoryIndex(newIndex);
+    setValue(history[newIndex]);
+    if (textAreaRef.current) {
+      form.setFieldsValue({ minute: history[newIndex] });
+      textAreaRef.current.focus(); // Keep focus on the TextArea
+    }
   };
 
   const handleUndo = () => {
     if (historyIndex > 0) {
       const newIndex = historyIndex - 1;
-      setHistoryIndex(newIndex);
-      setValue(history[newIndex]);
-      if (textAreaRef.current) {
-        textAreaRef.current.focus(); // Keep focus on the TextArea
-      }
+      updateHelper(newIndex);
     }
   };
 
   const handleRedo = () => {
     if (historyIndex < history.length - 1) {
       const newIndex = historyIndex + 1;
-      setHistoryIndex(newIndex);
-      setValue(history[newIndex]);
-      if (textAreaRef.current) {
-        textAreaRef.current.focus(); // Keep focus on the TextArea
-      }
+      updateHelper(newIndex);
     }
   };
 
   return (
     <div className="rounded-md border border-custom-gray_400 !bg-custom-white_100">
       <div className="flex flex-col items-start gap-2 p-2 ">
-        <TextArea
-          ref={textAreaRef}
-          className="!border-none"
-          placeholder="Type minute"
-          value={value}
-          onChange={(e) => onValueChange(e)}
-        />
+        <FormItem
+          name="minute"
+          rules={[{ required: true, message: 'Minute is required' }]}
+          className="!mb-0 w-full [&_.ant-form-item-explain]:!hidden"
+        >
+          <CustomTextArea
+            ref={textAreaRef}
+            className="!border-none"
+            placeholder="Type minute"
+            onChange={onValueChange}
+            classNames={{
+              textarea: 'bg-transparent',
+            }}
+          />
+        </FormItem>
         <div className="flex w-full flex-row gap-1 rounded-xl border border-custom-gray_500 p-2 shadow-[0px_2px_4px_0px_rgba(0,0,0,0.10)]">
           <CustomButton
             type="text"
@@ -96,7 +108,7 @@ const CustomMinute = () => {
             icon={<PaperClip size="18" />}
             size="small"
             description="Attach"
-            onClick={appContextData?.setUpload}
+            onClick={updateUploadHandler}
           />
           <div className="h-8 border border-custom-gray_100" />
           <CustomButton
@@ -123,4 +135,4 @@ const CustomMinute = () => {
   );
 };
 
-export default CustomMinute;
+export default MinuteTextActions;

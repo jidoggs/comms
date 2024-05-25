@@ -58,7 +58,7 @@ const PageContent = () => {
       }
       socket.off(EVENTS.JOIN_CREATE_ROOM(correspondence, user._id));
     };
-  }, []);
+  }, []); //eslint-disable-line
 
   return (
     <div className="flex w-full flex-col">

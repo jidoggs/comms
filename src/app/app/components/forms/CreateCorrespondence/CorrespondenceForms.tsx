@@ -22,42 +22,11 @@ const CorrespondenceForms = ({
   form,
   handleArchive,
 }: CorrespondenceFormsProps) => {
-  // const { data: user } = useSession();
-  // const parastatalId = user.parastatal?.[0]?._id;
   const [isFormValid, setIsFormValid] = useState(false);
-  const [selectedRecipient, setSelectedRecipient] = useState<{
-    value: string;
-    type: string;
-  } | null>(null);
-
-  // const { createCorrSwr } = useCorrespondence({
-  //   can_create: true,
-  // });
-
-  const handleRecipientChange = (value: string, type: string) => {
-    setSelectedRecipient({ value, type });
-  };
-
-  const modifiedHandleSubmit = (values: any) => {
-    // console.log('values', values);
-    const modifiedValues = {
-      ...values,
-      correspondences: values.correspondences.map((corr: any) => ({
-        ...corr,
-        recipient_type: selectedRecipient?.type, // Add recipient_type
-        recipient: selectedRecipient?.value, // Add recipient
-      })),
-    };
-
-    handleSubmit(modifiedValues); // Pass the modified data to the original handleSubmit
-  };
 
   const checkFormValidity = () => {
     const values = form.getFieldsValue();
-    // console.log('values', values);
-
     const allCorrespondences = values?.correspondences;
-
     // Ensure at least one correspondence has data
     const hasValidData = allCorrespondences?.some((corr: any) => hasData(corr));
 
@@ -67,12 +36,6 @@ const CorrespondenceForms = ({
   const handleCopy = (index: number) => {
     const values = form.getFieldsValue();
     const copiedCorrespondence = values.correspondences[index];
-
-    // Update recipient if selectedRecipient exists
-    if (selectedRecipient) {
-      copiedCorrespondence.recipient_type = selectedRecipient.type;
-      copiedCorrespondence.recipient = selectedRecipient.value;
-    }
 
     // Create a new empty correspondence to reset all fields and get a new index
     const newCorrespondence = {
@@ -100,7 +63,7 @@ const CorrespondenceForms = ({
   return (
     <Form
       layout="vertical"
-      onFinish={modifiedHandleSubmit}
+      onFinish={handleSubmit}
       className=""
       form={form}
       initialValues={{
@@ -127,14 +90,7 @@ const CorrespondenceForms = ({
             >
               <div className="flex h-[70vh] flex-col gap-4 overflow-y-auto">
                 {fields.map((field, index) => (
-                  <div
-                    // size="small"
-                    className="!bg-custom-white_100"
-                    // title={
-
-                    // }
-                    key={field.key}
-                  >
+                  <div className="!bg-custom-white_100" key={field.key}>
                     <div className="flex flex-row justify-between pb-2">
                       <Title tag="h4" className="text-custom-gray_300">
                         {/* {field.name + 1} */}
@@ -163,10 +119,7 @@ const CorrespondenceForms = ({
                         />
                       </div>
                     </div>
-                    <NewCorrespondenceForm
-                      field={field}
-                      handleRecipientChange={handleRecipientChange}
-                    />
+                    <NewCorrespondenceForm field={field} />
                   </div>
                 ))}
               </div>
@@ -187,13 +140,6 @@ const CorrespondenceForms = ({
       </div>
 
       <div className="flex flex-row justify-end gap-2 border-t pt-4">
-        {/* <FormItem noStyle shouldUpdate>
-          {() => (
-            <Title>
-              <pre>{JSON.stringify(form.getFieldsValue(), null, 2)}</pre>
-            </Title>
-          )}
-        </FormItem> */}
         <CustomButton
           size="small"
           onClick={handleArchive}

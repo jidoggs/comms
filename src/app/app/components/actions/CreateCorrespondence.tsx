@@ -19,9 +19,9 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
 
 export const hasData = (corrData: any) => {
   return (
-    corrData?.sender &&
-    corrData?.recipient &&
-    corrData?.subject &&
+    corrData?.sender ||
+    corrData?.recipient ||
+    corrData?.subject ||
     corrData?.reference_number
   );
 };
@@ -42,16 +42,19 @@ const CreateCorrespondence = forwardRef<HTMLButtonElement, Props>(
       can_create: true,
     });
 
-    const correspondenceFormSubmitHandler = async (values: any) => {
+    const serviceHandler = async (status: 'sent' | 'draft' | 'archive') => {
+      const values = form.getFieldsValue();
       const allCorrespondence = values.correspondences;
       try {
-        const createPromises = allCorrespondence.map(async (eachCorr: any) => {
+        const corrsPromises = allCorrespondence.map(async (eachCorr: any) => {
           const backendData = removeNullOrUndefinedProperties({
             ...eachCorr,
             files: eachCorr?.files?.map(
               (item: UploadFile<any>) => item.originFileObj
             ),
-            status: 'sent',
+            recipient: eachCorr?.recipient?.value,
+            recipient_type: eachCorr?.recipient?.title,
+            status,
           });
           const data = {
             ...backendData,
@@ -60,86 +63,58 @@ const CreateCorrespondence = forwardRef<HTMLButtonElement, Props>(
 
           return createCorrSwr.trigger({ data });
         });
-        await Promise.all(createPromises);
+        await Promise.all(corrsPromises);
         closeModalHandler();
+        let message = '';
+        if (status === 'sent') {
+          message = 'Created';
+        }
+        if (status === 'draft') {
+          message = 'Drafted';
+        }
+        if (status === 'archive') {
+          message = 'Archived';
+        }
+
+        messageHandler('success', `Correspondence(s) ${message} successfully`);
+
         form.resetFields();
       } catch (error: any) {
+        let type = '';
+        if (status === 'sent') {
+          type = 'create';
+        }
+        if (status === 'draft') {
+          type = 'save';
+        }
+        if (status === 'archive') {
+          type = 'archive';
+        }
         messageHandler(
           'error',
-          `Some correspondences failed to create. Error: ${error.message}`
+          `Some correspondences failed to ${type}. Error: ${error.message}`
         );
       }
     };
 
-    const handleSaveDraft = async (values: any) => {
-      const allCorrespondence = values.correspondences.map((corr: any) => ({
-        ...corr,
-        status: 'draft',
-      }));
-      try {
-        const draftPromises = allCorrespondence.map(async (eachCorr: any) => {
-          const backendData = removeNullOrUndefinedProperties({
-            ...eachCorr,
-            files: eachCorr?.files?.map(
-              (item: UploadFile<any>) => item.originFileObj
-            ),
-          });
-          //eslint-disable-next-line
-          const data = {
-            ...backendData,
-            parastatal: parastatalId,
-          };
-
-          // return createCorrSwr.trigger({ data });
-        });
-        await Promise.all(draftPromises);
-      } catch (error: any) {
-        messageHandler(
-          'error',
-          `Some drafts failed to save. Error: ${error.message}`
-        );
-      }
+    const correspondenceFormSubmitHandler = () => {
+      serviceHandler('sent');
     };
 
     const handleArchive = async () => {
       const values = form.getFieldsValue();
-      const allCorrespondence = values.correspondences;
-
-      try {
-        //eslint-disable-next-line
-        const archivePromises = allCorrespondence.map(async (eachCorr: any) => {
-          const backendData = removeNullOrUndefinedProperties({
-            ...eachCorr,
-            files: eachCorr?.files?.map(
-              (item: UploadFile<any>) => item.originFileObj
-            ),
-            status: 'archive',
-          });
-          //eslint-disable-next-line
-          const data = {
-            ...backendData,
-            parastatal: parastatalId,
-          };
-
-          // return createCorrSwr.trigger({ data });
-        });
-        // await Promise.all(archivePromises);
-        closeModalHandler();
-        messageHandler('success', 'Correspondence(s) Archived successfully');
-        form.resetFields();
-      } catch (error: any) {
-        // Handle errors if archiving fails
-        messageHandler('error', 'Failed to archive some correspondences.');
+      if (values.correspondences.some((corr: any) => hasData(corr))) {
+        serviceHandler('archive');
       }
     };
 
     const closeModalHandlerWithDraftSave = () => {
       const values = form.getFieldsValue();
       if (values.correspondences.some((corr: any) => hasData(corr))) {
-        handleSaveDraft(values);
-        // messageHandler('success', 'Correspondence(s) saved to draft');
+        serviceHandler('draft');
+      } else {
+        closeModalHandler();
       }
-      closeModalHandler();
     };
 
     const viewCorrespondenceHandler = () => {

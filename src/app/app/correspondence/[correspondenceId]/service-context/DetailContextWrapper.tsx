@@ -1,14 +1,15 @@
+import dayjs from 'dayjs';
 import React, { Suspense, useCallback, useState } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useAnimation } from 'framer-motion';
-import { DetailContextType, MultiSelectType } from '../../types';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
-import { ContextWrapper } from '@/types';
-// import useCorrespondence from '@/app/app/hooks/useCorrespondence';
-import dayjs from 'dayjs';
 import { useSession, useTabChange } from '@/common/hooks';
+import { DetailContextType, MultiSelectType } from '../../types';
+import { ContextWrapper, MinuteData } from '@/types';
+import useMinute from '@/app/app/hooks/useMinute';
 
 export const DetailContext = React.createContext<DetailContextType>(null);
+export const CorrsInfoContext = React.createContext<MinuteData | null>(null);
 
 const initialMutliSelect = {
   isMultiSelectMode: false,
@@ -17,7 +18,7 @@ const initialMutliSelect = {
 
 function DetailContextWrapper({ children }: ContextWrapper) {
   const params = useSearchParams();
-
+  const correspondenceId = useSearchParams().get('corrs') || '';
   const pathname = usePathname();
   const { data: user } = useSession();
   const [openCorrespondenceDetails, setOpenCorrespondenceDetails] =
@@ -81,12 +82,10 @@ function DetailContextWrapper({ children }: ContextWrapper) {
     }
   };
 
-  // const { getCorrMinListSwr } = useMinute({
-  //   can_get_all: true,
-  //   _id: correspondenceId.toString(),
-  // });
-
-  // const minuteData = getCorrMinListSwr?.data?.data || [];
+  const { getCorrMinListSwr } = useMinute({
+    can_get_all: true,
+    _id: correspondenceId,
+  });
 
   const sampleTimeline = {
     name: 'Adbul Jabar',
@@ -111,11 +110,10 @@ function DetailContextWrapper({ children }: ContextWrapper) {
           turnMultiSelectOFFHandler,
           selectItemHandler,
           multiSelect,
-          // minuteData,
+          minutesThread: getCorrMinListSwr.data,
+          loadingMinutesThread: getCorrMinListSwr.loading,
           sampleTimeline,
           user,
-          // onSearch,
-          // recipientData,
         }}
       >
         {children}

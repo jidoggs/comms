@@ -3,7 +3,6 @@ import React, {
   createContext,
   Suspense,
   useCallback,
-  // useContext,
   useMemo,
   useState,
 } from 'react';
@@ -11,17 +10,11 @@ import { MinuteContextType } from '../../types';
 import { ContextWrapper } from '@/types';
 import useRecipient from '@/app/app/hooks/useRecipient';
 import { useForm } from 'antd/es/form/Form';
-// import { DetailContext } from './DetailContextWrapper';
-// import { messageHandler } from '@/common/utils/notification';
 import { useDebounce } from '@/common/hooks';
-
-// import { CorrAppContext } from '@/app/app/service-context/AppContextWrapper';
 
 export const MinuteContext = createContext<MinuteContextType>(null);
 
 const MinuteContextWrapper = ({ children }: ContextWrapper) => {
-  // const detailContextInfo = useContext(DetailContext);
-  // const appContextInfo = useContext(CorrAppContext);
   const [search, setSearch] = useState<string>('');
   const [selectedRecipient, setSelectedRecipient] = useState<{
     value: string;

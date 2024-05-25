@@ -55,7 +55,12 @@ const useMinute = (props: CorrespondenceServiceArgs) => {
       results: getMinListSwr.data?.results,
       loading: getMinListSwr.isLoading || getMinListSwr.isValidating,
     },
-    getCorrMinListSwr,
+    getCorrMinListSwr: {
+      ...getCorrMinListSwr,
+      data: getCorrMinListSwr.data?.data || [],
+      results: getCorrMinListSwr.data?.results,
+      loading: getCorrMinListSwr.isLoading || getCorrMinListSwr.isValidating,
+    },
   };
 };
 
