@@ -21,8 +21,12 @@ const Notification = () => {
           ...data.children.map((item) => {
             return {
               key: item.key,
-              label: <SingleNotification label={item.label} />,
+              label: <SingleNotification item={item} />,
               onClick: onClick,
+              style: {
+                padding: '0',
+                borderBottom: '1px solid #f0f0f0',
+              },
             };
           }),
         ],
@@ -35,6 +39,8 @@ const Notification = () => {
     maxHeight: '80vh',
     overflowY: 'auto',
     paddingBottom: '10px',
+    paddingLeft: 0,
+    paddingRight: 0,
   };
 
   const count = 0;
@@ -49,14 +55,12 @@ const Notification = () => {
             <div className="flex flex-row items-center justify-between gap-10 p-5">
               <div className="flex flex-row items-center gap-2">
                 <Title className="circular font-medium">Notifications</Title>
-                {/* <div className="rounded-10 border border-gray-400 px-2 py-0.5 text-center"> */}
                 <Title
                   tag="span"
                   className="rounded-10 border border-gray-400 px-2 py-0.5 text-center"
                 >
                   {count}
                 </Title>
-                {/* </div> */}
               </div>
               <CustomButton
                 type="text"
@@ -71,15 +75,13 @@ const Notification = () => {
               style: menuStyle,
             })}
             <div className="h-px w-full bg-custom-gray_100" />
-            <div className="flex flex-col items-center justify-between p-2">
-              <CustomButton
-                type="text"
-                size="small"
-                className="!text-custom-purple_100"
-              >
-                Clear ist
-              </CustomButton>
-            </div>
+            <CustomButton
+              type="text"
+              size="small"
+              className="!w-full !rounded-none !text-custom-purple_100"
+            >
+              Clear ist
+            </CustomButton>
           </div>
         )}
       >
