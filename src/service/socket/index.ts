@@ -4,16 +4,23 @@ import { fetchUserToken } from '../storage';
 
 const token = fetchUserToken();
 
-const socket: Socket = io(SOCKET_URL, {
+const config = {
   transports: ['websocket'],
-  // extraHeaders: {
-  //   authorization: token ? `Bearer ${token}` : '',
-  // },
-
   auth: {
     authorization: token ? `Bearer ${token}` : undefined,
   },
-  // path: '/minutes',
-});
+};
 
-export { socket };
+const minuteSocket: Socket = io(SOCKET_URL + '/minutes', config);
+const noficationSocket: Socket = io(SOCKET_URL + '/notifications', config);
+
+const disconnectSocket = () => {
+  if (minuteSocket.connected) {
+    minuteSocket.disconnect();
+  }
+  if (noficationSocket.connected) {
+    noficationSocket.disconnect();
+  }
+};
+
+export { minuteSocket, noficationSocket, disconnectSocket };

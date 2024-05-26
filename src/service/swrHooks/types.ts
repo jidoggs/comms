@@ -19,11 +19,3 @@ export type SWRFetcher<T> = SWRConfiguration<
   APIResponseErrorModel,
   Request
 >;
-
-export interface SocketFormProps<T = any> {
-  // formId: string;
-  formEvent: string;
-  emitValue: T;
-  listenValue: T;
-  onEvent?: (eventName: string, data: any) => void;
-}

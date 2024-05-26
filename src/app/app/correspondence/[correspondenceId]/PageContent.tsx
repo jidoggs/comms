@@ -1,6 +1,5 @@
 'use client';
-import React, { useContext, useEffect, useRef } from 'react';
-import dayjs from 'dayjs';
+import React, { useContext } from 'react';
 import { motion } from 'framer-motion';
 import Minutes from './components/pages/Minutes';
 import Timelines from './components/pages/Timelines';
@@ -9,56 +8,24 @@ import CorrespondenceHeader from './components/CorrespondenceHeader';
 import CorrrespondenceMenu from './components/CorrrespondenceMenu';
 import MinuteDetails from './components/MinuteDetails';
 import { DetailContext } from './service-context/DetailContextWrapper';
-import { socket } from '@/service/socket';
-import { EVENTS } from '@/service/config/events';
-import { useSearchParams } from 'next/navigation';
-import { useSession } from '@/common/hooks';
 
 const PageContent = () => {
-  const correspondence = useSearchParams().get('corrs') as string;
-  const { data: user } = useSession();
   const detailsData = useContext(DetailContext);
-  const demoDetails = {
-    name: 'Export of Brewery Products',
-    from: 'Nigerian Breweries',
-    to: {
-      name: 'Adbul Jabar',
-      office: 'string',
-      date: dayjs('30 Jan 2024, 4:22pm', 'DD MMM YYYY, h:mmA'),
-    },
-    createdBy: {
-      name: 'Adbul Jabar',
-      office: 'string',
-      date: dayjs('30 Jan 2024, 4:22pm', 'DD MMM YYYY, h:mmA'),
-    },
-    dateCreated: '30-01-2024',
-  };
-
-  const mountOnce = useRef(false);
-  const unMountOnce = useRef(false);
-
-  useEffect(() => {
-    if (mountOnce.current) {
-      return;
-    }
-    mountOnce.current = true;
-
-    socket.on(EVENTS.JOIN_CREATE_ROOM(correspondence, user._id), (res) => {
-      if (typeof res !== 'string') {
-        console.log(res); //eslint-disable-line
-      }
-    });
-
-    socket.emit('joinQueue');
-
-    return () => {
-      if (unMountOnce.current === false) {
-        unMountOnce.current = true;
-        return;
-      }
-      socket.off(EVENTS.JOIN_CREATE_ROOM(correspondence, user._id));
-    };
-  }, []); //eslint-disable-line
+  // const demoDetails = {
+  //   name: 'Export of Brewery Products',
+  //   from: 'Nigerian Breweries',
+  //   to: {
+  //     name: 'Adbul Jabar',
+  //     office: 'string',
+  //     date: dayjs('30 Jan 2024, 4:22pm', 'DD MMM YYYY, h:mmA'),
+  //   },
+  //   createdBy: {
+  //     name: 'Adbul Jabar',
+  //     office: 'string',
+  //     date: dayjs('30 Jan 2024, 4:22pm', 'DD MMM YYYY, h:mmA'),
+  //   },
+  //   dateCreated: '30-01-2024',
+  // };
 
   return (
     <div className="flex w-full flex-col">
@@ -96,7 +63,7 @@ const PageContent = () => {
             }}
             className="flex w-2/6 items-center justify-center border-l border-custom-gray_500"
           >
-            <MinuteDetails corrMinuteDetails={demoDetails} />
+            <MinuteDetails />
           </motion.div>
         )}
       </div>

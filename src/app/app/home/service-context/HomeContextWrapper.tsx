@@ -1,19 +1,15 @@
 'use client';
-import React, {
-  createContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { createContext, useMemo, useState } from 'react';
 import useMinute from '../../hooks/useMinute';
 import { HomeContextType, SocketDataType } from '../types';
 import { ContextWrapper } from '@/types';
-import { socket } from '@/service/socket';
 import { EVENTS } from '@/service/config/events';
 import { useSession } from '@/common/hooks';
+import useSocketSubscription from '@/common/hooks/useSocketSubscription';
 
 export const HomeContext = createContext<HomeContextType>(null);
+
+const { ONGOING_CORRS, QUEUE_CORRS } = EVENTS.MINIUTES;
 
 const initialSocketData: SocketDataType = {
   queue: [],
@@ -32,38 +28,18 @@ const HomeContextWrapper = ({ children }: ContextWrapper) => {
   });
   const [socketData, setSocketData] = useState(initialSocketData);
 
-  const mountOnce = useRef(false);
-  const unMountOnce = useRef(false);
-
-  useEffect(() => {
-    if (mountOnce.current) {
-      return;
+  useSocketSubscription(
+    { broadcast: 'joinQueue', listenFor: QUEUE_CORRS(user._id) },
+    (res) => {
+      setSocketData((prev) => ({ ...prev, queue: [...prev.queue, res] }));
     }
-    mountOnce.current = true;
-
-    socket.on(EVENTS.QUEUE_CORRS(user._id), (res) => {
-      if (typeof res !== 'string') {
-        setSocketData((prev) => ({ ...prev, queue: [...prev.queue, res] }));
-      }
-    });
-    socket.on(EVENTS.ONGOING_CORRS(user._id), (res) => {
-      if (typeof res !== 'string') {
-        setSocketData((prev) => ({ ...prev, ongoing: [...prev.ongoing, res] }));
-      }
-    });
-
-    socket.emit('joinQueue');
-
-    socket.emit('joinOngoing');
-    return () => {
-      if (unMountOnce.current === false) {
-        unMountOnce.current = true;
-        return;
-      }
-      socket.off(EVENTS.QUEUE_CORRS(user._id));
-      socket.off(EVENTS.ONGOING_CORRS(user._id));
-    };
-  }, []);
+  );
+  useSocketSubscription(
+    { broadcast: 'joinOngoing', listenFor: ONGOING_CORRS(user._id) },
+    (res) => {
+      setSocketData((prev) => ({ ...prev, queue: [...prev.queue, res] }));
+    }
+  );
 
   const isMinutesFetching = queueSwr.loading || ongoingSwr.loading;
 
@@ -73,7 +49,7 @@ const HomeContextWrapper = ({ children }: ContextWrapper) => {
     const oldData = ongoingSwr.data.filter((item) => !newIds.has(item._id));
 
     return [...socketData.ongoing, ...oldData];
-  }, [socketData.ongoing.length, ongoingSwr.data.length]);
+  }, [socketData.ongoing.length, ongoingSwr.data.length]); //eslint-disable-line
 
   const isNewAccount = queuedList.length === 0 && ongoingList.length === 0;
 

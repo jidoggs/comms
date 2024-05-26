@@ -18,7 +18,7 @@ import { SessionResponse, UserSession, ResetResponse } from '../types/auth';
 import { User, UserPreDefinedRole } from '@/types';
 import { AuthParams } from './types';
 import { messageHandler } from '@/common/utils/notification';
-import { socket } from '@/service/socket';
+import { disconnectSocket } from '@/service/socket';
 
 const { FORGOT_PASSWORD, REFRESH_TOKEN } = ENDPOINTS.AUTH;
 const { LOGIN, RESET_PASSWORD } = ENDPOINTS.AUTH;
@@ -32,12 +32,10 @@ function useAuth(props?: AuthParams) {
 
   const handleLogout = async () => {
     storeUserHandler(null);
-    router.replace(`/auth/login`);
-    mutate((_) => true, undefined, { revalidate: false });
+    router.replace(`/auth/login`)
+    disconnectSocket();
     clearUserToken();
-    if (socket.connected) {
-      socket.disconnect();
-    }
+    mutate((_) => true, undefined, { revalidate: false });
   };
 
   const userSwr = useAuthGetRequest<User>(

@@ -1,8 +1,10 @@
-import React, { ReactNode } from 'react';
+import dayjs from 'dayjs';
+import React, { ReactNode, useContext } from 'react';
 import TimelineComponent from '@/common/components/TimelineComponent/TimelineComponent';
 import Title from '@/common/components/Title';
-import { TimelineProps } from '@/common/mockData/corrTimeline';
+// import { TimelineProps } from '@/common/mockData/corrTimeline';
 import Folder from '@/common/components/icons/Folder';
+import { DetailContext } from '../service-context/DetailContextWrapper';
 
 type ItemProps = {
   title: string;
@@ -22,39 +24,47 @@ const MinuteDetailItem = ({ title, detail }: ItemProps) => (
   </div>
 );
 
-interface DetailsProps {
-  corrMinuteDetails: {
-    name: string;
-    from: string;
-    to: TimelineProps;
-    createdBy: TimelineProps;
-    dateCreated: string;
-  };
-}
+// interface DetailsProps {
+//   corrMinuteDetails: {
+//     name: string;
+//     from: string;
+//     to: TimelineProps;
+//     createdBy: TimelineProps;
+//     dateCreated: string;
+//   };
+// }
 
-const MinuteDetails = ({ corrMinuteDetails }: DetailsProps) => {
+const MinuteDetails = () => {
+  const detailContext = useContext(DetailContext);
+  const corrMinuteDetails = detailContext?.minutesThread?.[0].correspondence;
+
   return (
     <div className="flex size-full flex-col gap-y-2.5 bg-custom-white_100 p-5">
       <div className="self-start rounded-10 bg-custom-gray_100 p-8 text-custom-main">
         <Folder size={18} />
       </div>
       <div className="flex flex-col gap-y-2.5">
-        <MinuteDetailItem title="Name" detail={corrMinuteDetails.name} />
-        <MinuteDetailItem title="From" detail={corrMinuteDetails.from} />
+        <MinuteDetailItem title="Name" detail={corrMinuteDetails?.subject} />
+        <MinuteDetailItem title="From" detail={corrMinuteDetails?.sender} />
         <MinuteDetailItem
           title="To"
-          detail={<TimelineComponent timeline={corrMinuteDetails.to} nogap />}
+          detail={
+            <TimelineComponent
+              timeline={{ date: dayjs(new Date()), name: '', office: '' }}
+              nogap
+            />
+          }
         />
         <MinuteDetailItem
           title="Created By"
           detail={
-            <TimelineComponent timeline={corrMinuteDetails.createdBy} nogap />
+            <TimelineComponent
+              timeline={{ date: dayjs(new Date()), name: '', office: '' }}
+              nogap
+            />
           }
         />
-        <MinuteDetailItem
-          title="Date of creation"
-          detail={corrMinuteDetails.dateCreated}
-        />
+        <MinuteDetailItem title="Date of creation" detail={''} />
       </div>
     </div>
   );

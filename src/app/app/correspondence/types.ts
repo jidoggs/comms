@@ -13,6 +13,7 @@ import {
 } from '@/types';
 import { Dayjs } from 'dayjs';
 import { FormInstance } from 'antd';
+import { Ipagination } from '@/common/hooks/usePagination';
 
 export type CorrespondenceContextNewType = {
   handleAdd: () => void;
@@ -39,6 +40,7 @@ export type CorrsInfoContextType = {
 } | null;
 
 export type DetailContextType = {
+  pagination: Ipagination;
   openCorrespondenceDetails: boolean;
   openDetailsHandler: () => void;
   closeDetailsHandler: () => void;
@@ -60,36 +62,7 @@ export type DetailContextType = {
     img: string;
   };
   user: User;
-  // onSearch: (value: string) => void;
-  // recipientData: never[] | RecipientData;
-} | null;
-
-export type MinuteContextType = {
-  form: FormInstance<any>;
-  recipientsData: RecipientData | never[];
-  onSearch: (value: string) => void;
-  filterOption: (
-    input: string,
-    option?: {
-      label: string;
-      value: string;
-    }
-  ) => boolean;
-  options: any[];
-  onChange: (value: string, option: any) => void;
-  selectedRecipient: {
-    value: string;
-    type: string;
-  } | null;
-  recipientIsLoading: boolean;
-  initialValues: {
-    minute: string;
-    recipient: string;
-    attach: never[];
-    upload?: never[];
-  };
-  // minuteFormSubmitHandler: (values: any) => Promise<void>;
-  // createMinuteLoading: boolean;
+  addToMinuteThread: (res: MinuteData) => void;
 } | null;
 
 export type MultiSelectType = {

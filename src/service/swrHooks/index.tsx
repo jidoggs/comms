@@ -1,6 +1,5 @@
 import useSWR, { useSWRConfig } from 'swr';
 import useSWRMutation from 'swr/mutation';
-import useSwrSubscription from 'swr/subscription';
 import {
   makeAuthRequest,
   makeAuthFetch,
@@ -14,10 +13,8 @@ import {
   APIResponseSuccessModel,
   apiRequestorArgs,
 } from '@/types';
-import { SWRFetcher, SWRMutation, SocketFormProps } from './types';
+import { SWRFetcher, SWRMutation } from './types';
 import { messageHandler } from '@/common/utils/notification';
-import { socket } from '../socket';
-import { useEffect } from 'react';
 
 const errorMessageHandler = (error: APIResponseErrorModel) => {
   messageHandler('error', apiErrorHandler(error));
@@ -122,35 +119,6 @@ export const useNonAuthGetRequest = <T,>(
     revalidate: mutate,
     isValidating,
   };
-};
-
-export const useSocketForm = <T,>(props: SocketFormProps<T>) => {
-  const emitFormSubmit = (data: T) => {
-    socket.emit(`${props.formEvent}`, data);
-// socket.connect({})
-  };
-
-  const data = useSwrSubscription<T>(`${props.formEvent}`, (mutate: any) =>
-    socket.on(`${props.formEvent}`, mutate)
-  );
-
-  const handleSocketEvent = (eventName: string, eventData: any) => {
-    if (props.onEvent && eventName !== `${props.formEvent}`) {
-      props.onEvent(eventName, eventData);
-    }
-  };
-
-  useEffect(() => {
-    socket.on('event', handleSocketEvent); // Listen to all events
-
-    // Cleanup function to disconnect from socket on unmount
-    return () => {
-      socket.disconnect();
-      socket.off('event', handleSocketEvent); // Remove event listener
-    };
-  }, []);
-
-  return { emitFormSubmit, data, unsubscribe: socket.disconnect };
 };
 
 export const useServiceConfig = () => {

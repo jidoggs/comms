@@ -1,12 +1,14 @@
 import dayjs from 'dayjs';
-import React, { Suspense, useCallback, useState } from 'react';
+import React, { Suspense, useCallback, useEffect, useState } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useAnimation } from 'framer-motion';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
-import { useSession, useTabChange } from '@/common/hooks';
+import { usePagination, useSession, useTabChange } from '@/common/hooks';
 import { DetailContextType, MultiSelectType } from '../../types';
 import { ContextWrapper, MinuteData } from '@/types';
 import useMinute from '@/app/app/hooks/useMinute';
+import useSocketSubscription from '@/common/hooks/useSocketSubscription';
+import { EVENTS } from '@/service/config/events';
 
 export const DetailContext = React.createContext<DetailContextType>(null);
 export const CorrsInfoContext = React.createContext<MinuteData | null>(null);
@@ -18,7 +20,7 @@ const initialMutliSelect = {
 
 function DetailContextWrapper({ children }: ContextWrapper) {
   const params = useSearchParams();
-  const correspondenceId = useSearchParams().get('corrs') || '';
+  const correspondence = useSearchParams().get('corrs') || '';
   const pathname = usePathname();
   const { data: user } = useSession();
   const [openCorrespondenceDetails, setOpenCorrespondenceDetails] =
@@ -82,10 +84,41 @@ function DetailContextWrapper({ children }: ContextWrapper) {
     }
   };
 
+  const pagination = usePagination();
+
   const { getCorrMinListSwr } = useMinute({
     can_get_all: true,
-    _id: correspondenceId,
+    _id: correspondence,
+    limit: pagination.itemPerPage,
+    page: pagination.currentPage,
   });
+
+  const [liveData, setLiveData] = useState<MinuteData[]>([]);
+
+  useEffect(() => {
+    if (pagination.currentPage === 1) {
+      setLiveData([...getCorrMinListSwr.data]);
+    } else {
+      setLiveData((prev) => [...getCorrMinListSwr.data, ...prev]);
+    }
+  }, [pagination.currentPage, getCorrMinListSwr.loading]); //eslint-disable-line
+
+  const addToMinuteThread = (data: MinuteData) => {
+    setLiveData((prev) => [...prev, data]);
+  };
+
+  useSocketSubscription(
+    {
+      broadcast: 'joinCorrespondence',
+      payload: { correspondence },
+      listenFor: EVENTS.MINIUTES.JOIN_CREATE_ROOM(correspondence, user._id),
+    },
+    (res) => {
+      if (typeof res !== 'string' && res._id) {
+        addToMinuteThread(res);
+      }
+    }
+  );
 
   const sampleTimeline = {
     name: 'Adbul Jabar',
@@ -98,6 +131,7 @@ function DetailContextWrapper({ children }: ContextWrapper) {
     <Suspense fallback={null}>
       <DetailContext.Provider
         value={{
+          pagination,
           openCorrespondenceDetails,
           openDetailsHandler,
           closeDetailsHandler,
@@ -109,8 +143,9 @@ function DetailContextWrapper({ children }: ContextWrapper) {
           turnMultiSelectOnHandler,
           turnMultiSelectOFFHandler,
           selectItemHandler,
+          addToMinuteThread,
           multiSelect,
-          minutesThread: getCorrMinListSwr.data,
+          minutesThread: liveData,
           loadingMinutesThread: getCorrMinListSwr.loading,
           sampleTimeline,
           user,

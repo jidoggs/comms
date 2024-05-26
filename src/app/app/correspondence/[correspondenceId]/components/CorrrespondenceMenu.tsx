@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { motion } from 'framer-motion';
 import CorrepondenceTabs from './CorrepondenceTabs';
 import { DetailContext } from '../service-context/DetailContextWrapper';
@@ -6,15 +6,22 @@ import CustomButton from '@/common/components/CustomButton';
 import CreateProject from '@/app/app/components/actions/CreateProject';
 import CreateMeeting from '@/app/app/components/actions/CreateMeeting';
 import Title from '@/common/components/Title';
+import CustomInput from '@/common/components/CustomInput';
 
 import { mergeClassName } from '@/common/utils';
 import Search from '@/common/components/icons/Search';
 import CloseCircled from '@/common/components/icons/CloseCircled';
 import Send from '@/common/components/icons/Send';
 import CloseCircle from '@/common/components/icons/CloseCircle';
+import { iHandleChange } from '@/types';
 
 const CorrrespondenceMenu = () => {
   const detailsData = useContext(DetailContext);
+  const [searchValue, setSearchValue] = useState('');
+
+  const searchHandler: iHandleChange = (e) => {
+    setSearchValue(e.target.value);
+  };
 
   return (
     <div className="flex !h-[50px] justify-between border-b border-custom-gray_400 bg-custom-white_100">
@@ -38,10 +45,22 @@ const CorrrespondenceMenu = () => {
             detailsData?.openCorrespondenceDetails ? 'pr-2.5' : 'pr-5'
           )}
         >
-          <CustomButton
-            description="Search"
-            type="primary"
-            icon={<Search size={18} />}
+          <CustomInput
+            prefix={<Search />}
+            className={mergeClassName(
+              'group !border-none !bg-transparent focus-within:!border focus-within:!border-custom-gray_700 focus-within:!shadow-none hover:!w-56 hover:!border hover:!border-custom-gray_700 hover:!bg-custom-gray_900 focus:!border focus:!border-custom-gray_700 focus:!bg-custom-gray_900',
+              searchValue !== ''
+                ? '!w-56 !border-custom-gray_700 !bg-custom-gray_900'
+                : '!w-12'
+            )}
+            classNames={{
+              prefix: mergeClassName(
+                'group-hover:!m-1',
+                searchValue !== '' ? '!m-1' : '!m-0'
+              ),
+            }}
+            value={searchValue}
+            onChange={searchHandler}
           />
           {detailsData?.multiSelect.isMultiSelectMode ? (
             <div className="flex h-full items-center gap-x-2.5 border-l border-custom-gray_500 p-2.5 pr-0">

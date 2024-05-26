@@ -11,6 +11,7 @@ type Create = 'can_create';
 type RequestType = Create | GetUpdateDelete;
 
 type QueryType = '_id' | 'search' | 'status';
+type PaginationType = 'page' | 'limit';
 
 export type ServiceParams = GenericServiceParam<RequestType, QueryType>;
 
@@ -18,5 +19,6 @@ export type RecipientParams = { recipient: string };
 
 export type CorrespondenceServiceArgs = GenericServiceParam<
   Create | GetUpdateDelete,
-  QueryType
+  QueryType,
+  PaginationType
 >;

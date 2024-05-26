@@ -36,7 +36,9 @@ const MinuteForm = ({
   toggleUpload,
 }: Props) => {
   const correspondenceData = useContext(CorrsInfoContext);
-  const minutesThread = useContext(DetailContext)?.minutesThread || [];
+  const DetailContextInfo = useContext(DetailContext);
+  const addToMinuteThread = DetailContextInfo?.addToMinuteThread;
+  const minutesThread = DetailContextInfo?.minutesThread || [];
   const lastThreadItem = minutesThread?.[minutesThread.length - 1];
   const minuteData = correspondenceData?._id
     ? correspondenceData
@@ -61,7 +63,10 @@ const MinuteForm = ({
       })),
     });
 
-    createMinuteSwr.trigger({ data }).then(() => {
+    createMinuteSwr.trigger({ data }).then((res) => {
+      if (addToMinuteThread) {
+        addToMinuteThread(res.data);
+      }
       form.resetFields();
     });
   };

@@ -25,10 +25,13 @@ export interface MinuteData extends BaseDataModel {
     minute: string;
   };
   correspondence: {
-    _id: string;
-    sender: string;
     documents: string[];
+    recipient: string;
+    reference_number: string;
+    sender: string;
+    status: string;
     subject: string;
+    _id: string;
   };
   recipient: BasicUser;
   hasAccess: BasicUser[]; // Array of users who have access
